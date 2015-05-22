@@ -13,11 +13,9 @@ class BaseLayer{
   int inputDim;
   int outputDim;
   int numInstance;
-  arma::mat W;
-  arma::vec B;
-  std::shared_ptr<arma::mat> inputX;
-  std::shared_ptr<arma::mat> inputY;
-  std::shared_ptr<arma::mat> outputY;
+  std::shared_ptr<arma::mat> inputX, inputY, outputY;
+  std::shared_ptr<arma::mat> W;
+  std::shared_ptr<arma::vec> B;
   ActivationType actType;  
   void initializeWeight();
     

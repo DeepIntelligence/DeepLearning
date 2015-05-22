@@ -9,25 +9,27 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0){
 };
 
 void BaseLayer::initializeWeight(){
-    W.randn(outputDim,inputDim);
-    B.randn(outputDim);
-    W -= 0.5;
-    B -= 0.5;
+    W = std::make_shared<arma::mat>(outputDim,inputDim);
+    B = std::make_shared<arma::vec>(outputDim,inputDim);
+    W->randu(outputDim,inputDim);
+    B->randu(outputDim);
+    (*W) -= 0.5;
+    (*B) -= 0.5;
 
     if (actType == sigmoid){
-    W *=4*sqrt(6.0/(inputDim+outputDim));
-    B *=4*sqrt(6.0/(inputDim+outputDim));
+    (*W) *=4*sqrt(6.0/(inputDim+outputDim));
+    (*B) *=4*sqrt(6.0/(inputDim+outputDim));
     } else if (actType == softmax){
-    W *=sqrt(6.0/(inputDim+outputDim));
-    B *=sqrt(6.0/(inputDim+outputDim));    
+    (*W) *=sqrt(6.0/(inputDim+outputDim));
+    (*B) *=sqrt(6.0/(inputDim+outputDim));    
        
     }
 
 }
 
 void BaseLayer::save(std::string filename){
-    W.save(filename+"_W.dat",arma::raw_ascii);
-    B.save(filename+"_B.dat",arma::raw_ascii);
+    W->save(filename+"_W.dat",arma::raw_ascii);
+    B->save(filename+"_B.dat",arma::raw_ascii);
 
 }
 
@@ -35,9 +37,9 @@ void BaseLayer::activateUp(){
   outputY = std::make_shared<arma::mat>(numInstance,outputDim);
   std::shared_ptr<arma::mat> &p=outputY;
 // first get the projection  
-  (*p) = (*inputX) * W.st() ;
+  (*p) = (*inputX) * (*W).st() ;
   
-  for (int i = 0; i < inputX->n_rows; i++) p->row(i) += B.st();  
+  for (int i = 0; i < inputX->n_rows; i++) p->row(i) += (*B).st();  
 // then do the activation  
   arma::mat maxVal = arma::max(*p,1);
   switch(actType){
