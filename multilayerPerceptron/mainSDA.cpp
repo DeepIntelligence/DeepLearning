@@ -5,35 +5,43 @@
 #include <cstdio>
 #include <memory>
 #include <armadillo>
+#include "MultiLayerPerceptron.h"
 
-#include "BaseLayer.h"
+
+
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X, 
-                    std::shared_ptr<arma::mat> Y,
-                    std::string filename_base);
+                    std::shared_ptr<arma::mat> Y);
 
 int main(int argc, char *argv[]){
   std::shared_ptr<arma::mat> trainDataX(new arma::mat);
   std::shared_ptr<arma::mat> trainDataY(new arma::mat);
-  loadData_MNIST(trainDataX,trainDataY, "../MNIST/data");
+  loadData_MNIST(trainDataX,trainDataY);
+  
+  int inputDim = trainDataX->n_cols;
+  int outputDim = trainDataY->n_cols;
+  int hiddenDim = 100;
+  std::cout << inputDim << std::endl;
+  std::cout << outputDim << std::endl;
+  std::cout << trainDataX->n_rows << std::endl;
+  std::cout << trainDataY->n_rows << std::endl;
+  trainDataX->save("trainingSamples.txt",arma::raw_ascii);
+  TrainingPara trainingPara(1e-6,100, 10, 0.5);
+  trainingPara.print();
+  MultiLayerPerceptron mlp(inputDim,  outputDim, hiddenDim, trainDataX, trainDataY, trainingPara);
+  
+  mlp.train();
+  
+  mlp.test(trainDataX,trainDataY);
+ // after training i do some testing
 
-  BaseLayer baseLayer(784,10,BaseLayer::softmax);
-  baseLayer.inputX = trainDataX;
-  baseLayer.activateUp(baseLayer.inputX);
-  
-//  baseLayer.inputX->print();
-  
-  baseLayer.save();
-  
-  trainDataX->save("X.dat",arma::raw_ascii);
-  baseLayer.outputY->save("PredY.dat",arma::raw_ascii);
 }
 
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X, 
-                    std::shared_ptr<arma::mat> Y,
-                    std::string filename_base){
+                    std::shared_ptr<arma::mat> Y){
   
+  std::string filename_base("../MNIST/data");
   std::string filename;
   char tag[50];
   char x;
@@ -41,7 +49,7 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
   int numFiles = 10;
   int featSize = 28*28;
   int labelSize = 10;
-  int numSamples = 10;
+  int numSamples = 100;
   X->set_size(numFiles*numSamples,featSize);
   Y->set_size(numFiles*numSamples,labelSize);
   Y->fill(0);
@@ -61,8 +69,8 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
         
         for (int k =0 ; k <featSize; k ++){
         infile.read(&x,1);
-//        std::cout << x << std::endl;
         (*X)(j+i*numSamples,k)=(unsigned char)x;
+        (*X)(j+i*numSamples,k)/= 256.0;
         }
         (*Y)(j+i*numSamples,i) = 1;
       }

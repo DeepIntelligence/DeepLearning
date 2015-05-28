@@ -9,7 +9,7 @@ class BaseLayer{
   BaseLayer(){}
   BaseLayer(int inputDim0, int outputDim0, ActivationType actType0);
   void save(std::string filename = "BaseLayer");
-  void activateUp();
+  void activateUp(std::shared_ptr<arma::mat> input);
   int inputDim;
   int outputDim;
   int numInstance;

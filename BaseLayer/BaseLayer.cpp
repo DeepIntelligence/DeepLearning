@@ -10,7 +10,7 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0){
 
 void BaseLayer::initializeWeight(){
     W = std::make_shared<arma::mat>(outputDim,inputDim);
-    B = std::make_shared<arma::vec>(outputDim,inputDim);
+    B = std::make_shared<arma::vec>(outputDim);
     W->randu(outputDim,inputDim);
     B->randu(outputDim);
     (*W) -= 0.5;
@@ -33,11 +33,11 @@ void BaseLayer::save(std::string filename){
 
 }
 
-void BaseLayer::activateUp(){
-  outputY = std::make_shared<arma::mat>(numInstance,outputDim);
+void BaseLayer::activateUp(std::shared_ptr<arma::mat> input){
+  outputY = std::make_shared<arma::mat>(input->n_rows,outputDim);
   std::shared_ptr<arma::mat> &p=outputY;
 // first get the projection  
-  (*p) = (*inputX) * (*W).st() ;
+  (*p) = (*input) * (*W).st();
   
   for (int i = 0; i < inputX->n_rows; i++) p->row(i) += (*B).st();  
 // then do the activation  
