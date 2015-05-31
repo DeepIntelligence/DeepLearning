@@ -7,7 +7,7 @@
 #include <armadillo>
 #include <vector>
 #include "PoolLayer.h"
-
+#include "../MatArray/MatArray.h"
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X, 
                     std::shared_ptr<arma::mat> Y);
@@ -33,21 +33,26 @@ int main(int argc, char *argv[]){
   testDataY = std::make_shared<arma::mat>(DataY->rows(ntrain,ntrain+ntest-1));
   
   std::shared_ptr<arma::cube> trainDataX2D(new arma::cube(28,28,ntrain));
+  MatArray<double>::Mat1DArray_ptr trainDataX2D2 = MatArray<double>::build(ntrain);
+  
   for (int i = 0 ; i < ntrain; i++){
+    (*trainDataX2D2)[i].set_size(28,28);  
     for(int j = 0; j < 28; j++){
         for( int k = 0; k < 28; k++){
             (*trainDataX2D)(j,k,i) = trainDataX->at(i,28*j+k);
+            (*trainDataX2D2)[i](j,k) = trainDataX->at(i,28*j+k);
         }
     }
+    (*trainDataX2D2)[i].print();
   }
 
   trainDataX2D->save("cube.dat",arma::raw_ascii);
   DataX.reset();
   DataY.reset();
     
-  PoolLayer pl(4, PoolLayer::mean);
-  pl.activateUp(trainDataX2D);
-  pl.outputX->save("outputcube_mean.dat", arma::raw_ascii);
+  PoolLayer pl(4, PoolLayer::mean, trainDataX2D2);
+  pl.activateUp();
+//  pl.outputX->save("outputcube_mean.dat", arma::raw_ascii);
 /*
   int inputDim = trainDataX->n_cols;
   int outputDim = trainDataY->n_cols;

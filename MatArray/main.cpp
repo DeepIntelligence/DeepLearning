@@ -13,12 +13,23 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                     std::string filename_base);
 
 int main(int argc, char *argv[]){
-    MatArray<double>::Mat1DArray matArr = MatArray<double>::build(5);
+    MatArray<double>::Mat1DArray_ptr matArr = MatArray<double>::build(5);
     
     for (int i = 0 ; i < 5; i++) {
-        matArr[0].randu(5,5);
-        matArr[0].print();
+        (*matArr)[i].randu(5,5);
+        (*matArr)[i].print("1D");
     }
+    
+    MatArray<double>::Mat2DArray_ptr mat2DArr = MatArray<double>::build(2,2);
+    
+    for (int i = 0 ; i < 2; i++) {
+        for (int j = 0; j < 2; j++){
+        (*mat2DArr)[i][j].randu(5,5);
+        (*mat2DArr)[i][j].print("2D");
+        }
+    }
+    
+    
 }
 
 
