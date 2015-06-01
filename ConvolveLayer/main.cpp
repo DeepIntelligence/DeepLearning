@@ -6,7 +6,7 @@
 #include <memory>
 #include <armadillo>
 #include <vector>
-#include "StackedRBM.h"
+#include "ConvolveLayer.h"
 
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X, 
@@ -52,25 +52,7 @@ int main(int argc, char *argv[]){
   dimensions.push_back(100);
   dimensions.push_back(50);
   
-  bool trainFlag = true;
-  bool testFlag = false;
-  RBM::PreTrainPara trainingPara(1e-6, 10, 10, 0.1);
-  trainingPara.print();
-  std::string filename = "pretrain";
-  std::shared_ptr<arma::umat> trainDataXBin(new arma::umat(trainDataX->n_rows,trainDataX->n_cols));
-  *trainDataXBin = (*trainDataX) < 0.5;
-  StackedRBM SRbm(numLayers, dimensions, trainDataXBin, trainingPara);
-  
-  if (trainFlag) {
-    SRbm.preTrain(filename);
-  }
-/*  
-  if (testFlag){
-      if (!trainFlag) rbm.loadTrainResult(filename);
-      testDataX->save("testSample.dat",arma::raw_ascii);
-      rbm.TestViaReconstruct(testDataX);
-  }
-*/  
+ 
 }
 
 

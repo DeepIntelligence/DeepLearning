@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
   DataX.reset();
   DataY.reset();
     
-  PoolLayer pl(4, PoolLayer::mean, trainDataX2D2);
+  PoolLayer pl(4,4, PoolLayer::mean, trainDataX2D);
   pl.activateUp();
 //  pl.outputX->save("outputcube_mean.dat", arma::raw_ascii);
 /*

@@ -7,13 +7,18 @@ class PoolLayer{
  public:
   enum Type { mean, max};
   PoolLayer(){}
-  PoolLayer(int poolDim0, Type type0, MatArray<double>::Mat1DArray_ptr inputX0):
-            poolDim(poolDim0),type(type0), inputX(inputX0){}
+  PoolLayer(int poolDim0, Type type0, std::shared<arma::cube> input0);
   void activateUp();
-  MatArray<double>::Mat1DArray_ptr inputX;
-  MatArray<double>::Mat1DArray_ptr outputX;
-  MatArray<int>::Mat1DArray_ptr maxIdx_x, maxIdx_y;
+  void upSampling(std::shared<arma::cube> detla_in);
+  std::shared<arma::cube> input;
+  std::shared<arma::cube> output;
+  std::shared<arma::Cube<int>> maxIdx_x, maxIdx_y;
+  std::shared<arma::cube> detla_in;
+  std::shared<arma::cube> delta_out;
   Type type;
-  int poolDim;	
-	
+  int poolDim_x, poolDim_y;
+  int inputDim_x;
+  int inputDim_y;
+  int inputDim_z;
+  int outputDim_x, outputDim_y, outputDim_z;  	
 };
