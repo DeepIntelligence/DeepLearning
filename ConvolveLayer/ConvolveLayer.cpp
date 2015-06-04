@@ -9,11 +9,11 @@ ConvolveLayer::ConvolveLayer(int numFilters0, int filterDim0_x, int filterDim0_y
     stride = stride0;
 }
 
-void ConvolveLayer::setInput(std::shared<arma::cube> input0) {
-    input = input0;
-    inputDim_x = input->n_rows;
-    inputDim_y = input->n_cols;
-    inputDim_z = input->n_slices;
+void ConvolveLayer::setInputDim(int inputdim0_x, int inputDim0_y, int inputdim0_z){
+
+    inputDim_x = inputDim_x;
+    inputDim_y = inputDim_y;
+    inputDim_z = inputDim_z;
 
     outputDim_x = inputDim_x / stride;
     outputDim_y = inputDim_y / stride;
@@ -52,9 +52,7 @@ void ConvolveLayer::activateUp() {
         }
     }
 
-    output_transform([](double val) {
-        return tanh(val)
-    });
+    output->transform([](double val) {return tanh(val)});
 }
 
 void ConvolveLayer::updatePara(MatArray<double>::Mat1DArray delta_upper, const PoolLayer & pl) {
@@ -63,8 +61,8 @@ void ConvolveLayer::updatePara(MatArray<double>::Mat1DArray delta_upper, const P
     int halfSize_x = filterDim_x / 2;
     int halfSize_y = filterDim_y / 2;
 
-    delta = (*delta_upper) % (1-(*output)%(*output))
-            (*B) -= delta;
+    delta = (*delta_upper) % (1-(*output)%(*output));
+    (*B) -= delta;
     for (int filterIdx = 0; filterIdx < numFilters; filterIdx++) {
         for (int imIdx_z = 0; imIdx_z < inputDim_z ; inDepth++) {
             for (int m = 0; m < filterDim_x; m++) {
@@ -89,12 +87,6 @@ void ConvolveLayer::updatePara(MatArray<double>::Mat1DArray delta_upper, const P
         }
     }
 
-
-
-
-}
-
-void ConvolveLayer::propError(std::shared<arma::cube> delta_upper) {
 
 
 

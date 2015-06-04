@@ -30,23 +30,24 @@ struct TrainingPara {
 
 class MultiLayerPerceptron {
 public:
-    MultiLayerPerceptron(int inputDim0, int outputDim0, int hiddenDim0, std::shared_ptr<arma::mat> trainingX0,
+    MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
                          std::shared_ptr<arma::mat> trainingY0, TrainingPara trainingPara);
 
     void train();
     void initialize();
+    void feedForward(std::shared_ptr<arma::mat>);
+    void backProp(std::shared_ptr<arma::mat>);
     void test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
 private:
     bool converge();
     TrainingPara trainingPara;
     int numLayers;
-    int inputDim;
-    int hiddenDim;
-    int outputDim;
     int numInstance;
     std::vector<BaseLayer> layers;
     std::shared_ptr<arma::mat> trainingX;
     std::shared_ptr<arma::mat> trainingY;
+    std::vector<int> dimensions;
+    std::shared_ptr<arma::mat> outputY;
 
 
 };

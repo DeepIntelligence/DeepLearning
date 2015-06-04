@@ -8,14 +8,14 @@ public:
     enum Type { mean, max};
     PoolLayer() {}
     PoolLayer(int poolDim_x, int poolDim_y, Type type0);
-    void setInput(std::shared<arma::cube> input0);
-    void activateUp();
-    void upSampling(std::shared<arma::cube> detla_in);
-    std::shared<arma::cube> input;
-    std::shared<arma::cube> output;
-    std::shared<arma::Cube<int>> maxIdx_x, maxIdx_y;
-    std::shared<arma::cube> detla_in;
-    std::shared<arma::cube> delta_out;
+    void setInputDim(int, int, int);
+    void activateUp(std::shared_ptr<arma::cube> input0);
+    void upSampling(std::shared_ptr<arma::cube> detla_in);
+    std::shared_ptr<arma::cube> input;
+    std::shared_ptr<arma::cube> output;
+    std::shared_ptr<arma::Cube<int>> maxIdx_x, maxIdx_y;
+    std::shared_ptr<arma::cube> detla_in;
+    std::shared_ptr<arma::cube> delta_out;
     Type type;
     int poolDim_x, poolDim_y;
     int inputDim_x;

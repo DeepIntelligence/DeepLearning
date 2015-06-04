@@ -1,21 +1,23 @@
 #include <algorithm>
 #include "MultiLayerPerceptron.h"
 
-MultiLayerPerceptron::MultiLayerPerceptron(int inputDim0, int outputDim0, int hiddenDim0, std::shared_ptr<arma::mat> trainingX0,
+MultiLayerPerceptron::MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
         std::shared_ptr<arma::mat> trainingY0, TrainingPara trainingPara0) {
 
-
-    inputDim = inputDim0;
-    hiddenDim = hiddenDim0;
-    outputDim = outputDim0;
-    numLayers = 2;
+    numLayers = numLayers0;
+    dimensions = dimensions0;
     trainingX = trainingX0;
     trainingY = trainingY0;
     numInstance = trainingX->n_rows;
     trainingPara = trainingPara0;
 
-    layers.push_back(BaseLayer(inputDim,hiddenDim,BaseLayer::sigmoid));
-    layers.push_back(BaseLayer(hiddenDim,outputDim,BaseLayer::softmax));
+    for (int i = 0; i < numLayers; i++){
+        if (i == numLayers-1) {
+            layers.push_back(BaseLayer(dimensions[i],dimensions[i+1],BaseLayer::softmax));
+        }else{
+            layers.push_back(BaseLayer(dimensions[i],dimensions[i+1],BaseLayer::sigmoid));
+        }
+    }
 //   layers[0].W.print("layer 0  W");
 //   layers[0].B.print("layer 0  B");
 //   layers[1].W.print("layer 1  W");
@@ -36,10 +38,23 @@ void MultiLayerPerceptron::train() {
         std::cout << epoch << std::endl;
         errorTotal = 0.0;
         for (int i = 0; i < ntimes; i++) {
-// first do the propogation
+// first do the propogation            
             subInputX = std::make_shared<arma::mat>(trainingX->rows(i*size,(i+1)*size-1));
             subInputY = std::make_shared<arma::mat>(trainingY->rows(i*size,(i+1)*size-1));
-
+            feedForward(subInputX);
+            
+            std::shared_ptr<arma::mat> delta(new arma::mat);
+             //for delta: each column is the delta of a sample
+            *delta = ((-*subInputY + *(layers[numLayers-1].outputY)).st());            
+            arma::vec error = arma::sum(*delta,1);
+            errorTotal += arma::as_scalar(error.st() * error);            
+            backProp(delta);
+           
+        }
+            std::cout << "error is: " << errorTotal << std::endl;
+        
+    }
+/*            
             layers[0].inputX = subInputX;
             layers[0].activateUp(subInputX);
             layers[1].inputX = layers[0].outputY;
@@ -75,10 +90,30 @@ void MultiLayerPerceptron::train() {
     }
 
 //    layers[1].outputY->print("final prediction");
+*/
+ }
+
+void MultiLayerPerceptron::feedForward(std::shared_ptr<arma::mat> subInput0){
+
+    std::shared_ptr<arma::mat> subInput = subInput0;
+    layers[0].inputX = subInput;
+    for (int i = 0; i < numLayers; i++) {
+        layers[i].activateUp(subInput);
+        subInput = layers[i].outputY;
+        if (i > 0) {
+            layers[i].inputX = layers[i-1].outputY;
+        }    
+    }
+    outputY = layers[numLayers-1].outputY;
 }
-
-//if(converge(W_aug_old,W_aug_new)) break;
-
+void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target){
+    std::shared_ptr<arma::mat> delta_in = delta_target;
+    double learningRate = trainingPara.alpha / trainingPara.miniBatchSize;
+    for (int i = numLayers-1; i >= 0 ; i--){
+            layers[i].updatePara(delta_in, learningRate );
+            delta_in = layers[i].delta_out;
+    }
+}
 
 void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY) {
     layers[0].inputX = trainingX;

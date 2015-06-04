@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <memory>
 #include <armadillo>
+#include <vector>
 #include "MultiLayerPerceptron.h"
 
 
@@ -20,19 +21,15 @@ int main(int argc, char *argv[]) {
 
     int inputDim = trainDataX->n_cols;
     int outputDim = trainDataY->n_cols;
-    int hiddenDim = 100;
-    std::cout << inputDim << std::endl;
-    std::cout << outputDim << std::endl;
-    std::cout << trainDataX->n_rows << std::endl;
-    std::cout << trainDataY->n_rows << std::endl;
     trainDataX->save("trainingSamples.txt",arma::raw_ascii);
-    TrainingPara trainingPara(1e-6,100, 10, 0.5);
+    TrainingPara trainingPara(1e-6,200, 10, 0.25);
     trainingPara.print();
-    MultiLayerPerceptron mlp(inputDim,  outputDim, hiddenDim, trainDataX, trainDataY, trainingPara);
+    std::vector<int> dimensions = {784, 100, 50, 10};
+    MultiLayerPerceptron mlp(3, dimensions, trainDataX, trainDataY, trainingPara);
 
     mlp.train();
 
-    mlp.test(trainDataX,trainDataY);
+ //   mlp.test(trainDataX,trainDataY);
 // after training i do some testing
 
 }
@@ -49,7 +46,7 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int numFiles = 10;
     int featSize = 28*28;
     int labelSize = 10;
-    int numSamples = 100;
+    int numSamples = 1000;
     X->set_size(numFiles*numSamples,featSize);
     Y->set_size(numFiles*numSamples,labelSize);
     Y->fill(0);

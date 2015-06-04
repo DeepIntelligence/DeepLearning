@@ -8,6 +8,8 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0) {
     initializeWeight();
 };
 
+
+
 void BaseLayer::initializeWeight() {
     W = std::make_shared<arma::mat>(outputDim,inputDim);
     B = std::make_shared<arma::vec>(outputDim);
@@ -33,25 +35,24 @@ void BaseLayer::save(std::string filename) {
 
 }
 
-void BaseLayer::updatePara(std::shared_ptr<arma::vec> delta_in) {
+void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
 
-    arma::vec deriv;
-    arma::vec delta;
-    delta_out = std::make_shared<arma::vec>(outputDim);
+    //for delta: each column is the delta of a sample
+    arma::mat deriv;
+    arma::mat delta;
+    delta_out = std::make_shared<arma::mat>(inputDim,delta_in->n_cols);
     if (actType == sigmoid || actType == softmax) {
         deriv = (1 - (*outputY)) % (*outputY);
-        delta = (delta_in % deriv );
-        (*delta_out) = delta * (*W).st();
     } else if ( actType == tanh) {
         deriv = (1 - (*outputY)) % (*outputY);
-        delta = (delta_in % deriv );
-        (*delta_out) = (delta_in % deriv) * (*W).st();
     } else if ( actType == linear) {
-        delta_out.ones();
+        deriv.ones(outputY->n_rows,outputY->n_cols);
     }
-
-    (*B) -= delta;
-    (*W) -= delta * (*inputX);
+    delta = (*delta_in) % deriv.st();
+    (*delta_out) = (*W).st() * (*delta_in);
+    
+    (*B) -= learningRate * arma::sum(delta,1);
+    (*W) -= learningRate * delta * (*inputX);
 
 }
 void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
@@ -60,14 +61,14 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
 // first get the projection
     (*p) = (*input) * (*W).st();
 
-    for (int i = 0; i < inputX->n_rows; i++) p->row(i) += (*B).st();
+    for (int i = 0; i < input->n_rows; i++) p->row(i) += (*B).st();
 // then do the activation
     arma::mat maxVal = arma::max(*p,1);
     switch(actType) {
     case softmax:
 //        p->print();
 //        maxVal.print();
-        for (int i = 0; i < inputX->n_rows; i++) {
+        for (int i = 0; i < input->n_rows; i++) {
             for (int j = 0; j < outputDim; j++) {
                 (*p)(i,j)-= maxVal(i);
             }
@@ -77,7 +78,7 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
         });
 
         double normfactor;
-        for (int i = 0; i < inputX->n_rows; i++) {
+        for (int i = 0; i < input->n_rows; i++) {
             normfactor = 0.0;
             for (int j = 0; j < outputDim; j++) {
                 normfactor+=p->at(i,j);
