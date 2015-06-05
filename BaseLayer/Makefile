@@ -23,7 +23,7 @@ LINK_DL_FLAGS =  $(LINKOPTFLAGS) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
 ODIR =
 
 
-OBJ = mainSDA.o BaseLayer.o
+OBJ = mainSDA.o BaseLayer.o BaseLayer.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)

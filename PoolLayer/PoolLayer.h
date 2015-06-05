@@ -22,4 +22,5 @@ public:
     int inputDim_y;
     int inputDim_z;
     int outputDim_x, outputDim_y, outputDim_z;
+    int inputSize, outputSize;
 };

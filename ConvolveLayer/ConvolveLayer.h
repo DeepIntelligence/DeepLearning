@@ -10,7 +10,7 @@ public:
     ConvolveLayer(int numFilters0, int filterDim0_x, int filterDim0_y, int stride0);
     void activateUp(std::shared_ptr<arma::cube>);
 // upate the parameters and propgate the error down for the lower layer
-    void updatePara(std::shared_ptr<arma::cube> delta_upper);
+    void updatePara(std::shared_ptr<arma::cube> delta_upper, double learningRate);
     void initializeWeight();
     void setInputDim(int, int, int);
     void propError(std::shared_ptr<arma::cube> delta_upper);
@@ -23,6 +23,8 @@ public:
     int inputDim_x;
     int inputDim_y;
     int inputDim_z;
+    int inputSize;
+    int outputSize;
     int outputDim_x, outputDim_y, outputDim_z;
     int stride;
 };

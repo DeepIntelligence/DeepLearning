@@ -110,8 +110,8 @@ void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target){
     std::shared_ptr<arma::mat> delta_in = delta_target;
     double learningRate = trainingPara.alpha / trainingPara.miniBatchSize;
     for (int i = numLayers-1; i >= 0 ; i--){
-            layers[i].updatePara(delta_in, learningRate );
-            delta_in = layers[i].delta_out;
+        layers[i].updatePara(delta_in, learningRate );
+        delta_in = layers[i].delta_out;
     }
 }
 

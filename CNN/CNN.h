@@ -30,7 +30,7 @@ struct TrainingPara {
 class CNN {
 public:
     CNN(){};
-    CNN(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trainingY0, int nChanel0);
+    CNN(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trainingY0, int nChanel0, TrainingPara trainingPara0);
     void train();
     void setTrainingData(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trainingY0, int nChanel0);
     void feedForward(std::shared_ptr<arma::cube>);

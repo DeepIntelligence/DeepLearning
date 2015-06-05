@@ -56,6 +56,7 @@ void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningR
 
 }
 void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
+    inputX = input;
     outputY = std::make_shared<arma::mat>(input->n_rows,outputDim);
     std::shared_ptr<arma::mat> &p=outputY;
 // first get the projection

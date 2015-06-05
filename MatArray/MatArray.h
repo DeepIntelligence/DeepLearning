@@ -62,5 +62,29 @@ public:
 
         return v;
     }
+    
+  	 static void fillZeros(Mat2DArray_ptr p){
+  	 	  int n_row = (*p).size();
+  	 	  int n_col = (*p)[0].size();
+  	 	  for (int i = 0; i < n_row; i++){
+  	 	  		for (int j = 0; j < n_col; j++){
+  	 	  				(*p)[i][j].zeros();
+  	 	  		
+  	 	  		}
+  	 	  }
+  	 }
+  	 
+  	 static void substract(Mat2DArray_ptr p1, Mat2DArray_ptr p2, double scale){
+  	 	  int n_row = (*p1).size();
+  	 	  int n_col = (*p1)[0].size();
+  	 	  for (int i = 0; i < n_row; i++){
+  	 	  		for (int j = 0; j < n_col; j++){
+  	 	  				(*p1)[i][j] -= ((*p2)[i][j] * scale);
+  	 	  		
+  	 	  		}
+  	 	  }  	 		
+  	 
+  	 
+  	 }  
 //  arma::Mat<T> & operator[](int i){return }
 };

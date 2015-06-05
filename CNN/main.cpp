@@ -24,14 +24,14 @@ int main(int argc, char *argv[]) {
 
     loadData_MNIST(DataX,DataY);
 
-    int ntrain = 2;
+    int ntrain = 500;
     int ntest = 100;
 //  now I split data into train, test, and validation
     trainDataX = std::make_shared<arma::mat>(DataX->rows(0,ntrain-1));
     trainDataY = std::make_shared<arma::mat>(DataY->rows(0,ntrain-1));
     testDataX = std::make_shared<arma::mat>(DataX->rows(ntrain,ntrain+ntest-1));
     testDataY = std::make_shared<arma::mat>(DataY->rows(ntrain,ntrain+ntest-1));
-
+    TrainingPara trainingPara(1e-6,50, 1, 0.25);
     std::shared_ptr<arma::cube> trainDataX2D(new arma::cube(28,28,ntrain));
 //    MatArray<double>::Mat1DArray_ptr trainDataX2D2 = MatArray<double>::build(ntrain);
 
@@ -50,7 +50,22 @@ int main(int argc, char *argv[]) {
     DataX.reset();
     DataY.reset();
     
-   CNN cnn(trainDataX2D, trainDataY, 1);
+   CNN cnn(trainDataX2D, trainDataY, 1, std::move(trainingPara));
+   cnn.train();
+   // finally i convert every 2D filter to 1D vectors
+   int n1 = cnn.convoLayers[0].numFilters;
+   int n2 = cnn.convoLayers[0].inputDim_z;
+   arma::mat filterMap(n1*n2, 81);
+   int count = 0;
+   for (int i = 0; i < cnn.convoLayers[0].numFilters; i++){
+       for (int j = 0; j < cnn.convoLayers[0].inputDim_z; j++){
+           filterMap.row(count++) = arma::vectorise((*cnn.convoLayers[0].filters)[i][j],1);
+       }
+   }
+   
+   filterMap.save("finalFilter.dat",arma::raw_ascii);
+   
+   
 }
 
 

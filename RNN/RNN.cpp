@@ -2,7 +2,7 @@
 
 
 RNN::forwardPass(std::shared_ptr<arma::mat> inputX) {
-
+	/*
     *Y_iGate = (*W_iGate_i) * (*X).st() + (*W_iGate_c) * (*Y_cPrev).st();
     for (int i = 0; i < Y_iGate->n_rows; i++)
         Y_iGate->row(i) += (*B_iGate).st();
@@ -47,7 +47,61 @@ RNN::forwardPass(std::shared_ptr<arma::mat> inputX) {
     	for (int i = 0; i < Y->n_rows; i++)
     		Y->row(i) += (*B_o).st();
     */
+	*/
+	
+	//kl forwardpass: 
+	// initialize for time series recursion 
+		
+	// input gate
+    *Y_iGate = (*W_iGate_x) * (*X).st() + (*W_iGate_c) * (*S_cPrev).st() + (*W_iGate_ms)*(*Y_cPrev).st(); // net_inj(t) in kl deduction
+    for (int i = 0; i < Y_iGate->n_rows; i++)
+        Y_iGate->row(i) += (*B_iGate).st(); 
+    Y_iGate->transform([](double val) {   // y_inj(t) in kl deduction
+        return 1.0/(1+exp(-val));  // f_inj takes sigmoid function
+    });
+
+    // cell candidate state
+    *Y_cCandit = (*W_c_i) * (*X).st() + (*W_c_ms) * (*Ms_Prev).st(); // net_cjv(t) in kl deduction
+    for (int i = 0; i < Y_cCandit->n_rows; i++)
+        Y_cCandit->row(i) += (*B_c).st();
+    Y_cCandit->transform([](double val) {   // g(net_cjv(t)) in kl deduction
+        return tanh(val);    // g taks tanh function
+    });
+
+	// forget gate
+    *Y_fGate = (*W_fGate_i) * (*X).st() + (*W_fGate_ms)*(*Ms_Prev).st()+ (*W_fGate_c) * (*S_cPrev).st(); // net_phi(t) in kl deduction
+    for (int i = 0; i < Y_fGate->n_rows; i++)
+        Y_fGate->row(i) += (*B_fGate).st();
+    Y_fGate->transform([](double val) {   // y_phi(t) in kl deduction
+        return 1.0/(1+exp(-val)); // f_phi_j in kl deduction
+    });
+
+	// output gate
+    (*Y_oGate) = (*W_oGate_i) * (*X).st() + （*W_oGate_ms）* (*Ms_Prev).st() ＋ (*W_oGate_c) * (*Y_cPrev).st(); // net_outj(t) in kl deduction
+    for (int i = 0; i < Y_oGate->n_rows; i++)
+        Y_oGate->row(i) += (*B_oGate).st();
+    Y_oGate->transform([](double val) { // y_outj(t) in kl deduction
+        return 1.0/(1+exp(-val)); // f_outj in kl deduction
+    });
+
+	// cell state based on input gate and forget gate
+    *S_c = (*Y_iGate) % (*Y_cCandit) + (*Y_fGate) % (*S_cPrev); // S_cjv(t) in kl deduction
+    *S_cPrev = *S_c;
+    *H_c = *S_c;  // h(S_cjv(t)) in kl figure
+    H_c->transform([](double val) {
+        return tanh(val); // h takes tanh function
+    });
+    *Y_cPrev = *Y_c;
+    *Y_c = (*Y_oGate) % (*H_c); // Y_c = ms(t) in kl deduction
+
+    outLayer.activateUp(Y_c);
+    /*
+    	*Y = (*H).st() * (*W_oh).st() ;
+    	for (int i = 0; i < Y->n_rows; i++)
+    		Y->row(i) += (*B_o).st();
+    */
 }
+
 
 RNN::backwardPass() {
 

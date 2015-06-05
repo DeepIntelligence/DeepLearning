@@ -6,27 +6,27 @@ PoolLayer::PoolLayer(int poolDim0_x, int poolDim0_y, Type type0) {
     type = type0;
 }
 
-void PoolLayer::setInputDim(int inputdim0_x, int inputDim0_y, int inputdim0_z){
+void PoolLayer::setInputDim(int inputDim0_x, int inputDim0_y, int inputDim0_z){
 
-    inputDim_x = inputDim_x;
-    inputDim_y = inputDim_y;
-    inputDim_z = inputDim_z;
-
-    outputDim_x = inputDim_x / poolDim_x;
-    outputDim_y = inputDim_y / poolDim_y;
-    outputDim_z = inputDim_z;
-
+    inputDim_x = inputDim0_x;
+    inputDim_y = inputDim0_y;
+    inputDim_z = inputDim0_z;
+    inputSize = inputDim_x * inputDim_y * inputDim_z;
+    outputDim_x = inputDim0_x / poolDim_x;
+    outputDim_y = inputDim0_y / poolDim_y;
+    outputDim_z = inputDim0_z;
+    outputSize = outputDim_x * outputDim_y * outputDim_z;
 }
 
 void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
     input = input0;
     int maxIdx1, maxIdx2;
-    output = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z);
+    output = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z,arma::fill::zeros);
     maxIdx_x = std::make_shared<arma::Cube<int>>(inputDim_x,inputDim_y, inputDim_z);
     maxIdx_y = std::make_shared<arma::Cube<int>>(inputDim_x,inputDim_y, inputDim_z);
 
     if (type == mean) {
-        for (int d = 0; d < inputDim_z; d++) {
+        for (int d = 0; d < outputDim_z; d++) {
             for (int i = 0; i < outputDim_x; i++) {
                 for (int j = 0; j < outputDim_y; j++) {
                     for (int m = i * poolDim_x; m < (i + 1) * poolDim_x; m++) {
@@ -63,24 +63,20 @@ void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
 }
 
 void PoolLayer::upSampling(std::shared_ptr<arma::cube> delta_in) {
-    delta_out = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z, arma::fill::zeros);
+    delta_out = std::make_shared<arma::cube>(inputDim_x,inputDim_y, inputDim_z, arma::fill::zeros);
     if (type == mean) {
-        for (int d = 0; d < outputDim_z; d++) {
-            for (int i = 0; i < outputDim_x; i++) {
-                for (int j = 0; j < outputDim_y; j++) {
-                    for (int ii = 0; ii < poolDim_x; ii+=poolDim_x) {
-                        for (int jj = 0; jj < poolDim_y; jj+=poolDim_y) {
-                            (*delta_out)(ii,jj,d) = (*delta_in)(i,j,d);
-                        }
-                    }
+        for (int d = 0; d < inputDim_z; d++) {
+            for (int i = 0; i < inputDim_x; i++) {
+                for (int j = 0; j < inputDim_y; j++) {
+                    (*delta_out)(i,j,d) = (*delta_in)(i/poolDim_x,j/poolDim_y,d);
                 }
             }
         }
         (*delta_out) /= (poolDim_x * poolDim_y);
     } else if(type == max) {
-        for (int d = 0; d < outputDim_z; d++) {
-            for (int i = 0; i < outputDim_x; i++) {
-                for (int j = 0; j < outputDim_y; j++) {
+        for (int d = 0; d < inputDim_z; d++) {
+            for (int i = 0; i < inputDim_x; i++) {
+                for (int j = 0; j < inputDim_y; j++) {
                     (*delta_out)((*maxIdx_x)(i,j,d),(*maxIdx_y)(i,j,d),d) = (*delta_in)(i,j,d);
                 }
             }
