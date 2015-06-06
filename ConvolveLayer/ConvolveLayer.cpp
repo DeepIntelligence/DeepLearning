@@ -54,8 +54,8 @@ void ConvolveLayer::activateUp(std::shared_ptr<arma::cube> subInput) {
                 for (int k = 0; k < inputDim_y; k+=stride) {
                     for (int m = 0; m < filterDim_x; m++) {
                         for (int n = 0; n < filterDim_y; n++) {
-                            int imIdx_x = j + m - halfSize_x;
-                            int imIdx_y = k + n - halfSize_y;
+                            int imIdx_x = j - ( m - halfSize_x );
+                            int imIdx_y = k - ( n - halfSize_y );
                             if (imIdx_x >=0 && imIdx_x < inputDim_x && imIdx_y >=0 && imIdx_y < inputDim_y)
                                 (*output)(j/stride,k/stride,filterIdx) += (*input)(imIdx_x, imIdx_y,imIdx_z) * (*filters)[filterIdx][imIdx_z](m,n);
                         }
