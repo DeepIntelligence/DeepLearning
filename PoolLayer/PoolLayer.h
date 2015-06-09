@@ -2,9 +2,7 @@
 #include <armadillo>
 #include "../MatArray/MatArray.h"
 
-class PoolLayer {
-
-public:
+struct PoolLayer {
     enum Type { mean, max};
     PoolLayer() {}
     PoolLayer(int poolDim_x, int poolDim_y, Type type0);

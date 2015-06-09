@@ -160,6 +160,6 @@ void ConvolveLayer::updatePara(std::shared_ptr<arma::cube> delta_upper, double l
     }
 
     MatArray<double>::substract(filters, deltaW, learningRate);
-//    MatArray<double>::save(deltaW,"analyGrad_conv");
+    MatArray<double>::save(deltaW,"analyGrad_conv");
 //     delta_out->save("delta_out.dat",arma::raw_ascii);
 }

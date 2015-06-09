@@ -50,9 +50,6 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     X->set_size(numFiles*numSamples,featSize);
     Y->set_size(numFiles*numSamples,labelSize);
     Y->fill(0);
-//  std::cout << Y.Len() << std::endl;
-//  std::cout << X.NumR() << std::endl;
-//  std::cout << X.NumC() << std::endl;
 
     for (int i = 0 ; i < numFiles ; i++) {
         sprintf(tag,"%d",i);

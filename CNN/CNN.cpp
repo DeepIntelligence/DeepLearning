@@ -16,12 +16,12 @@ CNN::CNN(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trai
     numFCLayers = 1;
     
     
-    testGrad = false;
+    testGrad = true;
     
     
-    convoLayers.push_back(ConvolveLayer(16,5,5,1, ConvolveLayer::ReLU));
-    convoLayers.push_back(ConvolveLayer(20,5,5,1, ConvolveLayer::ReLU)); 
-    convoLayers.push_back(ConvolveLayer(20,5,5,1, ConvolveLayer::ReLU));
+    convoLayers.push_back(ConvolveLayer(2,5,5,1, ConvolveLayer::ReLU));
+    convoLayers.push_back(ConvolveLayer(2,5,5,1, ConvolveLayer::ReLU)); 
+    convoLayers.push_back(ConvolveLayer(2,5,5,1, ConvolveLayer::ReLU));
     poolLayers.push_back(PoolLayer(2,2,PoolLayer::max));
 //    poolLayers.push_back(PoolLayer(2,2,PoolLayer::max));
 //    convoLayers.push_back(ConvolveLayer(10,5,5,1, ConvolveLayer::tanh));

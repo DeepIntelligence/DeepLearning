@@ -35,9 +35,12 @@ public:
 
     void train();
     void initialize();
+/* forward pass*/    
     void feedForward(std::shared_ptr<arma::mat>);
+/* back propogate the error to update the parameters*/    
     void backProp(std::shared_ptr<arma::mat>);
     void test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
+/* calculate the numerical gradient for testing*/    
     void calNumericGrad(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
 private:
     bool converge();
@@ -45,10 +48,14 @@ private:
     int numLayers;
     int numInstance;
     bool testGrad;
+/**the collection of Base layers*/
     std::vector<BaseLayer> layers;
+/**training data, input and label*/    
     std::shared_ptr<arma::mat> trainingX;
     std::shared_ptr<arma::mat> trainingY;
+/* dimension parameters for each layer*/    
     std::vector<int> dimensions;
+/* network output*/    
     std::shared_ptr<arma::mat> outputY;
 
 

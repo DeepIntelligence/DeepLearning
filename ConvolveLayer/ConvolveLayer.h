@@ -3,9 +3,7 @@
 #include "../MatArray/MatArray.h"
 
 
-class ConvolveLayer {
-
-public:
+struct ConvolveLayer {
     enum ActivationType {ReLU, tanh, sigmoid, linear};
     ConvolveLayer(int numFilters0, int filterDim0_x, int filterDim0_y, int stride0, ActivationType type0);
     void activateUp(std::shared_ptr<arma::cube>);
