@@ -14,15 +14,15 @@ MKL_DL_LINKFLAGS =  -Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
 ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lopenblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
-CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -DDEBUG -D__LINUX -g3 
+CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DDEBUG  -g3 
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) -ldl
-LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
+LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS)  -ldl #$(LINKOPTFLAGS)
 #LINKFLAGS = 
 #ODIR=obj
 ODIR =
 
-OBJ = main.o PoolLayer.o ConvolveLayer.o BaseLayer.o CNN.o
+OBJ = main.o PoolLayer.o ConvolveLayer.o BaseLayer.o CNN.o load_cifar10.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)
@@ -34,7 +34,10 @@ PoolLayer.o : ../PoolLayer/PoolLayer.cpp ../PoolLayer/PoolLayer.h
 	$(CPP) -c $(CXXFLAGS) $<
 	
 ConvolveLayer.o : ../ConvolveLayer/ConvolveLayer.cpp ../ConvolveLayer/ConvolveLayer.h
-	$(CPP) -c $(CXXFLAGS) $<			
+	$(CPP) -c $(CXXFLAGS) $<	
+	
+load_cifar10.o : ../cifar-10/load_cifar10.cpp 
+	$(CPP) -c $(CXXFLAGS) $<
 #%.o : %.cpp
 #	$(CPP) -c $(CXXFLAGS) 
 

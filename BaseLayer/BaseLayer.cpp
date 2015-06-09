@@ -41,18 +41,25 @@ void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningR
     arma::mat deriv;
     arma::mat delta;
     delta_out = std::make_shared<arma::mat>(inputDim,delta_in->n_cols);
-    if (actType == sigmoid || actType == softmax) {
-        deriv = (1 - (*outputY)) % (*outputY);
+    if (actType == softmax) {
+        deriv.ones(outputY->n_rows,outputY->n_cols);   
+    } else if (actType == sigmoid ) {
+        deriv = (1 - (*outputY)) % (*outputY);        
     } else if ( actType == tanh) {
-        deriv = (1 - (*outputY)) % (*outputY);
+        deriv = (1 - (*outputY) % (*outputY));
     } else if ( actType == linear) {
         deriv.ones(outputY->n_rows,outputY->n_cols);
     }
     delta = (*delta_in) % deriv.st();
-    (*delta_out) = (*W).st() * (*delta_in);
+    (*delta_out) = (*W).st() * (delta);
     
     (*B) -= learningRate * arma::sum(delta,1);
     (*W) -= learningRate * delta * (*inputX);
+    
+    arma::mat dW = delta * (*inputX);
+ //   dW.save("AnalyGrad_base.dat",arma::raw_ascii);
+ //   delta_in->print();
+ //   delta_out->print();
 
 }
 void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
@@ -92,7 +99,7 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
 //    p->print();
         break;
     case sigmoid:
-//        p->print();
+//        p->print("p");
         (*p).transform([](double val) {
             return 1.0/(1.0+exp(-val));
         }) ;

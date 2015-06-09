@@ -35,7 +35,10 @@ public:
     void setTrainingData(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trainingY0, int nChanel0);
     void feedForward(std::shared_ptr<arma::cube>);
     void backProp(std::shared_ptr<arma::mat>);
-
+    void test(std::shared_ptr<arma::cube> testX0, std::shared_ptr<arma::mat> testY0);
+    double calLayerError(std::shared_ptr<arma::cube> delta);
+    void calNumericGrad(std::shared_ptr<arma::cube>, std::shared_ptr<arma::mat>);
+    bool testGrad;
     std::vector<PoolLayer> poolLayers;
     std::vector<ConvolveLayer> convoLayers;
     std::vector<BaseLayer> FCLayers;
@@ -45,6 +48,7 @@ public:
     int nChanel;
     TrainingPara trainingPara;
     int inputDim_x, inputDim_y;
+    int outputDim;
     int numFCLayers;
     int numCLayers;
 };

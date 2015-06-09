@@ -38,11 +38,13 @@ public:
     void feedForward(std::shared_ptr<arma::mat>);
     void backProp(std::shared_ptr<arma::mat>);
     void test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
+    void calNumericGrad(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
 private:
     bool converge();
     TrainingPara trainingPara;
     int numLayers;
     int numInstance;
+    bool testGrad;
     std::vector<BaseLayer> layers;
     std::shared_ptr<arma::mat> trainingX;
     std::shared_ptr<arma::mat> trainingY;

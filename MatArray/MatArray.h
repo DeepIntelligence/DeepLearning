@@ -86,5 +86,18 @@ public:
   	 
   	 
   	 }  
-//  arma::Mat<T> & operator[](int i){return }
+         
+    static void save(Mat2DArray_ptr p,std::string filenamebase){
+        char tag[50];
+        std::string filename;
+        int n_row = (*p).size();
+  	int n_col = (*p)[0].size();
+  	for (int i = 0; i < n_row; i++){
+            for (int j = 0; j < n_col; j++){
+                sprintf(tag,"_%d_%d",i,j);
+                filename = filenamebase + (std::string)tag;
+  		(*p)[i][j].save(filename,arma::raw_ascii);
+            }
+  	}  
+    }
 };

@@ -22,8 +22,8 @@ void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
     input = input0;
     int maxIdx1, maxIdx2;
     output = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z,arma::fill::zeros);
-    maxIdx_x = std::make_shared<arma::Cube<int>>(inputDim_x,inputDim_y, inputDim_z);
-    maxIdx_y = std::make_shared<arma::Cube<int>>(inputDim_x,inputDim_y, inputDim_z);
+    maxIdx_x = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z);
+    maxIdx_y = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z);
 
     if (type == mean) {
         for (int d = 0; d < outputDim_z; d++) {
@@ -36,14 +36,16 @@ void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
                     }
                 }
             }
-            (*output).slice(d) /= (poolDim_x * poolDim_y);
+            (*output).slice(d) /= (1.0 * poolDim_x * poolDim_y);
         }
     } else if (type == max) {
         (*output).zeros();
-        for (int d = 0; d < inputDim_z; d++) {
-            for (int i = 0; i < inputDim_x; i++) {
-                for (int j = 0; j < inputDim_y; j++) {
+        for (int d = 0; d < outputDim_z; d++) {
+            for (int i = 0; i < outputDim_x; i++) {
+                for (int j = 0; j < outputDim_y; j++) {
                     double maxtemp = 0.0;
+                    maxIdx1 = 0;
+                    maxIdx2 = 0;
                     for (int m = i * poolDim_x; m < (i + 1) * poolDim_x; m++) {
                         for (int n = j * poolDim_y; n < (j + 1) * poolDim_y; n++) {
                             if (maxtemp < (*input)(m,n,d) ) {
@@ -72,12 +74,12 @@ void PoolLayer::upSampling(std::shared_ptr<arma::cube> delta_in) {
                 }
             }
         }
-        (*delta_out) /= (poolDim_x * poolDim_y);
+        (*delta_out) /= (1.0 * poolDim_x * poolDim_y);
     } else if(type == max) {
-        for (int d = 0; d < inputDim_z; d++) {
-            for (int i = 0; i < inputDim_x; i++) {
-                for (int j = 0; j < inputDim_y; j++) {
-                    (*delta_out)((*maxIdx_x)(i,j,d),(*maxIdx_y)(i,j,d),d) = (*delta_in)(i,j,d);
+        for (int d = 0; d < outputDim_z; d++) {
+            for (int i = 0; i < outputDim_x; i++) {
+                for (int j = 0; j < outputDim_y; j++) {
+                    (*delta_out)((*maxIdx_x)(i,j,d),(*maxIdx_y)(i,j,d),d) = (*delta_in)(i,j,d);             
                 }
             }
         }

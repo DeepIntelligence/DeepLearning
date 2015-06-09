@@ -6,8 +6,8 @@
 class ConvolveLayer {
 
 public:
-    enum ActivationType {ReLU, tanh, sigmoid};
-    ConvolveLayer(int numFilters0, int filterDim0_x, int filterDim0_y, int stride0);
+    enum ActivationType {ReLU, tanh, sigmoid, linear};
+    ConvolveLayer(int numFilters0, int filterDim0_x, int filterDim0_y, int stride0, ActivationType type0);
     void activateUp(std::shared_ptr<arma::cube>);
 // upate the parameters and propgate the error down for the lower layer
     void updatePara(std::shared_ptr<arma::cube> delta_upper, double learningRate);
@@ -27,4 +27,5 @@ public:
     int outputSize;
     int outputDim_x, outputDim_y, outputDim_z;
     int stride;
+    ActivationType type;
 };

@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
     trainDataX->save("trainingSamples.txt",arma::raw_ascii);
     TrainingPara trainingPara(1e-6,200, 10, 0.25);
     trainingPara.print();
-    std::vector<int> dimensions = {784, 100, 50, 10};
-    MultiLayerPerceptron mlp(3, dimensions, trainDataX, trainDataY, trainingPara);
+    std::vector<int> dimensions = {784,100,10};
+    MultiLayerPerceptron mlp(2, dimensions, trainDataX, trainDataY, trainingPara);
 
     mlp.train();
 
