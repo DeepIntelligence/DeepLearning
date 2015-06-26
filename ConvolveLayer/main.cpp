@@ -27,10 +27,10 @@ int main(int argc, char *argv[]) {
     int ntrain = 1000;
     int ntest = 100;
 //  now I split data into train, test, and validation
-    trainDataX = std::make_shared<arma::mat>(DataX->rows(0,ntrain-1));
-    trainDataY = std::make_shared<arma::mat>(DataY->rows(0,ntrain-1));
-    testDataX = std::make_shared<arma::mat>(DataX->rows(ntrain,ntrain+ntest-1));
-    testDataY = std::make_shared<arma::mat>(DataY->rows(ntrain,ntrain+ntest-1));
+    trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
+    trainDataY = std::make_shared<arma::mat>(DataY->cols(0,ntrain-1));
+    testDataX = std::make_shared<arma::mat>(DataX->cols(ntrain,ntrain+ntest-1));
+    testDataY = std::make_shared<arma::mat>(DataY->cols(ntrain,ntrain+ntest-1));
 
     DataX.reset();
     DataY.reset();
@@ -68,8 +68,8 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int featSize = 28*28;
     int labelSize = 10;
     int numSamples = 1000;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
+    X->set_size(featSize,numFiles*numSamples);
+    Y->set_size(labelSize, numFiles*numSamples);
     Y->fill(0);
 
 
@@ -86,10 +86,10 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                 for (int k =0 ; k <featSize; k ++) {
                     infile.read(&x,1);
 //        std::cout << x << std::endl;
-                    (*X)(i+numFiles*j,k)=((unsigned char)x)/256.0;
+                    (*X)(k, i+numFiles*j)=((unsigned char)x)/256.0;
 
                 }
-                (*Y)(i+numFiles*j,i) = 1;
+                (*Y)(i, i+numFiles*j) = 1;
 //        count++;
             }
 

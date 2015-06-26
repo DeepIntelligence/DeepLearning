@@ -1,7 +1,7 @@
 #pragma once
 #include <armadillo>
 #include "../BaseLayer/BaseLayer.h"
-
+#include "../Optimization/optimization.h"
 
 struct TrainingPara {
 
@@ -29,10 +29,12 @@ struct TrainingPara {
 
 
 class MultiLayerPerceptron {
+    friend class MLPTrainer;
 public:
     MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
                          std::shared_ptr<arma::mat> trainingY0, TrainingPara trainingPara);
 
+    enum ParaType{gradient, weight};
     void train();
     void initialize();
 /* forward pass*/    
@@ -42,6 +44,10 @@ public:
     void test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
 /* calculate the numerical gradient for testing*/    
     void calNumericGrad(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
+    void calGrad(std::shared_ptr<arma::mat> trainingX);
+    void vectoriseGrad(arma::vec &grad);
+    void deVectoriseWeight(arma::vec &x);
+    void vectoriseWeight(arma::vec &x);
 private:
     bool converge();
     TrainingPara trainingPara;
@@ -57,6 +63,15 @@ private:
     std::vector<int> dimensions;
 /* network output*/    
     std::shared_ptr<arma::mat> outputY;
+    int totalDim;
 
+};
 
+class MLPTrainer:public Optimization::ObjectFunc{
+public:
+    MLPTrainer(MultiLayerPerceptron &MLP);
+    virtual double operator()(arma::vec &x, arma::vec &grad);
+//    std::shared_ptr<arma::vec> x_init;
+private:
+    MultiLayerPerceptron  &MLP;
 };

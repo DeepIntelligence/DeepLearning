@@ -26,3 +26,20 @@
 *.exe
 *.out
 *.app
+test
+
+# PDFs
+*.pdf
+*.lyx
+
+# data
+*.dat
+*.txt
+*.bin
+*image*
+*.JPG
+*.png
+#other
+*.orig
+/CppApplication_1/build/
+/CppApplication_1/dist/

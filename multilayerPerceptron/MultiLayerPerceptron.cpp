@@ -8,15 +8,17 @@ MultiLayerPerceptron::MultiLayerPerceptron(int numLayers0, std::vector<int> dime
     dimensions = dimensions0;
     trainingX = trainingX0;
     trainingY = trainingY0;
-    numInstance = trainingX->n_rows;
+    numInstance = trainingX->n_cols;
     trainingPara = trainingPara0;
     testGrad = false;
+    totalDim = 0;
     for (int i = 0; i < numLayers; i++){
         if (i == numLayers-1) {
             layers.push_back(BaseLayer(dimensions[i],dimensions[i+1],BaseLayer::softmax));
         }else{
             layers.push_back(BaseLayer(dimensions[i],dimensions[i+1],BaseLayer::sigmoid));
         }
+        totalDim += layers[i].totalSize;
     }
 //   layers[0].W.print("layer 0  W");
 //   layers[0].B.print("layer 0  B");
@@ -31,16 +33,17 @@ void MultiLayerPerceptron::train() {
     trainingPara.print();
     int ntimes = numInstance / trainingPara.miniBatchSize;
     std::shared_ptr<arma::mat> subInputX, subInputY;
-    double errorTotal;
+    double errorTotal, crossEntropy;
     int size = trainingPara.miniBatchSize;
     double alpha = trainingPara.alpha / size;
     for(int epoch = 0; epoch < trainingPara.NEpoch; epoch++) {
         std::cout << epoch << std::endl;
         errorTotal = 0.0;
+        crossEntropy = 0.0;
         for (int i = 0; i < ntimes; i++) {
 // first do the propogation            
-            subInputX = std::make_shared<arma::mat>(trainingX->rows(i*size,(i+1)*size-1));
-            subInputY = std::make_shared<arma::mat>(trainingY->rows(i*size,(i+1)*size-1));
+            subInputX = std::make_shared<arma::mat>(trainingX->cols(i*size,(i+1)*size-1));
+            subInputY = std::make_shared<arma::mat>(trainingY->cols(i*size,(i+1)*size-1));
             feedForward(subInputX);
             
             if (testGrad){
@@ -50,13 +53,21 @@ void MultiLayerPerceptron::train() {
             
             std::shared_ptr<arma::mat> delta(new arma::mat);
              //for delta: each column is the delta of a sample
-            *delta = ((-*subInputY + *outputY).st());            
-            arma::vec error = arma::sum(*delta,1);
-            errorTotal += arma::as_scalar(error.st() * error);            
+            *delta = (-*subInputY + *outputY);            
+                       
             backProp(delta);
-           
+            delta->transform([](double val){return val*val;});
+            errorTotal += arma::sum(arma::sum(*delta)); 
+//            outputY->print();
+            outputY->transform([](double val){return std::log(val+1e-20);});
+           arma::mat crossEntropy_temp = *(subInputY) %  *(outputY);
+//    crossEntropy_temp.save("crossEntropy.dat",arma::raw_ascii);
+            crossEntropy -= arma::sum(arma::sum((crossEntropy_temp)));
+//            std::cout << crossEntropy << std::endl;
+//             std::cout << errorTotal << std::endl;
         }
             std::cout << "error is: " << errorTotal << std::endl;
+            std::cout << "cross entropy is: " << crossEntropy << std::endl;
         
     }
  }
@@ -90,14 +101,14 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput,st
             (*(layers[0].W))(i,j) += eps;
             feedForward(subInput);
  //           outputY->transform([](double val){return log(val);});
-            (*delta) = ((*outputY) - (*subInputY)).st();
+            (*delta) = (*outputY) - (*subInputY);
             *delta = arma::sum(*delta,1);
             error = 0.5* arma::as_scalar((*delta).st() * (*delta));
             temp_left = error;
             (*(layers[0].W))(i,j) -= 2.0*eps;
             feedForward(subInput);
  //           outputY->transform([](double val){return log(val);});
-            (*delta) = ((*outputY) - (*subInputY)).st();
+            (*delta) = (*outputY) - (*subInputY);
             *delta = arma::sum(*delta,1);
             error = 0.5* arma::as_scalar((*delta).st() * (*delta));;
             temp_right = error;
@@ -118,15 +129,104 @@ void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target){
     }
 }
 
-void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY) {
-    layers[0].inputX = trainingX;
-    layers[0].activateUp(trainingX);
-    layers[1].inputX = layers[0].outputY;
-    layers[1].activateUp(layers[1].inputX);
-    layers[1].outputY->save("testoutput.txt",arma::raw_ascii);
 
+void MultiLayerPerceptron::calGrad(std::shared_ptr<arma::mat> delta_target){
+    std::shared_ptr<arma::mat> delta_in = delta_target;
+    for (int i = numLayers-1; i >= 0 ; i--){
+        layers[i].calGrad(delta_in);
+        delta_in = layers[i].delta_out;
+    }
 }
 
+void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> testingX,std::shared_ptr<arma::mat> testingY) {
+        feedForward(testingX);
+        std::shared_ptr<arma::mat> delta(new arma::mat);
+             //for delta: each column is the delta of a sample
+        *delta = (-*testingY + *outputY);  
+        delta->transform([](double val){return val*val;});
+//        arma::vec error = arma::sum(*delta,1);
+        double errorTotal = arma::sum(arma::sum(*delta));                  
+        outputY->transform([](double val){return std::log(val+1e-20);});
+        arma::mat crossEntropy_temp = *(testingY) %  *(outputY);
+//    crossEntropy_temp.save("crossEntropy.dat",arma::raw_ascii);
+        double crossEntropy = - arma::sum(arma::sum((crossEntropy_temp))); 
+        std::cout << "testing result:" << std::endl;
+          std::cout << "error is: " << errorTotal << std::endl;
+            std::cout << "cross entropy is: " << crossEntropy << std::endl;
+}
+
+void MultiLayerPerceptron::deVectoriseWeight(arma::vec &x){
+        int startIdx = 0;
+        int endIdx = 0;
+//        std::shared_ptr<arma::vec> V(new arma::vec);
+    for (int i = 0; i < numLayers; i++) {
+        startIdx = endIdx;
+        endIdx += layers[i].totalSize;
+ //       *V = x.rows(startIdx,endIdx - 1);   
+        layers[i].deVectoriseWeight(x.memptr(),startIdx);
+        
+    }
+}
+
+void MultiLayerPerceptron::vectoriseGrad(arma::vec &grad){
+        int startIdx = 0;
+        int endIdx = 0;
+//        std::shared_ptr<arma::vec> V(new arma::vec);
+    for (int i = 0; i < numLayers; i++) {
+        startIdx = endIdx;
+        endIdx += layers[i].totalSize;
+ 
+        layers[i].vectoriseGrad(grad.memptr(), startIdx);
+//        V->print();
+//        grad.rows(startIdx,endIdx - 1) = *V;   
+    }
+}
+
+void MultiLayerPerceptron::vectoriseWeight(arma::vec &x){
+        int startIdx = 0;
+        int endIdx = 0;
+//        std::shared_ptr<arma::vec> V(new arma::vec);
+    for (int i = 0; i < numLayers; i++) {
+        startIdx = endIdx;
+        endIdx += layers[i].totalSize;
+        
+        layers[i].vectoriseWeight(x.memptr(), startIdx);
+//        x.rows(startIdx,endIdx - 1) = *V;
+    }
+}
+
+MLPTrainer::MLPTrainer(MultiLayerPerceptron& MLP0):MLP(MLP0){
+    dim = MLP.totalDim;  
+    x_init = std::make_shared<arma::vec>(dim);
+    MLP.vectoriseWeight(*x_init);
+//    x_init->save("x_init.dat", arma::raw_ascii);
+}
+double MLPTrainer::operator ()(arma::vec& x, arma::vec& grad){
+
+    grad.resize(MLP.totalDim);
+//  first assign x to the weights and bias of all the layers    
+    MLP.deVectoriseWeight(x);
+    
+    MLP.feedForward(MLP.trainingX);
+    std::shared_ptr<arma::mat> delta(new arma::mat);
+    //for delta: each column is the delta of a sample
+    *delta = (-*(MLP.trainingY) + *(MLP.outputY));            
+//    arma::vec error = arma::sum(*delta,1);
+//  the error function we should have is the cross entropy 
+//  since our gradient calcuated is assuming that we are using cross entropy
+//    error.save("error.dat",arma::raw_ascii);
+     MLP.outputY->transform([](double val){return std::log(val+1e-20);});
+
+    arma::mat crossEntropy_temp = *(MLP.trainingY) %  *(MLP.outputY);
+//    crossEntropy_temp.save("crossEntropy.dat",arma::raw_ascii);
+    double crossEntropy = - arma::sum(arma::sum((crossEntropy_temp)));
+//     std::cout << "cross entropy is: " << crossEntropy << std::endl;
+    double errorTotal= 0.5 * arma::sum(arma::sum(delta->st() * (*delta)));            
+    MLP.calGrad(delta);
+    
+    MLP.vectoriseGrad(grad);
+    return crossEntropy;
+}
 
 
 

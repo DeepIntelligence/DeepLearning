@@ -6,13 +6,19 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0) {
     outputDim = outputDim0;
     actType = actType0;
     initializeWeight();
+    W_size = inputDim * outputDim;
+    B_size = outputDim;
+    totalSize = W_size + B_size;
 };
 
 
 
 void BaseLayer::initializeWeight() {
-    W = std::make_shared<arma::mat>(outputDim,inputDim);
-    B = std::make_shared<arma::vec>(outputDim);
+    W = std::make_shared<arma::mat>(outputDim,inputDim,arma::fill::randu);
+    B = std::make_shared<arma::vec>(outputDim,arma::fill::randu);
+    grad_W = std::make_shared<arma::mat>(outputDim,inputDim);
+    grad_B = std::make_shared<arma::vec>(outputDim);
+    
     W->randu(outputDim,inputDim);
     B->randu(outputDim);
     (*W) -= 0.5;
@@ -36,7 +42,16 @@ void BaseLayer::save(std::string filename) {
 }
 
 void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
+    calGrad(delta_in);
+    (*B) -= learningRate * (*grad_B);
+    (*W) -= learningRate * (*grad_W);
+ //   arma::mat dW = delta * (*inputX);
+ //   dW.save("AnalyGrad_base.dat",arma::raw_ascii);
+ //   delta_in->print();
+ //   delta_out->print();
+}
 
+void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
     //for delta: each column is the delta of a sample
     arma::mat deriv;
     arma::mat delta;
@@ -50,50 +65,32 @@ void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningR
     } else if ( actType == linear) {
         deriv.ones(outputY->n_rows,outputY->n_cols);
     }
-    delta = (*delta_in) % deriv.st();
+    delta = (*delta_in) % deriv;
     (*delta_out) = (*W).st() * (delta);
-    
-    (*B) -= learningRate * arma::sum(delta,1);
-    (*W) -= learningRate * delta * (*inputX);
-    
-    arma::mat dW = delta * (*inputX);
- //   dW.save("AnalyGrad_base.dat",arma::raw_ascii);
- //   delta_in->print();
- //   delta_out->print();
+    (*grad_B) = arma::sum(delta,1);
+    (*grad_W) = delta * (*inputX).st();
 
 }
-void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
-    inputX = input;
-    outputY = std::make_shared<arma::mat>(input->n_rows,outputDim);
-    std::shared_ptr<arma::mat> &p=outputY;
-// first get the projection
-    (*p) = (*input) * (*W).st();
 
-    for (int i = 0; i < input->n_rows; i++) p->row(i) += (*B).st();
+void BaseLayer::applyActivation(){
 // then do the activation
-    arma::mat maxVal = arma::max(*p,1);
+    std::shared_ptr<arma::mat> &p=outputY;
+    arma::mat maxVal = arma::max(*p,0);
+    arma::mat sumVal;
     switch(actType) {
     case softmax:
 //        p->print();
 //        maxVal.print();
-        for (int i = 0; i < input->n_rows; i++) {
-            for (int j = 0; j < outputDim; j++) {
-                (*p)(i,j)-= maxVal(i);
-            }
-        }
+        for (int i = 0; i < p->n_cols; i++) {
+                p->col(i)-= maxVal(i);            
+        }        
         (*p).transform([](double val) {
             return exp(val);
         });
 
-        double normfactor;
-        for (int i = 0; i < input->n_rows; i++) {
-            normfactor = 0.0;
-            for (int j = 0; j < outputDim; j++) {
-                normfactor+=p->at(i,j);
-            }
-            for (int j = 0; j < outputDim; j++) {
-                (*p)(i,j)/=normfactor;
-            }
+         sumVal = arma::sum(*p,0);
+        for (int i = 0; i < p->n_cols; i++) {            
+               p->col(i) /=sumVal(i);
         }
 //    std::cout << normfactor << std::endl;
 //    p->print();
@@ -102,15 +99,102 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
 //        p->print("p");
         (*p).transform([](double val) {
             return 1.0/(1.0+exp(-val));
-        }) ;
+        });
         break;
     case linear:
         break;
     }
 }
 
+void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
+    inputX = input;
+    outputY = std::make_shared<arma::mat>(outputDim, input->n_cols);
+    std::shared_ptr<arma::mat> &p=outputY;
+// first get the projection
+    (*outputY) = (*W) * (*input);
+
+    for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B);
+
+    applyActivation();
+}
+
+void BaseLayer::activateUp(std::shared_ptr<arma::mat> W_external, std::shared_ptr<arma::vec> B_external, std::shared_ptr<arma::mat> input){
+    inputX = input;
+    outputY = std::make_shared<arma::mat>(outputDim, input->n_cols);
+    std::shared_ptr<arma::mat> &p=outputY;
+// first get the projection
+    (*outputY) = (*W_external) * (*input);
+
+    for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B_external);
+
+    applyActivation();
+
+}
 
 
+void BaseLayer::vectoriseGrad(std::shared_ptr<arma::vec> V){
+    
+    *V = arma::vectorise(*grad_W);
+    V->resize(W_size + B_size);
+    V->rows(W_size,W_size+B_size-1) = *grad_B;
+}
+
+void BaseLayer::vectoriseWeight(std::shared_ptr<arma::vec> V){
+    
+    *V = arma::vectorise(*W);
+    V->resize(W_size + B_size);
+    V->rows(W_size,W_size+B_size-1) = *B;
+}
 
 
+void BaseLayer::deVectoriseWeight(std::shared_ptr<arma::vec> V){
+    
+    *B =  V->rows(W_size,W_size+B_size-1);
+     V->resize(W_size);
+     *W = *V;
+    W->reshape(outputDim, inputDim);
+}
+// vectorise grad is frequency used to pass out the gradient as a vector
+void BaseLayer::vectoriseGrad(double *ptr, size_t offset){
 
+    double *W_ptr = grad_W->memptr();
+    double *B_ptr = grad_B->memptr();
+    for (int i = 0; i < W_size; i++){
+        *(ptr + offset) = *(W_ptr+i);
+        offset++;
+    }
+    for (int i = 0; i < B_size; i++){
+        *(ptr + offset) = *(B_ptr+i);
+        offset++;
+    }
+
+}
+
+void BaseLayer::vectoriseWeight(double *ptr, size_t offset){
+    
+    double *W_ptr = W->memptr();
+    double *B_ptr = B->memptr();
+    for (int i = 0; i < W_size; i++){
+        *(ptr + offset) = *(W_ptr+i);
+        offset++;
+    }
+    for (int i = 0; i < B_size; i++){
+        *(ptr + offset) = *(B_ptr+i);
+        offset++;
+    }
+}
+
+// devectorise weight is frequency used to pass out the gradient as a vector
+void BaseLayer::deVectoriseWeight(double *ptr, size_t offset){
+    
+    double *W_ptr = W->memptr();
+    double *B_ptr = B->memptr();
+    for (int i = 0; i < W_size; i++){
+        *(W_ptr+i) = *(ptr + offset) ;
+        offset++;
+    }
+    for (int i = 0; i < B_size; i++){
+        *(B_ptr+i) = *(ptr + offset) ;
+        offset++;
+    }
+}

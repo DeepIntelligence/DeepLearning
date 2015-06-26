@@ -25,7 +25,9 @@ public:
             int maxLineSearch;
             double maxStepSize;
             double minStepSize;
-            LBFGS_param(int, int);};
+            int saveFrequency;
+            std::string saveFileName;
+            LBFGS_param(int, int, int, std::string);};
 	struct PointValueDeriv {
             double step, value, deriv;
             PointValueDeriv(double step0 = NaN, double value0 = NaN, double deriv0 = NaN) : 
@@ -39,6 +41,7 @@ public:
         void calStepLength_MoreThuente();
 	bool converge();
 	void minimize();
+        void saveWeight(std::string str);
         double cubicInterp(const LBFGS::PointValueDeriv& p0, const LBFGS::PointValueDeriv& p1);
         ObjectFunc &calValGrad;
         LBFGS_param param;

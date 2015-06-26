@@ -7,6 +7,7 @@
 #include <armadillo>
 #include <vector>
 #include "MultiLayerPerceptron.h"
+#include "../Optimization/optimization.h"
 
 
 
@@ -15,21 +16,43 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                     std::shared_ptr<arma::mat> Y);
 
 int main(int argc, char *argv[]) {
+    std::shared_ptr<arma::mat> DataX(new arma::mat);
+    std::shared_ptr<arma::mat> DataY(new arma::mat);
     std::shared_ptr<arma::mat> trainDataX(new arma::mat);
     std::shared_ptr<arma::mat> trainDataY(new arma::mat);
-    loadData_MNIST(trainDataX,trainDataY);
+    std::shared_ptr<arma::mat> testDataX(new arma::mat);
+    std::shared_ptr<arma::mat> testDataY(new arma::mat);
+    std::shared_ptr<arma::mat> ValidationDataX(new arma::mat);
+    std::shared_ptr<arma::mat> ValidationDataY(new arma::mat);
+
+    loadData_MNIST(DataX,DataY);
+
+    int ntrain =2000;
+    int ntest = 1000;
+//  now I split data into train, test, and validation
+    trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
+    trainDataY = std::make_shared<arma::mat>(DataY->cols(0,ntrain-1));
+    testDataX = std::make_shared<arma::mat>(DataX->cols(ntrain,ntrain+ntest-1));
+    testDataY = std::make_shared<arma::mat>(DataY->cols(ntrain,ntrain+ntest-1));
+
 
     int inputDim = trainDataX->n_cols;
     int outputDim = trainDataY->n_cols;
     trainDataX->save("trainingSamples.txt",arma::raw_ascii);
-    TrainingPara trainingPara(1e-6,200, 10, 0.25);
+    TrainingPara trainingPara(1e-6,100, 10, 0.25);
     trainingPara.print();
     std::vector<int> dimensions = {784,100,10};
     MultiLayerPerceptron mlp(2, dimensions, trainDataX, trainDataY, trainingPara);
-
+    bool LBFGS_flag = true;
+    if (LBFGS_flag){
+    MLPTrainer mlpTrainer(mlp);
+    Optimization::LBFGS::LBFGS_param param(100,20);
+    Optimization::LBFGS lbfgs_opt(mlpTrainer,param, Optimization::LBFGS::Wolfe);
+    lbfgs_opt.minimize();
+    } else{
     mlp.train();
-
- //   mlp.test(trainDataX,trainDataY);
+    }
+    mlp.test(testDataX,testDataY);
 // after training i do some testing
 
 }
@@ -47,9 +70,10 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int featSize = 28*28;
     int labelSize = 10;
     int numSamples = 1000;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
+    X->set_size(featSize, numFiles*numSamples);
+    Y->set_size(labelSize, numFiles*numSamples);
     Y->fill(0);
+
 
     for (int i = 0 ; i < numFiles ; i++) {
         sprintf(tag,"%d",i);
@@ -63,10 +87,12 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
 
                 for (int k =0 ; k <featSize; k ++) {
                     infile.read(&x,1);
-                    (*X)(j+i*numSamples,k)=(unsigned char)x;
-                    (*X)(j+i*numSamples,k)/= 256.0;
+//        std::cout << x << std::endl;
+                    (*X)(k, i+numFiles*j)=((unsigned char)x)/256.0;
+
                 }
-                (*Y)(j+i*numSamples,i) = 1;
+                (*Y)(i, i+numFiles*j) = 1;
+//        count++;
             }
 
         } else {

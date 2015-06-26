@@ -1,5 +1,5 @@
 #include <memory>
-
+#include <armadillo>
 
 
 
@@ -10,13 +10,12 @@ struct OutputLayer {};
 
 class RNN {
 
-
-
-
-
 public:
-	
+	struct TrainingPara{};
   // methods
+	RNN(int inputDim0, int outputDim0, int numCells0, TrainingPara trainingPara0);
+	//void setTrainingData(std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0);
+	void initializeWeight();
     void forwardPass();
     void backwardPass();
   
@@ -39,9 +38,8 @@ public:
     std::shared_ptr<arma::mat> inputX;
     std::shared_ptr<arma::mat> H, C, H_prev;
     std::shared_ptr<arma::vec> B_igate, B_ogate, B_fgate;
-	int inputDim, outputDim, T, numCells; 
+	int inputDim, outputDim, numCells; 
 	BaseLayer outLayer;
-		
 		
 
 };

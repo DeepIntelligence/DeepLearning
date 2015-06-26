@@ -21,12 +21,13 @@ void PoolLayer::setInputDim(int inputDim0_x, int inputDim0_y, int inputDim0_z){
 void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
     input = input0;
     int maxIdx1, maxIdx2;
-    output = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z,arma::fill::zeros);
-    maxIdx_x = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z);
-    maxIdx_y = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z);
+    int inputInstance = input->n_slices / inputDim_z;    
+    output = std::make_shared<arma::cube>(outputDim_x,outputDim_y, outputDim_z*inputInstance,arma::fill::zeros);
+    maxIdx_x = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z*inputInstance);
+    maxIdx_y = std::make_shared<arma::Cube<int>>(outputDim_x,outputDim_y, outputDim_z*inputInstance);
 
     if (type == mean) {
-        for (int d = 0; d < outputDim_z; d++) {
+        for (int d = 0; d < outputDim_z * inputInstance; d++) {
             for (int i = 0; i < outputDim_x; i++) {
                 for (int j = 0; j < outputDim_y; j++) {
                     for (int m = i * poolDim_x; m < (i + 1) * poolDim_x; m++) {
@@ -40,7 +41,7 @@ void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
         }
     } else if (type == max) {
         (*output).zeros();
-        for (int d = 0; d < outputDim_z; d++) {
+        for (int d = 0; d < outputDim_z * inputInstance; d++) {
             for (int i = 0; i < outputDim_x; i++) {
                 for (int j = 0; j < outputDim_y; j++) {
                     double maxtemp = 0.0;
@@ -65,9 +66,10 @@ void PoolLayer::activateUp(std::shared_ptr<arma::cube> input0) {
 }
 
 void PoolLayer::upSampling(std::shared_ptr<arma::cube> delta_in) {
-    delta_out = std::make_shared<arma::cube>(inputDim_x,inputDim_y, inputDim_z, arma::fill::zeros);
+    int inputInstance = delta_in->n_slices / inputDim_z;
+    delta_out = std::make_shared<arma::cube>(inputDim_x,inputDim_y, inputDim_z * inputInstance, arma::fill::zeros);
     if (type == mean) {
-        for (int d = 0; d < inputDim_z; d++) {
+        for (int d = 0; d < inputDim_z * inputInstance; d++) {
             for (int i = 0; i < inputDim_x; i++) {
                 for (int j = 0; j < inputDim_y; j++) {
                     (*delta_out)(i,j,d) = (*delta_in)(i/poolDim_x,j/poolDim_y,d);
@@ -76,7 +78,7 @@ void PoolLayer::upSampling(std::shared_ptr<arma::cube> delta_in) {
         }
         (*delta_out) /= (1.0 * poolDim_x * poolDim_y);
     } else if(type == max) {
-        for (int d = 0; d < outputDim_z; d++) {
+        for (int d = 0; d < outputDim_z * inputInstance; d++) {
             for (int i = 0; i < outputDim_x; i++) {
                 for (int j = 0; j < outputDim_y; j++) {
                     (*delta_out)((*maxIdx_x)(i,j,d),(*maxIdx_y)(i,j,d),d) = (*delta_in)(i,j,d);             

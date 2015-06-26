@@ -2,12 +2,14 @@
 
 using namespace Optimization;
 
-LBFGS::LBFGS_param::LBFGS_param(int maxIter0, int memoryLimit0){
+LBFGS::LBFGS_param::LBFGS_param(int maxIter0, int memoryLimit0, int save, std::string str = "lbfgs_weight.dat"){
     maxIter = maxIter0;
     memoryLimit = memoryLimit0;
     maxLineSearch = 20;
     maxStepSize = 1e20;
     minStepSize = 1e-20;
+    saveFrequency = save;
+    saveFileName = str;
 }
 
 LBFGS::LBFGS(ObjectFunc& func, LBFGS_param param0, LineSearch method):
@@ -35,6 +37,8 @@ void LBFGS::minimize(){
     std::cout << "initial gradient norm is:" << grad_norm << std::endl;
     std::cout << "initial value is:" << currValue << std::endl;
     while (iter < param.maxIter) {
+        
+        if (((iter+1)%param.saveFrequency) == 0) saveWeight(param.saveFileName); 
             
         std::cout << "LBFGS iteration:" << iter << std::endl;
 
@@ -61,6 +65,9 @@ void LBFGS::minimize(){
 	
 }
 
+void LBFGS::saveWeight(std::string str= "lbfgs_weight.dat"){
+    x.save(str,arma::raw_ascii);
+}
 
 
 void LBFGS::calDirection(){

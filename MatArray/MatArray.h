@@ -1,7 +1,10 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <assert.h>
 #include <armadillo>
+
+
 
 
 template<typename T>
@@ -100,4 +103,127 @@ public:
             }
   	}  
     }
+};
+
+
+class Tensor_4D{
+public:
+    typedef std::shared_ptr<Tensor_4D> ptr;
+    
+	Tensor_4D(){}
+	Tensor_4D(size_t d1, size_t d2, size_t d3, size_t d4){		
+		_dim1 = d1;
+		_dim2 = d2;
+		_dim3 = d3;
+		_dim4 = d4;
+		_size =  _dim1 * _dim2 * _dim3 * _dim4;
+		data = (double *) malloc( _size * sizeof(double));
+	}
+	// construct from memory, no copy or copy
+	Tensor_4D(void *ptr, size_t size0, size_t d1, size_t d2, size_t d3, size_t d4, bool copyFlag = true){
+		if (copyFlag) {
+			data = (double *) malloc( size0 * sizeof(double));
+			double *p = (double *)ptr;
+			for (int i = 0; i < size0; i++)
+				*(data + i) = *(p + i);
+		} else {
+			double *p = (double *)ptr;
+			data = p;
+		}
+		_dim1 = d1;
+		_dim2 = d2;
+		_dim3 = d3;
+		_dim4 = d4;
+		_size =  _dim1 * _dim2 * _dim3 * _dim4;
+	}
+	~Tensor_4D(){ 
+//            free(data);
+//            data = nullptr;
+        }
+
+	const double& operator()(size_t i, size_t j, size_t k, size_t m) const{	
+	
+	#ifdef DEBUG
+		assert(i >=0 && i < _dim1);
+		assert(j >=0 && j < _dim2);
+		assert(k >=0 && k < _dim3);
+		assert(m >=0 && m < _dim4);
+	#endif
+		size_t idx = i + _dim1 * ( j + _dim2 * ( k + _dim3 * m ));
+		return data[idx];
+	}
+	
+	double& operator()(size_t i, size_t j, size_t k, size_t m) {
+	#ifdef DEBUG
+		assert(i >=0 && i < _dim1);
+		assert(j >=0 && j < _dim2);
+		assert(k >=0 && k < _dim3);
+		assert(m >=0 && m < _dim4);
+	#endif	
+		size_t idx = i + _dim1 * ( j + _dim2 * ( k + _dim3 * m ));
+		return data[idx];
+	}
+	
+	const double& operator()(size_t i) const{ 
+	#ifdef DEBUG
+		assert(i >=0 && i < _size);
+	#endif	
+	return data[i];
+	}
+	
+	double& operator()(size_t i) {
+	#ifdef DEBUG
+		assert(i >=0 && i < _size);
+	#endif	
+	return data[i];
+	}
+	
+	size_t dim1() const {return _dim1;}
+	size_t dim2() const {return _dim2;}
+	size_t dim3() const {return _dim3;}
+	size_t dim4() const {return _dim4;}
+	size_t size() const {return _size;}
+	void fill_randn(){
+		for (int i = 0; i < _size; i++)
+			data[i] = arma::randn();
+	}
+	void fill_randu(){
+		for (int i = 0; i < _size; i++)
+			data[i] = arma::randu();
+	}
+	void fill_zeros(){
+		for (int i = 0; i < _size; i++)
+			data[i] = 0;
+	}
+        void fill_ones(){
+		for (int i = 0; i < _size; i++)
+			data[i] = 1;
+	}
+	void print(){
+		for (int i = 0; i < _size; i++)
+			std::cout << data[i] << std::endl;
+	}
+	
+	void substract(const Tensor_4D &t2, const double scale){
+		assert(t2.dim1() == _dim1 && t2.dim2() == _dim2 
+		&& t2.dim3() == _dim3 && t2.dim4() == _dim4 &&
+		t2.size() == _size);
+		
+		for (int i = 0; i < _size; i++)
+			data[i] -= scale * t2.data[i]; 
+	}
+	template <typename func_t>
+        void transform(func_t op){
+            for (int i = 0; i < _size; i++)
+                data[i] = op(data[i]);
+        }
+        
+	double * getPtr(){return data;}
+        
+        static ptr build(size_t d1, size_t d2, size_t d3, size_t d4){
+            return ptr(new Tensor_4D(d1,d2,d3,d4));
+        }
+private:
+	double *data;
+	size_t _dim1,_dim2,_dim3, _dim4, _size;
 };

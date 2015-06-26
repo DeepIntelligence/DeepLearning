@@ -12,7 +12,7 @@ MKLROOT = /opt/intel/composerxe/mkl
 MKLLINKFLAGS = -Wl,--start-group $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_sequential.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread
 MKL_DL_LINKFLAGS =  -Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential -lpthread -lm
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
-ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lopenblas
+ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
 CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -DDEBUG -D__LINUX -g3
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program
@@ -23,7 +23,7 @@ LINK_DL_FLAGS =  $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
 ODIR =
 
 
-OBJ = main.o LBFGS.o
+OBJ = main.o LBFGS.o SteepDescent.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)

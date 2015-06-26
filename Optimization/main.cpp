@@ -15,7 +15,9 @@ using namespace Optimization;
 
 struct MyFunc: public ObjectFunc{
 
-    MyFunc(int dim):ObjectFunc(dim){}
+    MyFunc(int dim):ObjectFunc(dim){
+        x_init = std::make_shared<arma::vec>(dim,arma::fill::randn);
+    }
     
     virtual double operator()(arma::vec &x, arma::vec &grad){
         
@@ -32,6 +34,8 @@ struct MyFunc2: public ObjectFunc{
     MyFunc2(int dim):ObjectFunc(dim){
         W.eye(dim,dim);
         b = arma::randu(dim);
+        
+        x_init = std::make_shared<arma::vec>(dim,arma::fill::randn);
     }
     
     virtual double operator()(arma::vec &x, arma::vec &grad){
@@ -47,6 +51,7 @@ struct MyFunc3: public ObjectFunc{
 
     MyFunc3(int dim = 2):ObjectFunc(dim){
         
+        x_init = std::make_shared<arma::vec>(dim,arma::fill::randn);
     }
     
     virtual double operator()(arma::vec &x, arma::vec &grad){
@@ -61,8 +66,37 @@ struct MyFunc3: public ObjectFunc{
     
 };
 
-int main(int argc, char *argv[]) {
+struct MyFunc4: public ObjectFunc{
 
+    MyFunc4(int dim = 5000):ObjectFunc(dim){
+         /* Initialize the variables. */
+        x_init = std::make_shared<arma::vec>(dim,arma::fill::randn); 
+    for (int i = 0;i < dim;i += 2) {
+        (*x_init)[i] = -1.2;
+        (*x_init)[i+1] = 1.0;
+    }
+
+    }
+    
+    virtual double operator()(arma::vec &x, arma::vec &grad){
+        double fx = 0;
+        grad.resize(dim);
+    for (int i = 0;i < dim; i += 2) {
+        double t1 = 1.0 - x[i];
+        double t2 = 10.0 * (x[i+1] - x[i] * x[i]);
+        grad[i+1] = 20.0 * t2;
+        grad[i] = -2.0 * (x[i] * grad[i+1] + t1);
+        fx += t1 * t1 + t2 * t2;
+    }
+        
+    return fx;
+    }
+    
+};
+
+
+int main(int argc, char *argv[]) {
+    arma::wall_clock timer;
     int dim = 5;
     
     MyFunc myFunc(dim);
@@ -74,24 +108,53 @@ int main(int argc, char *argv[]) {
 //    x.print();
 //    std::cout << myFunc(x,grad) << std::endl;
 //    grad.print();
-    LBFGS::LBFGS_param param;
-    param.maxIter = 10;
-    param.memoryLimit = 20;
+    LBFGS::LBFGS_param param(200,20);
+
 //    std::cout << "test case 1" << std::endl;
 //    LBFGS lbfgs_opt(myFunc,param);
 //    lbfgs_opt.minimize();
-    
+ /*    
     std::cout << "test case 2" << std::endl;
     MyFunc2 myFunc2(dim);
-    LBFGS lbfgs_opt2(myFunc2,param,LBFGS::Armijo);
-    lbfgs_opt2.minimize();
-    
+    LBFGS  *lbfgs_opt2=new LBFGS(myFunc2,param,LBFGS::Armijo);
+    lbfgs_opt2->minimize();
+    delete lbfgs_opt2;
+    lbfgs_opt2 = new LBFGS(myFunc2,param,LBFGS::Wolfe);
+    lbfgs_opt2->minimize();
+    delete lbfgs_opt2;
+   
     std::cout << "test case 3" << std::endl;
     MyFunc3 myFunc3;
-    LBFGS lbfgs_opt3(myFunc3,param,LBFGS::Armijo);
-    lbfgs_opt3.minimize();
+    lbfgs_opt2=new LBFGS(myFunc3,param,LBFGS::Armijo);
+    lbfgs_opt2->minimize();
+    delete lbfgs_opt2;
+    lbfgs_opt2 = new LBFGS(myFunc3,param,LBFGS::Wolfe);
+    lbfgs_opt2->minimize();
+    delete lbfgs_opt2;
     
     
+    timer.tic();
+    std::cout << "test case 4" << std::endl;
+//    MyFunc3 myFunc3;
+    SteepDescent::SteepDescent_param param0(1e-6, 0.01, 2000);
+    SteepDescent sd_opt4(myFunc3,param0);
+    sd_opt4.minimize();
+
+    
+    
+    timer.tic();
+    
+   */
+  std::cout << "test case 5" << std::endl;
+    MyFunc4 myFunc4;
+    LBFGS  *lbfgs_opt5=new LBFGS(myFunc4,param,LBFGS::Armijo);
+    lbfgs_opt5->minimize();
+    delete lbfgs_opt5;
+    lbfgs_opt5 = new LBFGS(myFunc4,param,LBFGS::Wolfe);
+    lbfgs_opt5->minimize();
+    delete lbfgs_opt5;
+    
+    std::cout << "time cost is" << timer.toc() << std::endl;
     return 0;
 }
 

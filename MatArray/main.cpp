@@ -8,9 +8,7 @@
 
 #include "MatArray.h"
 
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y,
-                    std::string filename_base);
+
 
 int main(int argc, char *argv[]) {
     MatArray<double>::Mat1DArray_ptr matArr = MatArray<double>::build(5);
@@ -29,61 +27,84 @@ int main(int argc, char *argv[]) {
         }
     }
 
-
-}
-
-
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y,
-                    std::string filename_base) {
-
-    std::string filename;
-    char tag[50];
-    char x;
-    int count;
-    int numFiles = 10;
-    int featSize = 28*28;
-    int labelSize = 10;
-    int numSamples = 10;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
-    Y->fill(0);
-//  std::cout << Y.Len() << std::endl;
-//  std::cout << X.NumR() << std::endl;
-//  std::cout << X.NumC() << std::endl;
-
-    for (int i = 0 ; i < numFiles ; i++) {
-        sprintf(tag,"%d",i);
-        filename=filename_base+(std::string)tag;
-        std::cout << filename << std::endl;
-        std::ifstream infile;
-        infile.open(filename,std::ios::binary | std::ios::in);
-        if (infile.is_open()) {
-
-            for (int j = 0 ; j < numSamples ; j++) {
-
-                for (int k =0 ; k <featSize; k ++) {
-                    infile.read(&x,1);
-//        std::cout << x << std::endl;
-                    (*X)(j+i*numSamples,k)=(unsigned char)x;
+//  here I try to test Tensor_4D
+    Tensor_4D tensor(2,3,4,5);
+    
+    assert(2==tensor.dim1());
+    assert(3==tensor.dim2());
+    assert(4==tensor.dim3());
+    assert(5==tensor.dim4());
+    assert(120==tensor.size());
+    
+    tensor.fill_randn();
+    tensor.print();
+    tensor.fill_zeros();
+    tensor.print();
+    
+    arma::vec v(20,arma::fill::randn);
+    Tensor_4D tensor2(v.memptr(), 20, 1,1,4,5);
+    assert(1==tensor2.dim1());
+    assert(1==tensor2.dim2());
+    assert(4==tensor2.dim3());
+    assert(5==tensor2.dim4());
+    assert(20==tensor2.size());
+    
+    v.print("arma::v");
+    tensor2.print();
+    
+    Tensor_4D tensor3(v.memptr(), 20, 1,1,4,5,true);
+    tensor3.fill_zeros();
+    v.print("arma::v");
+    
+    tensor2.substract(tensor3,1.0);
+    tensor2.print();
+    
+    tensor3.substract(tensor2,1.0);
+    tensor3.print();
+    
+    Tensor_4D t4(1,2,3,4);
+    int count = 0;
+    for (int i = 0; i < t4.dim4(); i++){
+        for (int j = 0; j < t4.dim3(); j++){
+            for (int k = 0; k < t4.dim2(); k++){
+                for (int m = 0; m < t4.dim1(); m++){
+                    t4(m,k,j,i) = count++;
                 }
-                (*Y)(j+i*numSamples,i) = 1;
             }
-
-        } else {
-            std::cout << "open file failure!" << std::endl;
+        
         }
-
-// for (int j = 0 ; j < numSamples ; j++){
-//       for (int k =0 ; k <featSize; k ++){
-
-//	           std::cout << x << std::endl;
-//	   std::cout<<  (*X)(j,k) << " ";
-//	   }
-//	   }
-
-        std::cout << "dataloading finish!" <<std::endl;
-
     }
+    
+    
+    arma::vec v2(t4.getPtr(),t4.size());
+    
+    
+    t4.print();
+    
+    for (int i= 0; i < t4.size(); i++)
+        t4(i) -= i;
+    
+    t4.print();
+    
+    v2.print("arma::v2");
+    
+    
+    Tensor_4D t5(2,2,2,2);
+    
+    t5.fill_randu();
+    
+    
+    t5.print();
+    
+    t5.transform([](double val){return val-0.5;});
+    
+    t5.print();
+    
+    
+    
+    
+    
+    
 
 }
+

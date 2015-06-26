@@ -35,34 +35,51 @@ std::shared_ptr<arma::cube> X;
 
 std::shared_ptr<arma::mat> Y;
 
-load_cifar10(X, Y, filename,1,500);
+load_cifar10(X, Y, filename,1,600);
 // first try to plot some image
-for (int i = 0; i < 1 ; i++){
-    arma::mat temp = X->slice(i);
-    temp.reshape(1,32*32);
-    temp.save("image.dat", arma::raw_ascii);
+//for (int i = 0; i < 100; i++) {
+//    arma::cube temp = X->slices(i*3,i*3+2);
+//    temp = temp * 255;
+//    temp.reshape(1,32*32);
+//    char tag[10];
+//    sprintf(tag,"%d",i);
+//    temp.save("image" + (std::string)tag, arma::ppm_binary);
+//}
 
-}
+    int ntrain = 500;
+    int ntest = 100;
+    std::shared_ptr<arma::mat> trainDataY(new arma::mat);
+    std::shared_ptr<arma::mat> testDataY(new arma::mat);
+    int fSize = 32;
+    std::shared_ptr<arma::cube> trainDataX2D(new arma::cube(fSize,fSize,ntrain));
+    std::shared_ptr<arma::cube> testDataX2D(new arma::cube(fSize,fSize,ntest));    
+    
+
+    int nChannel = 3;
+    trainDataY = std::make_shared<arma::mat>(Y->cols(0,ntrain-1));
+    testDataY = std::make_shared<arma::mat>(Y->cols(ntrain,ntrain+ntest-1));
+    trainDataX2D = std::make_shared<arma::cube>(X->slices(0,ntrain*nChannel-1));
+    testDataX2D = std::make_shared<arma::cube>(X->slices(ntrain*nChannel,ntrain*nChannel+ntest*nChannel-1));
 
 
-TrainingPara trainingPara(1e-6,100, 1, 0.1);
+TrainingPara trainingPara(1e-6, 100, 10, 0.01);
 
-   CNN cnn(X, Y,3, std::move(trainingPara));
+
+
+   CNN cnn(trainDataX2D, trainDataY,3, std::move(trainingPara));
+      bool LBFGS_flag = true;
+    if (LBFGS_flag){
+    CNNTrainer cnnTrainer(cnn);
+//    cnnTrainer.gradientChecking();
+    Optimization::LBFGS::LBFGS_param param(100,20,20,"lbfgs_weight.dat");
+    Optimization::LBFGS lbfgs_opt(cnnTrainer,param, Optimization::LBFGS::Wolfe);
+    lbfgs_opt.minimize();
+    
+    } else {
    cnn.train();
-   // finally i convert every 2D filter to 1D vectors
-   int n1 = cnn.convoLayers[0].numFilters;
-   int n2 = cnn.convoLayers[0].inputDim_z;
-   arma::mat filterMap(n1*n2, 25);
-   int count = 0;
-   for (int i = 0; i < cnn.convoLayers[0].numFilters; i++){
-       for (int j = 0; j < cnn.convoLayers[0].inputDim_z; j++){
-           filterMap.row(count++) = arma::vectorise((*cnn.convoLayers[0].filters)[i][j],1);
-       }
-   }
-   
-   filterMap.save("finalFilter.dat",arma::raw_ascii);
+    }
     
-    
+    cnn.test(testDataX2D, testDataY);
 }
 
 void workOnMNIST(){
@@ -77,14 +94,14 @@ void workOnMNIST(){
 
     loadData_MNIST(DataX,DataY);
 
-    int ntrain =2000;
+    int ntrain =500;
     int ntest = 100;
 //  now I split data into train, test, and validation
-    trainDataX = std::make_shared<arma::mat>(DataX->rows(0,ntrain-1));
-    trainDataY = std::make_shared<arma::mat>(DataY->rows(0,ntrain-1));
-    testDataX = std::make_shared<arma::mat>(DataX->rows(ntrain,ntrain+ntest-1));
-    testDataY = std::make_shared<arma::mat>(DataY->rows(ntrain,ntrain+ntest-1));
-    TrainingPara trainingPara(1e-6,30, 1, 0.2);
+    trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
+    trainDataY = std::make_shared<arma::mat>(DataY->cols(0,ntrain-1));
+    testDataX = std::make_shared<arma::mat>(DataX->cols(ntrain,ntrain+ntest-1));
+    testDataY = std::make_shared<arma::mat>(DataY->cols(ntrain,ntrain+ntest-1));
+
     int fSize = 28;
     std::shared_ptr<arma::cube> trainDataX2D(new arma::cube(fSize,fSize,ntrain));
     std::shared_ptr<arma::cube> testDataX2D(new arma::cube(fSize,fSize,ntest));
@@ -92,7 +109,7 @@ void workOnMNIST(){
     for (int i = 0 ; i < ntrain; i++) {
         for(int j = 0; j < fSize; j++) {
             for( int k = 0; k < fSize; k++) {
-                (*trainDataX2D)(j,k,i) = trainDataX->at(i,fSize*j+k);
+                (*trainDataX2D)(k,j,i) = trainDataX->at(fSize*j+k, i);
             }
         }
     }
@@ -100,7 +117,7 @@ void workOnMNIST(){
     for (int i = 0 ; i < ntest; i++) {
         for(int j = 0; j < fSize; j++) {
             for( int k = 0; k < fSize; k++) {
-                (*testDataX2D)(j,k,i) = testDataX->at(i,fSize*j+k);
+                (*testDataX2D)(k,j,i) = testDataX->at(fSize*j+k, i);
             }
         }
     }
@@ -110,23 +127,22 @@ void workOnMNIST(){
     
 //    trainDataX2D = std::make_shared<arma::cube>(1,2,1,arma::fill::ones);
 //    trainDataY = std::make_shared<arma::mat>(1,2,arma::fill::ones);
-    
+     TrainingPara trainingPara(1e-6,20, 50, 0.2, 10, true);  
    CNN cnn(trainDataX2D, trainDataY, 1, std::move(trainingPara));
-   cnn.train();
+   
+   bool LBFGS_flag = false;
+    if (LBFGS_flag){
+    CNNTrainer cnnTrainer(cnn);
+//    cnnTrainer.gradientChecking();
+    Optimization::LBFGS::LBFGS_param param(100,20,50,"lbfgs_weight.dat");
+    Optimization::LBFGS lbfgs_opt(cnnTrainer,param, Optimization::LBFGS::Wolfe);
+    lbfgs_opt.minimize();
+    
+    } else {
+    cnn.train();
+    }
    cnn.test(testDataX2D, testDataY);
-   // finally i convert every 2D filter to 1D vectors
-   int n1 = cnn.convoLayers[0].numFilters;
-   int n2 = cnn.convoLayers[0].inputDim_z;
-   arma::mat filterMap(n1*n2, 9);
-   int count = 0;
-   for (int i = 0; i < cnn.convoLayers[0].numFilters; i++){
-       for (int j = 0; j < cnn.convoLayers[0].inputDim_z; j++){
-           filterMap.row(count++) = arma::vectorise((*cnn.convoLayers[0].filters)[i][j],1);
-       }
-   }
-   
-   filterMap.save("finalFilter.dat",arma::raw_ascii);
-   
+
 
 }
 
@@ -142,8 +158,8 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int featSize = 28*28;
     int labelSize = 10;
     int numSamples = 1000;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
+   X->set_size(featSize,numFiles*numSamples);
+    Y->set_size(labelSize, numFiles*numSamples);
     Y->fill(0);
 
 
@@ -160,10 +176,10 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                 for (int k =0 ; k <featSize; k ++) {
                     infile.read(&x,1);
 //        std::cout << x << std::endl;
-                    (*X)(i+numFiles*j,k)=((unsigned char)x)/256.0;
+                    (*X)(k, i+numFiles*j)=((unsigned char)x)/256.0;
 
                 }
-                (*Y)(i+numFiles*j,i) = 1;
+                (*Y)(i, i+numFiles*j) = 1;
 //        count++;
             }
 
