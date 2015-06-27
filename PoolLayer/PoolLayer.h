@@ -2,6 +2,8 @@
 #include <armadillo>
 #include "../MatArray/MatArray.h"
 
+namespace NeuralNet{
+
 struct PoolLayer {
     enum Type { mean, max};
     PoolLayer() {}
@@ -22,3 +24,5 @@ struct PoolLayer {
     int outputDim_x, outputDim_y, outputDim_z;
     int inputSize, outputSize;
 };
+
+}

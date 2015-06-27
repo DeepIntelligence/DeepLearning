@@ -1,12 +1,15 @@
 #pragma once
 #include <memory>
 #include <armadillo>
+#include <random>
+#include "../Utils/Util.h"
 
+namespace NeuralNet{
 
 struct BaseLayer {
     enum ActivationType {softmax, sigmoid, linear, tanh};
     BaseLayer() {}
-    BaseLayer(int inputDim0, int outputDim0, ActivationType actType0);
+    BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, bool dropout = false, double dropr=0.3);
 /*  save weights of the layers
  */
     void save(std::string filename = "BaseLayer");
@@ -38,7 +41,11 @@ struct BaseLayer {
     std::shared_ptr<arma::vec> B, grad_B;
 /* the error propogated from lower layers*/    
     std::shared_ptr<arma::mat> delta_out;
+    bool dropOutFlag;
+    double dropOutRate;
+    arma::mat dropOutMat;
     ActivationType actType;
+    Random_Bernoulli *randomGen;
     void vectoriseGrad(std::shared_ptr<arma::vec> V);
     void deVectoriseWeight(std::shared_ptr<arma::vec> V);
     void vectoriseWeight(std::shared_ptr<arma::vec> V);
@@ -46,5 +53,7 @@ struct BaseLayer {
     void deVectoriseWeight(double *ptr, size_t offset);
     void vectoriseWeight(double *ptr, size_t offset);
     void applyActivation();
+    void fill_Bernoulli(double *, int size); 
 };
 
+}

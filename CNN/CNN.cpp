@@ -1,7 +1,7 @@
 
 #include "CNN.h"
 
-
+using namespace NeuralNet;
 CNN::CNN(std::shared_ptr<arma::cube> trainingX0, std::shared_ptr<arma::mat> trainingY0, int nChanel0, TrainingPara trainingPara0){
     trainingX = trainingX0;
     trainingY = trainingY0;

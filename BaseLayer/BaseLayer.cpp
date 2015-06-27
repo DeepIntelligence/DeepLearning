@@ -1,14 +1,20 @@
 #include <cmath>
+#include <random>
 #include "BaseLayer.h"
 
-BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0) {
-    inputDim = inputDim0;
-    outputDim = outputDim0;
-    actType = actType0;
+using namespace NeuralNet;
+
+BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, 
+        bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
+    actType(actType0), dropOutFlag(dropout), dropOutRate(dropr){
     initializeWeight();
     W_size = inputDim * outputDim;
     B_size = outputDim;
     totalSize = W_size + B_size;
+    
+    if (dropOutFlag) {
+    randomGen=new Random_Bernoulli(dropOutRate);
+    }
 };
 
 
@@ -66,9 +72,15 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
         deriv.ones(outputY->n_rows,outputY->n_cols);
     }
     delta = (*delta_in) % deriv;
-    (*delta_out) = (*W).st() * (delta);
     (*grad_B) = arma::sum(delta,1);
     (*grad_W) = delta * (*inputX).st();
+
+    if(dropOutFlag) {
+        // for each column
+       delta = delta % dropOutMat; 
+    }
+    (*delta_out) = (*W).st() * (delta);
+
 
 }
 
@@ -107,10 +119,20 @@ void BaseLayer::applyActivation(){
 }
 
 void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
+    if(dropOutFlag){
+//        BaseLayer::fill_Bernoulli(dropOutMat.memptr(),W_size);
+    }
+    
+    
     inputX = input;
     outputY = std::make_shared<arma::mat>(outputDim, input->n_cols);
     std::shared_ptr<arma::mat> &p=outputY;
 // first get the projection
+    if( dropOutFlag) {
+    // for each column of the input
+        *input = (*input) % dropOutMat;
+    }
+    
     (*outputY) = (*W) * (*input);
 
     for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B);
@@ -196,5 +218,13 @@ void BaseLayer::deVectoriseWeight(double *ptr, size_t offset){
     for (int i = 0; i < B_size; i++){
         *(B_ptr+i) = *(ptr + offset) ;
         offset++;
+    }
+}
+
+void BaseLayer::fill_Bernoulli(double *p, int size){
+
+    for (int i = 0; i < size; i++){
+        if(randomGen->next()) *(p+i) = 1.0;
+        else *(p+i) = 0.0;
     }
 }

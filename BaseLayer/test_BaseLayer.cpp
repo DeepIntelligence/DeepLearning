@@ -5,12 +5,26 @@
 #include <cstdio>
 #include <memory>
 #include <armadillo>
-
 #include "BaseLayer.h"
+#include "gtest/gtest.h"
+using namespace NeuralNet;
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X,
                     std::shared_ptr<arma::mat> Y,
                     std::string filename_base);
+
+TEST(BaseLayerTest, fillBernoulli){
+
+    BaseLayer layer(100,10,BaseLayer::sigmoid,true,0.5);
+    EXPECT_EQ(layer.dropOutRate,0.5);
+//    EXPECT_TRUE(layer.dropOutFlag);
+    layer.B->print();
+    layer.fill_Bernoulli(layer.B->memptr(),layer.B_size);
+    layer.B->print();
+    
+}
+ 
+
 
 int main(int argc, char *argv[]) {
     std::shared_ptr<arma::mat> trainDataX(new arma::mat);
@@ -25,8 +39,12 @@ int main(int argc, char *argv[]) {
 
     baseLayer.save();
 
-    trainDataX->save("X.dat",arma::raw_ascii);
-    baseLayer.outputY->save("PredY.dat",arma::raw_ascii);
+//    trainDataX->save("X.dat",arma::raw_ascii);
+//    baseLayer.outputY->save("PredY.dat",arma::raw_ascii);
+    
+    
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 
 
@@ -42,8 +60,8 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int featSize = 28*28;
     int labelSize = 10;
     int numSamples = 10;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
+    X->set_size(featSize,numFiles*numSamples);
+    Y->set_size(labelSize,numFiles*numSamples);
     Y->fill(0);
 //  std::cout << Y.Len() << std::endl;
 //  std::cout << X.NumR() << std::endl;
@@ -62,9 +80,9 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                 for (int k =0 ; k <featSize; k ++) {
                     infile.read(&x,1);
 //        std::cout << x << std::endl;
-                    (*X)(j+i*numSamples,k)=(unsigned char)x;
+                    (*X)(k, j+i*numSamples)=(unsigned char)x;
                 }
-                (*Y)(j+i*numSamples,i) = 1;
+                (*Y)(i,j+i*numSamples) = 1;
             }
 
         } else {

@@ -4,6 +4,9 @@
 #include "../ConvolveLayer/ConvolveLayer.h"
 #include "../PoolLayer/PoolLayer.h"
 #include "../Optimization/optimization.h"
+
+namespace NeuralNet{
+
 struct TrainingPara {
 
     TrainingPara(double eps0=1e-6, int NEpoch0 = 500,
@@ -72,3 +75,5 @@ public:
 private:
     CNN  &cnn;
 };
+
+}

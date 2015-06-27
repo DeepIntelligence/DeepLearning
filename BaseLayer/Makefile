@@ -14,16 +14,16 @@ MKL_DL_LINKFLAGS =  -Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
 ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lopenblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
-CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -DDEBUG -D__LINUX -g3 
+CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -DDEBUG -D__LINUX -g3 -I/home/yuguangyang/workspace/libs/gtest-1.7.0/include
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) $(ARMA_LINKFLAGS) -ldl
-LINK_DL_FLAGS =  $(LINKOPTFLAGS) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
+LINK_DL_FLAGS =  $(LINKOPTFLAGS) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl -pthread -L~/workspace/libs/gtest-1.7.0/mybuilds -lgtest
 #LINKFLAGS = 
 #ODIR=obj
 ODIR =
 
 
-OBJ = mainSDA.o BaseLayer.o BaseLayer.o
+OBJ = test_BaseLayer.o BaseLayer.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)

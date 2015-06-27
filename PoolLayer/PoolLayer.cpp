@@ -1,4 +1,5 @@
 #include "PoolLayer.h"
+using namespace NeuralNet;
 
 PoolLayer::PoolLayer(int poolDim0_x, int poolDim0_y, Type type0) {
     poolDim_x = poolDim0_x;
