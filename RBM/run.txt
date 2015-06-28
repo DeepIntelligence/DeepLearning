@@ -1,0 +1,12 @@
+learningRate=0.001
+ntrain=500
+ntest=100
+miniBatchSize=10
+momentum=0.9
+inputDim=784
+hiddenDim=256
+eps=1e-6
+saveFrequency=50
+dataPath=../MNIST/data
+nEpoch=500
+learningRateDecay=0.9

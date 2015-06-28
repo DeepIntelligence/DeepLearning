@@ -4,21 +4,27 @@
 #include <memory>
 #include <armadillo>
 
-
+namespace NeuralNet{
 
 class RBM {
 public:
     struct PreTrainPara {
 
         PreTrainPara(double eps0=1e-6, int NEpoch0 = 500,
-                     int miniBatchSize0 = 10, double alpha0 = 0.1):
-            eps(eps0),NEpoch(NEpoch0),
-            miniBatchSize(miniBatchSize0), alpha(alpha0) {}
+                     int miniBatchSize0 = 10, double alpha0 = 0.01,
+                     double momentum0 = 0.9, int saveFreq0 = 50, 
+                     double learningRateDecay0 = 1.0):
+            eps(eps0),NEpoch(NEpoch0), miniBatchSize(miniBatchSize0), 
+            alpha(alpha0), momentum(momentum0), saveFrequency(saveFreq0),
+            learningRateDecay(learningRateDecay0){}
 
         double eps;
         int NEpoch;
         int miniBatchSize;
         double alpha;
+        double momentum;
+        int saveFrequency;
+        double learningRateDecay;
         void print() const;
     };
 
@@ -38,10 +44,11 @@ public:
     int inputDim;
     int outputDim;
     int numInstance;
-    std::shared_ptr<arma::mat> inputX, W , outputY, H_reconstructProb;
+    std::shared_ptr<arma::mat> inputX, W , outputY, H_reconstructProb, grad_W, grad_W_old;
     std::shared_ptr<arma::umat > H,V, V_reconstruct;
-    std::shared_ptr<arma::vec> A, B;
-
+    std::shared_ptr<arma::vec> A, B, grad_B, grad_B_old, grad_A, grad_A_old;
     RBM::PreTrainPara trainingPara;
 
 };
+
+}

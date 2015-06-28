@@ -22,7 +22,7 @@ LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
 #ODIR=obj
 ODIR =
 
-OBJ = mainSDA.o RBM.o
+OBJ = mainSDA.o RBM.o ProgramArgs.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)

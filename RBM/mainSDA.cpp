@@ -6,12 +6,12 @@
 #include <memory>
 #include <armadillo>
 #include "RBM.h"
+#include "ProgramArgs.h"
 
-
-
+using namespace NeuralNet;
 
 void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y);
+                    std::shared_ptr<arma::mat> Y, const std::string);
 
 int main(int argc, char *argv[]) {
     std::shared_ptr<arma::mat> DataX(new arma::mat);
@@ -22,43 +22,37 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<arma::mat> testDataY(new arma::mat);
     std::shared_ptr<arma::mat> ValidationDataX(new arma::mat);
     std::shared_ptr<arma::mat> ValidationDataY(new arma::mat);
+    
+    ProgramArgs progArgs(argc, argv);
+    
+    loadData_MNIST(DataX,DataY, progArgs.dataPath);
 
-    loadData_MNIST(DataX,DataY);
-
-    int ntrain = 1000;
-    int ntest = 100;
+    int ntrain = progArgs.ntrain;
+    int ntest = progArgs.ntest;  
+    int hiddenDim = progArgs.hiddenDim;
+    int inputDim = progArgs.inputDim;
+    
+    RBM::PreTrainPara trainingPara(progArgs.eps, progArgs.nEpoch, progArgs.miniBatchSize,
+            progArgs.learningRate, progArgs.momentum, progArgs.saveFrequency, progArgs.learningRateDecay);    
 //  now I split data into train, test, and validation
-    trainDataX = std::make_shared<arma::mat>(DataX->rows(0,ntrain-1));
-    trainDataY = std::make_shared<arma::mat>(DataY->rows(0,ntrain-1));
-    testDataX = std::make_shared<arma::mat>(DataX->rows(ntrain,ntrain+ntest-1));
-    testDataY = std::make_shared<arma::mat>(DataY->rows(ntrain,ntrain+ntest-1));
+    trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
+    trainDataY = std::make_shared<arma::mat>(DataY->cols(0,ntrain-1));
+    testDataX = std::make_shared<arma::mat>(DataX->cols(ntrain,ntrain+ntest-1));
+    testDataY = std::make_shared<arma::mat>(DataY->cols(ntrain,ntrain+ntest-1));
 
     DataX.reset();
     DataY.reset();
 
 
-    RBM::PreTrainPara trainingPara;
-    int inputDim = trainDataX->n_cols;
-    int outputDim = trainDataY->n_cols;
-    std::cout << inputDim << std::endl;
-    std::cout << outputDim << std::endl;
-    std::cout << trainDataX->n_rows << std::endl;
-    std::cout << trainDataY->n_rows << std::endl;
+
+    std::cout << trainDataX->n_cols << std::endl;
+ 
     trainingPara.print();
 
-    /*
-      arma::umat A;
-      arma::mat B = arma::randu(2,2);
-      arma::mat C = arma::randu(2,2);
-      B.print();
-      C.print();
-      A = B < C;
-      A.print();
-    */
-    int hiddenDim = 100;
     bool trainFlag = true;
     bool testFlag = true;
-    std::string filename = "pretrain";
+    
+    std::string filename = "pretrain_final";
     std::shared_ptr<arma::umat> trainDataXBin(new arma::umat(trainDataX->n_rows,trainDataX->n_cols));
     *trainDataXBin = (*trainDataX) < 0.5;
     RBM rbm(inputDim, hiddenDim, trainDataXBin, trainingPara);
@@ -76,10 +70,11 @@ int main(int argc, char *argv[]) {
 }
 
 
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y) {
 
-    std::string filename_base("../MNIST/data");
+void loadData_MNIST(std::shared_ptr<arma::mat> X,
+                    std::shared_ptr<arma::mat> Y,const std::string filepath) {
+
+    std::string filename_base(filepath);
     std::string filename;
     char tag[50];
     char x;
@@ -88,8 +83,8 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
     int featSize = 28*28;
     int labelSize = 10;
     int numSamples = 1000;
-    X->set_size(numFiles*numSamples,featSize);
-    Y->set_size(numFiles*numSamples,labelSize);
+   X->set_size(featSize,numFiles*numSamples);
+    Y->set_size(labelSize, numFiles*numSamples);
     Y->fill(0);
 
 
@@ -106,27 +101,19 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
                 for (int k =0 ; k <featSize; k ++) {
                     infile.read(&x,1);
 //        std::cout << x << std::endl;
-                    (*X)(i+numFiles*j,k)=((unsigned char)x)/256.0;
+                    (*X)(k, i+numFiles*j)=((unsigned char)x)/256.0;
 
                 }
-                (*Y)(i+numFiles*j,i) = 1;
+                (*Y)(i, i+numFiles*j) = 1;
 //        count++;
             }
 
         } else {
             std::cout << "open file failure!" << std::endl;
         }
-
-// for (int j = 0 ; j < numSamples ; j++){
-//       for (int k =0 ; k <featSize; k ++){
-
-//	           std::cout << x << std::endl;
-//	   std::cout<<  (*X)(j,k) << " ";
-//	   }
-//	   }
-
         std::cout << "dataloading finish!" <<std::endl;
 
     }
 
 }
+

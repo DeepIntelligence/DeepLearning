@@ -1,5 +1,7 @@
 #include "RBM.h"
 
+using namespace NeuralNet;
+
 RBM::RBM(int visibleDim0, int hiddenDim0, RBM::PreTrainPara preTrainPara0) {
 
     inputDim = visibleDim0;
@@ -8,15 +10,21 @@ RBM::RBM(int visibleDim0, int hiddenDim0, RBM::PreTrainPara preTrainPara0) {
     H = std::make_shared<arma::umat>();
     V_reconstruct = std::make_shared<arma::umat>();
     H_reconstructProb = std::make_shared<arma::mat>();
+    grad_B = std::make_shared<arma::vec>();
+    grad_W = std::make_shared<arma::mat>();
+    grad_B_old = std::make_shared<arma::vec>();
+    grad_W_old = std::make_shared<arma::mat>();
+    grad_A = std::make_shared<arma::vec>();
+    grad_A_old = std::make_shared<arma::vec>();
+    outputY = std::make_shared<arma::mat>();
     initializeWeight();
     W->save("initialWeight.dat",arma::raw_ascii);
-
 }
 
 RBM::RBM(int visibleDim0, int hiddenDim0, std::shared_ptr<arma::umat> inputX0,
          PreTrainPara preTrainPara0):RBM(visibleDim0,hiddenDim0,preTrainPara0) {
     V = inputX0;
-    numInstance = V->n_rows;
+    numInstance = V->n_cols;
 }
 
 void RBM::initializeWeight() {
@@ -39,24 +47,39 @@ void RBM::train() {
     double errorTotal = 0;
     int ntimes = numInstance / trainingPara.miniBatchSize;
     int size = trainingPara.miniBatchSize;
+    double learningRate = trainingPara.alpha / trainingPara.miniBatchSize;
     std::shared_ptr<arma::umat> subInputX;
-
+    grad_W_old->zeros(outputDim,inputDim);
+    grad_A_old->zeros(inputDim);
+    grad_B_old->zeros(outputDim);
+    int learningRateCount = 0;
+/*    
     for (int i = 0; i < ntimes ; i++) {
-        subInputX = std::make_shared<arma::umat>(V->rows(i*size,(i+1)*size-1));
+
+        subInputX = std::make_shared<arma::umat>(V->cols(i*size,(i+1)*size-1));
         propUp(subInputX);
         reconstructVisible();
         reconstructHiddenProb();
         energyTotal +=calEnergy(subInputX);
     }
     std::cout << "energy is: " <<  energyTotal << std::endl;
-
-
+*/
     for (int epoch = 0; epoch < trainingPara.NEpoch; epoch++) {
-        std::cout << "epoch: " << epoch << std::endl;
+       
+        if( ((learningRateCount+1)%10) == 0){
+            learningRate *= trainingPara.learningRateDecay;
+        }
+         learningRateCount++;
         energyTotal = 0.0;
         errorTotal = 0.0;
+        if( (epoch+1) % trainingPara.saveFrequency == 0){
+            char tag[10];            
+            sprintf(tag,"%d",(epoch+1));
+            this->saveTrainResult("middleResult" + (std::string)tag);
+        }
+        
         for (int i = 0; i < ntimes ; i++) {
-            subInputX = std::make_shared<arma::umat>(V->rows(i*size,(i+1)*size-1));
+            subInputX = std::make_shared<arma::umat>(V->cols(i*size,(i+1)*size-1));
 //  first is the sampling process
             propUp(subInputX);
             reconstructVisible();
@@ -65,48 +88,53 @@ void RBM::train() {
 //        H_reconstructProb->save("H_reconstructProb.dat",arma::raw_ascii);
 //        V_reconstruct->save("V_reconstruct.dat",arma::raw_ascii);
 
-            arma::mat grad = ((*H_reconstructProb).st() * arma::conv_to<arma::mat>::from((*V_reconstruct))
-                              - arma::conv_to<arma::mat>::from((*H).st()) * arma::conv_to<arma::mat>::from((*subInputX)));
+            *grad_W = ((*H_reconstructProb) * arma::conv_to<arma::mat>::from((*V_reconstruct).st())
+                              - arma::conv_to<arma::mat>::from((*H)) * arma::conv_to<arma::mat>::from((*subInputX).st()));
 //       grad.save("grad.dat",arma::raw_ascii);
 
-            (*W) -= trainingPara.alpha * grad;
-            arma::mat gradBtemp = (*H_reconstructProb).st()- (*H).st();
-            arma::mat gradAtemp = arma::conv_to<arma::mat>::from((*V_reconstruct).st())
-                                  - arma::conv_to<arma::mat>::from((*subInputX).st());
+            arma::mat gradBtemp = (*H_reconstructProb)- (*H);
+            arma::mat gradAtemp = arma::conv_to<arma::mat>::from((*V_reconstruct))
+                                  - arma::conv_to<arma::mat>::from((*subInputX));
 //       arma::mat gradAtemp = arma::conv_to<arma::mat>::from(gradAtemp2);
-            arma::vec gradA = arma::sum(gradAtemp,1);
-            arma::vec gradB = arma::sum(gradBtemp,1);
+            *grad_A = arma::sum(gradAtemp,1);
+            *grad_B = arma::sum(gradBtemp,1);
             //      gradBtemp.save("gradBtemp.dat",arma::raw_ascii);
             //      gradAtemp.save("gradAtemp.dat",arma::raw_ascii);
 //       gradAtemp2.save("gradAtemp2.dat",arma::raw_ascii);
 //       gradA.print();
 //       gradB.print();
-            *A -= trainingPara.alpha * (gradA);
-            *B -= trainingPara.alpha * (gradB);
-
-            errorTotal += arma::as_scalar(gradA.st() * gradA);
+            *grad_W_old = trainingPara.momentum * (*grad_W_old) - learningRate * (*grad_W);
+            *grad_A_old = trainingPara.momentum * (*grad_A_old) - learningRate * (*grad_A);
+            *grad_B_old = trainingPara.momentum * (*grad_B_old) - learningRate * (*grad_B);
+            
+            (*W) += (*grad_W_old);
+            *A += (*grad_A_old);
+            *B += (*grad_B_old);
+            
+//  here is the reconstruction error
+            errorTotal += arma::as_scalar(grad_A->st() * (*grad_A));
 //        energyTotal += calEnergy(subInputX);
         }
 //        energy = calEnergy();
 //        std::cout << "energy is: " <<  energyTotal << std::endl;
+        std::cout << "epoch: " << epoch << "\t";
+        std::cout << "learningRate: " << learningRate << "\t";
+        std::cout << "gradient Norm is: " << arma::norm(*grad_W_old) << "\t";
         std::cout << "reconstruct error is: " << errorTotal << std::endl;
     }
 
-
-    W->save("finalWeight.dat",arma::raw_ascii);
+    this->saveTrainResult("finalTrain_");
 }
 
 
 void RBM::propUp(std::shared_ptr<arma::umat> subV) {
 
-    outputY = std::make_shared<arma::mat>(subV->n_rows,outputDim);
-    (*outputY) = (*subV) * (*W).st();
-//    arma::mat outputY = (*V) * (*W).st();
-    for (int i = 0; i < outputY->n_rows; i++) outputY->row(i) += (*B).st();
+    (*outputY) = (*W) * (*subV);
+    outputY->each_col() += (*B);
     outputY->transform([](double val) {
         return 1.0/(1+exp(-val));
     });
-    arma::mat RandomMat = arma::randu(outputY->n_rows, outputDim);
+    arma::mat RandomMat = arma::randu(outputDim, outputY->n_cols);
     (*H) = RandomMat < (*outputY);
 
 }
@@ -114,23 +142,22 @@ void RBM::propUp(std::shared_ptr<arma::umat> subV) {
 void RBM::reconstructVisible() {
 
     arma::mat Vtemp;
-    Vtemp = (*H) * (*W);
-    for (int i = 0; i < Vtemp.n_rows; i++) Vtemp.row(i) += (*A).st();
+    Vtemp = (*W).st() * (*H);
+    Vtemp.each_col() += (*A);
     Vtemp.transform([](double val) {
         return 1.0/(1+exp(-val));
     });
-    arma::mat RandomMat = arma::randu(Vtemp.n_rows,inputDim);
+    arma::mat RandomMat = arma::randu(inputDim, Vtemp.n_cols);
     (*V_reconstruct) = RandomMat < Vtemp;
 }
 
 void RBM::reconstructHiddenProb() {
 
-    (*H_reconstructProb) = (*V_reconstruct) * (*W).st();
-    for (int i = 0; i < H_reconstructProb->n_rows; i++) H_reconstructProb->row(i) += (*B).st();
+    (*H_reconstructProb) = (*W) * (*V_reconstruct);
+    H_reconstructProb->each_col() += (*B);
     H_reconstructProb->transform([](double val) {
         return 1.0/(1+exp(-val));
     });
-
 
 }
 
@@ -161,50 +188,35 @@ void RBM::loadTrainResult(std::string filename) {
     A->load(filename+"A",arma::raw_ascii);
     B->load(filename+"B",arma::raw_ascii);
 
-
 }
 
 double RBM::calReconstructError(std::shared_ptr<arma::umat> inputX) {
-
 
 }
 
 
 void RBM::TestViaReconstruct(std::shared_ptr<arma::mat> testDataX) {
-    int numTest = testDataX->n_rows;
+    int numTest = testDataX->n_cols;
 
-    std::shared_ptr<arma::umat> Vtest(new arma::umat(numTest,inputDim));
-    std::shared_ptr<arma::umat> Htest(new arma::umat(numTest,outputDim));
-    std::shared_ptr<arma::mat> testOutputY(new arma::mat(numTest,outputDim));
-    std::shared_ptr<arma::umat> Vtest_reconstruct(new arma::umat(numTest,inputDim));
+    std::shared_ptr<arma::umat> Vtest(new arma::umat(inputDim,numTest));
+    std::shared_ptr<arma::umat> Htest(new arma::umat(outputDim,numTest));
+    std::shared_ptr<arma::mat> testOutputY(new arma::mat(outputDim,numTest));
+    std::shared_ptr<arma::umat> Vtest_reconstruct(new arma::umat(inputDim, numTest));
 
     (*Vtest) = (*testDataX) > 0.5;
 
-
-    (*testOutputY) = (*Vtest) * (*W).st();
-    for (int i = 0; i < numTest; i++) testOutputY->row(i) += (*B).st();
-    testOutputY->transform([](double val) {
-        return 1.0/(1+exp(-val));
-    });
-    arma::mat RandomMat = arma::randu(numTest, outputDim);
-    (*Htest) = RandomMat < (*testOutputY);
-
-    arma::mat Vtemp;
-    Vtemp = (*Htest) * (*W);
-    for (int i = 0; i < numTest; i++) Vtemp.row(i) += (*A).st();
-    Vtemp.transform([](double val) {
-        return 1.0/(1+exp(-val));
-    });
-    RandomMat = arma::randu(numTest,inputDim);
-    (*Vtest_reconstruct) = RandomMat < Vtemp;
-
-    Vtest_reconstruct->save("reconstruct.dat",arma::raw_ascii);
+    propUp(Vtest);
+    reconstructVisible();
+    V_reconstruct->save("test_reconstruct.dat",arma::raw_ascii);
 }
 
 void RBM::PreTrainPara::print() const {
     std::cout << eps << "\t";
     std::cout << NEpoch << "\t";
     std::cout << miniBatchSize << "\t";
-    std::cout << alpha << std::endl;
+    std::cout << alpha << "\t";
+    std::cout << momentum << "\t";
+    std::cout << learningRateDecay << "\t";
+    std::cout << saveFrequency << std::endl;
 
 }

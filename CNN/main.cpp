@@ -94,7 +94,7 @@ void workOnMNIST(){
 
     loadData_MNIST(DataX,DataY);
 
-    int ntrain =500;
+    int ntrain = 500;
     int ntest = 100;
 //  now I split data into train, test, and validation
     trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
