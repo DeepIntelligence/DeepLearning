@@ -1,6 +1,6 @@
 
 CPP = g++
-CXXFLAGS = -std=c++0x
+CXXFLAGS = -std=c++0x -g3
 
 
 OBJ = main.o

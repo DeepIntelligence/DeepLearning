@@ -19,6 +19,11 @@ RBM::RBM(int visibleDim0, int hiddenDim0, RBM::PreTrainPara preTrainPara0) {
     outputY = std::make_shared<arma::mat>();
     initializeWeight();
     W->save("initialWeight.dat",arma::raw_ascii);
+    
+    if (trainingPara.dropOutFlag) {
+        randomGen = new Random_Bernoulli<unsigned long long>(trainingPara.dropOutRate);
+    }
+    
 }
 
 RBM::RBM(int visibleDim0, int hiddenDim0, std::shared_ptr<arma::umat> inputX0,
@@ -69,7 +74,7 @@ void RBM::train() {
         if( ((learningRateCount+1)%10) == 0){
             learningRate *= trainingPara.learningRateDecay;
         }
-         learningRateCount++;
+        learningRateCount++;
         energyTotal = 0.0;
         errorTotal = 0.0;
         if( (epoch+1) % trainingPara.saveFrequency == 0){
@@ -91,7 +96,7 @@ void RBM::train() {
             *grad_W = ((*H_reconstructProb) * arma::conv_to<arma::mat>::from((*V_reconstruct).st())
                               - arma::conv_to<arma::mat>::from((*H)) * arma::conv_to<arma::mat>::from((*subInputX).st()));
 //       grad.save("grad.dat",arma::raw_ascii);
-
+            *grad_W += trainingPara.L2Decay * (*W);
             arma::mat gradBtemp = (*H_reconstructProb)- (*H);
             arma::mat gradAtemp = arma::conv_to<arma::mat>::from((*V_reconstruct))
                                   - arma::conv_to<arma::mat>::from((*subInputX));
@@ -118,12 +123,12 @@ void RBM::train() {
 //        energy = calEnergy();
 //        std::cout << "energy is: " <<  energyTotal << std::endl;
         std::cout << "epoch: " << epoch << "\t";
-        std::cout << "learningRate: " << learningRate << "\t";
+        std::cout << "learningRate: " << learningRate*trainingPara.miniBatchSize << "\t";
         std::cout << "gradient Norm is: " << arma::norm(*grad_W_old) << "\t";
         std::cout << "reconstruct error is: " << errorTotal << std::endl;
     }
 
-    this->saveTrainResult("finalTrain_");
+//    this->saveTrainResult("finalTrain_");
 }
 
 
@@ -137,6 +142,9 @@ void RBM::propUp(std::shared_ptr<arma::umat> subV) {
     arma::mat RandomMat = arma::randu(outputDim, outputY->n_cols);
     (*H) = RandomMat < (*outputY);
 
+    if (trainingPara.dropOutFlag) {
+        randomGen->modifier(H->memptr(), H->n_elem);   
+    }
 }
 
 void RBM::reconstructVisible() {
@@ -199,15 +207,25 @@ void RBM::TestViaReconstruct(std::shared_ptr<arma::mat> testDataX) {
     int numTest = testDataX->n_cols;
 
     std::shared_ptr<arma::umat> Vtest(new arma::umat(inputDim,numTest));
-    std::shared_ptr<arma::umat> Htest(new arma::umat(outputDim,numTest));
-    std::shared_ptr<arma::mat> testOutputY(new arma::mat(outputDim,numTest));
-    std::shared_ptr<arma::umat> Vtest_reconstruct(new arma::umat(inputDim, numTest));
+//    std::shared_ptr<arma::umat> Htest(new arma::umat(outputDim,numTest));
+//    std::shared_ptr<arma::mat> testOutputY(new arma::mat(outputDim,numTest));
+//    std::shared_ptr<arma::umat> Vtest_reconstruct(new arma::umat(inputDim, numTest));
 
     (*Vtest) = (*testDataX) > 0.5;
-
+    
+    // if we use drop out, we should scale the W when testing
+    if(trainingPara.dropOutFlag) {
+        (*W) *=trainingPara.dropOutRate;
+    }
     propUp(Vtest);
     reconstructVisible();
-    V_reconstruct->save("test_reconstruct.dat",arma::raw_ascii);
+    // if we use drop out, we should scale back the W after testing
+    if(trainingPara.dropOutFlag) {
+        (*W) /=trainingPara.dropOutRate;
+    }
+    
+    arma::umat vtemp = arma::trans(*V_reconstruct);
+    vtemp.save("test_reconstruct.dat",arma::raw_ascii);
 }
 
 void RBM::PreTrainPara::print() const {
@@ -217,6 +235,9 @@ void RBM::PreTrainPara::print() const {
     std::cout << alpha << "\t";
     std::cout << momentum << "\t";
     std::cout << learningRateDecay << "\t";
-    std::cout << saveFrequency << std::endl;
+    std::cout << saveFrequency << "\t";
+    std::cout << dropOutFlag << "\t";
+    std::cout << dropOutRate << "\t";
+    std::cout << std::endl;
 
 }

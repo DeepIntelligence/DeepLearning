@@ -2,6 +2,8 @@
 #include <armadillo>
 #include "../BaseLayer/BaseLayer.h"
 
+namespace NeuralNet{
+
 struct TrainingPara {
 //  enum Method{gradDescent,stochGradDescent};
     TrainingPara(double eps0=1e-6, int NEpoch0 = 20,
@@ -56,3 +58,4 @@ private:
     TrainingPara trainingPara;
 
 };
+}

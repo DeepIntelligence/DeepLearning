@@ -208,6 +208,8 @@ void LBFGS::calStepLength_Wolfe(){
         std::cout << "step_star not found! will use " << step <<std::endl;
 }
 
+#if 0
+
 void LBFGS::calStepLength_MoreThuente(){
 //	dirDeriv is (grad f)^T * Direction
     double value;
@@ -334,3 +336,5 @@ double LBFGS::cubicInterp(const LBFGS::PointValueDeriv& p0, const LBFGS::PointVa
 bool LBFGS::converge(){
     return false;
 }
+
+#endif

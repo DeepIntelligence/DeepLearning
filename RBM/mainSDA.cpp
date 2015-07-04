@@ -33,7 +33,8 @@ int main(int argc, char *argv[]) {
     int inputDim = progArgs.inputDim;
     
     RBM::PreTrainPara trainingPara(progArgs.eps, progArgs.nEpoch, progArgs.miniBatchSize,
-            progArgs.learningRate, progArgs.momentum, progArgs.saveFrequency, progArgs.learningRateDecay);    
+            progArgs.learningRate, progArgs.momentum, progArgs.saveFrequency, progArgs.learningRateDecay, 
+            progArgs.dropOutFlag, progArgs.dropOutRate);    
 //  now I split data into train, test, and validation
     trainDataX = std::make_shared<arma::mat>(DataX->cols(0,ntrain-1));
     trainDataY = std::make_shared<arma::mat>(DataY->cols(0,ntrain-1));
@@ -54,7 +55,7 @@ int main(int argc, char *argv[]) {
     
     std::string filename = "pretrain_final";
     std::shared_ptr<arma::umat> trainDataXBin(new arma::umat(trainDataX->n_rows,trainDataX->n_cols));
-    *trainDataXBin = (*trainDataX) < 0.5;
+    *trainDataXBin = (*trainDataX) > 0.5;
     RBM rbm(inputDim, hiddenDim, trainDataXBin, trainingPara);
 
     if (trainFlag) {

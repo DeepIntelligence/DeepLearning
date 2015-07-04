@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string>
 #include <fstream>
 #include <algorithm>
@@ -81,6 +83,9 @@ void ProgramArgs::ParseArg(string argAndVal) {
 		else if (arg.compare("dataPath") == 0) dataPath = val;
                 else if (arg.compare("nEpoch") == 0) nEpoch = atoi(val.c_str());
                 else if (arg.compare("learningRateDecay") == 0) learningRateDecay = atof(val.c_str());
+                else if (arg.compare("dropOutFlag") == 0) dropOutFlag = atoi(val.c_str());
+                else if (arg.compare("dropOutRate") == 0) dropOutRate = atof(val.c_str());
+                else if (arg.compare("L2Decay") == 0) L2Decay = atof(val.c_str());
 		else {
 			cerr << "Unrecognized arg: " << arg << endl;
 //			PrintHelp();

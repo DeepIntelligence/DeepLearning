@@ -1,5 +1,5 @@
 #include "AutoEncoderLayer.h"
-
+using namespace NeuralNet;
 // constructor function
 AutoEncoderLayer::AutoEncoderLayer(std::shared_ptr<arma::mat> trainingInputX,
                                    int outputLayerNum, TrainingPara trainingPara0):
@@ -35,7 +35,7 @@ void AutoEncoderLayer::pretrain() {
     arma::vec sumInToHidden (outputDim); // linear weighted sum of inputs to
     //  unit j in hidden layer
     arma::vec tempDelta(inputDim);
-
+    int numInstance = inputX_noise->n_rows;
     while (iter < trainingPara.NEpoch) {
         errorTotal = 0.0;
         // m training instances

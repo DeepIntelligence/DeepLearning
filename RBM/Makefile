@@ -15,7 +15,7 @@ ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
 ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lopenblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
 CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -DDEBUG -D__LINUX -g3 
-LINKOPTFLAGS = -O3 -flto=4 -fwhole-program
+LINKOPTFLAGS = -O3 -flto=4 -fwhole-program -march=native
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) -ldl
 LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl
 #LINKFLAGS = 
@@ -26,9 +26,13 @@ OBJ = mainSDA.o RBM.o ProgramArgs.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)
+		
 	
-#%.o : %.cpp
-#	$(CPP) -c $(CXXFLAGS) 
+ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include -DARMA_DONT_USE_WRAPPER
+ARMA_LINKFLAGS=-L/usr/lib -llapack -lopenblas -pthread	
+LINKFLAGS = -static $(LINKOPTFLAGS) $(ARMA_LINKFLAGS) -lgfortran -lquadmath
+test_static : $(OBJ)
+	$(CPP) -o $@ $(OBJ) $(LINKFLAGS)
 
 
 clean:

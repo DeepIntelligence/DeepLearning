@@ -45,7 +45,7 @@ struct BaseLayer {
     double dropOutRate;
     arma::mat dropOutMat;
     ActivationType actType;
-    Random_Bernoulli *randomGen;
+    Random_Bernoulli<double> *randomGen;
     void vectoriseGrad(std::shared_ptr<arma::vec> V);
     void deVectoriseWeight(std::shared_ptr<arma::vec> V);
     void vectoriseWeight(std::shared_ptr<arma::vec> V);

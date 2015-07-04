@@ -12,6 +12,7 @@ struct ProgramArgs {
 	 void LoadFromFile(const string & argsFilename);
 	 void ParseArg(string argAndVal); 
 	 int ntrain, ntest, saveFrequency, inputDim, hiddenDim,nEpoch;
-         double learningRate, eps, momentum, miniBatchSize, learningRateDecay; 
+         double learningRate, eps, momentum, miniBatchSize, learningRateDecay, dropOutRate, L2Decay; 
          string dataPath;
+         bool dropOutFlag;
 };

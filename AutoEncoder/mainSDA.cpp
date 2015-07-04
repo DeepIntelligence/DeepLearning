@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "AutoEncoderLayer.h"
-
+using namespace NeuralNet;
 void loadData_MNIST(std::shared_ptr<arma::mat> X,
                     std::shared_ptr<arma::mat> Y);
 
