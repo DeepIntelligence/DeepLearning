@@ -19,21 +19,22 @@ struct LSTMBrick: public BaseLayer{
 	
 }
 
-
-struct ElementWiseLayer{
-
-
-
-	
-}
-
 }
 
 
 class RNN_LSTM{
 
+
+	
+
 	forward();
 	backward();
+	
+	
+	std::vector<BaseLayer> inGateLayers, forgetGateLayers, cellStateLayers, outputGateLayers, informationLayers;
+	std::vector<ElementWiseLayer>  outputLayers, forgetElementGateLayers, inputElementGateLayers;
+	int numHiddenLayers;
+	int inputDim, outputDim;
 
 }
 

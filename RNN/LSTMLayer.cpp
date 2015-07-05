@@ -8,7 +8,7 @@ RNN_LSTM::RNN_LSTM(){
 	numHiddenLayers = 
 
 	std::vector<BaseLayer> inGateLayers, forgetGateLayers, cellStateLayers, outputGateLayers 
-	std::vector<ElementWiseLayer>  outputLayers, 	
+	std::vector<ElementWiseLayer>  outputLayers 	
 
 
 
@@ -18,6 +18,7 @@ RNN_LSTM::RNN_LSTM(){
 RNN_LSTM::forward(){
 
 	layerOutput.output->zeros();
+        // to forward pass the Deep LSTM model, loop each time point, at each time, go through bottom layer to top layer
 	for (int t = 0; t < T; t++)
 		for (int l = 0; l < L; l++)
 
@@ -29,33 +30,33 @@ RNN_LSTM::forward(){
 	
 // concatenate to a large vector
 	commonInput = [ lowerLayer.output ; layerOutput_prev[l].output]  ;
-	inGate.input = commonInput 
-1	inGate.activatUp();
-
-2	Information[l].input = commonInput
-	Information[l].activateUp();
-
-3	inputElementGate[l].inputOne = Information.output;
-	inputElementGate[l].inputTwo = inGate.output;
-
-	inputElementGate[l].activateUp();
+//1
+	inGateLayers.input = commonInput 
+ inGateLayers.activatUp();
+//2
+ InformationLayers[l].input = commonInput
+	InformationLayers[l].activateUp();
+//3
+ inputElementGateLayers[l].inputOne = InformationLayers.output;
+	inputElementGateLayers[l].inputTwo = inGateLayers.output;
+	inputElementGateLayers[l].activateUp();
 	
-
-4	forgetGate[l].input = commonInput;
-	forgetGate[l].activateUp();
-
-5	forgetElementGate[l].inputOne = forgetGate.output;
+//4
+ forgetGateLayers[l].input = commonInput;
+	forgetGateLayers[l].activateUp();
+//5
+ forgetElementGate[l].inputOne = forgetGate.output;
 	forgetElementGate[l].inputTwo = cellStateLayer.output;
 	forgetElementGate[l].activateUp();
-
-6	cellState[l].input = inputElementGate.output + forgetElementGate.output;
+//6
+ cellState[l].input = inputElementGate.output + forgetElementGate.output;
 	cellState_prev[l].input = cellState[l].input; 
 	cellState[l].activateUp();
-
-7	outputGate[l].input = commonInput;
+//7
+ outputGate[l].input = commonInput;
 	outputGate[l].activateUp();
-
-8	outputLayer[l].inputOne = outputGate.output;
+//8
+ outputLayer[l].inputOne = outputGate.output;
 	outputLayer[l].inputTwo = cellState.output;
 	outputLayer[l].activateUp(); 
 
@@ -67,6 +68,10 @@ RNN_LSTM::forward(){
 
 RNN_LSTM::backward(){
 	layerOutput.output->zeros();
+
+        // to backprop or backpass the Deep LSTM, start from the top layer of the last time point T, 
+           // and then go through from top to bottom, and then go to previous time point, and loop 
+            // from top to bottom layers again
 	for (int t = T-1; t >= T; t++)
 		for (int l = L-1; l >= 0; l++)
 
@@ -90,42 +95,6 @@ RNN_LSTM::backward(){
 	cellState[l].updatePara(outputLayer.deltaoutTwo);
 	inputElementGate.updatePara(cellState.deltaOut);
 	
-
-	delta_prev 
-
-// concatenate to a large vector
-	commonInput = [ lowerLayer.output ; layerOutput_prev[l].output]  ;
-	inGate.input = commonInput 
-1	inGate.activatUp();
-
-2	Information[l].input = commonInput
-	Information[l].activateUp();
-
-3	inputElementGate[l].inputOne = Information.output;
-	inputElementGate[l].inputTwo = inGate.output;
-
-	inputElementGate[l].activateUp();
-	
-
-4	forgetGate[l].input = commonInput;
-	forgetGate[l].activateUp();
-
-5	forgetElementGate[l].inputOne = forgetGate.output;
-	forgetElementGate[l].inputTwo = cellStateLayer.output;
-	forgetElementGate[l].activateUp();
-
-6	cellState[l].input = inputElementGate.output + forgetElementGate.output;
-	cellState_prev[l].input = cellState[l].input; 
-	cellState[l].activateUp();
-
-7	outputGate[l].input = commonInput;
-	outputGate[l].activateUp();
-
-8	outputLayer[l].inputOne = outputGate.output;
-	outputLayer[l].inputTwo = cellState.output;
-
-9	layerOutput[l].activateUp(); 
-	layerOutput_prev[l] = layerOutput[l];
 		}
 	}
 
