@@ -1,6 +1,6 @@
 #include <memory>
 #include <armadillo>
-
+#include "../BaseLayer/BaseLayer.h"
 
 
 struct InputLayer {};
