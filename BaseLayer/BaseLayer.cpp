@@ -13,7 +13,7 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
     totalSize = W_size + B_size;
     
     if (dropOutFlag) {
-    randomGen=new Random_Bernoulli(dropOutRate);
+        randomGen=new Random_Bernoulli<double>(dropOutRate);
     }
 };
 
@@ -63,17 +63,17 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
     arma::mat delta;
     delta_out = std::make_shared<arma::mat>(inputDim,delta_in->n_cols);
     if (actType == softmax) {
-        deriv.ones(outputY->n_rows,outputY->n_cols);   
+        deriv.ones(output->n_rows,output->n_cols);   
     } else if (actType == sigmoid ) {
-        deriv = (1 - (*outputY)) % (*outputY);        
+        deriv = (1 - (*output)) % (*output);        
     } else if ( actType == tanh) {
-        deriv = (1 - (*outputY) % (*outputY));
+        deriv = (1 - (*output) % (*output));
     } else if ( actType == linear) {
-        deriv.ones(outputY->n_rows,outputY->n_cols);
+        deriv.ones(output->n_rows,output->n_cols);
     }
     delta = (*delta_in) % deriv;
     (*grad_B) = arma::sum(delta,1);
-    (*grad_W) = delta * (*inputX).st();
+    (*grad_W) = delta * (*input).st();
 
     if(dropOutFlag) {
         // for each column
@@ -86,7 +86,7 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
 
 void BaseLayer::applyActivation(){
 // then do the activation
-    std::shared_ptr<arma::mat> &p=outputY;
+    std::shared_ptr<arma::mat> &p=output;
     arma::mat maxVal = arma::max(*p,0);
     arma::mat sumVal;
     switch(actType) {
@@ -118,34 +118,34 @@ void BaseLayer::applyActivation(){
     }
 }
 
-void BaseLayer::activateUp(std::shared_ptr<arma::mat> input) {
+void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
     if(dropOutFlag){
 //        BaseLayer::fill_Bernoulli(dropOutMat.memptr(),W_size);
     }
     
     
-    inputX = input;
-    outputY = std::make_shared<arma::mat>(outputDim, input->n_cols);
-    std::shared_ptr<arma::mat> &p=outputY;
+    input = input0;
+    output = std::make_shared<arma::mat>(outputDim, input->n_cols);
+    std::shared_ptr<arma::mat> &p=output;
 // first get the projection
     if( dropOutFlag) {
     // for each column of the input
         *input = (*input) % dropOutMat;
     }
     
-    (*outputY) = (*W) * (*input);
+    (*output) = (*W) * (*input);
 
     for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B);
 
     applyActivation();
 }
 
-void BaseLayer::activateUp(std::shared_ptr<arma::mat> W_external, std::shared_ptr<arma::vec> B_external, std::shared_ptr<arma::mat> input){
-    inputX = input;
-    outputY = std::make_shared<arma::mat>(outputDim, input->n_cols);
-    std::shared_ptr<arma::mat> &p=outputY;
+void BaseLayer::activateUp(std::shared_ptr<arma::mat> W_external, std::shared_ptr<arma::vec> B_external, std::shared_ptr<arma::mat> input0){
+    input = input0;
+    output = std::make_shared<arma::mat>(outputDim, input->n_cols);
+    std::shared_ptr<arma::mat> &p=output;
 // first get the projection
-    (*outputY) = (*W_external) * (*input);
+    (*output) = (*W_external) * (*input);
 
     for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B_external);
 

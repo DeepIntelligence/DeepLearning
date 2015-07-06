@@ -35,7 +35,7 @@ struct BaseLayer {
     int inputDim;
     int outputDim;
     int W_size, B_size, totalSize;
-    std::shared_ptr<arma::mat> inputX, inputY, outputY;
+    std::shared_ptr<arma::mat> input, output;
 /*  weight and bias for this layer*/
     std::shared_ptr<arma::mat> W, grad_W;
     std::shared_ptr<arma::vec> B, grad_B;
