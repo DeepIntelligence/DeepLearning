@@ -1,8 +1,10 @@
 #include "LSTMLayer.h"
 
+using namespace NeuralNet;
 
 RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0) {
+        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
+        std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0) {
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -72,70 +74,73 @@ RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
         
     }
     
-
+    netOutput = std::make_shared<arma::mat>();
 
 }
 
-RNN_LSTM::forward() {
+void RNN_LSTM::forward() {
 
-    arma::mat commonInput;
+    std::shared_ptr<arma::mat> commonInput(new arma::mat);
+    arma::mat outputLayers_prev_output[numHiddenLayers];
+    arma::mat cellStateLayers_prev[numHiddenLayers];
     // Deep LSTM
-    layerOutput.output->zeros();
+    //layerOutput.output->zeros();
     // to forward pass the Deep LSTM model, loop each time point, 
      // at each time, go through bottom layer to top layer
+    int T = trainingY->n_cols;
     for (int t = 0; t < T; t++){
         for (int l = 0; l < numHiddenLayers; l++) {
     // concatenate to a large vector            
             if (l == 0) {
-                commonInput = arma::join_cols(*(outputLayers_prev[l].output), trainingX->col(t));
+                *commonInput = arma::join_cols(outputLayers_prev_output[l], trainingX->col(t));
             } else {
-                commonInput = arma::join_cols(*(outputLayers_prev[l].output), *(outputLayers[l-1].output));
+                *commonInput = arma::join_cols(outputLayers_prev_output[l], *(outputLayers[l-1].output));
             }
 
     //1
-    inGateLayers[l].input = commonInput;
-    inGateLayers[l].activatUp();
+        inGateLayers[l].input = commonInput;
+        inGateLayers[l].activateUp();
     //2
-    InformationLayers[l].input = commonInput
-    InformationLayers[l].activateUp();
+        informationLayers[l].input = commonInput;
+        informationLayers[l].activateUp();
     //3
-    inputElementGateLayers[l].inputOne = InformationLayers.output;
-    inputElementGateLayers[l].inputTwo = inGateLayers.output;
-    inputElementGateLayers[l].activateUp();
+        inputElementGateLayers[l].inputOne = informationLayers[l].output;
+        inputElementGateLayers[l].inputTwo = inGateLayers[l].output;
+        inputElementGateLayers[l].activateUp();
 
     //4
-    forgetGateLayers[l].input = commonInput;
-    forgetGateLayers[l].activateUp();
+        forgetGateLayers[l].input = commonInput;
+        forgetGateLayers[l].activateUp();
     //5
-    forgetElementGateLayers[l].inputOne = forgetGate.output;
-    forgetElementGateLayers[l].inputTwo = cellStateLayer.output;
-    forgetElementGateLayers[l].activateUp();
+        forgetElementGateLayers[l].inputOne = forgetGateLayers[l].output;
+        forgetElementGateLayers[l].inputTwo = cellStateLayers[l].output;
+        forgetElementGateLayers[l].activateUp();
     //6
-    cellStateLayers[l].input = inputElementGateLayers[l].output + forgetElementGateLayers[l].output;
-    cellStateLayers_prev[l]= cellStateLayers[l];
-    cellStateLayers[l].activateUp();
+        (*cellStateLayers[l].input) = *(inputElementGateLayers[l].output) + *(forgetElementGateLayers[l].output);
+        cellStateLayers_prev[l]= *(cellStateLayers[l].input);
+        cellStateLayers[l].activateUp();
     //7
-    outputGateLayers[l].input = commonInput;
-    outputGateLayers[l].activateUp();
+        outputGateLayers[l].input = commonInput;
+        outputGateLayers[l].activateUp();
     //8
-    outputLayers[l].inputOne = outputGate.output;
-    outputLayers[l].inputTwo = cellState.output;
-    outputLayers[l].activateUp();
+        outputLayers[l].inputOne = outputGateLayers[l].output;
+        outputLayers[l].inputTwo = cellStateLayers[l].output;
+        outputLayers[l].activateUp();
 
     if(l == numHiddenLayers-1){
-        if (mask(t)) {
-            netOutput->col(t).zeros();
-        } else {
-            netOutput->col(t) = outputLayers[l].output;
-        }
+//        if (mask(t)) {
+//            netOutput->col(t).zeros();
+//        } else {
+            netOutput->col(t) = *(outputLayers[l].output);
+//        }
     }
     
-    outputLayers_prev[l] = outputLayers[l];
+    outputLayers_prev_output[l] = *(outputLayers[l].output);
 }
 }
 
 }
-
+#if 0
 RNN_LSTM::backward() {
 //    layerOutput.output->zeros();
 
@@ -189,7 +194,10 @@ RNN_LSTM::backward() {
     
 
 }
+
 }
+
+#endif
 
 
 

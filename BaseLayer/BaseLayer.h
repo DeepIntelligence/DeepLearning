@@ -16,7 +16,9 @@ struct BaseLayer {
 /*  given the input matrix, perform 
  outputY = sigma (W*input + B), sigma is the activation function
 */    
+    void activateUp();
     void activateUp(std::shared_ptr<arma::mat> input);
+    
     
 /* activate up using given W and B
  */    
