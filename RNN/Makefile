@@ -22,7 +22,7 @@ LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl #$(LINKOPTFLAGS)
 #ODIR=obj
 ODIR =
 
-OBJ = main.o BaseLayer.o ElementwiseLayer.o RNN_LSTM.o
+OBJ = main.o BaseLayer.o ElementwiseLayer.o LSTMLayer.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)
@@ -33,7 +33,7 @@ BaseLayer.o : ../BaseLayer/BaseLayer.cpp ../BaseLayer/BaseLayer.h
 ElementwiseLayer.o : ../ElementwiseLayer/ElementwiseLayer.cpp
 	$(CPP) -c $(CXXFLAGS) $<
 
-RNN_LSTM.o: LSTMLayer.cpp
+LSTMLayer.o: LSTMLayer.cpp
 	$(CPP) -c $(CXXFLAGS) $<
 	
 
