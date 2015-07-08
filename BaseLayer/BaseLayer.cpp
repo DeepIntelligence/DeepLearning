@@ -1,5 +1,6 @@
 #include <cmath>
 #include <random>
+#include <assert.h>
 #include "BaseLayer.h"
 
 using namespace NeuralNet;
@@ -117,7 +118,10 @@ void BaseLayer::applyActivation(){
         break;
     }
 }
-
+void BaseLayer::activateUp(){
+	assert((this->input!=NULL)&&"null ptr in the activateUp()");
+	this->activateUp(this->input);
+}
 void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
     if(dropOutFlag){
 //        BaseLayer::fill_Bernoulli(dropOutMat.memptr(),W_size);
