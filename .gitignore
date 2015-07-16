@@ -27,6 +27,7 @@
 *.out
 *.app
 test
+test_static
 
 # PDFs
 *.pdf
@@ -39,7 +40,13 @@ test
 *image*
 *.JPG
 *.png
+*.log
+*.zip
 #other
 *.orig
 /CppApplication_1/build/
 /CppApplication_1/dist/
+*~
+nbproject/
+*.swp
+*.pyc
