@@ -21,6 +21,9 @@ OBJ = test_BaseLayer.o BaseLayer.o
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)
 	
+BaseLayer.o: BaseLayer.cpp
+	$(CPP) -c $(CXXFLAGS) $<
+	
 	
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include -DARMA_DONT_USE_WRAPPER
 ARMA_LINKFLAGS=-L/usr/lib -llapack -lopenblas -pthread	
