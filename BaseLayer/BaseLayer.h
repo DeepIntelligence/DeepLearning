@@ -30,7 +30,11 @@ struct BaseLayer {
 /*
  calculate the gradient and propogate the error but not update W and B
  */    
-    void calGrad(std::shared_ptr<arma::mat> delta_in);
+    virtual void calGrad(std::shared_ptr<arma::mat> delta_in);
+    
+    void accumulateGrad(std::shared_ptr<arma::mat> delta_in);
+    
+    void updatePara_accu(double learningRate);
     
 /* randomly initialize weight and bias*/    
     void initializeWeight();    
@@ -39,8 +43,8 @@ struct BaseLayer {
     int W_size, B_size, totalSize;
     std::shared_ptr<arma::mat> input, output;
 /*  weight and bias for this layer*/
-    std::shared_ptr<arma::mat> W, grad_W;
-    std::shared_ptr<arma::vec> B, grad_B;
+    arma::mat W, grad_W, grad_W_accu;
+    arma::vec B, grad_B, grad_B_accu;
 /* the error propogated from lower layers*/    
     std::shared_ptr<arma::mat> delta_out;
     bool dropOutFlag;

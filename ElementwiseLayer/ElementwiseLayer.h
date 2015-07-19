@@ -17,8 +17,10 @@ namespace NeuralNet {
 
         std::shared_ptr<arma::mat> inputOne, inputTwo, output;
         std::shared_ptr<arma::mat> delta_outOne, delta_outTwo;
+        std::vector<std::shared_ptr<arma::mat>> inputMemOne, inputMemTwo;
+        void saveInputMemory();
         void activateUp();
-        void updatePara(std::shared_ptr<arma::mat> delta_in);
+        void updatePara(std::shared_ptr<arma::mat> delta_in, int timePoint);
 
 //        int inputSize;
     };
