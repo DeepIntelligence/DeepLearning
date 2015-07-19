@@ -38,6 +38,8 @@ void gpu_scal(const int N, const double alpha, double *X);
 
 void gpu_add(const int N, const double* a, const double* b, double* y);
 
+void gpu_selfAdd(const int N, const double* a, const double* b, double* y);
+
 void gpu_sub(const int N, const double* a, const double* b, double* y);
 
 void gpu_mul(const int N, const double* a, const double* b, double* y);

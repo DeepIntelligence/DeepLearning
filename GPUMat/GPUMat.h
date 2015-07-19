@@ -35,10 +35,12 @@ public:
 	}
 	void zeros();
 	void ones();
+	void randu();
+	void randn();
 	double* memptr_CPU(){return _data_CPU;}
-	double* memptr_GPU(){return _data_CPU;}
+	double* memptr_GPU(){return _data_GPU;}
 	double* memptr_CPU() const {return _data_CPU;}
-	double* memptr_GPU() const {return _data_CPU;}	
+	double* memptr_GPU() const {return _data_GPU;}	
 	GPUMat& st();
 	GPUMat& operator=(const GPUMat& rhs);
 	GPUMat& operator+=(const GPUMat& rhs);
@@ -50,7 +52,7 @@ public:
 	const GPUMat operator-(const GPUMat& rhs) const;
 	const GPUMat operator*(const GPUMat& rhs) const;
 	const GPUMat operator%(const GPUMat& rhs) const;
-	void print(std::string str="") const;
+	void print(std::string str="");
 	
 	int n_rows, n_cols, n_elem;
 	bool transposeFlag;

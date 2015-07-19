@@ -19,7 +19,7 @@ void gpu_gemm(const CBLAS_TRANSPOSE TransA,
       (TransA == CblasNoTrans) ? CUBLAS_OP_N : CUBLAS_OP_T;
   cublasOperation_t cuTransB =
       (TransB == CblasNoTrans) ? CUBLAS_OP_N : CUBLAS_OP_T;
-  CUBLAS_CHECK(cublasDgemm(cublas_handle, cuTransB, cuTransA,
+  CUBLAS_CHECK(cublasDgemm(GPUEnv::cublas_handle(), cuTransB, cuTransA,
       N, M, K, &alpha, B, ldb, A, lda, &beta, C, N));
 }
 
@@ -28,14 +28,14 @@ void gpu_gemv(const CBLAS_TRANSPOSE TransA, const int M,
     const double beta, double* y) {
   cublasOperation_t cuTransA =
       (TransA == CblasNoTrans) ? CUBLAS_OP_T : CUBLAS_OP_N;
-  CUBLAS_CHECK(cublasDgemv(cublas_handle, cuTransA, N, M, &alpha,
+  CUBLAS_CHECK(cublasDgemv(GPUEnv::cublas_handle(), cuTransA, N, M, &alpha,
       A, N, x, 1, &beta, y, 1));
 }
 
 
 void gpu_axpy(const int N, const double alpha, const double* X,
     double* Y) {
-  CUBLAS_CHECK(cublasDaxpy(cublas_handle, N, &alpha, X, 1, Y, 1));
+  CUBLAS_CHECK(cublasDaxpy(GPUEnv::cublas_handle(), N, &alpha, X, 1, Y, 1));
 }
 
 void gpu_memcpy(const size_t N, const void* X, void* Y) {
@@ -46,18 +46,18 @@ void gpu_memcpy(const size_t N, const void* X, void* Y) {
 
 
 void gpu_scal(const int N, const double alpha, double *X) {
-  CUBLAS_CHECK(cublasDscal(cublas_handle, N, &alpha, X, 1));
+  CUBLAS_CHECK(cublasDscal(GPUEnv::cublas_handle(), N, &alpha, X, 1));
 }
 
 void gpu_dot(const int n, const double* x, const double* y,
     double * out) {
-  CUBLAS_CHECK(cublasDdot(cublas_handle, n, x, 1, y, 1, out));
+  CUBLAS_CHECK(cublasDdot(GPUEnv::cublas_handle(), n, x, 1, y, 1, out));
 }
 
 void gpu_scale(const int n, const double alpha, const double *x,
                              double* y) {
-  CUBLAS_CHECK(cublasDcopy(cublas_handle, n, x, 1, y, 1));
-  CUBLAS_CHECK(cublasDscal(cublas_handle, n, &alpha, y, 1));
+  CUBLAS_CHECK(cublasDcopy(GPUEnv::cublas_handle(), n, x, 1, y, 1));
+  CUBLAS_CHECK(cublasDscal(GPUEnv::cublas_handle(), n, &alpha, y, 1));
 }
 
 template <typename Dtype>
@@ -99,11 +99,24 @@ __global__ void add_kernel(const int n, const Dtype* a,
   }
 }
 
+template <typename Dtype>
+__global__ void selfAdd_kernel(const int n, const Dtype* a,
+    Dtype* y) {
+  CUDA_KERNEL_LOOP(index, n) {
+    y[index] += a[index];
+  }
+}
+
 void gpu_add(const int N, const double* a, const double* b,
     double* y) {
   // NOLINT_NEXT_LINE(whitespace/operators)
   add_kernel<double><<<GET_BLOCKS(N), CUDA_NUM_THREADS>>>(
       N, a, b, y);
+}
+
+void gpu_selfAdd(const int N, const double* a, const double* b, double* y){
+  selfAdd_kernel<double><<<GET_BLOCKS(N), CUDA_NUM_THREADS>>>(
+      N, a, y);
 }
 
 
@@ -173,6 +186,6 @@ void gpu_rng_uniform(const int n, const double a, const double b,
 void gpu_rng_gaussian(const int n, const double mu, const double sigma,
                             double* r) {
   CURAND_CHECK(
-      curandGenerateNormalDouble(curand_generator(), r, n, mu, sigma));
+      curandGenerateNormalDouble(GPUEnv::curand_generator(), r, n, mu, sigma));
 }
 #endif

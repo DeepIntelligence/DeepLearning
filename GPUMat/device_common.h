@@ -2,13 +2,13 @@
 #ifndef DEVICE_COMMON_H
 #define DEVICE_COMMON_H
 
-#include "../common/Globals.h"
+#include <memory>
 #include <cublas_v2.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <curand.h>
+#include "../common/Globals.h"
 
-cublasHandle_t cublas_handle;
 
 inline const char* cublasGetErrorString(cublasStatus_t error) {
   switch (error) {
@@ -119,22 +119,56 @@ inline const char* curandGetErrorString(curandStatus_t error) {
 
 #define GET_BLOCKS(N) 128
 
+
 class GPUEnv{
 public:
 ~GPUEnv();
-inline static GPUEnv& getInstance(){
-	if(!(instance.
-  
-inline static cublasHandle_t cublas_handle() { return Get().cublas_handle_; }
-  // Prints the current GPU status.
-  static void DeviceQuery();
-}
+
   static std::shared_ptr<GPUEnv> singleton_;
+  inline static GPUEnv& GetInstance() {
+    if (!singleton_.get()) {
+      singleton_.reset(new GPUEnv());
+    }
+    return *singleton_;
+  }
+#if 0  
+    // This random number generator facade hides boost and CUDA rng
+  // implementation from one another (for cross-platform compatibility).
+  class RNG {
+   public:
+    RNG();
+    explicit RNG(unsigned int seed);
+    explicit RNG(const RNG&);
+    RNG& operator=(const RNG&);
+    void* generator();
+   private:
+    class Generator;
+    std::shared_ptr<Generator> generator_;
+  };
+
+  // Getters for boost rng, curand, and cublas handles
+  inline static RNG& rng_stream() {
+    if (!Get().random_generator_) {
+      Get().random_generator_.reset(new RNG());
+    }
+    return *(Get().random_generator_);
+  }
+  
+#endif  
+		inline static cublasHandle_t cublas_handle() { return Get().cublas_handle_; }
+  // Prints the current GPU status.
+  static void DeviceQuery(); 
+  cublasHandle_t cublas_handle_;
+#if 0  
+  curandGenerator_t curand_generator_;
+  std::shared_ptr<RNG> random_generator_;
+#endif
+
 private:
   // The private constructor to avoid duplicate instantiation.
   GPUEnv();
 
-}
+};
 
 
 

@@ -70,11 +70,16 @@ void GPUMat::ones() {
 	gpu_set(this->n_elem, 1.0, this->memptr_GPU());
 }
 
-void GPUMat::print(std::string str) const{
+void GPUMat::zeros(){
+	gpu_set(this->n_elem, 0.0, this->memptr_GPU());
+}
+
+void GPUMat::print(std::string str) {
+	this->syncToCPU();
 	std::cout << str << std::endl;
 	for (int i = 0; i < this->n_rows; i++){
 		for (int j = 0; j < this->n_cols; j++){
-			std::cout << _data_CPU[j*n_rows + i] <<std::endl;
+			std::cout << _data_CPU[j*n_rows + i] << "\t";
 	
 		}
 		std::cout << std::endl;
