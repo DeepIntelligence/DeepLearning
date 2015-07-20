@@ -18,15 +18,18 @@ namespace NeuralNet {
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0);
         void forward();
         void backward();
+        void train();
     private:
         std::vector<BaseLayer_LSTM> inGateLayers, forgetGateLayers, outputGateLayers, informationLayers, cellStateLayers;
         std::vector<ElementwiseLayer> outputElementLayers, forgetElementGateLayers, inputElementGateLayers;
         std::vector<LinearAdditionLayer> cellLinearAdditionLayers;
         std::vector<ActivationLayer> cellStateActivationLayers;
-        std::vector<BaseLayer> layerOutput_prev, cellState_prev;
-        std::shared_ptr<arma::mat> trainingY, trainingX, netOutput;
+//        std::vector<BaseLayer> layerOutput_prev, cellState_prev;
+        BaseLayer_LSTM* netOutputLayer;
+        std::shared_ptr<arma::mat> trainingY, trainingX;
         int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;
         int rnnInputDim, rnnOutputDim;
+        
         
 
     };

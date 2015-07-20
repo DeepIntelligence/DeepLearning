@@ -9,6 +9,8 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
         bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
     actType(actType0), dropOutFlag(dropout), dropOutRate(dropr){
     initializeWeight();
+    grad_W_accu.zeros(outputDim,inputDim);
+    grad_B_accu.zeros(outputDim);
     W_size = inputDim * outputDim;
     B_size = outputDim;
     totalSize = W_size + B_size;

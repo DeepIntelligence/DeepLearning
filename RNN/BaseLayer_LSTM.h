@@ -31,6 +31,8 @@ public:
     virtual void accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t);
     // @ override
     virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint);
+    
+    void clearAccuGrad();
 };
 
 }
