@@ -74,9 +74,6 @@ RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
         }
         
         
-        
-        
-        
         }
  
  }
@@ -304,17 +301,35 @@ void RNN_LSTM::backward() {
     
     }
     
-    
+   
     
 }
 
 void RNN_LSTM::train(){
 
+    this->forward();
+    this->backward();
+    std::string filename = "lstm";
+    this->savePara(filename);
 
+}
 
+void RNN_LSTM::test(){
 
+}
 
+void RNN_LSTM::savePara(std::string filename){
 
+    char tag[10];
+    
+    for (int l=0;l<numHiddenLayers;l++){
+        sprintf(tag,"%d",l);
+        inGateLayers[l].save(filename+"_inGateLayer_"+(std::string)tag);
+        forgetGateLayers[l].save(filename+"_forgetGateLayer_"+(std::string)tag);
+        outputGateLayers[l].save(filename+"_outputGateLayer_"+(std::string)tag);
+        informationLayers[l].save(filename+"_informationLayer_"+(std::string)tag);
+        
+    }
 }
 
 
