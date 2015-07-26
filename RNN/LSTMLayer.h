@@ -19,6 +19,8 @@ namespace NeuralNet {
         void forward();
         void backward();
         void train();
+        void savePara(std::string filename); // try to save all the parameters in the LSTM for further use
+        void test();
     private:
         std::vector<BaseLayer_LSTM> inGateLayers, forgetGateLayers, outputGateLayers, informationLayers, cellStateLayers;
         std::vector<ElementwiseLayer> outputElementLayers, forgetElementGateLayers, inputElementGateLayers;
