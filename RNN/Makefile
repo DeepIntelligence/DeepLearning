@@ -14,7 +14,7 @@ MKL_DL_LINKFLAGS =  -Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
 ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
-CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DARMA_NO_DEBUG -DDEBUG -g3
+CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DDEBUG -g3
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program -march=native
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) -ldl
 LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl #$(LINKOPTFLAGS)

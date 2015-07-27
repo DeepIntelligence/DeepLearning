@@ -19,13 +19,17 @@ struct BaseLayer_LSTM: public BaseLayer {
        // used for caculating the gradient in backpropagation
 public:
     std::vector<std::shared_ptr<arma::mat>> inputMem;
+    std::vector<std::shared_ptr<arma::mat>> outputMem;
     
     // save inputs at all time points during the LSTM forward pass
     void saveInputMemory();
+    // save outputs at all time points during the LSTM forward pass
+    void saveOutputMemory();
     
-    // extract out the specific input at time point t during backpropagation
+    // extract out the specific input or output at time point t during backpropagation
      // to calculate the gradient
     std::shared_ptr<arma::mat> getInputMemory(int t);
+    std::shared_ptr<arma::mat> getOutputMemory(int t);
     
     // @ override
     virtual void accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t);

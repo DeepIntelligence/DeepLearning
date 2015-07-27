@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <armadillo>
+#include <iostream>
 #include <vector>
 #include "../BaseLayer/BaseLayer.h"
 #include "../ElementwiseLayer/ElementwiseLayer.h"
@@ -21,6 +22,7 @@ namespace NeuralNet {
         void train();
         void savePara(std::string filename); // try to save all the parameters in the LSTM for further use
         void test();
+        void calNumericGrad();
     private:
         std::vector<BaseLayer_LSTM> inGateLayers, forgetGateLayers, outputGateLayers, informationLayers, cellStateLayers;
         std::vector<ElementwiseLayer> outputElementLayers, forgetElementGateLayers, inputElementGateLayers;

@@ -14,6 +14,8 @@ void ElementwiseLayer::saveInputMemory() {
     inputMemTwo.push_back(inputTwo);
 }
 
+// no need to save outputs at all time points for LSTM backprop
+
 // extract out the specific input at time point t during backpropagation
 // to calculate the gradient
 //std::shared_ptr<arma::mat> ElementwiseLayer::getInputMemory(int t) {

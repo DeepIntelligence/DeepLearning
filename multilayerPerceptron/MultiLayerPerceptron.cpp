@@ -98,21 +98,21 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput,st
     
     for (int i = 0; i < dim1; i++){
         for (int j = 0; j < dim2; j++){
-            (*(layers[0].W))(i,j) += eps;
+            layers[0].W(i,j) += eps;
             feedForward(subInput);
  //           outputY->transform([](double val){return log(val);});
             (*delta) = (*outputY) - (*subInputY);
             *delta = arma::sum(*delta,1);
             error = 0.5* arma::as_scalar((*delta).st() * (*delta));
             temp_left = error;
-            (*(layers[0].W))(i,j) -= 2.0*eps;
+            layers[0].W(i,j) -= 2.0*eps;
             feedForward(subInput);
  //           outputY->transform([](double val){return log(val);});
             (*delta) = (*outputY) - (*subInputY);
             *delta = arma::sum(*delta,1);
             error = 0.5* arma::as_scalar((*delta).st() * (*delta));;
             temp_right = error;
-            (*(layers[0].W))(i,j) += eps;
+            layers[0].W(i,j) += eps;
             dW(i,j) = (temp_left - temp_right) / 2.0 / eps;    
         }         
     }  

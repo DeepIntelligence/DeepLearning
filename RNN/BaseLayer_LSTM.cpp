@@ -13,19 +13,33 @@ std::shared_ptr<arma::mat> BaseLayer_LSTM::getInputMemory(int t) {
     return inputMem[t];
 }
 
+//save outputs at all time points during the LSTM forward pass
+void BaseLayer_LSTM::saveOutputMemory(){
+    outputMem.push_back(output);
+}
+
+// extract out the specific output at time point t during backpropagation
+// to calculate the gradient
+std::shared_ptr<arma::mat> BaseLayer_LSTM::getOutputMemory(int t){
+    return outputMem[t];
+}
+
+
 void BaseLayer_LSTM::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint) {
     //for delta: each column is the delta of a sample
     arma::mat deriv;
     arma::mat delta;
+    
+    std::shared_ptr<arma::mat> tempOutput = getOutputMemory(timePoint);
     delta_out = std::make_shared<arma::mat>(inputDim, delta_in->n_cols);
     if (actType == softmax) {
-        deriv.ones(output->n_rows, output->n_cols);
+        deriv.ones(tempOutput->n_rows, tempOutput->n_cols);
     } else if (actType == sigmoid) {
-        deriv = (1 - (*output)) % (*output);
+        deriv = (1 - (*tempOutput)) % (*tempOutput);
     } else if (actType == tanh) {
-        deriv = (1 - (*output) % (*output));
+        deriv = (1 - (*tempOutput) % (*tempOutput));
     } else if (actType == linear) {
-        deriv.ones(output->n_rows, output->n_cols);
+        deriv.ones(tempOutput->n_rows, tempOutput->n_cols);
     }
     delta = (*delta_in) % deriv;
     grad_B = arma::sum(delta, 1);
