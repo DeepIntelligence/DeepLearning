@@ -53,6 +53,7 @@ public:
     void vectoriseWeight(arma::vec &x);
     void save(std::string filename);
     void setTrainingSample(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
+    std::shared_ptr<arma::mat> getNetOutput(){return netOutput;}
 private:
     bool converge();
     TrainingPara_MLP trainingPara;

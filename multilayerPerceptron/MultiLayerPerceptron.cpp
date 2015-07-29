@@ -201,6 +201,15 @@ void MultiLayerPerceptron::vectoriseWeight(arma::vec &x){
     }
 }
 
+void MultiLayerPerceptron::save(std::string filename){
+    char tag[10];
+    for (int i = 0; i < this->numLayers; i++){
+        sprintf(tag,"%d",i);
+        this->layers[i].save(filename + (std::string)tag);
+    }
+
+}
+
 MLPTrainer::MLPTrainer(MultiLayerPerceptron& MLP0):MLP(MLP0){
     dim = MLP.totalDim;  
     x_init = std::make_shared<arma::vec>(dim);
