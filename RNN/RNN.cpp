@@ -58,9 +58,9 @@ void RNN::forward() {
         for (int l = 0; l < numHiddenLayers; l++) {
     // concatenate to a large vector            
             if (l == 0) {
-                *commonInput = arma::join_cols(outputLayers_prev_output[l], trainingX->col(t));
+                commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], trainingX->col(t)));
             } else {
-                *commonInput = arma::join_cols(outputLayers_prev_output[l], *(hiddenLayers[l-1].output));
+                commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], *(hiddenLayers[l-1].output)));
             }
 
             commonInput->print("common_input:");
@@ -69,7 +69,7 @@ void RNN::forward() {
         hiddenLayers[l].saveInputMemory();
         hiddenLayers[l].activateUp();
         hiddenLayers[l].saveOutputMemory();        
-        hiddenLayers[l].output->print("inGateLayers_output:");
+        hiddenLayers[l].output->print("hiddenLayers_output:");
             
         
         if(l == numHiddenLayers-1){
@@ -102,19 +102,25 @@ void RNN::backward() {
     
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
+        *delta = *(netOutputLayer->outputMem[t]) - trainingY->col(t);
+        netOutputLayer->accumulateGrad(delta, t);
         for (int l = numHiddenLayers - 1; l >= 0; l--){
             // delta error from the same time, propagate from upper layer to lower layer 
             if (l == numHiddenLayers - 1){ // the top most layer from target - network's output
-                *delta = netOutputLayer->output->col(t) - trainingY->col(t);
-            	netOutputLayer->accumulateGrad(delta,t);
                 *delta = *(netOutputLayer->delta_out); 
+  //              std::cout << delta->size() << std::endl;
             }else{ 
-                *delta = *(hiddenLayers[l+1].delta_out);
+                *delta = (hiddenLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1);
+  //              std::cout << delta->size() << std::endl;
+                // temporal storage of this delta from upstream but the same layer                
             }   
-            // temporal storage of this delta from upstream but the same layer
-            if (t < T - 1) {               
-                *delta += hiddenLayer_upstream_deltaOut[l]; 
-            }  
+            
+            if (t < T - 1) {
+               *delta += hiddenLayer_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1);
+  //             std::cout << delta->size() << std::endl;
+            }
+
+              
             // so far, the generated delta error is for the output h of each layer at each time
             hiddenLayers[l].accumulateGrad(delta, t);
             hiddenLayer_upstream_deltaOut[l] = *(hiddenLayers[l].delta_out);

@@ -18,9 +18,9 @@ void trainRNN();
 void testGrad();
 
 int main(int argc, char *argv[]) {
-   // testForward();
+    testForward();
 //    workOnSequenceGeneration();
-    testGrad();
+//    testGrad();
     return 0;
 }
 
@@ -57,12 +57,12 @@ void testForward(){
     std::shared_ptr<arma::mat> trainingX(new arma::mat());
     trainingX->randn(1, 10);
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
-    trainingY->ones(3, 10);
+    trainingY->ones(1, 10);
 //RNN::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
 //        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
 //        std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
     
-    RNN rnn(1, 2, 2, 1, 1, trainingX, trainingY);
+    RNN rnn(2, 2, 2, 1, 1, trainingX, trainingY);
     rnn.forward();
     rnn.backward();
 
