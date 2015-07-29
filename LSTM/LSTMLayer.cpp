@@ -373,7 +373,7 @@ void RNN_LSTM::calNumericGrad(){
             _LAYERS[0].W(i, j) += eps;
             this->forward();
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutputLayer->output) - (*trainingY);
+            (*delta) = (*netOutputLayer->outputMem) - (*trainingY);
             *delta = arma::sum(*delta, 1);
             error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
             temp_left = error;

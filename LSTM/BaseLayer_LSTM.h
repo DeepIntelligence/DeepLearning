@@ -13,7 +13,7 @@ struct BaseLayer_LSTM: public BaseLayer {
                 : BaseLayer(inputDim0, outputDim0, actType0, dropout, dropr),
                 timeLength(T){
                   }
-        
+         
     int timeLength;
     // for LSTM layer, each has to record the input to the layer at each time, which is 
        // used for caculating the gradient in backpropagation
