@@ -49,8 +49,11 @@ void RNN::forward() {
     arma::mat outputLayers_prev_output[numHiddenLayers];
     for (int l = 0; l < numHiddenLayers; l++){
         outputLayers_prev_output[l].zeros(hiddenLayerOutputDim,1);
+        hiddenLayers[l].inputMem.clear();
+        hiddenLayers[l].outputMem.clear();
     }
-    
+    netOutputLayer->inputMem.clear();
+    netOutputLayer->outputMem.clear();
     int T = trainingX->n_cols; 
     
 //    netOutput = std::make_shared<arma::mat>(rnnOutputDim,T);
@@ -132,7 +135,7 @@ void RNN::backward() {
         hiddenLayers[l].updatePara_accu(learningRate);
         // save this accumulated gradients for comparing with numerical gradients
         if (l==0){ // save this l layer
-           hiddenLayers[l].grad_W_accu.save("inGateLayer0_Grad.dat", arma::raw_ascii);
+           hiddenLayers[l].grad_W_accu.save("hiddenLayer0_Grad.dat", arma::raw_ascii);
         }
     }
 }
@@ -168,11 +171,10 @@ void RNN::savePara(std::string filename){
 // backward() to generate the model gradients which are compared to the numerical ones.
 void RNN::calNumericGrad(){
     
-    std::shared_ptr<arma::mat> delta = std::make_shared<arma::mat>();
-    
+    arma::mat delta;
     int dim1 = _LAYERS[0].outputDim;
     int dim2 = _LAYERS[0].inputDim;
-    double eps = 1e-9;
+    double eps = 1e-5;
 
     arma::mat dW(dim1, dim2, arma::fill::zeros);
 
@@ -183,17 +185,23 @@ void RNN::calNumericGrad(){
         for (int j = 0; j < dim2; j++) {
             _LAYERS[0].W(i, j) += eps;
             this->forward();
+            error = 0.0;
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutputLayer->output) - (*trainingY);
-            *delta = arma::sum(*delta, 1);
-            error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
+            for (int k = 0; k < trainingY->n_cols; k++) {
+                delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+                error += arma::as_scalar(delta.st() * delta); 
+            }
+            error *= 0.5;
             temp_left = error;
             _LAYERS[0].W(i, j) -= 2.0 * eps;
             this->forward();
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutputLayer->output) - (*trainingY);
-            *delta = arma::sum(*delta, 1);
-            error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
+            error = 0.0;
+            for (int k = 0; k < trainingY->n_cols; k++) {
+                delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+                error += arma::as_scalar(delta.st() * delta); 
+            }
+            error *= 0.5;
             temp_right = error;
             _LAYERS[0].W(i, j) += eps; // add back the change of the weights
             dW(i, j) = (temp_left - temp_right) / 2.0 / eps;
