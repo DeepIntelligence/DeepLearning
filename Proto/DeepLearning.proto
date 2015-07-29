@@ -1,0 +1,25 @@
+syntax = "proto2";
+message NeuralNetParameter {
+	optional string name = 1;
+	optional string type = 2;
+	repeated LayerStructParameter layerStruct = 100;
+	optional TrainingParameter trainingParameter = 101;
+
+}
+
+message LayerStructParameter {
+	enum ActivationType {sigmoid = 1; tanh = 2; linear = 3; softmax = 4;}
+	optional int32 inputDim = 1;
+	optional int32 outputDim = 2;
+	optional ActivationType activationType = 3;
+	optional string name = 4;
+	optional string type = 5;	
+
+}
+
+
+message TrainingParameter {
+	optional double learningRate = 1;
+	optional int32 maxIter = 2;
+}
+

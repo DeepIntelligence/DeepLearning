@@ -3,9 +3,11 @@
 #include "../BaseLayer/BaseLayer.h"
 #include "../Optimization/optimization.h"
 
-struct TrainingPara {
+namespace NeuralNet{
 
-    TrainingPara(double eps0=1e-6, int NEpoch0 = 500,
+struct TrainingPara_MLP {
+
+    TrainingPara_MLP(double eps0=1e-6, int NEpoch0 = 500,
                  int miniBatchSize0 = 10, double alpha0 = 0.1):
         eps(eps0),NEpoch(NEpoch0),
         miniBatchSize(miniBatchSize0), alpha(alpha0) {}
@@ -31,9 +33,10 @@ struct TrainingPara {
 class MultiLayerPerceptron {
     friend class MLPTrainer;
 public:
+    MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, TrainingPara_MLP trainingPara);
     MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
-                         std::shared_ptr<arma::mat> trainingY0, TrainingPara trainingPara);
-
+                         std::shared_ptr<arma::mat> trainingY0, TrainingPara_MLP trainingPara);
+    ~MultiLayerPerceptron(){}
     enum ParaType{gradient, weight};
     void train();
     void initialize();
@@ -48,9 +51,12 @@ public:
     void vectoriseGrad(arma::vec &grad);
     void deVectoriseWeight(arma::vec &x);
     void vectoriseWeight(arma::vec &x);
+    void save(std::string filename);
+    void setTrainingSample(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
+    std::shared_ptr<arma::mat> getNetOutput(){return netOutput;}
 private:
     bool converge();
-    TrainingPara trainingPara;
+    TrainingPara_MLP trainingPara;
     int numLayers;
     int numInstance;
     bool testGrad;
@@ -62,7 +68,7 @@ private:
 /* dimension parameters for each layer*/    
     std::vector<int> dimensions;
 /* network output*/    
-    std::shared_ptr<arma::mat> outputY;
+    std::shared_ptr<arma::mat> netOutput;
     int totalDim;
 
 };
@@ -75,3 +81,4 @@ public:
 private:
     MultiLayerPerceptron  &MLP;
 };
+}
