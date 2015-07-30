@@ -20,7 +20,8 @@ void testGrad();
 int main(int argc, char *argv[]) {
 //    testForward();
 //    workOnSequenceGeneration();
-    testGrad();
+//    testGrad();
+    trainRNN();
     return 0;
 }
 
@@ -37,7 +38,7 @@ void testGrad() {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN rnn(1, 2, 2, 1, 1, trainingX, trainingY);
+    RNN rnn(2, 2, 2, 1, 1, trainingX, trainingY);
     // before applying the LSTM backprop model, generate numerical gradients by just forward pass.
     rnn.calNumericGrad();
     
@@ -79,26 +80,37 @@ void trainRNN(){
     trainingY->ones(3, 10);
      */
     
+    std::shared_ptr<arma::mat> trainingX(new arma::mat());
+
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
-    workOnSequenceGeneration(trainingY);
-    std::shared_ptr<arma::mat> trainingX(new arma::mat(1, trainingY->n_cols));
-    for(int t=0; t<trainingY->n_cols;t++){
-       (*trainingX)(1,t) = 0;
-    }
+//    trainingY->load("testdata.dat");
+//    *trainingY = arma::trans(*trainingY);
+//    trainingX->zeros(trainingY->n_cols,1);
     
+
     
-    int iterations = 100;
+    trainingX->zeros(1, 10);
+    trainingY->zeros(1,10);
+    for (int i = 0; i <10; i++)
+        trainingY->at(i) = i;
+    trainingY->transform([](double val){return sin(val);});
+    
+    int iterations = 50000;
     
     /* RNN constructor parameters passed as:
         RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN rnn(3, 2, 2, 1, 1, trainingX, trainingY);
+    RNN rnn(2, 5, 5, 1, 1, trainingX, trainingY);
     // train the LSTM model by iterations
-    for (int iter = 0; iter<=iterations;iter++){
+    for (int iter = 0; iter < iterations;iter++){
         rnn.train();
     }
     
+    trainingY->save("trainingY.dat",arma::raw_ascii);
+    for (int k = 0; k < 10; k++){
+        (rnn.getOutputLayer()->outputMem[k])->print();
+    }
 }
 

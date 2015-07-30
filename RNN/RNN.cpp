@@ -5,7 +5,7 @@ using namespace NeuralNet;
 RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::sigmoid)){
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::tanh)){
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -66,20 +66,20 @@ void RNN::forward() {
                 commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], *(hiddenLayers[l-1].output)));
             }
 
-            commonInput->print("common_input:");
+ //           commonInput->print("common_input:");
     //1
         hiddenLayers[l].input = commonInput;
         hiddenLayers[l].saveInputMemory();
         hiddenLayers[l].activateUp();
         hiddenLayers[l].saveOutputMemory();        
-        hiddenLayers[l].output->print("hiddenLayers_output:");
+ //       hiddenLayers[l].output->print("hiddenLayers_output:");
             
         
         if(l == numHiddenLayers-1){
             
             netOutputLayer->input = hiddenLayers[l].output;
             netOutputLayer->activateUp();
-            netOutputLayer->output->print("netoutput");
+ //           netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
         }
@@ -143,10 +143,20 @@ void RNN::backward() {
 void RNN::train(){
 
     this->forward();
+//  for calcuating the total error
+            
+    double error = 0.0;
+    arma::mat delta;
+    //           outputY->transform([](double val){return log(val);});
+    for (int k = 0; k < trainingY->n_cols; k++) {
+        delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+        error += arma::as_scalar(delta.st() * delta); 
+    }
+    
+//    std:cout << "iter: " << iter << "\t";
+    std::cout << "total error is:" << error << std::endl;
+    
     this->backward();
-    std::string filename = "RNN";
-    this->savePara(filename);
-
 }
 
 void RNN::test(){
