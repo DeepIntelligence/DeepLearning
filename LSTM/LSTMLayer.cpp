@@ -93,8 +93,25 @@ void RNN_LSTM::forward() {
     for (int l = 0; l < numHiddenLayers; l++){
         cellStateLayers_prev_output[l].zeros(hiddenLayerOutputDim,1);
         outputLayers_prev_output[l].zeros(hiddenLayerOutputDim,1);
+        inGateLayers[l].inputMem.clear();
+        informationLayers[l].inputMem.clear();
+        forgetGateLayers[l].inputMem.clear();
+        outputGateLayers[l].inputMem.clear();
+        inGateLayers[l].outputMem.clear();
+        informationLayers[l].outputMem.clear();
+        forgetGateLayers[l].outputMem.clear();
+        outputGateLayers[l].outputMem.clear();
         
+        inputElementGateLayers[l].inputMemOne.clear();
+        inputElementGateLayers[l].inputMemOne.clear();
+        forgetElementGateLayers[l].inputMemOne.clear();
+        forgetElementGateLayers[l].inputMemTwo.clear();
+        outputElementLayers[l].inputMemOne.clear();
+        outputElementLayers[l].inputMemTwo.clear();
     }
+    netOutputLayer->inputMem.clear();
+    netOutputLayer->outputMem.clear();
+    
     
     // Deep LSTM
     //layerOutput.output->zeros();
@@ -107,9 +124,9 @@ void RNN_LSTM::forward() {
         for (int l = 0; l < numHiddenLayers; l++) {
     // concatenate to a large vector            
             if (l == 0) {
-                *commonInput = arma::join_cols(outputLayers_prev_output[l], trainingX->col(t));
+                commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], trainingX->col(t)));
             } else {
-                *commonInput = arma::join_cols(outputLayers_prev_output[l], *(outputElementLayers[l-1].output));
+                commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], *(outputElementLayers[l-1].output)));
             }
 
             commonInput->print("common_input:");
@@ -183,16 +200,10 @@ void RNN_LSTM::forward() {
             netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
-//        if (mask(t)) {
-//            netOutput->col(t).zeros();
-//        } else {
- 
-//        }
         }  
         outputLayers_prev_output[l] = *(outputElementLayers[l].output);
         }
     }
-//    netOutputLayer->output->print();
 }
  
 void RNN_LSTM::backward() {
@@ -233,31 +244,29 @@ void RNN_LSTM::backward() {
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
         for (int l = numHiddenLayers - 1; l >= 0; l--){
-          
+            *delta = *(netOutputLayer->outputMem[t]) - trainingY->col(t);
+            netOutputLayer->accumulateGrad(delta, t);
             // delta error from the same time, propagate from upper layer to lower layer 
             if (l == numHiddenLayers - 1){ // the top most layer from target - network's output
-                    *delta = netOutputLayer->output->col(t) - trainingY->col(t);
-                       //9
-            netOutputLayer->accumulateGrad(delta,t);
-            
-                *delta = *(netOutputLayer->delta_out); 
-                    
+                *delta = *(netOutputLayer->delta_out);                     
             }else{ // lower layer's delta error come from 1)inGate, (2)g, (4)forgetGate, 
             // (7)outputGate of upper hidden layer
-                *delta = *(inGateLayers[l+1].delta_out) + *(informationLayers[l+1].delta_out) +
-                        *(forgetGateLayers[l+1].delta_out) + *(outputGateLayers[l+1].delta_out);
+                *delta = (inGateLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1) 
+                        + (informationLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1)
+                        + (forgetGateLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1) 
+                        + (outputGateLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1);
             }   
             // another layer's output error comes from last time's (1)inGate, (2)g, (4)forgetGate, 
             //(7)outputGate, since output of each hidden layer will
             // be the input for the inGate, g, forgetGate, outputGate
             // temporal storage of this delta from upstream but the same layer
             if (t < T - 1) {               
-                *delta += inGate_upstream_deltaOut[l] + information_upstream_deltaOut[l] +
-                        forgetGate_upstream_deltaOut[l] + outputGate_upstream_deltaOut[l]; 
-            }  
-            
+                *delta += inGate_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1)
+                         + information_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1)
+                         + forgetGate_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1)
+                         + outputGate_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1); 
+            }            
             // so far, the generated delta error is for the output h of each layer at each time
-
    //8      backpropagate from output layer 
             outputElementLayers[l].updatePara(delta, t); // pass delta directly to the outputlayer h
    
@@ -302,8 +311,7 @@ void RNN_LSTM::backward() {
 }
     
     for (int l = numHiddenLayers - 1; l >= 0; l--){
-        outputGateLayers[l].updatePara_accu(learningRate);
-        
+        outputGateLayers[l].updatePara_accu(learningRate);        
         forgetGateLayers[l].updatePara_accu(learningRate);
         informationLayers[l].updatePara_accu(learningRate);
         inGateLayers[l].updatePara_accu(learningRate);
@@ -357,11 +365,10 @@ void RNN_LSTM::savePara(std::string filename){
 // backward() to generate the model gradients which are compared to the numerical ones.
 void RNN_LSTM::calNumericGrad(){
     
-    std::shared_ptr<arma::mat> delta = std::make_shared<arma::mat>();
-    
+    arma::mat delta;
     int dim1 = _LAYERS[0].outputDim;
     int dim2 = _LAYERS[0].inputDim;
-    double eps = 1e-9;
+    double eps = 1e-5;
 
     arma::mat dW(dim1, dim2, arma::fill::zeros);
 
@@ -372,24 +379,30 @@ void RNN_LSTM::calNumericGrad(){
         for (int j = 0; j < dim2; j++) {
             _LAYERS[0].W(i, j) += eps;
             this->forward();
+            error = 0.0;
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutputLayer->outputMem) - (*trainingY);
-            *delta = arma::sum(*delta, 1);
-            error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
+            for (int k = 0; k < trainingY->n_cols; k++) {
+                delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+                error += arma::as_scalar(delta.st() * delta); 
+            }
+            error *= 0.5;
             temp_left = error;
             _LAYERS[0].W(i, j) -= 2.0 * eps;
             this->forward();
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutputLayer->output) - (*trainingY);
-            *delta = arma::sum(*delta, 1);
-            error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
+            error = 0.0;
+            for (int k = 0; k < trainingY->n_cols; k++) {
+                delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+                error += arma::as_scalar(delta.st() * delta); 
+            }
+            error *= 0.5;
             temp_right = error;
             _LAYERS[0].W(i, j) += eps; // add back the change of the weights
             dW(i, j) = (temp_left - temp_right) / 2.0 / eps;
             
         }
     }
-    dW.save("numGrad_LSTM_inGateLayer.dat", arma::raw_ascii);
-   
+    dW.save("numGrad_inGateLayer.dat", arma::raw_ascii);
+      
 }
 #endif

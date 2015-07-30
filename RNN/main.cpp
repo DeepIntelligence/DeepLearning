@@ -20,8 +20,8 @@ void testGrad();
 int main(int argc, char *argv[]) {
 //    testForward();
 //    workOnSequenceGeneration();
-//    testGrad();
-    trainRNN();
+    testGrad();
+//    trainRNN();
     return 0;
 }
 
