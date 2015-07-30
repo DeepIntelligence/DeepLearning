@@ -23,8 +23,8 @@ void ElementwiseLayer::saveInputMemory() {
 //}
 void ElementwiseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, int timePoint){
 
-	(*delta_outOne) = (*inputMemTwo[timePoint]) * (*delta_in);
-	(*delta_outTwo) = (*inputMemOne[timePoint]) * (*delta_in);
+	(*delta_outOne) = (*inputMemTwo[timePoint]) % (*delta_in);
+	(*delta_outTwo) = (*inputMemOne[timePoint]) % (*delta_in);
 
 }
 }

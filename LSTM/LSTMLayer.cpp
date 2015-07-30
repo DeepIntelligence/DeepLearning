@@ -124,6 +124,7 @@ void RNN_LSTM::forward() {
         for (int l = 0; l < numHiddenLayers; l++) {
     // concatenate to a large vector            
             if (l == 0) {
+                //re-allocate memory 
                 commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], trainingX->col(t)));
             } else {
                 commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], *(outputElementLayers[l-1].output)));
@@ -278,8 +279,9 @@ void RNN_LSTM::backward() {
          cellStateActivationLayers[l].updatePara(outputElementLayers[l].delta_outTwo);   
     //6  cellStateLayers.delta_in = (5) cellState_next_deltaIn + (8) outputLayer.deltaoutTwo
 //         cellStateLayers_delta_in = std::make_shared<arma::mat>();
-            (*cellStateLayers_deltaIn) = cellState_upstream_deltaOut[l]+
-         *(cellStateActivationLayers[l].delta_out);
+            (*cellStateLayers_deltaIn) = *(cellStateActivationLayers[l].delta_out);
+            if (t < T - 1) (*cellStateLayers_deltaIn) += cellState_upstream_deltaOut[l];
+            
             cellLinearAdditionLayers[l].updatePara(cellStateLayers_deltaIn);
 //    inputElementGate.updatePara(cellState.deltaOut);
     //5
@@ -303,7 +305,7 @@ void RNN_LSTM::backward() {
     //7
             outputGate_upstream_deltaOut[l] = *(outputGateLayers[l].delta_out);
     //5
-            cellState_upstream_deltaOut[l] = *(cellLinearAdditionLayers[l].delta_out);
+            cellState_upstream_deltaOut[l] = *(forgetElementGateLayers[l].delta_outTwo);
      
         }
     
@@ -368,7 +370,7 @@ void RNN_LSTM::calNumericGrad(){
     arma::mat delta;
     int dim1 = _LAYERS[0].outputDim;
     int dim2 = _LAYERS[0].inputDim;
-    double eps = 1e-5;
+    double eps = 1e-9;
 
     arma::mat dW(dim1, dim2, arma::fill::zeros);
 

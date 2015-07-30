@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 void testGrad() {
     
     std::shared_ptr<arma::mat> trainingX(new arma::mat(1,10));
-    trainingX->randn(1, 10);
+    trainingX->randu(1, 10);
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
     trainingY->ones(1, 10);
 
@@ -40,7 +40,7 @@ void testGrad() {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN_LSTM rnn(1, 1, 1, 1, 1, trainingX, trainingY);
+    RNN_LSTM rnn(3, 2,2, 1, 1, trainingX, trainingY);
     // before applying the LSTM backprop model, generate numerical gradients by just forward pass.
     rnn.calNumericGrad();
     // train the LSTM model by one iteration to generate gradient from the model
