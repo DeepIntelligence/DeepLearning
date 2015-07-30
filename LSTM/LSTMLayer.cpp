@@ -5,7 +5,7 @@ using namespace NeuralNet;
 RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::sigmoid)){
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::tanh)){
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -130,20 +130,20 @@ void RNN_LSTM::forward() {
                 commonInput = std::make_shared<arma::mat>(arma::join_cols(outputLayers_prev_output[l], *(outputElementLayers[l-1].output)));
             }
 
-            commonInput->print("common_input:");
+//            commonInput->print("common_input:");
     //1
         inGateLayers[l].input = commonInput;
         inGateLayers[l].saveInputMemory();
         inGateLayers[l].activateUp();
         inGateLayers[l].saveOutputMemory();        
-        inGateLayers[l].output->print("inGateLayers_output:");
+//        inGateLayers[l].output->print("inGateLayers_output:");
             
     //2
         informationLayers[l].input = commonInput;
         informationLayers[l].saveInputMemory();       
         informationLayers[l].activateUp();
         informationLayers[l].saveOutputMemory();
-        informationLayers[l].output->print("informationLayer_output:");
+//        informationLayers[l].output->print("informationLayer_output:");
         
     //3
         inputElementGateLayers[l].inputOne = informationLayers[l].output;
@@ -151,23 +151,23 @@ void RNN_LSTM::forward() {
         inputElementGateLayers[l].saveInputMemory();
         // no need to save outputs for elementwise layer during forward pass, check the its "updataPara" func
         inputElementGateLayers[l].activateUp();
-        inputElementGateLayers[l].output->print("inputElementGateLayers_output:");
+//        inputElementGateLayers[l].output->print("inputElementGateLayers_output:");
 
     //4
         forgetGateLayers[l].input = commonInput;
         forgetGateLayers[l].saveInputMemory();
         forgetGateLayers[l].activateUp();
         forgetGateLayers[l].saveOutputMemory();        
-        forgetGateLayers[l].output->print("forgetGateLayers_output:");
+//        forgetGateLayers[l].output->print("forgetGateLayers_output:");
 
     //5
         forgetElementGateLayers[l].inputOne = forgetGateLayers[l].output;
     // TODO here should avoid duplication of memory    
         forgetElementGateLayers[l].inputTwo = std::make_shared<arma::mat>(cellStateLayers_prev_output[l]);
-        forgetElementGateLayers[l].inputTwo->print("forgetElementGateLayers_inputTwo:");
+//        forgetElementGateLayers[l].inputTwo->print("forgetElementGateLayers_inputTwo:");
         forgetElementGateLayers[l].saveInputMemory();
         forgetElementGateLayers[l].activateUp();
-        forgetElementGateLayers[l].output->print("forgetElementGateLayers_output:");
+//        forgetElementGateLayers[l].output->print("forgetElementGateLayers_output:");
 
     //6
         cellLinearAdditionLayers[l].inputOne = inputElementGateLayers[l].output;
@@ -175,30 +175,30 @@ void RNN_LSTM::forward() {
         cellLinearAdditionLayers[l].activateUp();
         
         cellStateLayers_prev_output[l]= *(cellLinearAdditionLayers[l].output);
-        cellLinearAdditionLayers[l].output->print("cellLinearAdditionLayers:");
+//        cellLinearAdditionLayers[l].output->print("cellLinearAdditionLayers:");
 
     //6.5
         cellStateActivationLayers[l].input = cellLinearAdditionLayers[l].output;
         cellStateActivationLayers[l].activateUp();
-        cellStateActivationLayers[l].output->print("cellStateActivationLayers:");
+//        cellStateActivationLayers[l].output->print("cellStateActivationLayers:");
     //7
         outputGateLayers[l].input = commonInput;
         outputGateLayers[l].saveInputMemory();
         outputGateLayers[l].activateUp();
         outputGateLayers[l].saveOutputMemory();        
-        outputGateLayers[l].output->print("outputGateLayers:");
+//        outputGateLayers[l].output->print("outputGateLayers:");
     //8
         outputElementLayers[l].inputOne = outputGateLayers[l].output;
         outputElementLayers[l].inputTwo = cellStateActivationLayers[l].output;
         outputElementLayers[l].saveInputMemory();
         outputElementLayers[l].activateUp();
-        outputElementLayers[l].output->print("outputElementLayers:");
+//        outputElementLayers[l].output->print("outputElementLayers:");
         
         if(l == numHiddenLayers-1){
             
             netOutputLayer->input = outputElementLayers[l].output;
             netOutputLayer->activateUp();
-            netOutputLayer->output->print("netoutput");
+//            netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
         }  
@@ -317,6 +317,7 @@ void RNN_LSTM::backward() {
         forgetGateLayers[l].updatePara_accu(learningRate);
         informationLayers[l].updatePara_accu(learningRate);
         inGateLayers[l].updatePara_accu(learningRate);
+#ifdef _GRADIENTCHECK
         // save this accumulated gradients for comparing with numerical gradients
         if (l==0){ // save this l layer
            outputGateLayers[l].grad_W_accu.save("outputGateLayer0_Grad.dat",arma::raw_ascii);
@@ -324,7 +325,7 @@ void RNN_LSTM::backward() {
            informationLayers[l].grad_W_accu.save("informationLayer0_Grad.dat", arma::raw_ascii);
            inGateLayers[l].grad_W_accu.save("inGateLayer0_Grad.dat", arma::raw_ascii);
         }
-        
+#endif
         
     }
     
@@ -333,12 +334,21 @@ void RNN_LSTM::backward() {
 }
 
 void RNN_LSTM::train(){
-
     this->forward();
+//  for calcuating the total error
+            
+    double error = 0.0;
+    arma::mat delta;
+    //           outputY->transform([](double val){return log(val);});
+    for (int k = 0; k < trainingY->n_cols; k++) {
+        delta = *(netOutputLayer->outputMem[k]) - trainingY->col(k);
+        error += arma::as_scalar(delta.st() * delta); 
+    }
+    
+//    std:cout << "iter: " << iter << "\t";
+    std::cout << "total error is:" << error << std::endl;
+    
     this->backward();
-    std::string filename = "lstm";
-    this->savePara(filename);
-
 }
 
 void RNN_LSTM::test(){

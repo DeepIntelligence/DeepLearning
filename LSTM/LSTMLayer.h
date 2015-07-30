@@ -23,6 +23,7 @@ namespace NeuralNet {
         void savePara(std::string filename); // try to save all the parameters in the LSTM for further use
         void test();
         void calNumericGrad();
+        BaseLayer_LSTM* getOutputLayer(){ return netOutputLayer;}
     private:
         std::vector<BaseLayer_LSTM> inGateLayers, forgetGateLayers, outputGateLayers, informationLayers, cellStateLayers;
         std::vector<ElementwiseLayer> outputElementLayers, forgetElementGateLayers, inputElementGateLayers;
