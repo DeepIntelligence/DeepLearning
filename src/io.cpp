@@ -28,14 +28,3 @@ bool ReadProtoFromTextFile(const char* filename, Message* proto) {
   return success;
 }
 
-int main(int argc, char *argv[]){
-
-	NeuralNetParameter message; 
-	if (argc == 2){
-
-		ReadProtoFromTextFile(argv[1], &message);
-	std::cout << message.layerstruct_size();	
-	}
-
-	return 0;
-}

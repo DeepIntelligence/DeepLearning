@@ -1,8 +1,8 @@
 #pragma once
 #include <armadillo>
-#include "../BaseLayer/BaseLayer.h"
-#include "../Optimization/optimization.h"
-
+#include "BaseLayer.h"
+#include "optimization.h"
+#include "DeepLearning.pb.h"
 namespace NeuralNet{
 
 struct TrainingPara_MLP {
@@ -34,6 +34,7 @@ class MultiLayerPerceptron {
     friend class MLPTrainer;
 public:
     MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, TrainingPara_MLP trainingPara);
+    MultiLayerPerceptron(DeepLearning::NeuralNetParameter);
     MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
                          std::shared_ptr<arma::mat> trainingY0, TrainingPara_MLP trainingPara);
     ~MultiLayerPerceptron(){}
@@ -43,7 +44,7 @@ public:
 /* forward pass*/    
     void feedForward(std::shared_ptr<arma::mat>);
 /* back propogate the error to update the parameters*/    
-    void backProp(std::shared_ptr<arma::mat>);
+    void backProp(std::shared_ptr<arma::mat>, double learningRate);
     void test(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
 /* calculate the numerical gradient for testing*/    
     void calNumericGrad(std::shared_ptr<arma::mat> trainingX,std::shared_ptr<arma::mat> trainingY);
@@ -57,7 +58,8 @@ public:
 private:
     bool converge();
     TrainingPara_MLP trainingPara;
-    int numLayers;
+    DeepLearning::NeuralNetParameter neuralNetPara;
+	int numLayers;
     int numInstance;
     bool testGrad;
 /**the collection of Base layers*/
@@ -76,6 +78,7 @@ private:
 class MLPTrainer:public Optimization::ObjectFunc{
 public:
     MLPTrainer(MultiLayerPerceptron &MLP);
+    ~MLPTrainer(){}
     virtual double operator()(arma::vec &x, arma::vec &grad);
 //    std::shared_ptr<arma::vec> x_init;
 private:

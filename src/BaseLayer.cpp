@@ -14,6 +14,8 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
     W_size = inputDim * outputDim;
     B_size = outputDim;
     totalSize = W_size + B_size;
+    delta_out = std::make_shared<arma::mat>();
+    output = std::make_shared<arma::mat>();
     
     if (dropOutFlag) {
         randomGen=new Random_Bernoulli<double>(dropOutRate);
@@ -25,9 +27,6 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
 void BaseLayer::initializeWeight() {
     W.randu(outputDim,inputDim);
     B.randu(outputDim);
-   
-//    W->randu(outputDim,inputDim);
-//    B->randu(outputDim);
     W -= 0.5;
     B -= 0.5;
 
@@ -75,7 +74,7 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
     //for delta: each column is the delta of a sample
     arma::mat deriv;
     arma::mat delta;
-    delta_out = std::make_shared<arma::mat>(inputDim,delta_in->n_cols);
+ 
     if (actType == softmax) {
         deriv.ones(output->n_rows,output->n_cols);   
     } else if (actType == sigmoid ) {
@@ -138,7 +137,7 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
     
     
     input = input0;
-    output = std::make_shared<arma::mat>(outputDim, input->n_cols);
+
     std::shared_ptr<arma::mat> &p=output;
 // first get the projection
     if( dropOutFlag) {

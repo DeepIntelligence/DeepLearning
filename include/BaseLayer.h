@@ -2,7 +2,7 @@
 #include <memory>
 #include <armadillo>
 #include <random>
-#include "../Utils/Util.h"
+#include "Util.h"
 
 namespace NeuralNet{
 
