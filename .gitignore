@@ -26,8 +26,6 @@
 *.exe
 *.out
 *.app
-test
-test_static
 
 # PDFs
 *.pdf
@@ -50,3 +48,5 @@ test_static
 nbproject/
 *.swp
 *.pyc
+*data*
+MNIST
