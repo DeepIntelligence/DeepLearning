@@ -2,7 +2,7 @@
 #include "MultiLayerPerceptron.h"
 
 using namespace NeuralNet;
-
+using namespace DeepLearning;
 MultiLayerPerceptron::MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, TrainingPara_MLP trainingPara0) {
 
     numLayers = numLayers0;
@@ -20,7 +20,38 @@ MultiLayerPerceptron::MultiLayerPerceptron(int numLayers0, std::vector<int> dime
     }
         
 }
+MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0){
+	
+	neuralNetPara = neuralNetPara0;
+    numLayers = neuralNetPara.layerstruct_size();
 
+    testGrad = false;
+    totalDim = 0;
+    for (int i = 0; i < numLayers; i++){
+		switch (neuralNetPara.layerstruct(i).activationtype())
+		{
+		case LayerStructParameter_ActivationType_sigmoid:
+            layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
+										neuralNetPara.layerstruct(i).outputdim(),BaseLayer::sigmoid));
+			break;
+        case LayerStructParameter_ActivationType_tanh:
+            layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
+										neuralNetPara.layerstruct(i).outputdim(),BaseLayer::tanh));
+			break;
+ 		case LayerStructParameter_ActivationType_softmax:
+            layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
+										neuralNetPara.layerstruct(i).outputdim(),BaseLayer::softmax));
+			break;
+ 		case LayerStructParameter_ActivationType_linear:
+        	    layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
+										neuralNetPara.layerstruct(i).outputdim(),BaseLayer::linear));
+			break;
+		default:break;         
+		}
+        totalDim += layers[i].totalSize;
+    }
+        
+}
 MultiLayerPerceptron::MultiLayerPerceptron(int numLayers0, std::vector<int> dimensions0, std::shared_ptr<arma::mat> trainingX0,
         std::shared_ptr<arma::mat> trainingY0, TrainingPara_MLP trainingPara0): 
         MultiLayerPerceptron::MultiLayerPerceptron(numLayers0, dimensions0,trainingPara0){    
@@ -36,13 +67,13 @@ void MultiLayerPerceptron::setTrainingSample(std::shared_ptr<arma::mat> X, std::
 void MultiLayerPerceptron::train() {
     // Here I used stochastic gradient descent
     // first do the forward propagate
-    trainingPara.print();
-    int ntimes = numInstance / trainingPara.miniBatchSize;
+//    trainingPara.print();
+    int ntimes = numInstance / neuralNetPara.neuralnettrainingparameter().minibatchsize();
     std::shared_ptr<arma::mat> subInputX, subInputY;
     double errorTotal, crossEntropy;
-    int size = trainingPara.miniBatchSize;
-    double alpha = trainingPara.alpha / size;
-    for(int epoch = 0; epoch < trainingPara.NEpoch; epoch++) {
+    int size = neuralNetPara.neuralnettrainingparameter().minibatchsize();
+    double learningRate = neuralNetPara.neuralnettrainingparameter().learningrate() / size;
+    for(int epoch = 0; epoch < neuralNetPara.neuralnettrainingparameter().nepoch(); epoch++) {
         std::cout << epoch << std::endl;
         errorTotal = 0.0;
         crossEntropy = 0.0;
@@ -60,17 +91,14 @@ void MultiLayerPerceptron::train() {
             std::shared_ptr<arma::mat> delta(new arma::mat);
              //for delta: each column is the delta of a sample
             *delta = (-*subInputY + *netOutput);            
-                       
-            backProp(delta);
+            backProp(delta, learningRate);
+
             delta->transform([](double val){return val*val;});
             errorTotal += arma::sum(arma::sum(*delta)); 
-//            outputY->print();
-            netOutput->transform([](double val){return std::log(val+1e-20);});
-           arma::mat crossEntropy_temp = *(subInputY) %  *(netOutput);
-//    crossEntropy_temp.save("crossEntropy.dat",arma::raw_ascii);
+            arma::mat netOutput_log(*netOutput);
+            netOutput_log.transform([](double val){return std::log(val+1e-20);});
+           arma::mat crossEntropy_temp = *(subInputY) %  (netOutput_log);
             crossEntropy -= arma::sum(arma::sum((crossEntropy_temp)));
-//            std::cout << crossEntropy << std::endl;
-//             std::cout << errorTotal << std::endl;
         }
             std::cout << "error is: " << errorTotal << std::endl;
             std::cout << "cross entropy is: " << crossEntropy << std::endl;
@@ -126,9 +154,8 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput,st
 }
 
 
-void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target){
+void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target, double learningRate){
     std::shared_ptr<arma::mat> delta_in = delta_target;
-    double learningRate = trainingPara.alpha / trainingPara.miniBatchSize;
     for (int i = numLayers-1; i >= 0 ; i--){
         layers[i].updatePara(delta_in, learningRate );
         delta_in = layers[i].delta_out;
@@ -144,7 +171,7 @@ void MultiLayerPerceptron::calGrad(std::shared_ptr<arma::mat> delta_target){
     }
 }
 
-void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> testingX,std::shared_ptr<arma::mat> testingY) {
+void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> testingX, std::shared_ptr<arma::mat> testingY) {
         feedForward(testingX);
         std::shared_ptr<arma::mat> delta(new arma::mat);
              //for delta: each column is the delta of a sample

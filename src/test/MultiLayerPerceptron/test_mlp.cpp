@@ -15,9 +15,7 @@ using namespace NeuralNet;
 
 int main(int argc, char *argv[]) {
     if (argc < 2) exit(1);
-
-
-	std::shared_ptr<arma::mat> DataX(new arma::mat);
+    std::shared_ptr<arma::mat> DataX(new arma::mat);
     std::shared_ptr<arma::mat> DataY(new arma::mat);
     std::shared_ptr<arma::mat> trainDataX(new arma::mat);
     std::shared_ptr<arma::mat> trainDataY(new arma::mat);

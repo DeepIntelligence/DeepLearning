@@ -27,6 +27,8 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
+namespace DeepLearning {
+
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_DeepLearning_2eproto();
 void protobuf_AssignDesc_DeepLearning_2eproto();
@@ -34,7 +36,7 @@ void protobuf_ShutdownFile_DeepLearning_2eproto();
 
 class NeuralNetParameter;
 class LayerStructParameter;
-class TrainingParameter;
+class NeuralNetTrainingParameter;
 
 enum LayerStructParameter_ActivationType {
   LayerStructParameter_ActivationType_sigmoid = 1,
@@ -136,35 +138,35 @@ class NeuralNetParameter : public ::google::protobuf::Message {
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // repeated .LayerStructParameter layerStruct = 100;
+  // repeated .DeepLearning.LayerStructParameter layerStruct = 100;
   inline int layerstruct_size() const;
   inline void clear_layerstruct();
   static const int kLayerStructFieldNumber = 100;
-  inline const ::LayerStructParameter& layerstruct(int index) const;
-  inline ::LayerStructParameter* mutable_layerstruct(int index);
-  inline ::LayerStructParameter* add_layerstruct();
-  inline const ::google::protobuf::RepeatedPtrField< ::LayerStructParameter >&
+  inline const ::DeepLearning::LayerStructParameter& layerstruct(int index) const;
+  inline ::DeepLearning::LayerStructParameter* mutable_layerstruct(int index);
+  inline ::DeepLearning::LayerStructParameter* add_layerstruct();
+  inline const ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >&
       layerstruct() const;
-  inline ::google::protobuf::RepeatedPtrField< ::LayerStructParameter >*
+  inline ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >*
       mutable_layerstruct();
 
-  // optional .TrainingParameter trainingParameter = 101;
-  inline bool has_trainingparameter() const;
-  inline void clear_trainingparameter();
-  static const int kTrainingParameterFieldNumber = 101;
-  inline const ::TrainingParameter& trainingparameter() const;
-  inline ::TrainingParameter* mutable_trainingparameter();
-  inline ::TrainingParameter* release_trainingparameter();
-  inline void set_allocated_trainingparameter(::TrainingParameter* trainingparameter);
+  // optional .DeepLearning.NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
+  inline bool has_neuralnettrainingparameter() const;
+  inline void clear_neuralnettrainingparameter();
+  static const int kNeuralNetTrainingParameterFieldNumber = 101;
+  inline const ::DeepLearning::NeuralNetTrainingParameter& neuralnettrainingparameter() const;
+  inline ::DeepLearning::NeuralNetTrainingParameter* mutable_neuralnettrainingparameter();
+  inline ::DeepLearning::NeuralNetTrainingParameter* release_neuralnettrainingparameter();
+  inline void set_allocated_neuralnettrainingparameter(::DeepLearning::NeuralNetTrainingParameter* neuralnettrainingparameter);
 
-  // @@protoc_insertion_point(class_scope:NeuralNetParameter)
+  // @@protoc_insertion_point(class_scope:DeepLearning.NeuralNetParameter)
  private:
   inline void set_has_name();
   inline void clear_has_name();
   inline void set_has_type();
   inline void clear_has_type();
-  inline void set_has_trainingparameter();
-  inline void clear_has_trainingparameter();
+  inline void set_has_neuralnettrainingparameter();
+  inline void clear_has_neuralnettrainingparameter();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -172,8 +174,8 @@ class NeuralNetParameter : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::std::string* name_;
   ::std::string* type_;
-  ::google::protobuf::RepeatedPtrField< ::LayerStructParameter > layerstruct_;
-  ::TrainingParameter* trainingparameter_;
+  ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter > layerstruct_;
+  ::DeepLearning::NeuralNetTrainingParameter* neuralnettrainingparameter_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -276,12 +278,12 @@ class LayerStructParameter : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 outputdim() const;
   inline void set_outputdim(::google::protobuf::int32 value);
 
-  // optional .LayerStructParameter.ActivationType activationType = 3;
+  // optional .DeepLearning.LayerStructParameter.ActivationType activationType = 3;
   inline bool has_activationtype() const;
   inline void clear_activationtype();
   static const int kActivationTypeFieldNumber = 3;
-  inline ::LayerStructParameter_ActivationType activationtype() const;
-  inline void set_activationtype(::LayerStructParameter_ActivationType value);
+  inline ::DeepLearning::LayerStructParameter_ActivationType activationtype() const;
+  inline void set_activationtype(::DeepLearning::LayerStructParameter_ActivationType value);
 
   // optional string name = 4;
   inline bool has_name() const;
@@ -307,7 +309,7 @@ class LayerStructParameter : public ::google::protobuf::Message {
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // @@protoc_insertion_point(class_scope:LayerStructParameter)
+  // @@protoc_insertion_point(class_scope:DeepLearning.LayerStructParameter)
  private:
   inline void set_has_inputdim();
   inline void clear_has_inputdim();
@@ -338,14 +340,14 @@ class LayerStructParameter : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class TrainingParameter : public ::google::protobuf::Message {
+class NeuralNetTrainingParameter : public ::google::protobuf::Message {
  public:
-  TrainingParameter();
-  virtual ~TrainingParameter();
+  NeuralNetTrainingParameter();
+  virtual ~NeuralNetTrainingParameter();
 
-  TrainingParameter(const TrainingParameter& from);
+  NeuralNetTrainingParameter(const NeuralNetTrainingParameter& from);
 
-  inline TrainingParameter& operator=(const TrainingParameter& from) {
+  inline NeuralNetTrainingParameter& operator=(const NeuralNetTrainingParameter& from) {
     CopyFrom(from);
     return *this;
   }
@@ -359,17 +361,17 @@ class TrainingParameter : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const TrainingParameter& default_instance();
+  static const NeuralNetTrainingParameter& default_instance();
 
-  void Swap(TrainingParameter* other);
+  void Swap(NeuralNetTrainingParameter* other);
 
   // implements Message ----------------------------------------------
 
-  TrainingParameter* New() const;
+  NeuralNetTrainingParameter* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TrainingParameter& from);
-  void MergeFrom(const TrainingParameter& from);
+  void CopyFrom(const NeuralNetTrainingParameter& from);
+  void MergeFrom(const NeuralNetTrainingParameter& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -405,12 +407,39 @@ class TrainingParameter : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 maxiter() const;
   inline void set_maxiter(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:TrainingParameter)
+  // optional int32 miniBatchSize = 3;
+  inline bool has_minibatchsize() const;
+  inline void clear_minibatchsize();
+  static const int kMiniBatchSizeFieldNumber = 3;
+  inline ::google::protobuf::int32 minibatchsize() const;
+  inline void set_minibatchsize(::google::protobuf::int32 value);
+
+  // optional int32 NEpoch = 4;
+  inline bool has_nepoch() const;
+  inline void clear_nepoch();
+  static const int kNEpochFieldNumber = 4;
+  inline ::google::protobuf::int32 nepoch() const;
+  inline void set_nepoch(::google::protobuf::int32 value);
+
+  // optional double epi = 5 [default = 1e-06];
+  inline bool has_epi() const;
+  inline void clear_epi();
+  static const int kEpiFieldNumber = 5;
+  inline double epi() const;
+  inline void set_epi(double value);
+
+  // @@protoc_insertion_point(class_scope:DeepLearning.NeuralNetTrainingParameter)
  private:
   inline void set_has_learningrate();
   inline void clear_has_learningrate();
   inline void set_has_maxiter();
   inline void clear_has_maxiter();
+  inline void set_has_minibatchsize();
+  inline void clear_has_minibatchsize();
+  inline void set_has_nepoch();
+  inline void clear_has_nepoch();
+  inline void set_has_epi();
+  inline void clear_has_epi();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -418,12 +447,15 @@ class TrainingParameter : public ::google::protobuf::Message {
   mutable int _cached_size_;
   double learningrate_;
   ::google::protobuf::int32 maxiter_;
+  ::google::protobuf::int32 minibatchsize_;
+  double epi_;
+  ::google::protobuf::int32 nepoch_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
 
   void InitAsDefaultInstance();
-  static TrainingParameter* default_instance_;
+  static NeuralNetTrainingParameter* default_instance_;
 };
 // ===================================================================
 
@@ -449,7 +481,7 @@ inline void NeuralNetParameter::clear_name() {
   clear_has_name();
 }
 inline const ::std::string& NeuralNetParameter::name() const {
-  // @@protoc_insertion_point(field_get:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.name)
   return *name_;
 }
 inline void NeuralNetParameter::set_name(const ::std::string& value) {
@@ -458,7 +490,7 @@ inline void NeuralNetParameter::set_name(const ::std::string& value) {
     name_ = new ::std::string;
   }
   name_->assign(value);
-  // @@protoc_insertion_point(field_set:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetParameter.name)
 }
 inline void NeuralNetParameter::set_name(const char* value) {
   set_has_name();
@@ -466,7 +498,7 @@ inline void NeuralNetParameter::set_name(const char* value) {
     name_ = new ::std::string;
   }
   name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_set_char:DeepLearning.NeuralNetParameter.name)
 }
 inline void NeuralNetParameter::set_name(const char* value, size_t size) {
   set_has_name();
@@ -474,14 +506,14 @@ inline void NeuralNetParameter::set_name(const char* value, size_t size) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.NeuralNetParameter.name)
 }
 inline ::std::string* NeuralNetParameter::mutable_name() {
   set_has_name();
   if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.name)
   return name_;
 }
 inline ::std::string* NeuralNetParameter::release_name() {
@@ -505,7 +537,7 @@ inline void NeuralNetParameter::set_allocated_name(::std::string* name) {
     clear_has_name();
     name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:NeuralNetParameter.name)
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.name)
 }
 
 // optional string type = 2;
@@ -525,7 +557,7 @@ inline void NeuralNetParameter::clear_type() {
   clear_has_type();
 }
 inline const ::std::string& NeuralNetParameter::type() const {
-  // @@protoc_insertion_point(field_get:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.type)
   return *type_;
 }
 inline void NeuralNetParameter::set_type(const ::std::string& value) {
@@ -534,7 +566,7 @@ inline void NeuralNetParameter::set_type(const ::std::string& value) {
     type_ = new ::std::string;
   }
   type_->assign(value);
-  // @@protoc_insertion_point(field_set:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetParameter.type)
 }
 inline void NeuralNetParameter::set_type(const char* value) {
   set_has_type();
@@ -542,7 +574,7 @@ inline void NeuralNetParameter::set_type(const char* value) {
     type_ = new ::std::string;
   }
   type_->assign(value);
-  // @@protoc_insertion_point(field_set_char:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_set_char:DeepLearning.NeuralNetParameter.type)
 }
 inline void NeuralNetParameter::set_type(const char* value, size_t size) {
   set_has_type();
@@ -550,14 +582,14 @@ inline void NeuralNetParameter::set_type(const char* value, size_t size) {
     type_ = new ::std::string;
   }
   type_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.NeuralNetParameter.type)
 }
 inline ::std::string* NeuralNetParameter::mutable_type() {
   set_has_type();
   if (type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     type_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.type)
   return type_;
 }
 inline ::std::string* NeuralNetParameter::release_type() {
@@ -581,78 +613,78 @@ inline void NeuralNetParameter::set_allocated_type(::std::string* type) {
     clear_has_type();
     type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:NeuralNetParameter.type)
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.type)
 }
 
-// repeated .LayerStructParameter layerStruct = 100;
+// repeated .DeepLearning.LayerStructParameter layerStruct = 100;
 inline int NeuralNetParameter::layerstruct_size() const {
   return layerstruct_.size();
 }
 inline void NeuralNetParameter::clear_layerstruct() {
   layerstruct_.Clear();
 }
-inline const ::LayerStructParameter& NeuralNetParameter::layerstruct(int index) const {
-  // @@protoc_insertion_point(field_get:NeuralNetParameter.layerStruct)
+inline const ::DeepLearning::LayerStructParameter& NeuralNetParameter::layerstruct(int index) const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.layerStruct)
   return layerstruct_.Get(index);
 }
-inline ::LayerStructParameter* NeuralNetParameter::mutable_layerstruct(int index) {
-  // @@protoc_insertion_point(field_mutable:NeuralNetParameter.layerStruct)
+inline ::DeepLearning::LayerStructParameter* NeuralNetParameter::mutable_layerstruct(int index) {
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.layerStruct)
   return layerstruct_.Mutable(index);
 }
-inline ::LayerStructParameter* NeuralNetParameter::add_layerstruct() {
-  // @@protoc_insertion_point(field_add:NeuralNetParameter.layerStruct)
+inline ::DeepLearning::LayerStructParameter* NeuralNetParameter::add_layerstruct() {
+  // @@protoc_insertion_point(field_add:DeepLearning.NeuralNetParameter.layerStruct)
   return layerstruct_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::LayerStructParameter >&
+inline const ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >&
 NeuralNetParameter::layerstruct() const {
-  // @@protoc_insertion_point(field_list:NeuralNetParameter.layerStruct)
+  // @@protoc_insertion_point(field_list:DeepLearning.NeuralNetParameter.layerStruct)
   return layerstruct_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::LayerStructParameter >*
+inline ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >*
 NeuralNetParameter::mutable_layerstruct() {
-  // @@protoc_insertion_point(field_mutable_list:NeuralNetParameter.layerStruct)
+  // @@protoc_insertion_point(field_mutable_list:DeepLearning.NeuralNetParameter.layerStruct)
   return &layerstruct_;
 }
 
-// optional .TrainingParameter trainingParameter = 101;
-inline bool NeuralNetParameter::has_trainingparameter() const {
+// optional .DeepLearning.NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
+inline bool NeuralNetParameter::has_neuralnettrainingparameter() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void NeuralNetParameter::set_has_trainingparameter() {
+inline void NeuralNetParameter::set_has_neuralnettrainingparameter() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void NeuralNetParameter::clear_has_trainingparameter() {
+inline void NeuralNetParameter::clear_has_neuralnettrainingparameter() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void NeuralNetParameter::clear_trainingparameter() {
-  if (trainingparameter_ != NULL) trainingparameter_->::TrainingParameter::Clear();
-  clear_has_trainingparameter();
+inline void NeuralNetParameter::clear_neuralnettrainingparameter() {
+  if (neuralnettrainingparameter_ != NULL) neuralnettrainingparameter_->::DeepLearning::NeuralNetTrainingParameter::Clear();
+  clear_has_neuralnettrainingparameter();
 }
-inline const ::TrainingParameter& NeuralNetParameter::trainingparameter() const {
-  // @@protoc_insertion_point(field_get:NeuralNetParameter.trainingParameter)
-  return trainingparameter_ != NULL ? *trainingparameter_ : *default_instance_->trainingparameter_;
+inline const ::DeepLearning::NeuralNetTrainingParameter& NeuralNetParameter::neuralnettrainingparameter() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
+  return neuralnettrainingparameter_ != NULL ? *neuralnettrainingparameter_ : *default_instance_->neuralnettrainingparameter_;
 }
-inline ::TrainingParameter* NeuralNetParameter::mutable_trainingparameter() {
-  set_has_trainingparameter();
-  if (trainingparameter_ == NULL) trainingparameter_ = new ::TrainingParameter;
-  // @@protoc_insertion_point(field_mutable:NeuralNetParameter.trainingParameter)
-  return trainingparameter_;
+inline ::DeepLearning::NeuralNetTrainingParameter* NeuralNetParameter::mutable_neuralnettrainingparameter() {
+  set_has_neuralnettrainingparameter();
+  if (neuralnettrainingparameter_ == NULL) neuralnettrainingparameter_ = new ::DeepLearning::NeuralNetTrainingParameter;
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
+  return neuralnettrainingparameter_;
 }
-inline ::TrainingParameter* NeuralNetParameter::release_trainingparameter() {
-  clear_has_trainingparameter();
-  ::TrainingParameter* temp = trainingparameter_;
-  trainingparameter_ = NULL;
+inline ::DeepLearning::NeuralNetTrainingParameter* NeuralNetParameter::release_neuralnettrainingparameter() {
+  clear_has_neuralnettrainingparameter();
+  ::DeepLearning::NeuralNetTrainingParameter* temp = neuralnettrainingparameter_;
+  neuralnettrainingparameter_ = NULL;
   return temp;
 }
-inline void NeuralNetParameter::set_allocated_trainingparameter(::TrainingParameter* trainingparameter) {
-  delete trainingparameter_;
-  trainingparameter_ = trainingparameter;
-  if (trainingparameter) {
-    set_has_trainingparameter();
+inline void NeuralNetParameter::set_allocated_neuralnettrainingparameter(::DeepLearning::NeuralNetTrainingParameter* neuralnettrainingparameter) {
+  delete neuralnettrainingparameter_;
+  neuralnettrainingparameter_ = neuralnettrainingparameter;
+  if (neuralnettrainingparameter) {
+    set_has_neuralnettrainingparameter();
   } else {
-    clear_has_trainingparameter();
+    clear_has_neuralnettrainingparameter();
   }
-  // @@protoc_insertion_point(field_set_allocated:NeuralNetParameter.trainingParameter)
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
 }
 
 // -------------------------------------------------------------------
@@ -674,13 +706,13 @@ inline void LayerStructParameter::clear_inputdim() {
   clear_has_inputdim();
 }
 inline ::google::protobuf::int32 LayerStructParameter::inputdim() const {
-  // @@protoc_insertion_point(field_get:LayerStructParameter.inputDim)
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.inputDim)
   return inputdim_;
 }
 inline void LayerStructParameter::set_inputdim(::google::protobuf::int32 value) {
   set_has_inputdim();
   inputdim_ = value;
-  // @@protoc_insertion_point(field_set:LayerStructParameter.inputDim)
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.inputDim)
 }
 
 // optional int32 outputDim = 2;
@@ -698,16 +730,16 @@ inline void LayerStructParameter::clear_outputdim() {
   clear_has_outputdim();
 }
 inline ::google::protobuf::int32 LayerStructParameter::outputdim() const {
-  // @@protoc_insertion_point(field_get:LayerStructParameter.outputDim)
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.outputDim)
   return outputdim_;
 }
 inline void LayerStructParameter::set_outputdim(::google::protobuf::int32 value) {
   set_has_outputdim();
   outputdim_ = value;
-  // @@protoc_insertion_point(field_set:LayerStructParameter.outputDim)
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.outputDim)
 }
 
-// optional .LayerStructParameter.ActivationType activationType = 3;
+// optional .DeepLearning.LayerStructParameter.ActivationType activationType = 3;
 inline bool LayerStructParameter::has_activationtype() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -721,15 +753,15 @@ inline void LayerStructParameter::clear_activationtype() {
   activationtype_ = 1;
   clear_has_activationtype();
 }
-inline ::LayerStructParameter_ActivationType LayerStructParameter::activationtype() const {
-  // @@protoc_insertion_point(field_get:LayerStructParameter.activationType)
-  return static_cast< ::LayerStructParameter_ActivationType >(activationtype_);
+inline ::DeepLearning::LayerStructParameter_ActivationType LayerStructParameter::activationtype() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.activationType)
+  return static_cast< ::DeepLearning::LayerStructParameter_ActivationType >(activationtype_);
 }
-inline void LayerStructParameter::set_activationtype(::LayerStructParameter_ActivationType value) {
-  assert(::LayerStructParameter_ActivationType_IsValid(value));
+inline void LayerStructParameter::set_activationtype(::DeepLearning::LayerStructParameter_ActivationType value) {
+  assert(::DeepLearning::LayerStructParameter_ActivationType_IsValid(value));
   set_has_activationtype();
   activationtype_ = value;
-  // @@protoc_insertion_point(field_set:LayerStructParameter.activationType)
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.activationType)
 }
 
 // optional string name = 4;
@@ -749,7 +781,7 @@ inline void LayerStructParameter::clear_name() {
   clear_has_name();
 }
 inline const ::std::string& LayerStructParameter::name() const {
-  // @@protoc_insertion_point(field_get:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.name)
   return *name_;
 }
 inline void LayerStructParameter::set_name(const ::std::string& value) {
@@ -758,7 +790,7 @@ inline void LayerStructParameter::set_name(const ::std::string& value) {
     name_ = new ::std::string;
   }
   name_->assign(value);
-  // @@protoc_insertion_point(field_set:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.name)
 }
 inline void LayerStructParameter::set_name(const char* value) {
   set_has_name();
@@ -766,7 +798,7 @@ inline void LayerStructParameter::set_name(const char* value) {
     name_ = new ::std::string;
   }
   name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_set_char:DeepLearning.LayerStructParameter.name)
 }
 inline void LayerStructParameter::set_name(const char* value, size_t size) {
   set_has_name();
@@ -774,14 +806,14 @@ inline void LayerStructParameter::set_name(const char* value, size_t size) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.LayerStructParameter.name)
 }
 inline ::std::string* LayerStructParameter::mutable_name() {
   set_has_name();
   if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.name)
   return name_;
 }
 inline ::std::string* LayerStructParameter::release_name() {
@@ -805,7 +837,7 @@ inline void LayerStructParameter::set_allocated_name(::std::string* name) {
     clear_has_name();
     name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:LayerStructParameter.name)
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.name)
 }
 
 // optional string type = 5;
@@ -825,7 +857,7 @@ inline void LayerStructParameter::clear_type() {
   clear_has_type();
 }
 inline const ::std::string& LayerStructParameter::type() const {
-  // @@protoc_insertion_point(field_get:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.type)
   return *type_;
 }
 inline void LayerStructParameter::set_type(const ::std::string& value) {
@@ -834,7 +866,7 @@ inline void LayerStructParameter::set_type(const ::std::string& value) {
     type_ = new ::std::string;
   }
   type_->assign(value);
-  // @@protoc_insertion_point(field_set:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.type)
 }
 inline void LayerStructParameter::set_type(const char* value) {
   set_has_type();
@@ -842,7 +874,7 @@ inline void LayerStructParameter::set_type(const char* value) {
     type_ = new ::std::string;
   }
   type_->assign(value);
-  // @@protoc_insertion_point(field_set_char:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_set_char:DeepLearning.LayerStructParameter.type)
 }
 inline void LayerStructParameter::set_type(const char* value, size_t size) {
   set_has_type();
@@ -850,14 +882,14 @@ inline void LayerStructParameter::set_type(const char* value, size_t size) {
     type_ = new ::std::string;
   }
   type_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.LayerStructParameter.type)
 }
 inline ::std::string* LayerStructParameter::mutable_type() {
   set_has_type();
   if (type_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     type_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.type)
   return type_;
 }
 inline ::std::string* LayerStructParameter::release_type() {
@@ -881,72 +913,146 @@ inline void LayerStructParameter::set_allocated_type(::std::string* type) {
     clear_has_type();
     type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:LayerStructParameter.type)
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.type)
 }
 
 // -------------------------------------------------------------------
 
-// TrainingParameter
+// NeuralNetTrainingParameter
 
 // optional double learningRate = 1;
-inline bool TrainingParameter::has_learningrate() const {
+inline bool NeuralNetTrainingParameter::has_learningrate() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void TrainingParameter::set_has_learningrate() {
+inline void NeuralNetTrainingParameter::set_has_learningrate() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void TrainingParameter::clear_has_learningrate() {
+inline void NeuralNetTrainingParameter::clear_has_learningrate() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void TrainingParameter::clear_learningrate() {
+inline void NeuralNetTrainingParameter::clear_learningrate() {
   learningrate_ = 0;
   clear_has_learningrate();
 }
-inline double TrainingParameter::learningrate() const {
-  // @@protoc_insertion_point(field_get:TrainingParameter.learningRate)
+inline double NeuralNetTrainingParameter::learningrate() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.learningRate)
   return learningrate_;
 }
-inline void TrainingParameter::set_learningrate(double value) {
+inline void NeuralNetTrainingParameter::set_learningrate(double value) {
   set_has_learningrate();
   learningrate_ = value;
-  // @@protoc_insertion_point(field_set:TrainingParameter.learningRate)
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.learningRate)
 }
 
 // optional int32 maxIter = 2;
-inline bool TrainingParameter::has_maxiter() const {
+inline bool NeuralNetTrainingParameter::has_maxiter() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void TrainingParameter::set_has_maxiter() {
+inline void NeuralNetTrainingParameter::set_has_maxiter() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void TrainingParameter::clear_has_maxiter() {
+inline void NeuralNetTrainingParameter::clear_has_maxiter() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void TrainingParameter::clear_maxiter() {
+inline void NeuralNetTrainingParameter::clear_maxiter() {
   maxiter_ = 0;
   clear_has_maxiter();
 }
-inline ::google::protobuf::int32 TrainingParameter::maxiter() const {
-  // @@protoc_insertion_point(field_get:TrainingParameter.maxIter)
+inline ::google::protobuf::int32 NeuralNetTrainingParameter::maxiter() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.maxIter)
   return maxiter_;
 }
-inline void TrainingParameter::set_maxiter(::google::protobuf::int32 value) {
+inline void NeuralNetTrainingParameter::set_maxiter(::google::protobuf::int32 value) {
   set_has_maxiter();
   maxiter_ = value;
-  // @@protoc_insertion_point(field_set:TrainingParameter.maxIter)
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.maxIter)
+}
+
+// optional int32 miniBatchSize = 3;
+inline bool NeuralNetTrainingParameter::has_minibatchsize() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_minibatchsize() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void NeuralNetTrainingParameter::clear_has_minibatchsize() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void NeuralNetTrainingParameter::clear_minibatchsize() {
+  minibatchsize_ = 0;
+  clear_has_minibatchsize();
+}
+inline ::google::protobuf::int32 NeuralNetTrainingParameter::minibatchsize() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.miniBatchSize)
+  return minibatchsize_;
+}
+inline void NeuralNetTrainingParameter::set_minibatchsize(::google::protobuf::int32 value) {
+  set_has_minibatchsize();
+  minibatchsize_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.miniBatchSize)
+}
+
+// optional int32 NEpoch = 4;
+inline bool NeuralNetTrainingParameter::has_nepoch() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_nepoch() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void NeuralNetTrainingParameter::clear_has_nepoch() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void NeuralNetTrainingParameter::clear_nepoch() {
+  nepoch_ = 0;
+  clear_has_nepoch();
+}
+inline ::google::protobuf::int32 NeuralNetTrainingParameter::nepoch() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.NEpoch)
+  return nepoch_;
+}
+inline void NeuralNetTrainingParameter::set_nepoch(::google::protobuf::int32 value) {
+  set_has_nepoch();
+  nepoch_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.NEpoch)
+}
+
+// optional double epi = 5 [default = 1e-06];
+inline bool NeuralNetTrainingParameter::has_epi() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_epi() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void NeuralNetTrainingParameter::clear_has_epi() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void NeuralNetTrainingParameter::clear_epi() {
+  epi_ = 1e-06;
+  clear_has_epi();
+}
+inline double NeuralNetTrainingParameter::epi() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.epi)
+  return epi_;
+}
+inline void NeuralNetTrainingParameter::set_epi(double value) {
+  set_has_epi();
+  epi_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.epi)
 }
 
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace DeepLearning
+
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::LayerStructParameter_ActivationType> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::DeepLearning::LayerStructParameter_ActivationType> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::LayerStructParameter_ActivationType>() {
-  return ::LayerStructParameter_ActivationType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::DeepLearning::LayerStructParameter_ActivationType>() {
+  return ::DeepLearning::LayerStructParameter_ActivationType_descriptor();
 }
 
 }  // namespace google

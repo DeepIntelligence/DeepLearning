@@ -1,10 +1,14 @@
 CPP = g++
-ARMA_INCLUDE=-I/home/yuguangyang/Downloads/armadillo-5.100.2/include
+ARMA_INCLUDE=-I/home/yuugangyang/Downloads/armadillo-5.100.2/include
 ARMA_LINKFLAGS=-llapack -lblas
 CXXFLAGS = -std=c++0x $(ARMA_INCLUDE) -I./include -I/opt/boost/boost_1_57_0 -D__LINUX -DDEBUG -g3 -DARMA_DONT_USE_WRAAPER
-SRCS=$(wildcard src/*.cpp)
-
-OBJ=$(SRCS:.cpp=.o)
+SRCS1 = $(wildcard src/*.cpp)
+OBJ1 = $(SRCS1:%.cpp=%.o)
+SRCS2 = $(wildcard src/*.cc)
+OBJ2 = $(SRCS2:%.cc=%.o)
+#SRCS3=$(wildcard src/*.c)
+#OBJ3 = $(SRCS3:.c=.o)
+OBJ = $(OBJ1) $(OBJ2) $(OBJ3)
 
 
 # Specify extensions of files to delete when cleaning
@@ -29,7 +33,7 @@ listfile:
 	echo $(OBJ)
 
 clean:
-	for file in $(CLEANEXTS); do rm -f *.$$file; done
+	for file in $(CLEANEXTS); do rm -f src/*.$$file; done
 	
 install:
 	mkdir -p $(INSTALLDIR)

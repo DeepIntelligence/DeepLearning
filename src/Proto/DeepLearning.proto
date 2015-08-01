@@ -1,9 +1,10 @@
 syntax = "proto2";
+package DeepLearning;g
 message NeuralNetParameter {
 	optional string name = 1;
 	optional string type = 2;
 	repeated LayerStructParameter layerStruct = 100;
-	optional TrainingParameter trainingParameter = 101;
+	optional NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
 
 }
 
@@ -18,8 +19,12 @@ message LayerStructParameter {
 }
 
 
-message TrainingParameter {
+message NeuralNetTrainingParameter {
 	optional double learningRate = 1;
 	optional int32 maxIter = 2;
+	optional int32 miniBatchSize = 3;
+	optional int32 NEpoch = 4;
+	optional double epi = 5 [default = 1e-6];
+
 }
 
