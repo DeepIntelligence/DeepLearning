@@ -216,7 +216,7 @@ MLPTrainer::MLPTrainer(MultiLayerPerceptron& MLP0):MLP(MLP0){
     MLP.vectoriseWeight(*x_init);
 //    x_init->save("x_init.dat", arma::raw_ascii);
 }
-double MLPTrainer::operator ()(arma::vec& x, arma::vec& grad){
+double MLPTrainer::operator()(arma::vec& x, arma::vec& grad){
 
     grad.resize(MLP.totalDim);
 //  first assign x to the weights and bias of all the layers    
@@ -242,6 +242,3 @@ double MLPTrainer::operator ()(arma::vec& x, arma::vec& grad){
     MLP.vectoriseGrad(grad);
     return crossEntropy;
 }
-
-
-

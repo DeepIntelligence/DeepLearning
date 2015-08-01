@@ -1,5 +1,5 @@
 CPP = nvcc
-CXXFLAGS = --std=c++11 -I/home/yuugangyang/Downloads/armadillo-5.200.2/include -DARMA_DONT_USE_WRAPPER
+CXXFLAGS = --std=c++11 -I/home/yuguangyang/Downloads/armadillo-5.100.2/include -DARMA_DONT_USE_WRAPPER
 #nvcc mmul_1.cu -lcublas -lcurand -o mmul_1
 LINKFLAGS = -lcublas -lcurand -lblas -llapack
 

@@ -10,6 +10,7 @@ namespace Optimization{
 
 struct ObjectFunc{
     ObjectFunc(int dim0 = 0):dim(dim0){}
+    ~ObjectFunc(){}
     int dim;
     std::shared_ptr<arma::vec> x_init;
     virtual double operator()(arma::vec &x, arma::vec &grad) = 0;

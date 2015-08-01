@@ -1,11 +1,9 @@
 #include "Util.h"
 
-using namespace NeuralNet;
+namespace NeuralNet{
+void loadData_MNIST(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y, std::string filename0){
 
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y, std::string filename) {
-
-    std::string filename_base("../MNIST/data");
+    std::string filename_base(filename0);
     std::string filename;
     char tag[50];
     char x;
@@ -43,16 +41,9 @@ void loadData_MNIST(std::shared_ptr<arma::mat> X,
             std::cout << "open file failure!" << std::endl;
         }
 
-// for (int j = 0 ; j < numSamples ; j++){
-//       for (int k =0 ; k <featSize; k ++){
-
-//	           std::cout << x << std::endl;
-//	   std::cout<<  (*X)(j,k) << " ";
-//	   }
-//	   }
-
         std::cout << "dataloading finish!" <<std::endl;
 
     }
 
+}
 }

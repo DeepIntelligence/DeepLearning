@@ -36,6 +36,11 @@ int main(){
         std::cout << "third" << std::endl;
         for(int i = 0; i < 25; i++)
             std::cout << p2[i] << std::endl;
+	
+	std::shared_ptr<arma::mat> X, Y;
+	std::string filename="";
+	
+	loadData_MNIST(X, Y, filename);
 	return 0;	
 }	
 	

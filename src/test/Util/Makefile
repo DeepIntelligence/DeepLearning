@@ -1,13 +1,10 @@
 
-CPP = g++
-CXXFLAGS = -std=c++0x -g3
+include ../Makefile.common
 
-
-OBJ = main.o
+OBJ = test_Utils.o
 
 test : $(OBJ)
-	$(CPP) -o test $(OBJ) $(LINKFLAGS)
-
+	$(CXX) -o test $(OBJ) $(LDFLAG)
 
 clean:
 	rm -f *.o *~

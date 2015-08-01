@@ -7,16 +7,17 @@
 #include <armadillo>
 #include <vector>
 #include "MultiLayerPerceptron.h"
-#include "../Optimization/optimization.h"
-
+#include "optimization.h"
+#include "Util.h"
 
 using namespace NeuralNet;
 
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y);
 
 int main(int argc, char *argv[]) {
-    std::shared_ptr<arma::mat> DataX(new arma::mat);
+    if (argc < 2) exit(1);
+
+
+	std::shared_ptr<arma::mat> DataX(new arma::mat);
     std::shared_ptr<arma::mat> DataY(new arma::mat);
     std::shared_ptr<arma::mat> trainDataX(new arma::mat);
     std::shared_ptr<arma::mat> trainDataY(new arma::mat);
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<arma::mat> ValidationDataX(new arma::mat);
     std::shared_ptr<arma::mat> ValidationDataY(new arma::mat);
 
-    loadData_MNIST(DataX,DataY);
+    loadData_MNIST(DataX,DataY,(std::string)argv[1]);
 
     int ntrain =2000;
     int ntest = 1000;
@@ -53,9 +54,9 @@ int main(int argc, char *argv[]) {
     mlp.train();
     }
     mlp.test(testDataX,testDataY);
-
-
+	return 0;
 }
+
 
 
 

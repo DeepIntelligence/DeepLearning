@@ -1,7 +1,7 @@
 #pragma once
 #include <armadillo>
-#include "../BaseLayer/BaseLayer.h"
-#include "../Optimization/optimization.h"
+#include "BaseLayer.h"
+#include "optimization.h"
 
 namespace NeuralNet{
 
@@ -76,6 +76,7 @@ private:
 class MLPTrainer:public Optimization::ObjectFunc{
 public:
     MLPTrainer(MultiLayerPerceptron &MLP);
+    ~MLPTrainer(){}
     virtual double operator()(arma::vec &x, arma::vec &grad);
 //    std::shared_ptr<arma::vec> x_init;
 private:

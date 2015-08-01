@@ -2,7 +2,7 @@
 #include <random>
 #include <string>
 #include <memory>
-
+#include <armadillo>
 namespace NeuralNet{
 template<typename T>	
 struct Random_Bernoulli{
@@ -52,8 +52,7 @@ public:
     int nextInt(){return (*randomPtr_unitformInt)(*genPtr);}
 };	
 	
-void loadData_MNIST(std::shared_ptr<arma::mat> X,
-                    std::shared_ptr<arma::mat> Y, std::string);
-	
-	
+void loadData_MNIST(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y, std::string filename);
 }
+
+
