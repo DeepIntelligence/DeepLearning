@@ -42,10 +42,10 @@ void BaseLayer_LSTM::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint)
         deriv.ones(tempOutput->n_rows, tempOutput->n_cols);
     }
     delta = (*delta_in) % deriv;
-    grad_B = arma::sum(delta, 1);
+    *grad_B = arma::sum(delta, 1);
     
     std::shared_ptr<arma::mat> tempInput = getInputMemory(timePoint);
-    grad_W = delta * (*tempInput).st();
+    *grad_W = delta * (*tempInput).st();
 #if 0
     if (dropOutFlag) {
         // for each column
@@ -57,12 +57,11 @@ void BaseLayer_LSTM::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint)
 
 void BaseLayer_LSTM::accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t) {
     calGrad(delta_in, t);
-    grad_B_accu += grad_B;
-    grad_W_accu += grad_W;
+    *grad_B_accu += *grad_B;
+    *grad_W_accu += *grad_W;
 }
 
 void BaseLayer_LSTM::clearAccuGrad(){
-    grad_B_accu.zeros();
-    grad_W_accu.zeros();
-
+    (*grad_B_accu).zeros();
+    (*grad_W_accu).zeros();
 }

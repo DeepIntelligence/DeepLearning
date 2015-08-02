@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 }
 
 // use LSTM to approximate a dynamical system
-void testDynamics(char **argv){
+void testDynamics(){
     
     
     //ReadProtoFromTextFile()
