@@ -3,10 +3,10 @@
 #include <armadillo>
 #include <iostream>
 #include <vector>
-#include "../BaseLayer/BaseLayer.h"
-#include "../ElementwiseLayer/ElementwiseLayer.h"
-#include "../LinearAdditionLayer/LinearAdditionLayer.h"
-#include "../ActivationLayer/ActivationLayer.h"
+#include "BaseLayer.h"
+#include "ElementwiseLayer.h"
+#include "LinearAdditionLayer.h"
+#include "ActivationLayer.h"
 #include "BaseLayer_LSTM.h"
 
 namespace NeuralNet {
