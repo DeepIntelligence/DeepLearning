@@ -5,7 +5,8 @@ using namespace NeuralNet;
 RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::tanh)){
+        // previously, netOutputLayer.actType = BaseLayer::tanh, here linear is for scaling up
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::linear)){
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -82,6 +83,9 @@ void RNN::forward() {
  //           netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
+            //netOutputLayer->output->print("netOutputLayer.output");
+            //netOutputLayer->W.print("netOutputLayer_Weight");
+            //netOutputLayer->grad_W_accu.print("grad_W_accu");
         }
   
         outputLayers_prev_output[l] = *(hiddenLayers[l].output);
@@ -100,8 +104,9 @@ void RNN::backward() {
         hiddenLayer_upstream_deltaOut[l].zeros(hiddenLayerOutputDim, 1);
         hiddenLayers[l].clearAccuGrad();
     }
+    netOutputLayer->clearAccuGrad();
     
-    double learningRate = 0.1;
+    double learningRate = 0.0000001;
     
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
@@ -138,6 +143,7 @@ void RNN::backward() {
            hiddenLayers[l].grad_W_accu.save("hiddenLayer0_Grad.dat", arma::raw_ascii);
         }
     }
+    netOutputLayer->updatePara_accu(learningRate);
 }
 
 void RNN::train(){

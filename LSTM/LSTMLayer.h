@@ -35,7 +35,6 @@ namespace NeuralNet {
         int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;
         int rnnInputDim, rnnOutputDim;
         
-        
 
     };
 

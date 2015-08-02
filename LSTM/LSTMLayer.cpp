@@ -5,7 +5,8 @@ using namespace NeuralNet;
 RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::tanh)){
+        // netOutputLayer.actType = BaseLayer::tanh previously
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::linear)){ 
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -158,7 +159,7 @@ void RNN_LSTM::forward() {
         forgetGateLayers[l].saveInputMemory();
         forgetGateLayers[l].activateUp();
         forgetGateLayers[l].saveOutputMemory();        
-//        forgetGateLayers[l].output->print("forgetGateLayers_output:");
+ //       forgetGateLayers[l].output->print("forgetGateLayers_output:");
 
     //5
         forgetElementGateLayers[l].inputOne = forgetGateLayers[l].output;
@@ -186,13 +187,13 @@ void RNN_LSTM::forward() {
         outputGateLayers[l].saveInputMemory();
         outputGateLayers[l].activateUp();
         outputGateLayers[l].saveOutputMemory();        
-//        outputGateLayers[l].output->print("outputGateLayers:");
+ //       outputGateLayers[l].output->print("outputGateLayers:");
     //8
         outputElementLayers[l].inputOne = outputGateLayers[l].output;
         outputElementLayers[l].inputTwo = cellStateActivationLayers[l].output;
         outputElementLayers[l].saveInputMemory();
         outputElementLayers[l].activateUp();
-//        outputElementLayers[l].output->print("outputElementLayers:");
+ //       outputElementLayers[l].output->print("outputElementLayers:");
         
         if(l == numHiddenLayers-1){
             
@@ -201,8 +202,12 @@ void RNN_LSTM::forward() {
 //            netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
+            //netOutputLayer->output->print("netOutputLayer.output");
+            //netOutputLayer->W.print("netOutputLayer_Weight");
+            //netOutputLayer->grad_W_accu.print("grad_W_accu");
         }  
         outputLayers_prev_output[l] = *(outputElementLayers[l].output);
+       
         }
     }
 }
@@ -235,12 +240,13 @@ void RNN_LSTM::backward() {
         forgetGateLayers[l].clearAccuGrad();
         informationLayers[l].clearAccuGrad();
         inGateLayers[l].clearAccuGrad();
+        
 
     }
+    netOutputLayer->clearAccuGrad();
+
     
-    
-    
-    double learningRate = 0.1;
+    double learningRate = 0.005;
     
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
@@ -317,6 +323,7 @@ void RNN_LSTM::backward() {
         forgetGateLayers[l].updatePara_accu(learningRate);
         informationLayers[l].updatePara_accu(learningRate);
         inGateLayers[l].updatePara_accu(learningRate);
+        
 #ifdef _GRADIENTCHECK
         // save this accumulated gradients for comparing with numerical gradients
         if (l==0){ // save this l layer
@@ -328,8 +335,8 @@ void RNN_LSTM::backward() {
 #endif
         
     }
+    netOutputLayer->updatePara_accu(learningRate);
     
-   
     
 }
 
