@@ -22,7 +22,14 @@ int main(int argc, char *argv[]){
 	std::cout << message.neuralnettrainingparameter().minibatchsize()<< std::endl;
 	std::cout << message.neuralnettrainingparameter().nepoch() << std::endl;
 	std::cout << message.neuralnettrainingparameter().epi() << std::endl;
-	std::cout << std::endl;	
+	std::cout << message.neuralnettrainingparameter().trainertype() << std::endl;
+
+	std::cout << std::endl;
+	
+	std::cout << "test Kai message" << std::endl;
+	std::cout << message.rnnstruct().numhiddenlayers() << std::endl;
+	std::cout << message.rnnstruct().hiddenlayeroutputdim() << std::endl;
+
 	}
 
 	return 0;

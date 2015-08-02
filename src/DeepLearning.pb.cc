@@ -27,9 +27,13 @@ const ::google::protobuf::Descriptor* LayerStructParameter_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   LayerStructParameter_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* LayerStructParameter_ActivationType_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* RNNStructParameter_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  RNNStructParameter_reflection_ = NULL;
 const ::google::protobuf::Descriptor* NeuralNetTrainingParameter_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   NeuralNetTrainingParameter_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* NeuralNetTrainingParameter_TrainerType_descriptor_ = NULL;
 
 }  // namespace
 
@@ -41,23 +45,24 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
       "DeepLearning.proto");
   GOOGLE_CHECK(file != NULL);
   NeuralNetParameter_descriptor_ = file->message_type(0);
-  static const int NeuralNetParameter_offsets_[4] = {
+  static const int NeuralNetParameter_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, layerstruct_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, neuralnettrainingparameter_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, rnnstruct_),
   };
   NeuralNetParameter_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
       NeuralNetParameter_descriptor_,
       NeuralNetParameter::default_instance_,
       NeuralNetParameter_offsets_,
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, _unknown_fields_),
       -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(NeuralNetParameter));
+      -1,
+      sizeof(NeuralNetParameter),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetParameter, _internal_metadata_),
+      -1);
   LayerStructParameter_descriptor_ = file->message_type(1);
   static const int LayerStructParameter_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayerStructParameter, inputdim_),
@@ -67,36 +72,59 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayerStructParameter, type_),
   };
   LayerStructParameter_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
       LayerStructParameter_descriptor_,
       LayerStructParameter::default_instance_,
       LayerStructParameter_offsets_,
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayerStructParameter, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayerStructParameter, _unknown_fields_),
       -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(LayerStructParameter));
+      -1,
+      sizeof(LayerStructParameter),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(LayerStructParameter, _internal_metadata_),
+      -1);
   LayerStructParameter_ActivationType_descriptor_ = LayerStructParameter_descriptor_->enum_type(0);
-  NeuralNetTrainingParameter_descriptor_ = file->message_type(2);
-  static const int NeuralNetTrainingParameter_offsets_[5] = {
+  RNNStructParameter_descriptor_ = file->message_type(2);
+  static const int RNNStructParameter_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, numhiddenlayers_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayerinputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayeroutputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, inputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, outputdim_),
+  };
+  RNNStructParameter_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      RNNStructParameter_descriptor_,
+      RNNStructParameter::default_instance_,
+      RNNStructParameter_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, _has_bits_[0]),
+      -1,
+      -1,
+      sizeof(RNNStructParameter),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, _internal_metadata_),
+      -1);
+  NeuralNetTrainingParameter_descriptor_ = file->message_type(3);
+  static const int NeuralNetTrainingParameter_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, learningrate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, maxiter_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, minibatchsize_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, nepoch_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, epi_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, trainertype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, decayrate_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, momentum_),
   };
   NeuralNetTrainingParameter_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
       NeuralNetTrainingParameter_descriptor_,
       NeuralNetTrainingParameter::default_instance_,
       NeuralNetTrainingParameter_offsets_,
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, _unknown_fields_),
       -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(NeuralNetTrainingParameter));
+      -1,
+      sizeof(NeuralNetTrainingParameter),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, _internal_metadata_),
+      -1);
+  NeuralNetTrainingParameter_TrainerType_descriptor_ = NeuralNetTrainingParameter_descriptor_->enum_type(0);
 }
 
 namespace {
@@ -110,11 +138,13 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    NeuralNetParameter_descriptor_, &NeuralNetParameter::default_instance());
+      NeuralNetParameter_descriptor_, &NeuralNetParameter::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    LayerStructParameter_descriptor_, &LayerStructParameter::default_instance());
+      LayerStructParameter_descriptor_, &LayerStructParameter::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    NeuralNetTrainingParameter_descriptor_, &NeuralNetTrainingParameter::default_instance());
+      RNNStructParameter_descriptor_, &RNNStructParameter::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      NeuralNetTrainingParameter_descriptor_, &NeuralNetTrainingParameter::default_instance());
 }
 
 }  // namespace
@@ -124,6 +154,8 @@ void protobuf_ShutdownFile_DeepLearning_2eproto() {
   delete NeuralNetParameter_reflection_;
   delete LayerStructParameter::default_instance_;
   delete LayerStructParameter_reflection_;
+  delete RNNStructParameter::default_instance_;
+  delete RNNStructParameter_reflection_;
   delete NeuralNetTrainingParameter::default_instance_;
   delete NeuralNetTrainingParameter_reflection_;
 }
@@ -135,28 +167,39 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\022DeepLearning.proto\022\014DeepLearning\"\267\001\n\022N"
+    "\n\022DeepLearning.proto\022\014DeepLearning\"\354\001\n\022N"
     "euralNetParameter\022\014\n\004name\030\001 \001(\t\022\014\n\004type\030"
     "\002 \001(\t\0227\n\013layerStruct\030d \003(\0132\".DeepLearnin"
     "g.LayerStructParameter\022L\n\032neuralNetTrain"
     "ingParameter\030e \001(\0132(.DeepLearning.Neural"
-    "NetTrainingParameter\"\344\001\n\024LayerStructPara"
-    "meter\022\020\n\010inputDim\030\001 \001(\005\022\021\n\toutputDim\030\002 \001"
-    "(\005\022I\n\016activationType\030\003 \001(\01621.DeepLearnin"
-    "g.LayerStructParameter.ActivationType\022\014\n"
-    "\004name\030\004 \001(\t\022\014\n\004type\030\005 \001(\t\"@\n\016ActivationT"
-    "ype\022\013\n\007sigmoid\020\001\022\010\n\004tanh\020\002\022\n\n\006linear\020\003\022\013"
-    "\n\007softmax\020\004\"~\n\032NeuralNetTrainingParamete"
-    "r\022\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 \001(\005"
-    "\022\025\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001(\005\022"
-    "\022\n\003epi\030\005 \001(\001:\0051e-06", 579);
+    "NetTrainingParameter\0223\n\trnnStruct\030f \001(\0132"
+    " .DeepLearning.RNNStructParameter\"\344\001\n\024La"
+    "yerStructParameter\022\020\n\010inputDim\030\001 \001(\005\022\021\n\t"
+    "outputDim\030\002 \001(\005\022I\n\016activationType\030\003 \001(\0162"
+    "1.DeepLearning.LayerStructParameter.Acti"
+    "vationType\022\014\n\004name\030\004 \001(\t\022\014\n\004type\030\005 \001(\t\"@"
+    "\n\016ActivationType\022\013\n\007sigmoid\020\001\022\010\n\004tanh\020\002\022"
+    "\n\n\006linear\020\003\022\013\n\007softmax\020\004\"\215\001\n\022RNNStructPa"
+    "rameter\022\027\n\017numHiddenLayers\030\001 \001(\005\022\033\n\023hidd"
+    "enLayerInputDim\030\002 \001(\005\022\034\n\024hiddenLayerOutp"
+    "utDim\030\003 \001(\005\022\020\n\010inputDim\030\004 \001(\005\022\021\n\toutputD"
+    "im\030\005 \001(\005\"\240\002\n\032NeuralNetTrainingParameter\022"
+    "\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 \001(\005\022\025"
+    "\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001(\005\022\022\n"
+    "\003epi\030\005 \001(\001:\0051e-06\022N\n\013trainerType\030\006 \001(\01624"
+    ".DeepLearning.NeuralNetTrainingParameter"
+    ".TrainerType:\003SGD\022\025\n\tdecayRate\030\007 \001(\001:\00210"
+    "\022\025\n\010momentum\030\010 \001(\001:\0030.9\"\"\n\013TrainerType\022\007"
+    "\n\003SGD\020\001\022\n\n\006iRProp\020\002", 939);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DeepLearning.proto", &protobuf_RegisterTypes);
   NeuralNetParameter::default_instance_ = new NeuralNetParameter();
   LayerStructParameter::default_instance_ = new LayerStructParameter();
+  RNNStructParameter::default_instance_ = new RNNStructParameter();
   NeuralNetTrainingParameter::default_instance_ = new NeuralNetTrainingParameter();
   NeuralNetParameter::default_instance_->InitAsDefaultInstance();
   LayerStructParameter::default_instance_->InitAsDefaultInstance();
+  RNNStructParameter::default_instance_->InitAsDefaultInstance();
   NeuralNetTrainingParameter::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_DeepLearning_2eproto);
 }
@@ -168,6 +211,16 @@ struct StaticDescriptorInitializer_DeepLearning_2eproto {
   }
 } static_descriptor_initializer_DeepLearning_2eproto_;
 
+namespace {
+
+static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
+static void MergeFromFail(int line) {
+  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+}
+
+}  // namespace
+
+
 // ===================================================================
 
 #ifndef _MSC_VER
@@ -175,20 +228,23 @@ const int NeuralNetParameter::kNameFieldNumber;
 const int NeuralNetParameter::kTypeFieldNumber;
 const int NeuralNetParameter::kLayerStructFieldNumber;
 const int NeuralNetParameter::kNeuralNetTrainingParameterFieldNumber;
+const int NeuralNetParameter::kRnnStructFieldNumber;
 #endif  // !_MSC_VER
 
 NeuralNetParameter::NeuralNetParameter()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:DeepLearning.NeuralNetParameter)
 }
 
 void NeuralNetParameter::InitAsDefaultInstance() {
   neuralnettrainingparameter_ = const_cast< ::DeepLearning::NeuralNetTrainingParameter*>(&::DeepLearning::NeuralNetTrainingParameter::default_instance());
+  rnnstruct_ = const_cast< ::DeepLearning::RNNStructParameter*>(&::DeepLearning::RNNStructParameter::default_instance());
 }
 
 NeuralNetParameter::NeuralNetParameter(const NeuralNetParameter& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:DeepLearning.NeuralNetParameter)
@@ -197,9 +253,10 @@ NeuralNetParameter::NeuralNetParameter(const NeuralNetParameter& from)
 void NeuralNetParameter::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   neuralnettrainingparameter_ = NULL;
+  rnnstruct_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -209,14 +266,11 @@ NeuralNetParameter::~NeuralNetParameter() {
 }
 
 void NeuralNetParameter::SharedDtor() {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete type_;
-  }
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
     delete neuralnettrainingparameter_;
+    delete rnnstruct_;
   }
 }
 
@@ -237,29 +291,34 @@ const NeuralNetParameter& NeuralNetParameter::default_instance() {
 
 NeuralNetParameter* NeuralNetParameter::default_instance_ = NULL;
 
-NeuralNetParameter* NeuralNetParameter::New() const {
-  return new NeuralNetParameter;
+NeuralNetParameter* NeuralNetParameter::New(::google::protobuf::Arena* arena) const {
+  NeuralNetParameter* n = new NeuralNetParameter;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void NeuralNetParameter::Clear() {
-  if (_has_bits_[0 / 32] & 11) {
+  if (_has_bits_[0 / 32] & 27u) {
     if (has_name()) {
-      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        name_->clear();
-      }
+      name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
     if (has_type()) {
-      if (type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        type_->clear();
-      }
+      type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
     if (has_neuralnettrainingparameter()) {
       if (neuralnettrainingparameter_ != NULL) neuralnettrainingparameter_->::DeepLearning::NeuralNetTrainingParameter::Clear();
     }
+    if (has_rnnstruct()) {
+      if (rnnstruct_ != NULL) rnnstruct_->::DeepLearning::RNNStructParameter::Clear();
+    }
   }
   layerstruct_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->Clear();
+  }
 }
 
 bool NeuralNetParameter::MergePartialFromCodedStream(
@@ -280,7 +339,7 @@ bool NeuralNetParameter::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "name");
+            "DeepLearning.NeuralNetParameter.name");
         } else {
           goto handle_unusual;
         }
@@ -297,7 +356,7 @@ bool NeuralNetParameter::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->type().data(), this->type().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "type");
+            "DeepLearning.NeuralNetParameter.type");
         } else {
           goto handle_unusual;
         }
@@ -309,12 +368,15 @@ bool NeuralNetParameter::MergePartialFromCodedStream(
       case 100: {
         if (tag == 802) {
          parse_layerStruct:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_layerStruct:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_layerstruct()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(802)) goto parse_layerStruct;
+        if (input->ExpectTag(802)) goto parse_loop_layerStruct;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectTag(810)) goto parse_neuralNetTrainingParameter;
         break;
       }
@@ -325,6 +387,19 @@ bool NeuralNetParameter::MergePartialFromCodedStream(
          parse_neuralNetTrainingParameter:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_neuralnettrainingparameter()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(818)) goto parse_rnnStruct;
+        break;
+      }
+
+      // optional .DeepLearning.RNNStructParameter rnnStruct = 102;
+      case 102: {
+        if (tag == 818) {
+         parse_rnnStruct:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_rnnstruct()));
         } else {
           goto handle_unusual;
         }
@@ -362,7 +437,7 @@ void NeuralNetParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "name");
+      "DeepLearning.NeuralNetParameter.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -372,13 +447,13 @@ void NeuralNetParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "type");
+      "DeepLearning.NeuralNetParameter.type");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->type(), output);
   }
 
   // repeated .DeepLearning.LayerStructParameter layerStruct = 100;
-  for (int i = 0; i < this->layerstruct_size(); i++) {
+  for (unsigned int i = 0, n = this->layerstruct_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       100, this->layerstruct(i), output);
   }
@@ -386,10 +461,16 @@ void NeuralNetParameter::SerializeWithCachedSizes(
   // optional .DeepLearning.NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
   if (has_neuralnettrainingparameter()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      101, this->neuralnettrainingparameter(), output);
+      101, *this->neuralnettrainingparameter_, output);
   }
 
-  if (!unknown_fields().empty()) {
+  // optional .DeepLearning.RNNStructParameter rnnStruct = 102;
+  if (has_rnnstruct()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      102, *this->rnnstruct_, output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
@@ -404,7 +485,7 @@ void NeuralNetParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "name");
+      "DeepLearning.NeuralNetParameter.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -415,14 +496,14 @@ void NeuralNetParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "type");
+      "DeepLearning.NeuralNetParameter.type");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->type(), target);
   }
 
   // repeated .DeepLearning.LayerStructParameter layerStruct = 100;
-  for (int i = 0; i < this->layerstruct_size(); i++) {
+  for (unsigned int i = 0, n = this->layerstruct_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         100, this->layerstruct(i), target);
@@ -432,10 +513,17 @@ void NeuralNetParameter::SerializeWithCachedSizes(
   if (has_neuralnettrainingparameter()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        101, this->neuralnettrainingparameter(), target);
+        101, *this->neuralnettrainingparameter_, target);
   }
 
-  if (!unknown_fields().empty()) {
+  // optional .DeepLearning.RNNStructParameter rnnStruct = 102;
+  if (has_rnnstruct()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        102, *this->rnnstruct_, target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
@@ -446,7 +534,7 @@ void NeuralNetParameter::SerializeWithCachedSizes(
 int NeuralNetParameter::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 27) {
     // optional string name = 1;
     if (has_name()) {
       total_size += 1 +
@@ -465,7 +553,14 @@ int NeuralNetParameter::ByteSize() const {
     if (has_neuralnettrainingparameter()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->neuralnettrainingparameter());
+          *this->neuralnettrainingparameter_);
+    }
+
+    // optional .DeepLearning.RNNStructParameter rnnStruct = 102;
+    if (has_rnnstruct()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          *this->rnnstruct_);
     }
 
   }
@@ -477,7 +572,7 @@ int NeuralNetParameter::ByteSize() const {
         this->layerstruct(i));
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
@@ -489,10 +584,10 @@ int NeuralNetParameter::ByteSize() const {
 }
 
 void NeuralNetParameter::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const NeuralNetParameter* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const NeuralNetParameter*>(
-      &from);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const NeuralNetParameter* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const NeuralNetParameter>(
+          &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -501,20 +596,27 @@ void NeuralNetParameter::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void NeuralNetParameter::MergeFrom(const NeuralNetParameter& from) {
-  GOOGLE_CHECK_NE(&from, this);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   layerstruct_.MergeFrom(from.layerstruct_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_name()) {
-      set_name(from.name());
+      set_has_name();
+      name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
     }
     if (from.has_type()) {
-      set_type(from.type());
+      set_has_type();
+      type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.type_);
     }
     if (from.has_neuralnettrainingparameter()) {
       mutable_neuralnettrainingparameter()->::DeepLearning::NeuralNetTrainingParameter::MergeFrom(from.neuralnettrainingparameter());
     }
+    if (from.has_rnnstruct()) {
+      mutable_rnnstruct()->::DeepLearning::RNNStructParameter::MergeFrom(from.rnnstruct());
+    }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  if (from._internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  }
 }
 
 void NeuralNetParameter::CopyFrom(const ::google::protobuf::Message& from) {
@@ -535,15 +637,18 @@ bool NeuralNetParameter::IsInitialized() const {
 }
 
 void NeuralNetParameter::Swap(NeuralNetParameter* other) {
-  if (other != this) {
-    std::swap(name_, other->name_);
-    std::swap(type_, other->type_);
-    layerstruct_.Swap(&other->layerstruct_);
-    std::swap(neuralnettrainingparameter_, other->neuralnettrainingparameter_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void NeuralNetParameter::InternalSwap(NeuralNetParameter* other) {
+  name_.Swap(&other->name_);
+  type_.Swap(&other->type_);
+  layerstruct_.UnsafeArenaSwap(&other->layerstruct_);
+  std::swap(neuralnettrainingparameter_, other->neuralnettrainingparameter_);
+  std::swap(rnnstruct_, other->rnnstruct_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata NeuralNetParameter::GetMetadata() const {
@@ -554,6 +659,232 @@ void NeuralNetParameter::Swap(NeuralNetParameter* other) {
   return metadata;
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// NeuralNetParameter
+
+// optional string name = 1;
+bool NeuralNetParameter::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void NeuralNetParameter::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void NeuralNetParameter::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void NeuralNetParameter::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_name();
+}
+ const ::std::string& NeuralNetParameter::name() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void NeuralNetParameter::set_name(const ::std::string& value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetParameter.name)
+}
+ void NeuralNetParameter::set_name(const char* value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:DeepLearning.NeuralNetParameter.name)
+}
+ void NeuralNetParameter::set_name(const char* value, size_t size) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.NeuralNetParameter.name)
+}
+ ::std::string* NeuralNetParameter::mutable_name() {
+  set_has_name();
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* NeuralNetParameter::release_name() {
+  clear_has_name();
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void NeuralNetParameter::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    set_has_name();
+  } else {
+    clear_has_name();
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.name)
+}
+
+// optional string type = 2;
+bool NeuralNetParameter::has_type() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void NeuralNetParameter::set_has_type() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void NeuralNetParameter::clear_has_type() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void NeuralNetParameter::clear_type() {
+  type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_type();
+}
+ const ::std::string& NeuralNetParameter::type() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.type)
+  return type_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void NeuralNetParameter::set_type(const ::std::string& value) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetParameter.type)
+}
+ void NeuralNetParameter::set_type(const char* value) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:DeepLearning.NeuralNetParameter.type)
+}
+ void NeuralNetParameter::set_type(const char* value, size_t size) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.NeuralNetParameter.type)
+}
+ ::std::string* NeuralNetParameter::mutable_type() {
+  set_has_type();
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.type)
+  return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* NeuralNetParameter::release_type() {
+  clear_has_type();
+  return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void NeuralNetParameter::set_allocated_type(::std::string* type) {
+  if (type != NULL) {
+    set_has_type();
+  } else {
+    clear_has_type();
+  }
+  type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.type)
+}
+
+// repeated .DeepLearning.LayerStructParameter layerStruct = 100;
+int NeuralNetParameter::layerstruct_size() const {
+  return layerstruct_.size();
+}
+void NeuralNetParameter::clear_layerstruct() {
+  layerstruct_.Clear();
+}
+ const ::DeepLearning::LayerStructParameter& NeuralNetParameter::layerstruct(int index) const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.layerStruct)
+  return layerstruct_.Get(index);
+}
+ ::DeepLearning::LayerStructParameter* NeuralNetParameter::mutable_layerstruct(int index) {
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.layerStruct)
+  return layerstruct_.Mutable(index);
+}
+ ::DeepLearning::LayerStructParameter* NeuralNetParameter::add_layerstruct() {
+  // @@protoc_insertion_point(field_add:DeepLearning.NeuralNetParameter.layerStruct)
+  return layerstruct_.Add();
+}
+ const ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >&
+NeuralNetParameter::layerstruct() const {
+  // @@protoc_insertion_point(field_list:DeepLearning.NeuralNetParameter.layerStruct)
+  return layerstruct_;
+}
+ ::google::protobuf::RepeatedPtrField< ::DeepLearning::LayerStructParameter >*
+NeuralNetParameter::mutable_layerstruct() {
+  // @@protoc_insertion_point(field_mutable_list:DeepLearning.NeuralNetParameter.layerStruct)
+  return &layerstruct_;
+}
+
+// optional .DeepLearning.NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
+bool NeuralNetParameter::has_neuralnettrainingparameter() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void NeuralNetParameter::set_has_neuralnettrainingparameter() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void NeuralNetParameter::clear_has_neuralnettrainingparameter() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void NeuralNetParameter::clear_neuralnettrainingparameter() {
+  if (neuralnettrainingparameter_ != NULL) neuralnettrainingparameter_->::DeepLearning::NeuralNetTrainingParameter::Clear();
+  clear_has_neuralnettrainingparameter();
+}
+ const ::DeepLearning::NeuralNetTrainingParameter& NeuralNetParameter::neuralnettrainingparameter() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
+  return neuralnettrainingparameter_ != NULL ? *neuralnettrainingparameter_ : *default_instance_->neuralnettrainingparameter_;
+}
+ ::DeepLearning::NeuralNetTrainingParameter* NeuralNetParameter::mutable_neuralnettrainingparameter() {
+  set_has_neuralnettrainingparameter();
+  if (neuralnettrainingparameter_ == NULL) {
+    neuralnettrainingparameter_ = new ::DeepLearning::NeuralNetTrainingParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
+  return neuralnettrainingparameter_;
+}
+ ::DeepLearning::NeuralNetTrainingParameter* NeuralNetParameter::release_neuralnettrainingparameter() {
+  clear_has_neuralnettrainingparameter();
+  ::DeepLearning::NeuralNetTrainingParameter* temp = neuralnettrainingparameter_;
+  neuralnettrainingparameter_ = NULL;
+  return temp;
+}
+ void NeuralNetParameter::set_allocated_neuralnettrainingparameter(::DeepLearning::NeuralNetTrainingParameter* neuralnettrainingparameter) {
+  delete neuralnettrainingparameter_;
+  neuralnettrainingparameter_ = neuralnettrainingparameter;
+  if (neuralnettrainingparameter) {
+    set_has_neuralnettrainingparameter();
+  } else {
+    clear_has_neuralnettrainingparameter();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.neuralNetTrainingParameter)
+}
+
+// optional .DeepLearning.RNNStructParameter rnnStruct = 102;
+bool NeuralNetParameter::has_rnnstruct() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void NeuralNetParameter::set_has_rnnstruct() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void NeuralNetParameter::clear_has_rnnstruct() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void NeuralNetParameter::clear_rnnstruct() {
+  if (rnnstruct_ != NULL) rnnstruct_->::DeepLearning::RNNStructParameter::Clear();
+  clear_has_rnnstruct();
+}
+ const ::DeepLearning::RNNStructParameter& NeuralNetParameter::rnnstruct() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetParameter.rnnStruct)
+  return rnnstruct_ != NULL ? *rnnstruct_ : *default_instance_->rnnstruct_;
+}
+ ::DeepLearning::RNNStructParameter* NeuralNetParameter::mutable_rnnstruct() {
+  set_has_rnnstruct();
+  if (rnnstruct_ == NULL) {
+    rnnstruct_ = new ::DeepLearning::RNNStructParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.NeuralNetParameter.rnnStruct)
+  return rnnstruct_;
+}
+ ::DeepLearning::RNNStructParameter* NeuralNetParameter::release_rnnstruct() {
+  clear_has_rnnstruct();
+  ::DeepLearning::RNNStructParameter* temp = rnnstruct_;
+  rnnstruct_ = NULL;
+  return temp;
+}
+ void NeuralNetParameter::set_allocated_rnnstruct(::DeepLearning::RNNStructParameter* rnnstruct) {
+  delete rnnstruct_;
+  rnnstruct_ = rnnstruct;
+  if (rnnstruct) {
+    set_has_rnnstruct();
+  } else {
+    clear_has_rnnstruct();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.NeuralNetParameter.rnnStruct)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
@@ -591,7 +922,7 @@ const int LayerStructParameter::kTypeFieldNumber;
 #endif  // !_MSC_VER
 
 LayerStructParameter::LayerStructParameter()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:DeepLearning.LayerStructParameter)
 }
@@ -600,7 +931,8 @@ void LayerStructParameter::InitAsDefaultInstance() {
 }
 
 LayerStructParameter::LayerStructParameter(const LayerStructParameter& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:DeepLearning.LayerStructParameter)
@@ -612,8 +944,8 @@ void LayerStructParameter::SharedCtor() {
   inputdim_ = 0;
   outputdim_ = 0;
   activationtype_ = 1;
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  type_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -623,12 +955,8 @@ LayerStructParameter::~LayerStructParameter() {
 }
 
 void LayerStructParameter::SharedDtor() {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete type_;
-  }
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  type_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -650,41 +978,41 @@ const LayerStructParameter& LayerStructParameter::default_instance() {
 
 LayerStructParameter* LayerStructParameter::default_instance_ = NULL;
 
-LayerStructParameter* LayerStructParameter::New() const {
-  return new LayerStructParameter;
+LayerStructParameter* LayerStructParameter::New(::google::protobuf::Arena* arena) const {
+  LayerStructParameter* n = new LayerStructParameter;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void LayerStructParameter::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<LayerStructParameter*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<LayerStructParameter*>(16)->f)
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
+  if (_has_bits_[0 / 32] & 31u) {
     ZR_(inputdim_, outputdim_);
     activationtype_ = 1;
     if (has_name()) {
-      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        name_->clear();
-      }
+      name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
     if (has_type()) {
-      if (type_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        type_->clear();
-      }
+      type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->Clear();
+  }
 }
 
 bool LayerStructParameter::MergePartialFromCodedStream(
@@ -755,7 +1083,7 @@ bool LayerStructParameter::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "name");
+            "DeepLearning.LayerStructParameter.name");
         } else {
           goto handle_unusual;
         }
@@ -772,7 +1100,7 @@ bool LayerStructParameter::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->type().data(), this->type().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "type");
+            "DeepLearning.LayerStructParameter.type");
         } else {
           goto handle_unusual;
         }
@@ -826,7 +1154,7 @@ void LayerStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "name");
+      "DeepLearning.LayerStructParameter.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->name(), output);
   }
@@ -836,12 +1164,12 @@ void LayerStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "type");
+      "DeepLearning.LayerStructParameter.type");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       5, this->type(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
@@ -872,7 +1200,7 @@ void LayerStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "name");
+      "DeepLearning.LayerStructParameter.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         4, this->name(), target);
@@ -883,13 +1211,13 @@ void LayerStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "type");
+      "DeepLearning.LayerStructParameter.type");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         5, this->type(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
@@ -900,7 +1228,7 @@ void LayerStructParameter::SerializeWithCachedSizes(
 int LayerStructParameter::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 31) {
     // optional int32 inputDim = 1;
     if (has_inputdim()) {
       total_size += 1 +
@@ -936,7 +1264,7 @@ int LayerStructParameter::ByteSize() const {
     }
 
   }
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
@@ -948,10 +1276,10 @@ int LayerStructParameter::ByteSize() const {
 }
 
 void LayerStructParameter::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const LayerStructParameter* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const LayerStructParameter*>(
-      &from);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const LayerStructParameter* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const LayerStructParameter>(
+          &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -960,7 +1288,7 @@ void LayerStructParameter::MergeFrom(const ::google::protobuf::Message& from) {
 }
 
 void LayerStructParameter::MergeFrom(const LayerStructParameter& from) {
-  GOOGLE_CHECK_NE(&from, this);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_inputdim()) {
       set_inputdim(from.inputdim());
@@ -972,13 +1300,17 @@ void LayerStructParameter::MergeFrom(const LayerStructParameter& from) {
       set_activationtype(from.activationtype());
     }
     if (from.has_name()) {
-      set_name(from.name());
+      set_has_name();
+      name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
     }
     if (from.has_type()) {
-      set_type(from.type());
+      set_has_type();
+      type_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.type_);
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  if (from._internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  }
 }
 
 void LayerStructParameter::CopyFrom(const ::google::protobuf::Message& from) {
@@ -999,16 +1331,18 @@ bool LayerStructParameter::IsInitialized() const {
 }
 
 void LayerStructParameter::Swap(LayerStructParameter* other) {
-  if (other != this) {
-    std::swap(inputdim_, other->inputdim_);
-    std::swap(outputdim_, other->outputdim_);
-    std::swap(activationtype_, other->activationtype_);
-    std::swap(name_, other->name_);
-    std::swap(type_, other->type_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void LayerStructParameter::InternalSwap(LayerStructParameter* other) {
+  std::swap(inputdim_, other->inputdim_);
+  std::swap(outputdim_, other->outputdim_);
+  std::swap(activationtype_, other->activationtype_);
+  name_.Swap(&other->name_);
+  type_.Swap(&other->type_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata LayerStructParameter::GetMetadata() const {
@@ -1019,19 +1353,749 @@ void LayerStructParameter::Swap(LayerStructParameter* other) {
   return metadata;
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// LayerStructParameter
+
+// optional int32 inputDim = 1;
+bool LayerStructParameter::has_inputdim() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void LayerStructParameter::set_has_inputdim() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void LayerStructParameter::clear_has_inputdim() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void LayerStructParameter::clear_inputdim() {
+  inputdim_ = 0;
+  clear_has_inputdim();
+}
+ ::google::protobuf::int32 LayerStructParameter::inputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.inputDim)
+  return inputdim_;
+}
+ void LayerStructParameter::set_inputdim(::google::protobuf::int32 value) {
+  set_has_inputdim();
+  inputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.inputDim)
+}
+
+// optional int32 outputDim = 2;
+bool LayerStructParameter::has_outputdim() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void LayerStructParameter::set_has_outputdim() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void LayerStructParameter::clear_has_outputdim() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void LayerStructParameter::clear_outputdim() {
+  outputdim_ = 0;
+  clear_has_outputdim();
+}
+ ::google::protobuf::int32 LayerStructParameter::outputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.outputDim)
+  return outputdim_;
+}
+ void LayerStructParameter::set_outputdim(::google::protobuf::int32 value) {
+  set_has_outputdim();
+  outputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.outputDim)
+}
+
+// optional .DeepLearning.LayerStructParameter.ActivationType activationType = 3;
+bool LayerStructParameter::has_activationtype() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void LayerStructParameter::set_has_activationtype() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void LayerStructParameter::clear_has_activationtype() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void LayerStructParameter::clear_activationtype() {
+  activationtype_ = 1;
+  clear_has_activationtype();
+}
+ ::DeepLearning::LayerStructParameter_ActivationType LayerStructParameter::activationtype() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.activationType)
+  return static_cast< ::DeepLearning::LayerStructParameter_ActivationType >(activationtype_);
+}
+ void LayerStructParameter::set_activationtype(::DeepLearning::LayerStructParameter_ActivationType value) {
+  assert(::DeepLearning::LayerStructParameter_ActivationType_IsValid(value));
+  set_has_activationtype();
+  activationtype_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.activationType)
+}
+
+// optional string name = 4;
+bool LayerStructParameter::has_name() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void LayerStructParameter::set_has_name() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void LayerStructParameter::clear_has_name() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void LayerStructParameter::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_name();
+}
+ const ::std::string& LayerStructParameter::name() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void LayerStructParameter::set_name(const ::std::string& value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.name)
+}
+ void LayerStructParameter::set_name(const char* value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:DeepLearning.LayerStructParameter.name)
+}
+ void LayerStructParameter::set_name(const char* value, size_t size) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.LayerStructParameter.name)
+}
+ ::std::string* LayerStructParameter::mutable_name() {
+  set_has_name();
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* LayerStructParameter::release_name() {
+  clear_has_name();
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void LayerStructParameter::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    set_has_name();
+  } else {
+    clear_has_name();
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.name)
+}
+
+// optional string type = 5;
+bool LayerStructParameter::has_type() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void LayerStructParameter::set_has_type() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void LayerStructParameter::clear_has_type() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void LayerStructParameter::clear_type() {
+  type_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_type();
+}
+ const ::std::string& LayerStructParameter::type() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.type)
+  return type_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void LayerStructParameter::set_type(const ::std::string& value) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.type)
+}
+ void LayerStructParameter::set_type(const char* value) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:DeepLearning.LayerStructParameter.type)
+}
+ void LayerStructParameter::set_type(const char* value, size_t size) {
+  set_has_type();
+  type_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:DeepLearning.LayerStructParameter.type)
+}
+ ::std::string* LayerStructParameter::mutable_type() {
+  set_has_type();
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.type)
+  return type_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* LayerStructParameter::release_type() {
+  clear_has_type();
+  return type_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void LayerStructParameter::set_allocated_type(::std::string* type) {
+  if (type != NULL) {
+    set_has_type();
+  } else {
+    clear_has_type();
+  }
+  type_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), type);
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.type)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
+#ifndef _MSC_VER
+const int RNNStructParameter::kNumHiddenLayersFieldNumber;
+const int RNNStructParameter::kHiddenLayerInputDimFieldNumber;
+const int RNNStructParameter::kHiddenLayerOutputDimFieldNumber;
+const int RNNStructParameter::kInputDimFieldNumber;
+const int RNNStructParameter::kOutputDimFieldNumber;
+#endif  // !_MSC_VER
+
+RNNStructParameter::RNNStructParameter()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:DeepLearning.RNNStructParameter)
+}
+
+void RNNStructParameter::InitAsDefaultInstance() {
+}
+
+RNNStructParameter::RNNStructParameter(const RNNStructParameter& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:DeepLearning.RNNStructParameter)
+}
+
+void RNNStructParameter::SharedCtor() {
+  _cached_size_ = 0;
+  numhiddenlayers_ = 0;
+  hiddenlayerinputdim_ = 0;
+  hiddenlayeroutputdim_ = 0;
+  inputdim_ = 0;
+  outputdim_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+RNNStructParameter::~RNNStructParameter() {
+  // @@protoc_insertion_point(destructor:DeepLearning.RNNStructParameter)
+  SharedDtor();
+}
+
+void RNNStructParameter::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void RNNStructParameter::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* RNNStructParameter::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return RNNStructParameter_descriptor_;
+}
+
+const RNNStructParameter& RNNStructParameter::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_DeepLearning_2eproto();
+  return *default_instance_;
+}
+
+RNNStructParameter* RNNStructParameter::default_instance_ = NULL;
+
+RNNStructParameter* RNNStructParameter::New(::google::protobuf::Arena* arena) const {
+  RNNStructParameter* n = new RNNStructParameter;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void RNNStructParameter::Clear() {
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<RNNStructParameter*>(16)->f)
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  if (_has_bits_[0 / 32] & 31u) {
+    ZR_(numhiddenlayers_, outputdim_);
+  }
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  if (_internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->Clear();
+  }
+}
+
+bool RNNStructParameter::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:DeepLearning.RNNStructParameter)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 numHiddenLayers = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &numhiddenlayers_)));
+          set_has_numhiddenlayers();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_hiddenLayerInputDim;
+        break;
+      }
+
+      // optional int32 hiddenLayerInputDim = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_hiddenLayerInputDim:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &hiddenlayerinputdim_)));
+          set_has_hiddenlayerinputdim();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_hiddenLayerOutputDim;
+        break;
+      }
+
+      // optional int32 hiddenLayerOutputDim = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_hiddenLayerOutputDim:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &hiddenlayeroutputdim_)));
+          set_has_hiddenlayeroutputdim();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_inputDim;
+        break;
+      }
+
+      // optional int32 inputDim = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_inputDim:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &inputdim_)));
+          set_has_inputdim();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_outputDim;
+        break;
+      }
+
+      // optional int32 outputDim = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_outputDim:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &outputdim_)));
+          set_has_outputdim();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:DeepLearning.RNNStructParameter)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:DeepLearning.RNNStructParameter)
+  return false;
+#undef DO_
+}
+
+void RNNStructParameter::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:DeepLearning.RNNStructParameter)
+  // optional int32 numHiddenLayers = 1;
+  if (has_numhiddenlayers()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->numhiddenlayers(), output);
+  }
+
+  // optional int32 hiddenLayerInputDim = 2;
+  if (has_hiddenlayerinputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->hiddenlayerinputdim(), output);
+  }
+
+  // optional int32 hiddenLayerOutputDim = 3;
+  if (has_hiddenlayeroutputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->hiddenlayeroutputdim(), output);
+  }
+
+  // optional int32 inputDim = 4;
+  if (has_inputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->inputdim(), output);
+  }
+
+  // optional int32 outputDim = 5;
+  if (has_outputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->outputdim(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:DeepLearning.RNNStructParameter)
+}
+
+::google::protobuf::uint8* RNNStructParameter::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:DeepLearning.RNNStructParameter)
+  // optional int32 numHiddenLayers = 1;
+  if (has_numhiddenlayers()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->numhiddenlayers(), target);
+  }
+
+  // optional int32 hiddenLayerInputDim = 2;
+  if (has_hiddenlayerinputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->hiddenlayerinputdim(), target);
+  }
+
+  // optional int32 hiddenLayerOutputDim = 3;
+  if (has_hiddenlayeroutputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->hiddenlayeroutputdim(), target);
+  }
+
+  // optional int32 inputDim = 4;
+  if (has_inputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->inputdim(), target);
+  }
+
+  // optional int32 outputDim = 5;
+  if (has_outputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->outputdim(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:DeepLearning.RNNStructParameter)
+  return target;
+}
+
+int RNNStructParameter::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & 31) {
+    // optional int32 numHiddenLayers = 1;
+    if (has_numhiddenlayers()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->numhiddenlayers());
+    }
+
+    // optional int32 hiddenLayerInputDim = 2;
+    if (has_hiddenlayerinputdim()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->hiddenlayerinputdim());
+    }
+
+    // optional int32 hiddenLayerOutputDim = 3;
+    if (has_hiddenlayeroutputdim()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->hiddenlayeroutputdim());
+    }
+
+    // optional int32 inputDim = 4;
+    if (has_inputdim()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->inputdim());
+    }
+
+    // optional int32 outputDim = 5;
+    if (has_outputdim()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->outputdim());
+    }
+
+  }
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RNNStructParameter::MergeFrom(const ::google::protobuf::Message& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const RNNStructParameter* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const RNNStructParameter>(
+          &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void RNNStructParameter::MergeFrom(const RNNStructParameter& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_numhiddenlayers()) {
+      set_numhiddenlayers(from.numhiddenlayers());
+    }
+    if (from.has_hiddenlayerinputdim()) {
+      set_hiddenlayerinputdim(from.hiddenlayerinputdim());
+    }
+    if (from.has_hiddenlayeroutputdim()) {
+      set_hiddenlayeroutputdim(from.hiddenlayeroutputdim());
+    }
+    if (from.has_inputdim()) {
+      set_inputdim(from.inputdim());
+    }
+    if (from.has_outputdim()) {
+      set_outputdim(from.outputdim());
+    }
+  }
+  if (from._internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  }
+}
+
+void RNNStructParameter::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RNNStructParameter::CopyFrom(const RNNStructParameter& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RNNStructParameter::IsInitialized() const {
+
+  return true;
+}
+
+void RNNStructParameter::Swap(RNNStructParameter* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RNNStructParameter::InternalSwap(RNNStructParameter* other) {
+  std::swap(numhiddenlayers_, other->numhiddenlayers_);
+  std::swap(hiddenlayerinputdim_, other->hiddenlayerinputdim_);
+  std::swap(hiddenlayeroutputdim_, other->hiddenlayeroutputdim_);
+  std::swap(inputdim_, other->inputdim_);
+  std::swap(outputdim_, other->outputdim_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata RNNStructParameter::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = RNNStructParameter_descriptor_;
+  metadata.reflection = RNNStructParameter_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// RNNStructParameter
+
+// optional int32 numHiddenLayers = 1;
+bool RNNStructParameter::has_numhiddenlayers() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void RNNStructParameter::set_has_numhiddenlayers() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void RNNStructParameter::clear_has_numhiddenlayers() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void RNNStructParameter::clear_numhiddenlayers() {
+  numhiddenlayers_ = 0;
+  clear_has_numhiddenlayers();
+}
+ ::google::protobuf::int32 RNNStructParameter::numhiddenlayers() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.numHiddenLayers)
+  return numhiddenlayers_;
+}
+ void RNNStructParameter::set_numhiddenlayers(::google::protobuf::int32 value) {
+  set_has_numhiddenlayers();
+  numhiddenlayers_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.numHiddenLayers)
+}
+
+// optional int32 hiddenLayerInputDim = 2;
+bool RNNStructParameter::has_hiddenlayerinputdim() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void RNNStructParameter::set_has_hiddenlayerinputdim() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void RNNStructParameter::clear_has_hiddenlayerinputdim() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void RNNStructParameter::clear_hiddenlayerinputdim() {
+  hiddenlayerinputdim_ = 0;
+  clear_has_hiddenlayerinputdim();
+}
+ ::google::protobuf::int32 RNNStructParameter::hiddenlayerinputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.hiddenLayerInputDim)
+  return hiddenlayerinputdim_;
+}
+ void RNNStructParameter::set_hiddenlayerinputdim(::google::protobuf::int32 value) {
+  set_has_hiddenlayerinputdim();
+  hiddenlayerinputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.hiddenLayerInputDim)
+}
+
+// optional int32 hiddenLayerOutputDim = 3;
+bool RNNStructParameter::has_hiddenlayeroutputdim() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void RNNStructParameter::set_has_hiddenlayeroutputdim() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void RNNStructParameter::clear_has_hiddenlayeroutputdim() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void RNNStructParameter::clear_hiddenlayeroutputdim() {
+  hiddenlayeroutputdim_ = 0;
+  clear_has_hiddenlayeroutputdim();
+}
+ ::google::protobuf::int32 RNNStructParameter::hiddenlayeroutputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.hiddenLayerOutputDim)
+  return hiddenlayeroutputdim_;
+}
+ void RNNStructParameter::set_hiddenlayeroutputdim(::google::protobuf::int32 value) {
+  set_has_hiddenlayeroutputdim();
+  hiddenlayeroutputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.hiddenLayerOutputDim)
+}
+
+// optional int32 inputDim = 4;
+bool RNNStructParameter::has_inputdim() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void RNNStructParameter::set_has_inputdim() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void RNNStructParameter::clear_has_inputdim() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void RNNStructParameter::clear_inputdim() {
+  inputdim_ = 0;
+  clear_has_inputdim();
+}
+ ::google::protobuf::int32 RNNStructParameter::inputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.inputDim)
+  return inputdim_;
+}
+ void RNNStructParameter::set_inputdim(::google::protobuf::int32 value) {
+  set_has_inputdim();
+  inputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.inputDim)
+}
+
+// optional int32 outputDim = 5;
+bool RNNStructParameter::has_outputdim() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void RNNStructParameter::set_has_outputdim() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void RNNStructParameter::clear_has_outputdim() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void RNNStructParameter::clear_outputdim() {
+  outputdim_ = 0;
+  clear_has_outputdim();
+}
+ ::google::protobuf::int32 RNNStructParameter::outputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.outputDim)
+  return outputdim_;
+}
+ void RNNStructParameter::set_outputdim(::google::protobuf::int32 value) {
+  set_has_outputdim();
+  outputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.outputDim)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+const ::google::protobuf::EnumDescriptor* NeuralNetTrainingParameter_TrainerType_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return NeuralNetTrainingParameter_TrainerType_descriptor_;
+}
+bool NeuralNetTrainingParameter_TrainerType_IsValid(int value) {
+  switch(value) {
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const NeuralNetTrainingParameter_TrainerType NeuralNetTrainingParameter::SGD;
+const NeuralNetTrainingParameter_TrainerType NeuralNetTrainingParameter::iRProp;
+const NeuralNetTrainingParameter_TrainerType NeuralNetTrainingParameter::TrainerType_MIN;
+const NeuralNetTrainingParameter_TrainerType NeuralNetTrainingParameter::TrainerType_MAX;
+const int NeuralNetTrainingParameter::TrainerType_ARRAYSIZE;
+#endif  // _MSC_VER
 #ifndef _MSC_VER
 const int NeuralNetTrainingParameter::kLearningRateFieldNumber;
 const int NeuralNetTrainingParameter::kMaxIterFieldNumber;
 const int NeuralNetTrainingParameter::kMiniBatchSizeFieldNumber;
 const int NeuralNetTrainingParameter::kNEpochFieldNumber;
 const int NeuralNetTrainingParameter::kEpiFieldNumber;
+const int NeuralNetTrainingParameter::kTrainerTypeFieldNumber;
+const int NeuralNetTrainingParameter::kDecayRateFieldNumber;
+const int NeuralNetTrainingParameter::kMomentumFieldNumber;
 #endif  // !_MSC_VER
 
 NeuralNetTrainingParameter::NeuralNetTrainingParameter()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:DeepLearning.NeuralNetTrainingParameter)
 }
@@ -1040,7 +2104,8 @@ void NeuralNetTrainingParameter::InitAsDefaultInstance() {
 }
 
 NeuralNetTrainingParameter::NeuralNetTrainingParameter(const NeuralNetTrainingParameter& from)
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:DeepLearning.NeuralNetTrainingParameter)
@@ -1053,6 +2118,9 @@ void NeuralNetTrainingParameter::SharedCtor() {
   minibatchsize_ = 0;
   nepoch_ = 0;
   epi_ = 1e-06;
+  trainertype_ = 1;
+  decayrate_ = 10;
+  momentum_ = 0.9;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1083,32 +2151,39 @@ const NeuralNetTrainingParameter& NeuralNetTrainingParameter::default_instance()
 
 NeuralNetTrainingParameter* NeuralNetTrainingParameter::default_instance_ = NULL;
 
-NeuralNetTrainingParameter* NeuralNetTrainingParameter::New() const {
-  return new NeuralNetTrainingParameter;
+NeuralNetTrainingParameter* NeuralNetTrainingParameter::New(::google::protobuf::Arena* arena) const {
+  NeuralNetTrainingParameter* n = new NeuralNetTrainingParameter;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void NeuralNetTrainingParameter::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<NeuralNetTrainingParameter*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<NeuralNetTrainingParameter*>(16)->f)
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
+  if (_has_bits_[0 / 32] & 255u) {
     ZR_(learningrate_, minibatchsize_);
     nepoch_ = 0;
     epi_ = 1e-06;
+    trainertype_ = 1;
+    decayrate_ = 10;
+    momentum_ = 0.9;
   }
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->Clear();
+  }
 }
 
 bool NeuralNetTrainingParameter::MergePartialFromCodedStream(
@@ -1191,6 +2266,56 @@ bool NeuralNetTrainingParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(48)) goto parse_trainerType;
+        break;
+      }
+
+      // optional .DeepLearning.NeuralNetTrainingParameter.TrainerType trainerType = 6 [default = SGD];
+      case 6: {
+        if (tag == 48) {
+         parse_trainerType:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::DeepLearning::NeuralNetTrainingParameter_TrainerType_IsValid(value)) {
+            set_trainertype(static_cast< ::DeepLearning::NeuralNetTrainingParameter_TrainerType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(6, value);
+          }
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(57)) goto parse_decayRate;
+        break;
+      }
+
+      // optional double decayRate = 7 [default = 10];
+      case 7: {
+        if (tag == 57) {
+         parse_decayRate:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &decayrate_)));
+          set_has_decayrate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(65)) goto parse_momentum;
+        break;
+      }
+
+      // optional double momentum = 8 [default = 0.9];
+      case 8: {
+        if (tag == 65) {
+         parse_momentum:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &momentum_)));
+          set_has_momentum();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1245,7 +2370,23 @@ void NeuralNetTrainingParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteDouble(5, this->epi(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  // optional .DeepLearning.NeuralNetTrainingParameter.TrainerType trainerType = 6 [default = SGD];
+  if (has_trainertype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      6, this->trainertype(), output);
+  }
+
+  // optional double decayRate = 7 [default = 10];
+  if (has_decayrate()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(7, this->decayrate(), output);
+  }
+
+  // optional double momentum = 8 [default = 0.9];
+  if (has_momentum()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(8, this->momentum(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
@@ -1280,7 +2421,23 @@ void NeuralNetTrainingParameter::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(5, this->epi(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  // optional .DeepLearning.NeuralNetTrainingParameter.TrainerType trainerType = 6 [default = SGD];
+  if (has_trainertype()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      6, this->trainertype(), target);
+  }
+
+  // optional double decayRate = 7 [default = 10];
+  if (has_decayrate()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(7, this->decayrate(), target);
+  }
+
+  // optional double momentum = 8 [default = 0.9];
+  if (has_momentum()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(8, this->momentum(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
@@ -1291,7 +2448,7 @@ void NeuralNetTrainingParameter::SerializeWithCachedSizes(
 int NeuralNetTrainingParameter::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 255) {
     // optional double learningRate = 1;
     if (has_learningrate()) {
       total_size += 1 + 8;
@@ -1323,8 +2480,24 @@ int NeuralNetTrainingParameter::ByteSize() const {
       total_size += 1 + 8;
     }
 
+    // optional .DeepLearning.NeuralNetTrainingParameter.TrainerType trainerType = 6 [default = SGD];
+    if (has_trainertype()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->trainertype());
+    }
+
+    // optional double decayRate = 7 [default = 10];
+    if (has_decayrate()) {
+      total_size += 1 + 8;
+    }
+
+    // optional double momentum = 8 [default = 0.9];
+    if (has_momentum()) {
+      total_size += 1 + 8;
+    }
+
   }
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
@@ -1336,10 +2509,10 @@ int NeuralNetTrainingParameter::ByteSize() const {
 }
 
 void NeuralNetTrainingParameter::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const NeuralNetTrainingParameter* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const NeuralNetTrainingParameter*>(
-      &from);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const NeuralNetTrainingParameter* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const NeuralNetTrainingParameter>(
+          &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
@@ -1348,7 +2521,7 @@ void NeuralNetTrainingParameter::MergeFrom(const ::google::protobuf::Message& fr
 }
 
 void NeuralNetTrainingParameter::MergeFrom(const NeuralNetTrainingParameter& from) {
-  GOOGLE_CHECK_NE(&from, this);
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_learningrate()) {
       set_learningrate(from.learningrate());
@@ -1365,8 +2538,19 @@ void NeuralNetTrainingParameter::MergeFrom(const NeuralNetTrainingParameter& fro
     if (from.has_epi()) {
       set_epi(from.epi());
     }
+    if (from.has_trainertype()) {
+      set_trainertype(from.trainertype());
+    }
+    if (from.has_decayrate()) {
+      set_decayrate(from.decayrate());
+    }
+    if (from.has_momentum()) {
+      set_momentum(from.momentum());
+    }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  if (from._internal_metadata_.have_unknown_fields()) {
+    mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+  }
 }
 
 void NeuralNetTrainingParameter::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1387,16 +2571,21 @@ bool NeuralNetTrainingParameter::IsInitialized() const {
 }
 
 void NeuralNetTrainingParameter::Swap(NeuralNetTrainingParameter* other) {
-  if (other != this) {
-    std::swap(learningrate_, other->learningrate_);
-    std::swap(maxiter_, other->maxiter_);
-    std::swap(minibatchsize_, other->minibatchsize_);
-    std::swap(nepoch_, other->nepoch_);
-    std::swap(epi_, other->epi_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void NeuralNetTrainingParameter::InternalSwap(NeuralNetTrainingParameter* other) {
+  std::swap(learningrate_, other->learningrate_);
+  std::swap(maxiter_, other->maxiter_);
+  std::swap(minibatchsize_, other->minibatchsize_);
+  std::swap(nepoch_, other->nepoch_);
+  std::swap(epi_, other->epi_);
+  std::swap(trainertype_, other->trainertype_);
+  std::swap(decayrate_, other->decayrate_);
+  std::swap(momentum_, other->momentum_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata NeuralNetTrainingParameter::GetMetadata() const {
@@ -1407,6 +2596,203 @@ void NeuralNetTrainingParameter::Swap(NeuralNetTrainingParameter* other) {
   return metadata;
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// NeuralNetTrainingParameter
+
+// optional double learningRate = 1;
+bool NeuralNetTrainingParameter::has_learningrate() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_learningrate() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void NeuralNetTrainingParameter::clear_has_learningrate() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void NeuralNetTrainingParameter::clear_learningrate() {
+  learningrate_ = 0;
+  clear_has_learningrate();
+}
+ double NeuralNetTrainingParameter::learningrate() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.learningRate)
+  return learningrate_;
+}
+ void NeuralNetTrainingParameter::set_learningrate(double value) {
+  set_has_learningrate();
+  learningrate_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.learningRate)
+}
+
+// optional int32 maxIter = 2;
+bool NeuralNetTrainingParameter::has_maxiter() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_maxiter() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void NeuralNetTrainingParameter::clear_has_maxiter() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void NeuralNetTrainingParameter::clear_maxiter() {
+  maxiter_ = 0;
+  clear_has_maxiter();
+}
+ ::google::protobuf::int32 NeuralNetTrainingParameter::maxiter() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.maxIter)
+  return maxiter_;
+}
+ void NeuralNetTrainingParameter::set_maxiter(::google::protobuf::int32 value) {
+  set_has_maxiter();
+  maxiter_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.maxIter)
+}
+
+// optional int32 miniBatchSize = 3;
+bool NeuralNetTrainingParameter::has_minibatchsize() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_minibatchsize() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void NeuralNetTrainingParameter::clear_has_minibatchsize() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void NeuralNetTrainingParameter::clear_minibatchsize() {
+  minibatchsize_ = 0;
+  clear_has_minibatchsize();
+}
+ ::google::protobuf::int32 NeuralNetTrainingParameter::minibatchsize() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.miniBatchSize)
+  return minibatchsize_;
+}
+ void NeuralNetTrainingParameter::set_minibatchsize(::google::protobuf::int32 value) {
+  set_has_minibatchsize();
+  minibatchsize_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.miniBatchSize)
+}
+
+// optional int32 NEpoch = 4;
+bool NeuralNetTrainingParameter::has_nepoch() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_nepoch() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void NeuralNetTrainingParameter::clear_has_nepoch() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void NeuralNetTrainingParameter::clear_nepoch() {
+  nepoch_ = 0;
+  clear_has_nepoch();
+}
+ ::google::protobuf::int32 NeuralNetTrainingParameter::nepoch() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.NEpoch)
+  return nepoch_;
+}
+ void NeuralNetTrainingParameter::set_nepoch(::google::protobuf::int32 value) {
+  set_has_nepoch();
+  nepoch_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.NEpoch)
+}
+
+// optional double epi = 5 [default = 1e-06];
+bool NeuralNetTrainingParameter::has_epi() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_epi() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void NeuralNetTrainingParameter::clear_has_epi() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void NeuralNetTrainingParameter::clear_epi() {
+  epi_ = 1e-06;
+  clear_has_epi();
+}
+ double NeuralNetTrainingParameter::epi() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.epi)
+  return epi_;
+}
+ void NeuralNetTrainingParameter::set_epi(double value) {
+  set_has_epi();
+  epi_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.epi)
+}
+
+// optional .DeepLearning.NeuralNetTrainingParameter.TrainerType trainerType = 6 [default = SGD];
+bool NeuralNetTrainingParameter::has_trainertype() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_trainertype() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void NeuralNetTrainingParameter::clear_has_trainertype() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void NeuralNetTrainingParameter::clear_trainertype() {
+  trainertype_ = 1;
+  clear_has_trainertype();
+}
+ ::DeepLearning::NeuralNetTrainingParameter_TrainerType NeuralNetTrainingParameter::trainertype() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.trainerType)
+  return static_cast< ::DeepLearning::NeuralNetTrainingParameter_TrainerType >(trainertype_);
+}
+ void NeuralNetTrainingParameter::set_trainertype(::DeepLearning::NeuralNetTrainingParameter_TrainerType value) {
+  assert(::DeepLearning::NeuralNetTrainingParameter_TrainerType_IsValid(value));
+  set_has_trainertype();
+  trainertype_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.trainerType)
+}
+
+// optional double decayRate = 7 [default = 10];
+bool NeuralNetTrainingParameter::has_decayrate() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_decayrate() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void NeuralNetTrainingParameter::clear_has_decayrate() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void NeuralNetTrainingParameter::clear_decayrate() {
+  decayrate_ = 10;
+  clear_has_decayrate();
+}
+ double NeuralNetTrainingParameter::decayrate() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.decayRate)
+  return decayrate_;
+}
+ void NeuralNetTrainingParameter::set_decayrate(double value) {
+  set_has_decayrate();
+  decayrate_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.decayRate)
+}
+
+// optional double momentum = 8 [default = 0.9];
+bool NeuralNetTrainingParameter::has_momentum() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_momentum() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void NeuralNetTrainingParameter::clear_has_momentum() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void NeuralNetTrainingParameter::clear_momentum() {
+  momentum_ = 0.9;
+  clear_has_momentum();
+}
+ double NeuralNetTrainingParameter::momentum() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.momentum)
+  return momentum_;
+}
+ void NeuralNetTrainingParameter::set_momentum(double value) {
+  set_has_momentum();
+  momentum_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.momentum)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

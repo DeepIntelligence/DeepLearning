@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     X->transform([&](double x){return x/(xmax - xmin);});
     Y->ones();
     *Y = 5*(*X); 
-    Y->transform([](double val){return sin(val) + exp(val);});
+    Y->transform([](double val){return sin(4*val) + exp(val);});
     
     NeuralNetParameter nnpara;
     ReadProtoFromTextFile(argv[1], &nnpara);

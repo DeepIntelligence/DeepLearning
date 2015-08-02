@@ -9,8 +9,12 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
         bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
     actType(actType0), dropOutFlag(dropout), dropOutRate(dropr){
     initializeWeight();
-    grad_W_accu.zeros(outputDim,inputDim);
-    grad_B_accu.zeros(outputDim);
+    grad_W = std::make_shared<arma::mat>();
+    grad_B = std::make_shared<arma::mat>();
+    grad_W_accu = std::make_shared<arma::mat>();
+    grad_B_accu = std::make_shared<arma::mat>();
+    grad_W_accu->zeros(outputDim,inputDim);
+    grad_B_accu->zeros(outputDim, 1);
     W_size = inputDim * outputDim;
     B_size = outputDim;
     totalSize = W_size + B_size;
@@ -49,25 +53,20 @@ void BaseLayer::save(std::string filename) {
 
 void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
     calGrad(delta_in);
-    B -= learningRate * grad_B;
-    W -= learningRate * grad_W;
- //   arma::mat dW = delta * (*inputX);
- //   dW.save("AnalyGrad_base.dat",arma::raw_ascii);
- //   delta_in->print();
- //   delta_out->print();
-    
+    B -= learningRate * (*grad_B);
+    W -= learningRate * (*grad_W);
 }
 
 void BaseLayer::accumulateGrad(std::shared_ptr<arma::mat> delta_in){
     calGrad(delta_in);
-    grad_B_accu += grad_B;
-    grad_W_accu += grad_W;
+    *grad_B_accu += *grad_B;
+    *grad_W_accu += *grad_W;
 }
 
 void BaseLayer::updatePara_accu(double learningRate){
    
-    B -= learningRate * grad_B_accu; 
-    W -= learningRate * grad_W_accu;
+    B -= learningRate * (*grad_B_accu); 
+    W -= learningRate * (*grad_W_accu);
 }
 
 void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
@@ -85,15 +84,14 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
         deriv.ones(output->n_rows,output->n_cols);
     }
     delta = (*delta_in) % deriv;
-    grad_B = arma::sum(delta,1);
-    grad_W = delta * (*input).st();
+    *grad_B = arma::sum(delta,1);
+    *grad_W = delta * (*input).st();
 
     if(dropOutFlag) {
         // for each column
        delta = delta % dropOutMat; 
     }
     (*delta_out) = W.st() * (delta);
-
 
 }
 
@@ -168,9 +166,9 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> W_external, std::shared_pt
 
 void BaseLayer::vectoriseGrad(std::shared_ptr<arma::vec> V){
     
-    *V = arma::vectorise(grad_W);
+    *V = arma::vectorise(*grad_W);
     V->resize(W_size + B_size);
-    V->rows(W_size,W_size+B_size-1) = grad_B;
+    V->rows(W_size,W_size+B_size-1) = *grad_B;
 }
 
 void BaseLayer::vectoriseWeight(std::shared_ptr<arma::vec> V){
@@ -191,8 +189,8 @@ void BaseLayer::deVectoriseWeight(std::shared_ptr<arma::vec> V){
 // vectorise grad is frequency used to pass out the gradient as a vector
 void BaseLayer::vectoriseGrad(double *ptr, size_t offset){
 
-    double *W_ptr = grad_W.memptr();
-    double *B_ptr = grad_B.memptr();
+    double *W_ptr = grad_W->memptr();
+    double *B_ptr = grad_B->memptr();
     for (int i = 0; i < W_size; i++){
         *(ptr + offset) = *(W_ptr+i);
         offset++;

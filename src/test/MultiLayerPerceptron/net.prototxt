@@ -20,7 +20,7 @@ layerStruct{
 }
 
 neuralNetTrainingParameter{
-	learningRate: 0.1
+	learningRate: 0.001
 	miniBatchSize: 100
 	NEpoch: 20000
 }

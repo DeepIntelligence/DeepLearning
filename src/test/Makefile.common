@@ -1,7 +1,7 @@
 CC = gcc
 CXX = g++
 
-HOME=/home/yuugangyang/
+HOME=/home/yuguangyang/
 ARMA_INCLUDE=-I$(HOME)Downloads/armadillo-5.100.2/include
 DEEPLEARNING_INCLUDE=-I../../../include
 GTEST_INCLUDE=-I$(HOME)workspace/libs/gtest-1.7.0/include

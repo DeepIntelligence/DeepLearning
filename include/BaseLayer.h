@@ -43,8 +43,8 @@ struct BaseLayer {
     int W_size, B_size, totalSize;
     std::shared_ptr<arma::mat> input, output;
 /*  weight and bias for this layer*/
-    arma::mat W, grad_W, grad_W_accu;
-    arma::vec B, grad_B, grad_B_accu;
+    arma::mat W, B;
+    std::shared_ptr<arma::mat> grad_W, grad_W_accu, grad_B, grad_B_accu;
 /* the error propogated from lower layers*/    
     std::shared_ptr<arma::mat> delta_out;
     bool dropOutFlag;
