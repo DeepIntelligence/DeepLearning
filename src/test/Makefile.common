@@ -1,0 +1,23 @@
+CC = gcc
+CXX = g++
+
+HOME=/home/yuguangyang/
+ARMA_INCLUDE=-I$(HOME)Downloads/armadillo-5.100.2/include
+DEEPLEARNING_INCLUDE=-I../../../include
+GTEST_INCLUDE=-I$(HOME)workspace/libs/gtest-1.7.0/include
+BOOST_INCLUDE=-I/opt/boost/boost_1_57_0
+PROTO_INCLUDE=-I/usr/local/include
+
+GTEST_PATH=-L$(HOME)workspace/libs/gtest-1.7.0/mybuilds
+DEEPLEARNING_PATH=-L../../lib
+PROTO_PATH=-L/usr/local/lib
+
+DEBUGFLAG=-DDEBUG -g3
+RELEASEFLAG=
+CXXFLAGS=  -std=c++0x $(ARMA_INCLUDE) $(DEEPLEARNING_INCLUDE) $(GTEST_INCLUDE) $(BOOST_INCLUDE) $(PROTO_INCLUDE) -D__LINUX -DARMA_DONT_USE_WRAAPER 
+CXXFLAGS += $(DEBUGFLAG)
+
+LINKOPTFLAGS= -O3 -flto=4 -fwhole-program
+LDFLAG=$(DEEPLEARNING_PATH) $(GTEST_PATH) $(PROTO_PATH) -ldeeplearning -llapack -lblas  -pthread -lprotobuf 
+
+

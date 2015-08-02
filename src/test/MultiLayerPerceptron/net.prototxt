@@ -1,0 +1,26 @@
+layerStruct{
+	name: "BaseLayer1"
+	inputDim: 1
+	outputDim: 40
+	activationType: sigmoid
+}
+
+layerStruct{
+	name: "BaseLayer1"
+	inputDim: 40
+	outputDim: 20
+	activationType: sigmoid
+}
+
+layerStruct{
+	name: "BaseLayer2"
+	inputDim: 20
+	outputDim: 1
+	activationType: linear
+}
+
+neuralNetTrainingParameter{
+	learningRate: 0.001
+	miniBatchSize: 100
+	NEpoch: 20000
+}

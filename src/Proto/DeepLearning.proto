@@ -1,11 +1,11 @@
 syntax = "proto2";
-package DeepLearning;g
+package DeepLearning;
 message NeuralNetParameter {
 	optional string name = 1;
 	optional string type = 2;
 	repeated LayerStructParameter layerStruct = 100;
-	optional NeuralNetTrainingParameter neuralNetTrainingParameter = 101;
-
+	optional NeuralNetTrainingParameter neuralNetTrainingParameter= 101;
+	optional RNNStructParameter rnnStruct = 102;
 }
 
 message LayerStructParameter {
@@ -18,13 +18,25 @@ message LayerStructParameter {
 
 }
 
+message RNNStructParameter{
+	optional int32 numHiddenLayers = 1;
+	optional int32 hiddenLayerInputDim = 2;
+	optional int32 hiddenLayerOutputDim = 3;
+	optional int32 inputDim = 4;
+	optional int32 outputDim = 5;
+
+
+}
 
 message NeuralNetTrainingParameter {
+ enum TrainerType {SGD = 1; iRProp = 2;}
 	optional double learningRate = 1;
 	optional int32 maxIter = 2;
 	optional int32 miniBatchSize = 3;
 	optional int32 NEpoch = 4;
 	optional double epi = 5 [default = 1e-6];
-
+	optional TrainerType trainerType = 6 [default = SGD];
+ optional double decayRate = 7 [default = 10];
+	optional double momentum = 8 [default = 0.9];
 }
 
