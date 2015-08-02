@@ -1,3 +1,5 @@
+DEEPLEARNING_PATH=-L/home/kai/Dropbox/DeepLearningPackage/KaiCopy/DeepLearning/src/lib
+DEEPLEARNING_INCLUDE=-I/home/kai/Dropbox/DeepLearningPackage/KaiCopy/DeepLearning/include
 # this make file now is dynamically linking
 #OPTFLAGS = -O3 -march=nocona -mfpmath=sse -msse3 -Wuninitialized -flto
 #MKL_INCLUDE = /opt/intel/mkl/include/
@@ -14,21 +16,19 @@ MKL_DL_LINKFLAGS =  -Wl,--no-as-needed -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64
 ARMA_INCLUDE=-I~/Downloads/armadillo-5.100.2/include/armadillo
 ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -llapack -lblas
 #MKLLINKFLAGS = -Wl,--start-group -Wl,--end-group -lpthread
-CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DDEBUG -g3
+CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) $(DEEPLEARNING_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DDEBUG -g3
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program -march=native
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) -ldl
-LINK_DL_FLAGS =   $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl #$(LINKOPTFLAGS)
+LINK_DL_FLAGS =   $(DEEPLEARNING_PATH) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldl -ldeeplearning #$(LINKOPTFLAGS)
 #LINKFLAGS = 
 #ODIR=obj
 ODIR =
 
-OBJ = main.o BaseLayer.o BaseLayer_LSTM.o RNN.o
+OBJ = main.o BaseLayer_LSTM.o RNN.o
 
 test : $(OBJ)
 	$(CPP) -o test $(OBJ) $(LINK_DL_FLAGS)
 
-BaseLayer.o : ../BaseLayer/BaseLayer.cpp 
-	$(CPP) -c $(CXXFLAGS) $<
 
 BaseLayer_LSTM.o : ../LSTM/BaseLayer_LSTM.cpp
 	$(CPP) -c $(CXXFLAGS) $<

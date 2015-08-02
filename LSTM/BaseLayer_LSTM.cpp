@@ -15,7 +15,7 @@ std::shared_ptr<arma::mat> BaseLayer_LSTM::getInputMemory(int t) {
 
 //save outputs at all time points during the LSTM forward pass
 void BaseLayer_LSTM::saveOutputMemory(){
-    outputMem.push_back(output);
+    outputMem.push_back(std::shared_ptr<arma::mat>(new arma::mat(*output)));    
 }
 
 // extract out the specific output at time point t during backpropagation
