@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../BaseLayer/BaseLayer.h"
+#include "BaseLayer.h"
 
 
 namespace NeuralNet{

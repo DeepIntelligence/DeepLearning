@@ -1,7 +1,7 @@
 CPP = g++
-ARMA_INCLUDE=-I/home/yuugangyang/Downloads/armadillo-5.100.2/include
+ARMA_INCLUDE=-I/home/kai/Downloads/armadillo-5.100.2/include
 ARMA_LINKFLAGS=-llapack -lblas
-CXXFLAGS = -std=c++0x $(ARMA_INCLUDE) -I./include -I/opt/boost/boost_1_57_0 -D__LINUX -DDEBUG -g3 -DARMA_DONT_USE_WRAAPER
+CXXFLAGS = -std=c++0x $(ARMA_INCLUDE) -I./include -I/usr/local/include -I/opt/boost/boost_1_57_0 -D__LINUX -DDEBUG -g3 -DARMA_DONT_USE_WRAAPER
 SRCS1 = $(wildcard src/*.cpp)
 OBJ1 = $(SRCS1:%.cpp=%.o)
 SRCS2 = $(wildcard src/*.cc)

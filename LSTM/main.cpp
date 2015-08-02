@@ -80,11 +80,19 @@ void trainRNN_LSTM() {
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
     trainingX->zeros(1, 10);
     trainingY->zeros(1, 10);
-    for (int i = 0; i < 10; i++)
-        trainingY->at(i) = i;
-    trainingY->transform([](double val) {
+    for (int i = 0; i < 10; i++){
+        //trainingX->at(i) = i;
+        //trainingY->at(i) = 0.5;
+        if (i%2==0){
+            trainingY->at(i)=0.0;
+        }
+        else{
+            trainingY->at(i)=1.0;
+        }
+    }
+    /*trainingY->transform([](double val) {
         return sin(val);
-    });
+    });*/
 
     int iterations = 50000;
 
@@ -93,7 +101,7 @@ void trainRNN_LSTM() {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN_LSTM lstm(3, 5, 5, 1, 1, trainingX, trainingY);
+    RNN_LSTM lstm(4, 8, 8, 1, 1, trainingX, trainingY);
     // train the LSTM model by iterations
     for (int iter = 0; iter < iterations; iter++) {
         lstm.train();
