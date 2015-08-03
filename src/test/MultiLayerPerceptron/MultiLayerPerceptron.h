@@ -25,12 +25,14 @@ namespace NeuralNet {
         void vectoriseGrad(arma::vec &grad);
         void deVectoriseWeight(arma::vec &x);
         void vectoriseWeight(arma::vec &x);
-        void save(std::string filename);
+        void calLoss(std::shared_ptr<arma::mat> delta);
         virtual void setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
         virtual void applyUpdates(std::vector<std::shared_ptr<arma::mat>>);
         virtual void calGradient();
         virtual std::vector<std::shared_ptr<arma::mat>> netGradients();
-
+        virtual double getLoss();
+        virtual void save(std::string filename);
+        virtual void load(std::string filename);
         std::shared_ptr<arma::mat> getNetOutput() {
             return netOutput;
         }
@@ -39,6 +41,7 @@ namespace NeuralNet {
         int numLayers;
         int numInstance;
         bool testGrad;
+        double error;
         /**the collection of Base layers*/
         std::vector<BaseLayer> layers;
         /**training data, input and label*/

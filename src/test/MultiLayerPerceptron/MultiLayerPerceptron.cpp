@@ -33,6 +33,10 @@ MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0) {
         totalDim += layers[i].totalSize;
     }
 
+    for (int i = 0; i < numLayers; i++){
+        netGradVector.push_back(this->layers[i].grad_W);
+        netGradVector.push_back(this->layers[i].grad_B);
+    }
 }
 
 void MultiLayerPerceptron::setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y) {
@@ -41,24 +45,24 @@ void MultiLayerPerceptron::setTrainingSamples(std::shared_ptr<arma::mat> X, std:
     numInstance = trainingX->n_cols;
 }
 
+void MultiLayerPerceptron::calLoss(std::shared_ptr<arma::mat> delta){
+    arma::mat errorMat = (*delta) % (*delta);
+    double errorTotal = arma::sum(arma::sum(errorMat));
+    this->error = errorTotal;
+}
+
+double MultiLayerPerceptron::getLoss(){
+    return this->error;
+}
+
 void MultiLayerPerceptron::calGradient(){
      this->feedForward(this->trainingX);
  // now calculate propogate the error
     std::shared_ptr<arma::mat> delta(new arma::mat);
-     *delta = (-*trainingY + *netOutput);
-     backProp(delta);
-
-    double errorTotal = arma::sum(arma::sum(*delta));
-    arma::mat netOutput_log(*netOutput);
-    netOutput_log.transform([](double val) {
-                return std::log(val + 1e-20);
-            });
-    arma::mat crossEntropy_temp = *(trainingY) % (netOutput_log);
-    double crossEntropy = arma::sum(arma::sum((crossEntropy_temp)));
-        
-    std::cout << "error is: " << errorTotal << std::endl;
-    std::cout << "cross entropy is: " << crossEntropy << std::endl;
-
+    *delta = (-*trainingY + *netOutput);
+    backProp(delta);
+     
+    this->calLoss(delta);
 
 }
 #if 0
@@ -155,19 +159,14 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, s
     }
     dW.save("numGrad.dat", arma::raw_ascii);
 }
-void MultiLayerPerceptron::applyUpdates(std::vector<std::shared_ptr<arma::mat> >){
+void MultiLayerPerceptron::applyUpdates(std::vector<std::shared_ptr<arma::mat>> updates){
     for (int i = 0; i < numLayers; i++){
-        this->layers[i].W -= *(this->layers[i].grad_W);
-        this->layers[i].B -= *(this->layers[i].grad_B);
+        this->layers[i].W -= *(updates[2*i]);
+        this->layers[i].B -= *(updates[2*i+1]);
     }
 }
 
 std::vector<std::shared_ptr<arma::mat>> MultiLayerPerceptron::netGradients(){
-    netGradVector.clear();
-    for (int i = 0; i < numLayers; i++){
-        netGradVector.push_back(this->layers[i].grad_W);
-        netGradVector.push_back(this->layers[i].grad_B);
-    }
     return netGradVector;
 }
 
@@ -255,7 +254,13 @@ void MultiLayerPerceptron::save(std::string filename) {
         sprintf(tag, "%d", i);
         this->layers[i].save(filename + (std::string)tag);
     }
-
+}
+void MultiLayerPerceptron::load(std::string filename) {
+    char tag[10];
+    for (int i = 0; i < this->numLayers; i++) {
+        sprintf(tag, "%d", i);
+        this->layers[i].load(filename + (std::string)tag);
+    }
 }
 
 /*

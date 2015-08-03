@@ -13,6 +13,7 @@ struct BaseLayer {
 /*  save weights of the layers
  */
     void save(std::string filename = "BaseLayer");
+    void load(std::string filename = "BaseLayer");
 /*  given the input matrix, perform 
  outputY = sigma (W*input + B), sigma is the activation function
 */    

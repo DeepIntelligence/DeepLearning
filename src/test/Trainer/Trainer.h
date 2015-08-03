@@ -5,16 +5,17 @@ namespace NeuralNet {
 
     class Trainer {
     public:
-        Trainer(const DeepLearning::NeuralNetParameter& nnPara){
-            trainingParameter = nnPara;        
+        Trainer(std::shared_ptr<Net> net0, const DeepLearning::NeuralNetParameter& nnPara){
+            net = net0;
+            trainingParameter = nnPara;
         }
 
         virtual ~Trainer() {
         }
-        virtual void getGradientFromNet();
+        std::vector<std::shared_ptr<arma::mat>> getGradientFromNet();
         virtual void applyUpdatesToNet();
         virtual void calUpdates() = 0;
-        void setTrainingSamples(std::shared_ptr<arma::mat> X,std::shared_ptr<arma::mat> Y){
+        virtual void setTrainingSamples(std::shared_ptr<arma::mat> X,std::shared_ptr<arma::mat> Y){
             trainingX = X;
             trainingY = Y;
         }
@@ -24,28 +25,57 @@ namespace NeuralNet {
         virtual void train() = 0;
     protected:
         int iter;
-        std::vector<std::shared_ptr<arma::mat> > currUpdate, prevUpdate;
+        double learningRate;
+        std::shared_ptr<arma::mat> trainingX, trainingY;
+        std::vector<std::shared_ptr<arma::mat>> currUpdate, prevUpdate;
         std::shared_ptr<Net> net;
         DeepLearning::NeuralNetParameter trainingParameter;
     };
 
     class Trainer_SGD : public Trainer {
     public:
-        Trainer_SGD(const DeepLearning::NeuralNetParameter& nnPara):Trainer(nnPara){}
+        Trainer_SGD(std::shared_ptr<Net> net, const DeepLearning::NeuralNetParameter& nnPara):Trainer(net,nnPara){
+            currUpdate = net->netGradients();
+            // allocat memory for the prevUpdate
+            for (int i = 0; i < currUpdate.size(); i++){
+               prevUpdate.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+            }        
+        }
         virtual ~Trainer_SGD() {}
         virtual void train();
         virtual void calUpdates();
-
+    private:
+        std::vector<std::shared_ptr<arma::mat>> prevUpdate;
     };
 
+    
+    class Trainer_iRProp : public Trainer {
+    public:
+        Trainer_iRProp(std::shared_ptr<Net> net, const DeepLearning::NeuralNetParameter& nnPara):Trainer(net,nnPara){
+            currUpdate = net->netGradients();
+            // allocat memory for the prevUpdate
+            for (int i = 0; i < currUpdate.size(); i++) {
+               prevUpdate.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+               prevDelta.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+               currDelta.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+            }
+        }
+        virtual ~Trainer_iRProp(){}
+        virtual void train();
+        virtual void calUpdates();
+    private:
+        std::vector<std::shared_ptr<arma::mat>> currDelta, prevDelta;
+    };
+    
     class TrainerBuilder {
-        inline static std::shared_ptr<Trainer> GetTrainer(const DeepLearning::NeuralNetParameter& nnPara) {
+    public:
+        inline static std::shared_ptr<Trainer> GetTrainer(std::shared_ptr<Net> net, const DeepLearning::NeuralNetParameter& nnPara) {
             switch (nnPara.neuralnettrainingparameter().trainertype()) {
                 case DeepLearning::NeuralNetTrainingParameter_TrainerType_SGD:
-                    return std::shared_ptr<Trainer>(new Trainer_SGD(nnPara));
+                    return std::shared_ptr<Trainer>(new Trainer_SGD(net, nnPara));
                     break;
                 case DeepLearning::NeuralNetTrainingParameter_TrainerType_iRProp:
-//                    return std::shared_ptr<Trainer_SGD>(new Trainer_SGD(nnPara));
+                    return std::shared_ptr<Trainer>(new Trainer_iRProp(net, nnPara));
                     break;
                 default: break;
             }
