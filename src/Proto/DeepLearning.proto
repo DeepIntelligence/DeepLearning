@@ -24,6 +24,7 @@ message RNNStructParameter{
 	optional int32 hiddenLayerOutputDim = 3;
 	optional int32 inputDim = 4;
 	optional int32 outputDim = 5;
+        optional int32 timeSeriesLength = 6;
 
 
 }

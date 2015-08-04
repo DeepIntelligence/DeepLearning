@@ -460,6 +460,13 @@ class RNNStructParameter : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 outputdim() const;
   inline void set_outputdim(::google::protobuf::int32 value);
 
+  // optional int32 timeSeriesLength = 6;
+  inline bool has_timeserieslength() const;
+  inline void clear_timeserieslength();
+  static const int kTimeSeriesLengthFieldNumber = 6;
+  inline ::google::protobuf::int32 timeserieslength() const;
+  inline void set_timeserieslength(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:DeepLearning.RNNStructParameter)
  private:
   inline void set_has_numhiddenlayers();
@@ -472,6 +479,8 @@ class RNNStructParameter : public ::google::protobuf::Message {
   inline void clear_has_inputdim();
   inline void set_has_outputdim();
   inline void clear_has_outputdim();
+  inline void set_has_timeserieslength();
+  inline void clear_has_timeserieslength();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -482,6 +491,7 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 hiddenlayeroutputdim_;
   ::google::protobuf::int32 inputdim_;
   ::google::protobuf::int32 outputdim_;
+  ::google::protobuf::int32 timeserieslength_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -1284,6 +1294,30 @@ inline void RNNStructParameter::set_outputdim(::google::protobuf::int32 value) {
   set_has_outputdim();
   outputdim_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.outputDim)
+}
+
+// optional int32 timeSeriesLength = 6;
+inline bool RNNStructParameter::has_timeserieslength() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void RNNStructParameter::set_has_timeserieslength() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void RNNStructParameter::clear_has_timeserieslength() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void RNNStructParameter::clear_timeserieslength() {
+  timeserieslength_ = 0;
+  clear_has_timeserieslength();
+}
+inline ::google::protobuf::int32 RNNStructParameter::timeserieslength() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.timeSeriesLength)
+  return timeserieslength_;
+}
+inline void RNNStructParameter::set_timeserieslength(::google::protobuf::int32 value) {
+  set_has_timeserieslength();
+  timeserieslength_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.timeSeriesLength)
 }
 
 // -------------------------------------------------------------------

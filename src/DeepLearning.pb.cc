@@ -84,12 +84,13 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
       sizeof(LayerStructParameter));
   LayerStructParameter_ActivationType_descriptor_ = LayerStructParameter_descriptor_->enum_type(0);
   RNNStructParameter_descriptor_ = file->message_type(2);
-  static const int RNNStructParameter_offsets_[5] = {
+  static const int RNNStructParameter_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, numhiddenlayers_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayerinputdim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayeroutputdim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, inputdim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, outputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, timeserieslength_),
   };
   RNNStructParameter_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -179,18 +180,19 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
     "1.DeepLearning.LayerStructParameter.Acti"
     "vationType\022\014\n\004name\030\004 \001(\t\022\014\n\004type\030\005 \001(\t\"@"
     "\n\016ActivationType\022\013\n\007sigmoid\020\001\022\010\n\004tanh\020\002\022"
-    "\n\n\006linear\020\003\022\013\n\007softmax\020\004\"\215\001\n\022RNNStructPa"
+    "\n\n\006linear\020\003\022\013\n\007softmax\020\004\"\247\001\n\022RNNStructPa"
     "rameter\022\027\n\017numHiddenLayers\030\001 \001(\005\022\033\n\023hidd"
     "enLayerInputDim\030\002 \001(\005\022\034\n\024hiddenLayerOutp"
     "utDim\030\003 \001(\005\022\020\n\010inputDim\030\004 \001(\005\022\021\n\toutputD"
-    "im\030\005 \001(\005\"\240\002\n\032NeuralNetTrainingParameter\022"
-    "\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 \001(\005\022\025"
-    "\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001(\005\022\022\n"
-    "\003epi\030\005 \001(\001:\0051e-06\022N\n\013trainerType\030\006 \001(\01624"
-    ".DeepLearning.NeuralNetTrainingParameter"
-    ".TrainerType:\003SGD\022\025\n\tdecayRate\030\007 \001(\001:\00210"
-    "\022\025\n\010momentum\030\010 \001(\001:\0030.9\"\"\n\013TrainerType\022\007"
-    "\n\003SGD\020\001\022\n\n\006iRProp\020\002", 939);
+    "im\030\005 \001(\005\022\030\n\020timeSeriesLength\030\006 \001(\005\"\240\002\n\032N"
+    "euralNetTrainingParameter\022\024\n\014learningRat"
+    "e\030\001 \001(\001\022\017\n\007maxIter\030\002 \001(\005\022\025\n\rminiBatchSiz"
+    "e\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001(\005\022\022\n\003epi\030\005 \001(\001:\0051e"
+    "-06\022N\n\013trainerType\030\006 \001(\01624.DeepLearning."
+    "NeuralNetTrainingParameter.TrainerType:\003"
+    "SGD\022\025\n\tdecayRate\030\007 \001(\001:\00210\022\025\n\010momentum\030\010"
+    " \001(\001:\0030.9\"\"\n\013TrainerType\022\007\n\003SGD\020\001\022\n\n\006iRP"
+    "rop\020\002", 965);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DeepLearning.proto", &protobuf_RegisterTypes);
   NeuralNetParameter::default_instance_ = new NeuralNetParameter();
@@ -1115,6 +1117,7 @@ const int RNNStructParameter::kHiddenLayerInputDimFieldNumber;
 const int RNNStructParameter::kHiddenLayerOutputDimFieldNumber;
 const int RNNStructParameter::kInputDimFieldNumber;
 const int RNNStructParameter::kOutputDimFieldNumber;
+const int RNNStructParameter::kTimeSeriesLengthFieldNumber;
 #endif  // !_MSC_VER
 
 RNNStructParameter::RNNStructParameter()
@@ -1140,6 +1143,7 @@ void RNNStructParameter::SharedCtor() {
   hiddenlayeroutputdim_ = 0;
   inputdim_ = 0;
   outputdim_ = 0;
+  timeserieslength_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1185,8 +1189,8 @@ void RNNStructParameter::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
-    ZR_(numhiddenlayers_, outputdim_);
+  if (_has_bits_[0 / 32] & 63) {
+    ZR_(numhiddenlayers_, timeserieslength_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -1276,6 +1280,21 @@ bool RNNStructParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(48)) goto parse_timeSeriesLength;
+        break;
+      }
+
+      // optional int32 timeSeriesLength = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_timeSeriesLength:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &timeserieslength_)));
+          set_has_timeserieslength();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1330,6 +1349,11 @@ void RNNStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->outputdim(), output);
   }
 
+  // optional int32 timeSeriesLength = 6;
+  if (has_timeserieslength()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->timeserieslength(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1363,6 +1387,11 @@ void RNNStructParameter::SerializeWithCachedSizes(
   // optional int32 outputDim = 5;
   if (has_outputdim()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->outputdim(), target);
+  }
+
+  // optional int32 timeSeriesLength = 6;
+  if (has_timeserieslength()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->timeserieslength(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1412,6 +1441,13 @@ int RNNStructParameter::ByteSize() const {
           this->outputdim());
     }
 
+    // optional int32 timeSeriesLength = 6;
+    if (has_timeserieslength()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->timeserieslength());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1454,6 +1490,9 @@ void RNNStructParameter::MergeFrom(const RNNStructParameter& from) {
     if (from.has_outputdim()) {
       set_outputdim(from.outputdim());
     }
+    if (from.has_timeserieslength()) {
+      set_timeserieslength(from.timeserieslength());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1482,6 +1521,7 @@ void RNNStructParameter::Swap(RNNStructParameter* other) {
     std::swap(hiddenlayeroutputdim_, other->hiddenlayeroutputdim_);
     std::swap(inputdim_, other->inputdim_);
     std::swap(outputdim_, other->outputdim_);
+    std::swap(timeserieslength_, other->timeserieslength_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

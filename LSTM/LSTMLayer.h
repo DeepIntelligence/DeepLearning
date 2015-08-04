@@ -15,7 +15,7 @@ namespace NeuralNet {
         
     public:
         RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
+        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, double learningRate0,
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0);
         void forward();
         void backward();
@@ -34,7 +34,7 @@ namespace NeuralNet {
         std::shared_ptr<arma::mat> trainingY, trainingX;
         int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;
         int rnnInputDim, rnnOutputDim;
-        
+        double learningRate;
 
     };
 

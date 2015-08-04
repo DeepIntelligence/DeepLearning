@@ -15,7 +15,7 @@ ARMA_LINKFLAGS=-L/usr/lib -L/opt/intel/mkl/lib/intel64 -larmadillo -lmkl_rt -lla
 CXXFLAGS = -std=c++0x -I$(MKL_INCLUDE) $(ARMA_INCLUDE) $(DEEPLEARNING_INCLUDE) -I/opt/boost/boost_1_57_0 -c -D__LINUX -DDEBUG -g3
 LINKOPTFLAGS = -O3 -flto=4 -fwhole-program -march=native
 #LINKFLAGS = -static $(LINKOPTFLAGS) $(MKLLINKFLAGS) -ldl
-LINK_DL_FLAGS =   $(DEEPLEARNING_PATH) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldeeplearning -ldl #$(LINKOPTFLAGS)
+LINK_DL_FLAGS =   $(DEEPLEARNING_PATH) $(MKL_DL_LINKFLAGS) $(ARMA_LINKFLAGS) -ldeeplearning -ldl -lprotobuf#$(LINKOPTFLAGS)
 #LINKFLAGS = 
 #ODIR=obj
 ODIR =

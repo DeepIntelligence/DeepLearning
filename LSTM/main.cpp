@@ -7,38 +7,134 @@
 #include <armadillo>
 #include <vector>
 #include <math.h>
+#include <random>
 
 #include "LSTMLayer.h"
-//#include "common.h"
+#include "common.h"
 using namespace NeuralNet;
+using namespace DeepLearning;
 
 void workOnSequenceGeneration(std::shared_ptr<arma::mat> trainingY);
-void testForward();
-void trainRNN_LSTM();
-void testGrad();
-void testDynamics();
+void testForward(char* filename, NeuralNetParameter message);
+void trainRNN_LSTM(char* filename, NeuralNetParameter message);
+void testGrad(char* filename, NeuralNetParameter message);
+void testDynamics(char* filename,NeuralNetParameter message);
+void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
+        std::shared_ptr<arma::mat> trainingY);
 
-void genSimData(); // generate simulation data
-double f_x(double t);
 
 int main(int argc, char *argv[]) {
     // testForward();
     //    workOnSequenceGeneration();
     // testGrad();
     // trainRNN_LSTM();
-    testDynamics();
+    //std::shared_ptr<arma::mat> trainingX(new arma::mat(1,20));
+    //std::shared_ptr<arma::mat> trainingY(new arma::mat(1,20));
+    //aLittleTimerGenerator(trainingX,trainingY);
+    NeuralNetParameter message;
+    testDynamics(argv[1], message);
     return 0;
 }
 
+void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
+        std::shared_ptr<arma::mat> trainingY){
+    
+    int T = trainingY->n_elem;
+    
+    std::random_device device;
+    std::mt19937 gen(device());
+    std::bernoulli_distribution distribution(0.1);
+    std::uniform_real_distribution<> dis(0, 1);
+    
+    arma::mat input(2, T);
+    arma::mat output(1, T);
+    
+    
+    for(int i=0;i<T;i++){
+        if (distribution(gen)){
+            input(0,i) = 1;
+        }
+        else{
+            input(0,i) = 0;
+        }
+    }
+    
+    // generate input u2(t)
+    input(1,0) = (int)((dis(gen) + 0.1)*10);
+    for(int i=1;i<T;i++){
+        if( input(0,i) == 1) {
+            input(1,i) = (int)((dis(gen) + 0.1)*10);
+        } else {
+            input(1,i) = input(1,i-1); // if input1 = 0,keep the input2 the same as previously
+        }
+    }
+    
+    std::cout<<"input_1"<<std::endl;
+    input.row(0).print(); 
+    std::cout<<std::endl;
+    
+    
+    // generate output
+    int t = 0;
+    while(t<T){
+        
+        if(input(0,t)==1){
+            
+            output(arma::span(0,0),arma::span(t,T-1)).zeros();
+           
+            //std::cout<<"input(1,t)"<<input(1,t)<<std::endl;
+            for (int i=t; i<(t+input(1,t));i++){
+                //std::cout<<i<<" ";
+                if(i<T){
+                    output(0,i) = 0.5;
+                }
+                else{
+                    break;
+                }
+            } 
+           
+        }
+        else{
+            if(output(0,t) == 0.5){
+                output(0,t) = 0.5;
+            }
+            else{
+                output(0,t) = 0;
+            }
+            
+        }
+        //output(0,arma::span(t,t)).print();
+        t = t + 1;
+    }
+    
+    input.row(1) = input.row(1) / 10;
+    
+    std::cout<<"input_2"<<std::endl;
+    input.row(1).print();
+    std::cout<<std::endl;
+    //input.row(1).print();
+    std::cout<<std::endl;      
+    std::cout<<t<<std::endl;
+    std::cout<<"output"<<std::endl;
+    output.print();
+    
+    
+    *trainingX = input;
+    *trainingY = output;
+}
+
 // use LSTM to approximate a dynamical system
-void testDynamics(){
+void testDynamics(char* filename, NeuralNetParameter message){
     
+    //NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);	
     
-    //ReadProtoFromTextFile()
+    int seriesLength = message.rnnstruct().timeserieslength();
+    std::cout << seriesLength << std::endl;
     
-    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,10));
-    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,10));
-    
+    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,seriesLength));
+    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,seriesLength));
+    /*
     // initialize 
     trainingX->zeros();
     trainingY->at(0) = 0.9999;
@@ -52,15 +148,21 @@ void testDynamics(){
 //        trainingY->at(i) = sin(i);
         
     }
+    */
+    aLittleTimerGenerator(trainingX, trainingY);
     
-    int iterations = 5000;
-
+    int iterations = message.neuralnettrainingparameter().nepoch();
+    
     /* RNN constructor parameters passed as:
         RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
+        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, double learningRate,
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN_LSTM lstm(3, 8, 8, 1, 1, trainingX, trainingY);
+    RNN_LSTM lstm(message.rnnstruct().numhiddenlayers(), message.rnnstruct().hiddenlayerinputdim(), 
+            message.rnnstruct().hiddenlayeroutputdim(), message.rnnstruct().inputdim(),
+            message.rnnstruct().outputdim(), message.neuralnettrainingparameter().learningrate(),
+            trainingX, trainingY);
+    
     // train the LSTM model by iterations
     for (int iter = 0; iter < iterations; iter++) {
         lstm.train();
@@ -77,8 +179,10 @@ void testDynamics(){
 
 // test the gradients by numerical gradients checking
 
-void testGrad() {
+void testGrad(char* filename, NeuralNetParameter message) {
 
+    ReadProtoFromTextFile(filename, &message);
+    
     std::shared_ptr<arma::mat> trainingX(new arma::mat(1, 10));
     trainingX->randu(1, 10);
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
@@ -89,11 +193,14 @@ void testGrad() {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN_LSTM rnn(3, 2, 2, 1, 1, trainingX, trainingY);
+    RNN_LSTM lstm(message.rnnstruct().numhiddenlayers(), message.rnnstruct().hiddenlayerinputdim(), 
+            message.rnnstruct().hiddenlayeroutputdim(), message.rnnstruct().inputdim(),
+            message.rnnstruct().outputdim(), message.neuralnettrainingparameter().learningrate(),
+            trainingX, trainingY);
     // before applying the LSTM backprop model, generate numerical gradients by just forward pass.
-    rnn.calNumericGrad();
+    lstm.calNumericGrad();
     // train the LSTM model by one iteration to generate gradient from the model
-    rnn.train();
+    lstm.train();
 
 }
 
@@ -104,8 +211,10 @@ void workOnSequenceGeneration(std::shared_ptr<arma::mat> trainingY) {
     trainingY->print();
 }
 
-void testForward() {
+void testForward(char* filename, NeuralNetParameter message) {
 
+    ReadProtoFromTextFile(filename, &message);
+    
     std::shared_ptr<arma::mat> trainingX(new arma::mat());
     trainingX->randn(1, 10);
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
@@ -114,14 +223,19 @@ void testForward() {
     //        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
     //        std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
 
-    RNN_LSTM rnn(1, 2, 2, 1, 1, trainingX, trainingY);
-    rnn.forward();
-    rnn.backward();
+    RNN_LSTM lstm(message.rnnstruct().numhiddenlayers(), message.rnnstruct().hiddenlayerinputdim(), 
+            message.rnnstruct().hiddenlayeroutputdim(), message.rnnstruct().inputdim(),
+            message.rnnstruct().outputdim(), message.neuralnettrainingparameter().learningrate(),
+            trainingX, trainingY);
+    lstm.forward();
+    lstm.backward();
 
 }
 
-void trainRNN_LSTM() {
-
+void trainRNN_LSTM(char* filename, NeuralNetParameter message) {
+    
+    ReadProtoFromTextFile(filename, &message);
+    
     std::shared_ptr<arma::mat> trainingX(new arma::mat());
 
     std::shared_ptr<arma::mat> trainingY(new arma::mat());
@@ -148,7 +262,10 @@ void trainRNN_LSTM() {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN_LSTM lstm(4, 8, 8, 1, 1, trainingX, trainingY);
+    RNN_LSTM lstm(message.rnnstruct().numhiddenlayers(), message.rnnstruct().hiddenlayerinputdim(), 
+            message.rnnstruct().hiddenlayeroutputdim(), message.rnnstruct().inputdim(),
+            message.rnnstruct().outputdim(), message.neuralnettrainingparameter().learningrate(),
+            trainingX, trainingY);
     // train the LSTM model by iterations
     for (int iter = 0; iter < iterations; iter++) {
         lstm.train();
@@ -160,29 +277,3 @@ void trainRNN_LSTM() {
     }
 }
 
-/*void genSimData(std::shared_ptr<arma::mat> trainingX){
-
-    int TotalLength = 10;
-    double mean = 0;
-    double max_abs = 0;
-    for (int i = 0; i < TotalLength; ++i) {
-        double val = f_x(i * 0.01);
-        max_abs = max(max_abs, abs(val));
-    }
-    for (int i = 0; i < TotalLength; ++i) {
-        mean += f_x(i * 0.01) / max_abs;
-    }
-    mean /= TotalLength;
-    for (int i = 0; i < TotalLength; ++i) {
-        trainingX[i] = f_x(i * 0.01) / max_abs - mean;
-    }
-    
-    
-}
-
-double f_x(double t) {
-    
-    return 0.5 * sin(2 * t) - 0.05 * cos(17 * t + 0.8)
-            + 0.05 * sin(25 * t + 10) - 0.02 * cos(45 * t + 0.3);
-    
-}*/

@@ -3,10 +3,10 @@
 using namespace NeuralNet;
 
 RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
+        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, double learningRate0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
         // netOutputLayer.actType = BaseLayer::tanh previously
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::linear)){ 
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::tanh)){ 
 
 
     // at beginning, we assume all the hidden layers have the same size, 
@@ -17,6 +17,7 @@ RNN_LSTM::RNN_LSTM(int numHiddenLayers0, int hiddenLayerInputDim0,
     rnnOutputDim = outputDim0; // this parameter is not used within sofar code
     trainingX = trainingX0;
     trainingY = trainingY0;
+    learningRate = learningRate0;
 
 
     
@@ -246,7 +247,7 @@ void RNN_LSTM::backward() {
     netOutputLayer->clearAccuGrad();
 
     
-    double learningRate = 0.005;
+    // double learningRate = 0.005;
     
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
