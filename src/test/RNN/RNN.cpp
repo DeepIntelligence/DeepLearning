@@ -1,6 +1,66 @@
 #include "RNN.h"
 
+
 using namespace NeuralNet;
+using namespace DeepLearning;
+
+RNN::RNN(NeuralNetParameter neuralNetPara0){
+
+    neuralNetPara = neuralNetPara0;
+    // at beginning, we assume all the hidden layers have the same size,
+    numHiddenLayers = neuralNetPara.rnnstruct().numhiddenlayers();
+    hiddenLayerInputDim = neuralNetPara.rnnstruct().hiddenlayeroutputdim();
+    hiddenLayerOutputDim = neuralNetPara.rnnstruct().hiddenlayeroutputdim();
+    rnnInputDim = neuralNetPara.rnnstruct().inputdim();
+    rnnOutputDim = neuralNetPara.rnnstruct().outputdim(); // this parameter is not used within sofar code
+     
+    for (int i = 0; i < numHiddenLayers; i++){
+        
+        // i=0 is the first hidden layer with input consisting 
+          // of data input and last time hidden
+        if (i == 0) {
+            
+            // inputDim is the unrolled LSTM input for various layers, the same to outputDim
+            int inputDim = rnnInputDim + hiddenLayerOutputDim;
+            int outputDim = hiddenLayerOutputDim;
+            
+            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
+            
+          // of hidden output from lower layer at the same time and
+           // hidden output from same layer but at previous time
+       } else if(i <= numHiddenLayers-1){
+              
+            // inputDim is the unrolled LSTM input for various layers, the same to outputDim
+            int inputDim = hiddenLayerOutputDim + hiddenLayerOutputDim;
+            int outputDim = hiddenLayerOutputDim;
+            
+            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
+        }
+		}
+
+ 
+        switch (neuralNetPara.layerstruct(0).activationtype()) {
+            case LayerStructParameter_ActivationType_sigmoid:
+                netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
+                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::sigmoid);
+                break;
+            case LayerStructParameter_ActivationType_tanh:
+                netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
+                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::tanh);
+                break;
+            case LayerStructParameter_ActivationType_softmax:
+                netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
+                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::softmax);
+                break;
+            case LayerStructParameter_ActivationType_linear:
+                netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
+                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::linear);
+                break;
+            default:break;
+        }
+    
+        fillNetGradVector();
+}
 
 RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
@@ -8,7 +68,7 @@ RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         // previously, netOutputLayer.actType = BaseLayer::tanh, here linear is for scaling up
         netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::linear)){
 
-
+    learningRate = 0.01;
     // at beginning, we assume all the hidden layers have the same size, 
     numHiddenLayers = numHiddenLayers0;
     hiddenLayerInputDim = hiddenLayerInputDim0;
@@ -80,12 +140,8 @@ void RNN::forward() {
             
             netOutputLayer->input = hiddenLayers[l].output;
             netOutputLayer->activateUp();
- //           netOutputLayer->output->print("netoutput");
             netOutputLayer->saveInputMemory();
             netOutputLayer->saveOutputMemory();
-            //netOutputLayer->output->print("netOutputLayer.output");
-            //netOutputLayer->W.print("netOutputLayer_Weight");
-            //netOutputLayer->grad_W_accu.print("grad_W_accu");
         }
   
         outputLayers_prev_output[l] = *(hiddenLayers[l].output);
@@ -106,8 +162,7 @@ void RNN::backward() {
     }
     netOutputLayer->clearAccuGrad();
     
-    double learningRate = 0.0000001;
-    
+   
     int T = trainingY->n_cols;
     for (int t = T - 1; t >= 0; t--){
         *delta = *(netOutputLayer->outputMem[t]) - trainingY->col(t);
@@ -116,41 +171,37 @@ void RNN::backward() {
             // delta error from the same time, propagate from upper layer to lower layer 
             if (l == numHiddenLayers - 1){ // the top most layer from target - network's output
                 *delta = *(netOutputLayer->delta_out); 
-  //              std::cout << delta->size() << std::endl;
             }else{ 
                 *delta = (hiddenLayers[l+1].delta_out)->rows(hiddenLayerOutputDim,2*hiddenLayerOutputDim-1);
-  //              std::cout << delta->size() << std::endl;
                 // temporal storage of this delta from upstream but the same layer                
             }   
             
             if (t < T - 1) {
                *delta += hiddenLayer_upstream_deltaOut[l].rows(0,  hiddenLayerOutputDim-1);
-  //             std::cout << delta->size() << std::endl;
-            }
-
-              
+            }              
             // so far, the generated delta error is for the output h of each layer at each time
             hiddenLayers[l].accumulateGrad(delta, t);
             hiddenLayer_upstream_deltaOut[l] = *(hiddenLayers[l].delta_out);
-     
         }
 }
     
+}
+void RNN::updatePara(){
     for (int l = numHiddenLayers - 1; l >= 0; l--){
         hiddenLayers[l].updatePara_accu(learningRate);
         // save this accumulated gradients for comparing with numerical gradients
-        if (l==0){ // save this l layer
-           hiddenLayers[l].grad_W_accu.save("hiddenLayer0_Grad.dat", arma::raw_ascii);
-        }
+  //      if (l==0){ // save this l layer
+  //         hiddenLayers[l].grad_W_accu.save("hiddenLayer0_Grad.dat", arma::raw_ascii);
+  //      }
     }
     netOutputLayer->updatePara_accu(learningRate);
 }
+
 
 void RNN::train(){
 
     this->forward();
 //  for calcuating the total error
-            
     double error = 0.0;
     arma::mat delta;
     //           outputY->transform([](double val){return log(val);});
@@ -163,20 +214,81 @@ void RNN::train(){
     std::cout << "total error is:" << error << std::endl;
     
     this->backward();
+    this->updatePara();
 }
 
 void RNN::test(){
 
 }
 
-void RNN::savePara(std::string filename){
+void RNN::setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y){
+    this->trainingX = X;
+    this->trainingY = Y;
+}
 
-    char tag[10];
-    
+void RNN::fillNetGradVector(){
+    for (int i = 0; i < this->numHiddenLayers; i++){
+        netGradVector.push_back(this->hiddenLayers[i].grad_W_accu);
+        netGradVector.push_back(this->hiddenLayers[i].grad_B_accu);
+    }
+    netGradVector.push_back((this->netOutputLayer)->grad_W_accu);
+    netGradVector.push_back((this->netOutputLayer)->grad_B_accu);
+}
+
+void RNN::applyUpdates(std::vector<std::shared_ptr<arma::mat>>){
+    for (int i = 0; i < this->numHiddenLayers; i++){
+        (this->hiddenLayers[i]).W -= *(netGradVector[2*i]);
+        (this->hiddenLayers[i]).B -= *(netGradVector[2*i+1]);
+    }
+    netOutputLayer->W -= *(netGradVector[2*this->numHiddenLayers]);
+    netOutputLayer->B -= *(netGradVector[2*this->numHiddenLayers+1]);    
+}
+
+void RNN::calGradient(){
+        forward();
+        backward();
+}
+
+std::vector<std::shared_ptr<arma::mat>> RNN::netGradients(){
+    return this->netGradVector;
+}
+double RNN::getLoss(){
+//  for calcuating the total error
+    double error = 0.0;
+    arma::mat delta;
+    //           outputY->transform([](double val){return log(val);});
+    for (int k = 0; k < trainingY->n_cols; k++) {
+        delta = *((netOutputLayer->outputMem)[k]) - trainingY->col(k);
+        error += arma::as_scalar(delta.st() * delta); 
+    }
+    return error;
+}
+
+std::shared_ptr<arma::mat> RNN::netOutput(){
+    netOutput_ = std::make_shared<arma::mat>(trainingY->n_rows, trainingY->n_cols);
+    for (int k = 0; k < trainingY->n_cols; k++) {
+        double* ptr = netOutput_->colptr(k);
+        for (int i = 0; i < trainingY->n_rows; i++){
+            *(ptr+i) = (netOutputLayer->outputMem[k])->at(i);
+        }
+    }
+    return netOutput_;
+}
+void RNN::save(std::string filename){
+    char tag[10];    
     for (int l=0;l<numHiddenLayers;l++){
         sprintf(tag,"%d",l);
         hiddenLayers[l].save(filename+"_hiddenLayer_"+(std::string)tag);
     }
+    this->netOutputLayer->save(filename+"netOutputLayer");
+}
+void RNN::load(std::string filename){
+    char tag[10];    
+    for (int l=0;l<numHiddenLayers;l++){
+        sprintf(tag,"%d",l);
+        hiddenLayers[l].load(filename+"_hiddenLayer_"+(std::string)tag);
+    }
+    this->netOutputLayer->load(filename+"netOutputLayer");
 }
 
 #if 1

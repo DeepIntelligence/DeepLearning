@@ -48,7 +48,10 @@ void BaseLayer::initializeWeight() {
 void BaseLayer::save(std::string filename) {
     W.save(filename+"_W.dat",arma::raw_ascii);
     B.save(filename+"_B.dat",arma::raw_ascii);
-
+}
+void BaseLayer::load(std::string filename) {
+    W.save(filename+"_W.dat",arma::raw_ascii);
+    B.save(filename+"_B.dat",arma::raw_ascii);
 }
 
 void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
