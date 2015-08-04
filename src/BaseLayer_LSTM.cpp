@@ -62,6 +62,12 @@ void BaseLayer_LSTM::accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t) 
 }
 
 void BaseLayer_LSTM::clearAccuGrad(){
+<<<<<<< HEAD:src/BaseLayer_LSTM.cpp
     (*grad_B_accu).zeros();
     (*grad_W_accu).zeros();
+=======
+    grad_B_accu->zeros();
+    grad_W_accu->zeros();
+
+>>>>>>> a055be6d1603658a3e5e58d5c20df48cd4fbdf1e:LSTM/BaseLayer_LSTM.cpp
 }

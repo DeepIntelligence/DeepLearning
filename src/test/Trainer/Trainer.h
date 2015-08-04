@@ -26,7 +26,12 @@ namespace NeuralNet {
     protected:
         int iter;
         double learningRate;
+<<<<<<< HEAD
         std::shared_ptr<arma::mat> trainingX, trainingY;     
+=======
+        std::shared_ptr<arma::mat> trainingX, trainingY;
+        std::shared_ptr<arma::mat> trainingX, trainingY;        
+>>>>>>> a055be6d1603658a3e5e58d5c20df48cd4fbdf1e
         std::vector<std::shared_ptr<arma::mat>> currUpdate, prevUpdate;
         std::shared_ptr<Net> net;
         DeepLearning::NeuralNetParameter trainingParameter;

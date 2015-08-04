@@ -3,7 +3,11 @@
 #include <armadillo>
 #include <iostream>
 #include <vector>
+<<<<<<< HEAD
 #include "BaseLayer_LSTM.h"
+=======
+#include "../../../LSTM/BaseLayer_LSTM.h"
+>>>>>>> a055be6d1603658a3e5e58d5c20df48cd4fbdf1e
 #include "Net.h"
 #include "common.h"
 namespace NeuralNet {
