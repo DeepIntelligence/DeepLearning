@@ -55,8 +55,7 @@ void testDynamicswithTrainer(char* filename){
     
     std::shared_ptr<Net> rnn(new RNN(message));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
-    traistd::shared_ptr<arma::mat> trainingX, trainingY;
-    ner->setTrainingSamples(trainingX, trainingY);
+    trainer->setTrainingSamples(trainingX, trainingY);
     trainer->train();
     
     trainingY->save("trainingY.dat", arma::raw_ascii);
