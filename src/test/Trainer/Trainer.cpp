@@ -43,9 +43,9 @@ void Trainer_SGD::train() {
             subTrainingX = std::make_shared<arma::mat>(trainingX->cols(i*size, (i + 1) * size - 1));
             subTrainingY= std::make_shared<arma::mat>(trainingY->cols(i*size, (i + 1) * size - 1));           
             net->setTrainingSamples(subTrainingX, subTrainingY);
-            currUpdate = net->calGradient();
+            net->calGradient();
             errorTotal += net->getLoss();
-            this->getGradientFromNet();
+            currUpdate = this->getGradientFromNet();
             this->calUpdates();
             this->applyUpdatesToNet();
         }

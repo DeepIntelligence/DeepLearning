@@ -33,7 +33,7 @@ namespace NeuralNet {
         virtual double getLoss();
         virtual void save(std::string filename);
         virtual void load(std::string filename);
-        std::shared_ptr<arma::mat> getNetOutput() {
+        virtual std::shared_ptr<arma::mat> netOutput() {
             return netOutput;
         }
     private:

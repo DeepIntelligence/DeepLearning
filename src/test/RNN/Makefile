@@ -1,15 +1,13 @@
+
 include ../Makefile.common
 
-all: test_rnn_funcApprox
+OBJ = test_RNN.o Trainer.o RNN.o BaseLayer_LSTM.o
 
-test_mlp: test_rnn_funcApprox.o MultiLayerPerceptron.o
-	$(CXX) -o $@ $^ $(LDFLAG)
-
-test_funcApprox: test_funcApprox.o MultiLayerPerceptron.o
-	$(CXX) -o $@ $^ $(LDFLAG)
-
-%.o:%.cpp
+test_RNN : $(OBJ)
+	$(CXX) -o test $(OBJ) $(LDFLAG)
+Trainer.o : ../Trainer/Trainer.cpp
 	$(CXX) -c $(CXXFLAGS) $^
-
+BaseLayer_LSTM.o : ../../../LSTM/BaseLayer_LSTM.cpp
+	$(CXX) -c $(CXXFLAGS) $^
 clean:
-	rm test_mlp *.o
+	rm -f *.o *~
