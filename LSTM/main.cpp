@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+
+
 // use LSTM to approximate a dynamical system
 void testDynamics(){
     
