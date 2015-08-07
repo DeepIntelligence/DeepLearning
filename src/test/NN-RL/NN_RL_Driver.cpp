@@ -12,14 +12,14 @@ int main(){
 
 
 void testModel(){
-    double dt = 0.5;
+    double dt = 0.05;
     Model model(dt);
     
     model.createInitialState();
     
     double T = 1000;
     double t = 0.0;
-    while (t < T || !model.terminate()) {
+    while (t < T && !model.terminate()) {
         
         std::cout << t << "\t";
         std::cout << model.getCurrState().theta << "\t " << model.getCurrState().theta_v << std::endl;

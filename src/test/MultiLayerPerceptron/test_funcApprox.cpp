@@ -1,6 +1,6 @@
 #include "MultiLayerPerceptron.h"
 #include "common.h"
-
+#include "../Trainer/Trainer.h"
 using namespace NeuralNet;
 using namespace DeepLearning;
 
@@ -19,16 +19,18 @@ int main(int argc, char** argv) {
     X->transform([&](double x){return x/(xmax - xmin);});
     Y->ones();
     *Y = 5*(*X); 
-    Y->transform([](double val){return sin(4*val) + exp(val);});
+    Y->transform([](double val){return sin(4*val);});
     
     NeuralNetParameter nnpara;
     ReadProtoFromTextFile(argv[1], &nnpara);
 //  nnpara.neuralnettrainingparameter().set_minibatchsize(X->n_elem);
-    MultiLayerPerceptron mlp(nnpara);
-    mlp.setTrainingSample(X, Y);
-    mlp.train();
+    std::shared_ptr<Net> mlp(new MultiLayerPerceptron(nnpara));
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(mlp, nnpara));
+    
+    trainer->setTrainingSamples(X, Y);
+    trainer->train();
     Y->save("target.dat",arma::raw_ascii);
-    mlp.getNetOutput()->save("trainingResult.dat",arma::raw_ascii);
+    mlp->netOutput()->save("trainingResult.dat",arma::raw_ascii);
     
     //MLPTrainer mlpTrainer(mlp);
     //Optimization::LBFGS::LBFGS_param param(100,20, 50 , "result.txt");

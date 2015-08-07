@@ -28,7 +28,7 @@ public:
     double getCosts(State) const;
     State getCurrState() const{return currState;};
     void createInitialState();
-    bool terminate(){ return (currState.theta < -M_PI || currState.theta > M_PI);}
+    bool terminate(){ return (currState.theta < -0.5*M_PI || currState.theta > 0.5*M_PI);}
 private:
     State oldState, currState;
     std::shared_ptr<RandomStream> randNoise;    

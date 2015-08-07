@@ -59,7 +59,7 @@ void MultiLayerPerceptron::calGradient(){
      this->feedForward(this->trainingX);
  // now calculate propogate the error
     std::shared_ptr<arma::mat> delta(new arma::mat);
-    *delta = (-*trainingY + *netOutput);
+    *delta = (-*trainingY + *netOutput_);
     backProp(delta);
      
     this->calLoss(delta);
@@ -122,9 +122,11 @@ void MultiLayerPerceptron::feedForward(std::shared_ptr<arma::mat> subInput0) {
             layers[i].input = layers[i - 1].output;
         }
     }
-    netOutput = layers[numLayers - 1].output;
+    netOutput_ = layers[numLayers - 1].output;
 }
-
+void MultiLayerPerceptron::forward(){
+	this->feedForward(this->trainingX);
+}
 void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, std::shared_ptr<arma::mat> subInputY) {
     std::shared_ptr<arma::mat> delta = std::make_shared<arma::mat>();
     int dim1 = layers[0].outputDim;
@@ -141,14 +143,14 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, s
             layers[0].W(i, j) += eps;
             feedForward(subInput);
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutput) - (*subInputY);
+            (*delta) = (*netOutput_) - (*subInputY);
             *delta = arma::sum(*delta, 1);
             error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
             temp_left = error;
             layers[0].W(i, j) -= 2.0 * eps;
             feedForward(subInput);
             //           outputY->transform([](double val){return log(val);});
-            (*delta) = (*netOutput) - (*subInputY);
+            (*delta) = (*netOutput_) - (*subInputY);
             *delta = arma::sum(*delta, 1);
             error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
             ;
@@ -191,16 +193,16 @@ void MultiLayerPerceptron::test(std::shared_ptr<arma::mat> testingX, std::shared
     feedForward(testingX);
     std::shared_ptr<arma::mat> delta(new arma::mat);
     //for delta: each column is the delta of a sample
-    *delta = (-*testingY + *netOutput);
+    *delta = (-*testingY + *netOutput_);
     delta->transform([](double val) {
         return val*val;
     });
     //        arma::vec error = arma::sum(*delta,1);
     double errorTotal = arma::sum(arma::sum(*delta));
-    netOutput->transform([](double val) {
+    netOutput_->transform([](double val) {
         return std::log(val + 1e-20);
     });
-    arma::mat crossEntropy_temp = *(testingY) % *(netOutput);
+    arma::mat crossEntropy_temp = *(testingY) % *(netOutput_);
     //    crossEntropy_temp.save("crossEntropy.dat",arma::raw_ascii);
     double crossEntropy = -arma::sum(arma::sum((crossEntropy_temp)));
     std::cout << "testing result:" << std::endl;

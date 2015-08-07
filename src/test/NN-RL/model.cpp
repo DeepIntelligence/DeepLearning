@@ -28,7 +28,8 @@ void Model::run(int action) {
     accer /= (4.0 * 0.5 / 3.0 - 0.1 * 2.0 * 0.5 * cos(currState.theta));
     oldState = currState;
     currState.theta += currState.theta_v * dt;
-    if (currState.theta > M_PI) currState.theta -= M_PI - 
+    if (currState.theta > M_PI) currState.theta -= 2.0*M_PI;
+    if (currState.theta < -M_PI) currState.theta += 2.0*M_PI;
     currState.theta_v += accer * dt;
 }
 
