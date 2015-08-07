@@ -24,39 +24,26 @@ void testDynamics();
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
         std::shared_ptr<arma::mat> trainingY);
 
+std::random_device device;
+std::mt19937 gen(device());
+std::bernoulli_distribution distribution(0.1);
+std::uniform_real_distribution<> dis(0, 1);
+
 int main(int argc, char *argv[]) {
-//    testForward();
-//    workOnSequenceGeneration();
-   // testGrad();
-//    trainRNN();
     testDynamicswithTrainer(argv[1]);
     return 0;
 }
 
 void testDynamicswithTrainer(char* filename){
     
-    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,100));
-    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,100));
-    
-    /*
-    // initialize 
-    trainingX->zeros();
-    trainingY->at(0) = 1.001;
-    //trainingY->at(1) = 0.2;
-    //trainingY->at(2) = 0.1;
-    for (int i = 1; i < trainingY->n_elem; i++){
-        //trainingY->at(i) = sin(trainingY->at(i-1)); // sine wave xt = sin(xt-1))
-        // trainingY->at(i) = pow(trainingY->at(i-1),1); // xt = xt-1 ^ 2 
-        //trainingY->at(i) = trainingY->at(i-1) + trainingY->at(i-2) - trainingY->at(i-3);
-        trainingY->at(i) = trainingY->at(i-1)*trainingY->at(i-1);
-//        trainingY->at(i) = sin(i);
-        
-    }
-    */
+    double T = 100;
+    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> testingX(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> testingY(new arma::mat(1,T));
     
     aLittleTimerGenerator(trainingX, trainingY);
-    
-    // trainingY->ones(1, 100);
+    aLittleTimerGenerator(testingX, testingY);
     NeuralNetParameter message; 
     ReadProtoFromTextFile(filename, &message);
     
@@ -70,17 +57,20 @@ void testDynamicswithTrainer(char* filename){
     (rnn->netOutput())->print();
     std::cout<<std::endl;
     trainingY->print();
+    
+    rnn->setTrainingSamples(testingX, testingY);
+    rnn->forward();
+    (rnn->netOutput())->print("output for testing");
+    testingY->print("testing Y");
+    
+    
 }
 
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
-        std::shared_ptr<arma::mat> trainingY){
-    
+    std::shared_ptr<arma::mat> trainingY){
     int T = trainingY->n_elem;
     
-    std::random_device device;
-    std::mt19937 gen(device());
-    std::bernoulli_distribution distribution(0.1);
-    std::uniform_real_distribution<> dis(0, 1);
+
     
     arma::mat input(2, T);
     arma::mat output(1, T);
@@ -216,9 +206,7 @@ void testGrad() {
     rnn.calNumericGrad();
     
     rnn.forward();
-    rnn.backward();
-
-    
+    rnn.backward();    
 }
 
 void workOnSequenceGeneration(std::shared_ptr<arma::mat> trainingY){

@@ -11,7 +11,8 @@ public:
     virtual double getLoss() = 0;
     virtual void save(std::string filename) = 0;
     virtual void load(std::string filename) = 0;
-    virtual std::shared_ptr<arma::mat> netOutput() = 0;
+    virtual void forward() = 0;
+	virtual std::shared_ptr<arma::mat> netOutput() = 0;
     virtual ~Net() {
     }
 };

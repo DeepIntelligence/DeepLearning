@@ -15,13 +15,14 @@ namespace NeuralNet {
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0);
         RNN(DeepLearning::NeuralNetParameter);
-        void forward();
+        
         void backward();
         void updatePara();
         void train();
         void test();
         void calNumericGrad();
         // implementing methods required by Net interface
+        virtual void forward();
         virtual void setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
         virtual void applyUpdates(std::vector<std::shared_ptr<arma::mat>>);
         virtual void calGradient();
