@@ -3,7 +3,7 @@
 #include <sstream>
 #include <math.h>
 #include "model.h"
-
+// this model is from paper Lease-squares policy iteration
 Model::Model(double dt0) {
     dt = dt0;
     randNoise = std::make_shared<RandomStream>(-10, 10);
@@ -28,6 +28,7 @@ void Model::run(int action) {
     accer /= (4.0 * 0.5 / 3.0 - 0.1 * 2.0 * 0.5 * cos(currState.theta));
     oldState = currState;
     currState.theta += currState.theta_v * dt;
+    if (currState.theta > M_PI) currState.theta -= M_PI - 
     currState.theta_v += accer * dt;
 }
 

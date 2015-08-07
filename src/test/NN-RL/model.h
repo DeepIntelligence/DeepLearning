@@ -8,12 +8,17 @@ This model is the Inverted Pendulum problem found in the paper
 #pragma once
 #include <string>
 #include <cmath>
-#include "../Utils/Util.h"
+#include <iostream>
+#include "Util.h"
 
 using namespace NeuralNet;
 struct State{
 	double theta;
 	double theta_v;
+	friend std::ostream& operator<<(std::ostream& out, State& in){
+		std::cout << in.theta <<"  " << in.theta_v;
+                return std::cout;
+	}
 };
 
 class Model{
