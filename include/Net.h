@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 
+namespace NeuralNet{
 class Net {
 public:
     virtual void applyUpdates(std::vector<std::shared_ptr<arma::mat>>) = 0;
@@ -17,4 +18,4 @@ public:
     }
 };
 
-
+}

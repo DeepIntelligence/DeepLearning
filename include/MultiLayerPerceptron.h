@@ -27,7 +27,7 @@ namespace NeuralNet {
         void vectoriseWeight(arma::vec &x);
         void calLoss(std::shared_ptr<arma::mat> delta);
         virtual void forward();
-		virtual void setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
+	virtual void setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y);
         virtual void applyUpdates(std::vector<std::shared_ptr<arma::mat>>);
         virtual void calGradient();
         virtual std::vector<std::shared_ptr<arma::mat>> netGradients();

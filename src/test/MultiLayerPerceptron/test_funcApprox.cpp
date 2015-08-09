@@ -27,20 +27,14 @@ int main(int argc, char** argv) {
     std::shared_ptr<Net> mlp(new MultiLayerPerceptron(nnpara));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(mlp, nnpara));
     
+    mlp->setTrainingSamples(X,nullptr);
+    mlp->forward();
+    (mlp->netOutput())->print();
     trainer->setTrainingSamples(X, Y);
     trainer->train();
     Y->save("target.dat",arma::raw_ascii);
     mlp->netOutput()->save("trainingResult.dat",arma::raw_ascii);
-    
-    //MLPTrainer mlpTrainer(mlp);
-    //Optimization::LBFGS::LBFGS_param param(100,20, 50 , "result.txt");
-    //Optimization::LBFGS lbfgs_opt(mlpTrainer,param, Optimization::LBFGS::Wolfe);
-    //lbfgs_opt.minimize();
-    
-    
-    
-    
-    
+      
     
     return 0;
 }

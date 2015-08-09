@@ -27,11 +27,13 @@ void Trainer_SGD::train() {
     std::shared_ptr<arma::mat> subTrainingX;
     std::shared_ptr<arma::mat> subTrainingY;
     int size = trainingParameter.neuralnettrainingparameter().minibatchsize();
+    if (size < 0 || size >= trainingX->n_cols) {
+        size = trainingX->n_cols;
+    }
     double errorTotal;
     
     for (iter = 0; iter < trainingParameter.neuralnettrainingparameter().nepoch(); iter++) {
         errorTotal = 0.0;
-        std::cout << "iteration: " << iter << std::endl;
         learningRate = trainingParameter.neuralnettrainingparameter().learningrate() / 
         trainingParameter.neuralnettrainingparameter().minibatchsize();
         
@@ -49,8 +51,12 @@ void Trainer_SGD::train() {
             this->calUpdates();
             this->applyUpdatesToNet();
         }
-        std::cout << "errorTotal: " << errorTotal << std::endl;
-        std::cout << "learningRate:" << learningRate << std::endl;
+        if (trainingParameter.neuralnettrainingparameter().verbose()&& 
+                ((iter+1)%trainingParameter.neuralnettrainingparameter().printinfofrequency()==0)){
+            std::cout << "iteration: " << iter << std::endl;
+            std::cout << "errorTotal: " << errorTotal << std::endl;
+            std::cout << "learningRate:" << learningRate << std::endl;
+        }
     }
 }
 

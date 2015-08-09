@@ -1,75 +1,124 @@
 #include "NN_RLSolver.h"
 
 using namespace ReinforcementLearning;
-NN_RLSolver::NN_RLSolver(Model& m, NeuralNet::MultiLayerPerceptron& mlp0, RL_TrainingPara tp):
-    model(m), mlp(mlp0), trainingPara(tp){
-    randChoice = std::make_shared<RandomStream>(-10, 10);
+using namespace NeuralNet;
+NN_RLSolver::NN_RLSolver(std::shared_ptr<BaseModel> m,
+                         std::shared_ptr<Net> net0, 
+                         std::shared_ptr<Trainer> trainer0, 
+                         RL_TrainingPara tp, int Dim):
+                        model(m), net(net0), trainer(trainer0), trainingPara(tp), stateDim(Dim){
+    netInputDim = stateDim + 1;
+    randChoice = std::make_shared<RandomStream>(0, model->getNumActions()-1);
+    this->setNormalizationConst();
 }
-
 void NN_RLSolver::train(){
-    std::shared_ptr<arma::mat> trainingSampleX, trainingSampleY;
-    std::shared_ptr<arma::mat> trainingSampleX_total, trainingSampleY_total;   
+    std::shared_ptr<arma::mat> trainingSampleX(new arma::mat);
+    std::shared_ptr<arma::mat> trainingSampleY(new arma::mat);
+    
     for (int iter = 0; iter < trainingPara.maxIter; iter++){
-        this->generateTrainingSample(trainingSampleX, trainingSampleY);
-        if (trainingPara.experienceReplayFlag) {
-            trainingSampleX_total->insert_cols(trainingSampleX_total->n_cols-1,*trainingSampleX);
-            trainingSampleY_total->insert_cols(trainingSampleY_total->n_cols-1,*trainingSampleY);
-        } else {
-            trainingSampleX_total = trainingSampleX;
-            trainingSampleY_total = trainingSampleY;
+        std::cout << "RLsolver iteration: " << iter << std::endl;
+        this->generateExperience();
+        if (iter > 20) {
+            this->generateTrainingSample(trainingSampleX, trainingSampleY);
+//            trainingSampleX->print("X");
+//            trainingSampleY->print("Y");
+            trainer->setTrainingSamples(trainingSampleX, trainingSampleY);
+            trainer->train();
         }
-        
-        mlp.setTrainingSample(trainingSampleX_total, trainingSampleY_total);
-        mlp.train();
-        
-    }
-    
-    mlp.save("result.txt");
-    this->generatePolicy();
-    
+        double sum = 0.0;
+        for (double n : durationVec) 
+            sum += n;
+        std::cout << "averageDuration: " << sum/(iter+1) << std::endl;
+    }   
+}
+void NN_RLSolver::setNormalizationConst(){
+    state_norm.resize(stateDim+1);
+    state_norm[0] = M_PI;
+    state_norm[1] = 20.0;
+    state_norm[2] = model->getNumActions()-1;
 }
 
-void NN_RLSolver::generateTrainingSample(std::shared_ptr<arma::mat> trainingSampleX, std::shared_ptr<arma::mat> trainingSampleY){
-    trainingSampleX = std::make_shared<arma::mat>(inputDim,1);
-    trainingSampleY = std::make_shared<arma::mat>(1,1);
-    double minQ;
+void NN_RLSolver::getMaxQ(const State& S, double* Q, int* action) {
+    double maxQ;
+    int a = 0;
+    std::shared_ptr<arma::mat> inputTemp(new arma::mat(netInputDim, 1));
+    maxQ = -std::numeric_limits<double>::max();
+    for (int k = 0; k < this->stateDim; k++)
+        inputTemp->at(k) = S[k] / this->state_norm[k];
+    for (int j = 0; j < model->getNumActions(); j++) {
+        inputTemp->at(stateDim) = j / state_norm[stateDim];
+        net->setTrainingSamples(inputTemp, nullptr);
+        net->forward();
+        double tempQ = arma::as_scalar(*(net->netOutput()));
+        if (maxQ < tempQ) {
+            maxQ = tempQ;
+            a = j;
+        }
+    }
+    *Q = maxQ;
+    *action = a;
+    return;
+}
+
+void NN_RLSolver::generateTrainingSample(std::shared_ptr<arma::mat> trainingX, std::shared_ptr<arma::mat> trainingY){
+    trainingX->set_size(netInputDim, experienceSet.size());
+    trainingY->set_size(1, experienceSet.size());
+    double maxQ;
+    int action;
+    std::shared_ptr<arma::mat> inputTemp(new arma::mat(netInputDim, 1));
+    for (int i = 0; i < this->experienceSet.size(); i++) {
+        this->getMaxQ(experienceSet[i].newState,&maxQ,&action);
+        double targetQ = experienceSet[i].reward +  trainingPara.discount*maxQ;;
+        for ( int k = 0; k < this->stateDim; k++)
+            inputTemp->at(k) =  experienceSet[i].oldState[k] / this->state_norm[k];
+        inputTemp->at(stateDim) = experienceSet[i].action / state_norm[stateDim];
+        
+        trainingX->col(i) = *inputTemp;
+        trainingY->at(i) = targetQ;
+    }
+}
+
+void NN_RLSolver::generateExperience(){
+    double maxQ;
+    int action;
+    double epi = 0.95;
     arma::mat outputTemp(1,1);
-    std::shared_ptr<arma::mat> inputTemp(new arma::mat);
-    
-    for( int i = 0; i < trainingPara.trainingSampleSize; i++){
-                
-        int action = randChoice->nextInt();
-        State currState = model.getCurrState();
-        model.run(action);
-        inputTemp->at(0) = currState.theta;
-        inputTemp->at(1) = currState.theta_v; 
-        inputTemp->at(2) = action;
-        mlp.feedForward(inputTemp);
-        for ( int j = 0 ; j < 3; j++){
-            inputTemp->at(0) = currState.theta;
-            inputTemp->at(1) = currState.theta_v; 
-            inputTemp->at(2) = j; 
-            double tempQ = arma::as_scalar(*(mlp.getNetOutput()));
-            if( minQ > tempQ ) minQ = tempQ;
+    std::shared_ptr<arma::mat> inputTemp(new arma::mat(netInputDim, 1));
+    model->createInitialState();
+    int i;
+    for(i = 0; i < trainingPara.trainingSampleSize; i++){
+        if( this->terminate(model->getCurrState()) ) {
+            break;
         }
-        double targetQ = this->getCosts(currState) + minQ;;
-        outputTemp(1) = targetQ;
-        if ( i == 0 ){
-            *trainingSampleX = *inputTemp;
-            trainingSampleY->at(0) = targetQ;
+        
+        State oldState = model->getCurrState();
+        if (randChoice->nextDou()< epi){
+            this->getMaxQ(oldState, &maxQ, &action);
         } else {
-            trainingSampleX->insert_cols(i,*inputTemp);
-            trainingSampleY->insert_cols(i,outputTemp);
+            action = randChoice->nextInt();
         }
-        if( model.terminate() ) break;
+            model->run(action);
+            State currState = model->getCurrState();
+            double r = this->getRewards(currState);
+            oldState.shrink_to_fit();
+            currState.shrink_to_fit();
+            this->experienceSet.push_back(Experience(oldState,currState, action, r));
     }
+     std::cout << "duration:" << i << std::endl;
+     durationVec.push_back(i);
 }
-
 void NN_RLSolver::generatePolicy() const{
 
 }
 
-double NN_RLSolver::getCosts(const State &newS) const{
-    return 0.0;
+double NN_RLSolver::getRewards(const State &newS) const{    
+    if (this->terminate(newS)){
+        return -1.0;
+    } else {
+        return 0.0;
+    }
 }
+bool NN_RLSolver::terminate(const State& S) const {
+    return (S[0] < - 0.5* M_PI || S[0] > 0.5 * M_PI);
 
+}

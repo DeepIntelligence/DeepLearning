@@ -40,7 +40,9 @@ void BaseLayer::initializeWeight() {
     } else if (actType == softmax) {
         (W) *=sqrt(6.0/(inputDim+outputDim));
         (B) *=sqrt(6.0/(inputDim+outputDim));
-
+    } else {
+        (W) *=sqrt(6.0/(inputDim+outputDim));
+        (B) *=sqrt(6.0/(inputDim+outputDim));
     }
 
 }

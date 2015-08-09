@@ -1,27 +1,21 @@
 layerStruct{
 	name: "BaseLayer1"
-	inputDim: 784
-	outputDim: 100
+	inputDim: 3
+	outputDim: 8
 	activationType: sigmoid
 }
 
 layerStruct{
 	name: "BaseLayer2"
-	inputDim: 100
-	outputDim: 100
+	inputDim: 8
+	outputDim: 1
 	activationType: sigmoid
 }
 
-layerStruct{
-	name: "BaseLayer3"
-	inputDim: 100
-	outputDim: 10
-	activationType: softmax
-}
 neuralNetTrainingParameter{
 	learningRate: 0.1
-	miniBatchSize: 20
-	NEpoch: 200
+	miniBatchSize: 10
+	NEpoch: 20
         momentum: 0.9
         decayRate: 1000
 }

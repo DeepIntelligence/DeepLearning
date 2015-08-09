@@ -103,7 +103,7 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, _internal_metadata_),
       -1);
   NeuralNetTrainingParameter_descriptor_ = file->message_type(3);
-  static const int NeuralNetTrainingParameter_offsets_[8] = {
+  static const int NeuralNetTrainingParameter_offsets_[10] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, learningrate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, maxiter_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, minibatchsize_),
@@ -112,6 +112,8 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, trainertype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, decayrate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, momentum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, verbose_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NeuralNetTrainingParameter, printinfofrequency_),
   };
   NeuralNetTrainingParameter_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -183,14 +185,15 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
     "rameter\022\027\n\017numHiddenLayers\030\001 \001(\005\022\033\n\023hidd"
     "enLayerInputDim\030\002 \001(\005\022\034\n\024hiddenLayerOutp"
     "utDim\030\003 \001(\005\022\020\n\010inputDim\030\004 \001(\005\022\021\n\toutputD"
-    "im\030\005 \001(\005\"\240\002\n\032NeuralNetTrainingParameter\022"
+    "im\030\005 \001(\005\"\326\002\n\032NeuralNetTrainingParameter\022"
     "\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 \001(\005\022\025"
     "\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001(\005\022\022\n"
     "\003epi\030\005 \001(\001:\0051e-06\022N\n\013trainerType\030\006 \001(\01624"
     ".DeepLearning.NeuralNetTrainingParameter"
     ".TrainerType:\003SGD\022\025\n\tdecayRate\030\007 \001(\001:\00210"
-    "\022\025\n\010momentum\030\010 \001(\001:\0030.9\"\"\n\013TrainerType\022\007"
-    "\n\003SGD\020\001\022\n\n\006iRProp\020\002", 939);
+    "\022\025\n\010momentum\030\010 \001(\001:\0030.9\022\025\n\007verbose\030\t \001(\010"
+    ":\004true\022\035\n\022printInfoFrequency\030\n \001(\005:\0011\"\"\n"
+    "\013TrainerType\022\007\n\003SGD\020\001\022\n\n\006iRProp\020\002", 993);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DeepLearning.proto", &protobuf_RegisterTypes);
   NeuralNetParameter::default_instance_ = new NeuralNetParameter();
@@ -2092,6 +2095,8 @@ const int NeuralNetTrainingParameter::kEpiFieldNumber;
 const int NeuralNetTrainingParameter::kTrainerTypeFieldNumber;
 const int NeuralNetTrainingParameter::kDecayRateFieldNumber;
 const int NeuralNetTrainingParameter::kMomentumFieldNumber;
+const int NeuralNetTrainingParameter::kVerboseFieldNumber;
+const int NeuralNetTrainingParameter::kPrintInfoFrequencyFieldNumber;
 #endif  // !_MSC_VER
 
 NeuralNetTrainingParameter::NeuralNetTrainingParameter()
@@ -2121,6 +2126,8 @@ void NeuralNetTrainingParameter::SharedCtor() {
   trainertype_ = 1;
   decayrate_ = 10;
   momentum_ = 0.9;
+  verbose_ = true;
+  printinfofrequency_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2175,6 +2182,10 @@ void NeuralNetTrainingParameter::Clear() {
     trainertype_ = 1;
     decayrate_ = 10;
     momentum_ = 0.9;
+  }
+  if (_has_bits_[8 / 32] & 768u) {
+    verbose_ = true;
+    printinfofrequency_ = 1;
   }
 
 #undef ZR_HELPER_
@@ -2316,6 +2327,36 @@ bool NeuralNetTrainingParameter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(72)) goto parse_verbose;
+        break;
+      }
+
+      // optional bool verbose = 9 [default = true];
+      case 9: {
+        if (tag == 72) {
+         parse_verbose:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &verbose_)));
+          set_has_verbose();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_printInfoFrequency;
+        break;
+      }
+
+      // optional int32 printInfoFrequency = 10 [default = 1];
+      case 10: {
+        if (tag == 80) {
+         parse_printInfoFrequency:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &printinfofrequency_)));
+          set_has_printinfofrequency();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2386,6 +2427,16 @@ void NeuralNetTrainingParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteDouble(8, this->momentum(), output);
   }
 
+  // optional bool verbose = 9 [default = true];
+  if (has_verbose()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(9, this->verbose(), output);
+  }
+
+  // optional int32 printInfoFrequency = 10 [default = 1];
+  if (has_printinfofrequency()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->printinfofrequency(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2435,6 +2486,16 @@ void NeuralNetTrainingParameter::SerializeWithCachedSizes(
   // optional double momentum = 8 [default = 0.9];
   if (has_momentum()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(8, this->momentum(), target);
+  }
+
+  // optional bool verbose = 9 [default = true];
+  if (has_verbose()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(9, this->verbose(), target);
+  }
+
+  // optional int32 printInfoFrequency = 10 [default = 1];
+  if (has_printinfofrequency()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->printinfofrequency(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -2497,6 +2558,20 @@ int NeuralNetTrainingParameter::ByteSize() const {
     }
 
   }
+  if (_has_bits_[8 / 32] & 768) {
+    // optional bool verbose = 9 [default = true];
+    if (has_verbose()) {
+      total_size += 1 + 1;
+    }
+
+    // optional int32 printInfoFrequency = 10 [default = 1];
+    if (has_printinfofrequency()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->printinfofrequency());
+    }
+
+  }
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -2548,6 +2623,14 @@ void NeuralNetTrainingParameter::MergeFrom(const NeuralNetTrainingParameter& fro
       set_momentum(from.momentum());
     }
   }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_verbose()) {
+      set_verbose(from.verbose());
+    }
+    if (from.has_printinfofrequency()) {
+      set_printinfofrequency(from.printinfofrequency());
+    }
+  }
   if (from._internal_metadata_.have_unknown_fields()) {
     mutable_unknown_fields()->MergeFrom(from.unknown_fields());
   }
@@ -2583,6 +2666,8 @@ void NeuralNetTrainingParameter::InternalSwap(NeuralNetTrainingParameter* other)
   std::swap(trainertype_, other->trainertype_);
   std::swap(decayrate_, other->decayrate_);
   std::swap(momentum_, other->momentum_);
+  std::swap(verbose_, other->verbose_);
+  std::swap(printinfofrequency_, other->printinfofrequency_);
   std::swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -2790,6 +2875,54 @@ void NeuralNetTrainingParameter::clear_momentum() {
   set_has_momentum();
   momentum_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.momentum)
+}
+
+// optional bool verbose = 9 [default = true];
+bool NeuralNetTrainingParameter::has_verbose() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_verbose() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void NeuralNetTrainingParameter::clear_has_verbose() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void NeuralNetTrainingParameter::clear_verbose() {
+  verbose_ = true;
+  clear_has_verbose();
+}
+ bool NeuralNetTrainingParameter::verbose() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.verbose)
+  return verbose_;
+}
+ void NeuralNetTrainingParameter::set_verbose(bool value) {
+  set_has_verbose();
+  verbose_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.verbose)
+}
+
+// optional int32 printInfoFrequency = 10 [default = 1];
+bool NeuralNetTrainingParameter::has_printinfofrequency() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+void NeuralNetTrainingParameter::set_has_printinfofrequency() {
+  _has_bits_[0] |= 0x00000200u;
+}
+void NeuralNetTrainingParameter::clear_has_printinfofrequency() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+void NeuralNetTrainingParameter::clear_printinfofrequency() {
+  printinfofrequency_ = 1;
+  clear_has_printinfofrequency();
+}
+ ::google::protobuf::int32 NeuralNetTrainingParameter::printinfofrequency() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.printInfoFrequency)
+  return printinfofrequency_;
+}
+ void NeuralNetTrainingParameter::set_printinfofrequency(::google::protobuf::int32 value) {
+  set_has_printinfofrequency();
+  printinfofrequency_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.printInfoFrequency)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
