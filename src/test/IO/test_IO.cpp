@@ -3,7 +3,8 @@
 using namespace DeepLearning;
 int main(int argc, char *argv[]){
 
-	NeuralNetParameter message; 
+	NeuralNetParameter message;
+	RNNStructParameter submessage;
 	if (argc == 2){
 
 		ReadProtoFromTextFile(argv[1], &message);
@@ -29,6 +30,13 @@ int main(int argc, char *argv[]){
 	std::cout << "test Kai message" << std::endl;
 	std::cout << message.rnnstruct().numhiddenlayers() << std::endl;
 	std::cout << message.rnnstruct().hiddenlayeroutputdim() << std::endl;
+
+	submessage = message.rnnstruct();
+
+	std::cout << "test sub message" << std::endl;
+	std::cout << submessage.numhiddenlayers() << std::endl;
+	std::cout << submessage.hiddenlayeroutputdim() << std::endl;	
+
 
 	}
 

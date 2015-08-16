@@ -18,6 +18,6 @@ CXXFLAGS=  -std=c++0x $(ARMA_INCLUDE) $(DEEPLEARNING_INCLUDE) $(GTEST_INCLUDE) $
 CXXFLAGS += $(DEBUGFLAG)
 
 LINKOPTFLAGS= -O3 -flto=4 -fwhole-program
-LDFLAG=$(DEEPLEARNING_PATH) $(GTEST_PATH) $(PROTO_PATH) -ldeeplearning -llapack -lblas  -pthread -lprotobuf 
+LDFLAG=$(DEEPLEARNING_PATH) $(GTEST_PATH) $(PROTO_PATH) -ldeeplearning -llapack -lblas  -lprotobuf -pthread -lpthread 
 
 

@@ -8,6 +8,10 @@ message NeuralNetParameter {
 	optional RNNStructParameter rnnStruct = 102;
 }
 
+message ReinforcementLearningParameter{
+	optional QLearningSolverParameter qLearningSolverParameter= 100;
+}
+
 message LayerStructParameter {
 	enum ActivationType {sigmoid = 1; tanh = 2; linear = 3; softmax = 4;}
 	optional int32 inputDim = 1;
@@ -15,21 +19,17 @@ message LayerStructParameter {
 	optional ActivationType activationType = 3;
 	optional string name = 4;
 	optional string type = 5;	
-
 }
-
 message RNNStructParameter{
 	optional int32 numHiddenLayers = 1;
 	optional int32 hiddenLayerInputDim = 2;
 	optional int32 hiddenLayerOutputDim = 3;
 	optional int32 inputDim = 4;
 	optional int32 outputDim = 5;
-
-
 }
 
 message NeuralNetTrainingParameter {
- enum TrainerType {SGD = 1; iRProp = 2;}
+ enum TrainerType {SGD = 1; iRProp = 2; SGDRNN=3;}
 	optional double learningRate = 1;
 	optional int32 maxIter = 2;
 	optional int32 miniBatchSize = 3;
@@ -42,3 +42,11 @@ message NeuralNetTrainingParameter {
 	optional int32 printInfoFrequency = 10 [default = 1];
 }
 
+message QLearningSolverParameter{
+	optional int32 numTrainingEpisodes = 1;
+	optional double learningRate = 2;
+	optional double epsilon = 3;
+	optional int32 EpisodeLength = 4;
+	optional double discount = 5;
+	optional int32 numEpisodesBeforeTraining = 6;
+}

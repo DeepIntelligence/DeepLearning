@@ -32,7 +32,7 @@ void Model_PoleSimple::run(int action) {
     double &theta = currState[0];
     double &theta_v = currState[1];
     accer = 9.8 * sin(theta) - 0.1 * 2.0 * 0.5 * pow(theta_v, 2.0) * sin(2.0 * theta) / 2.0 - 0.1 * cos(theta) * force;
-    accer /= (4.0 * 0.5 / 3.0 - 0.1 * 2.0 * 0.5 * cos(theta));
+    accer /= (4.0 * 0.5 / 3.0 - 0.1 * 2.0 * 0.5 * cos(theta) * cos(theta) );
     prevState = currState;
     theta += theta_v * dt;
     if (theta > M_PI) theta -= 2.0*M_PI;

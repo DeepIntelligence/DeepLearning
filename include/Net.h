@@ -13,9 +13,15 @@ public:
     virtual void save(std::string filename) = 0;
     virtual void load(std::string filename) = 0;
     virtual void forward() = 0;
-	virtual std::shared_ptr<arma::mat> netOutput() = 0;
-    virtual ~Net() {
-    }
+    virtual std::shared_ptr<arma::mat> netOutput() = 0;
+    // the following are RNN specific
+    virtual arma::mat forwardInTime(std::shared_ptr<arma::mat> x){}
+    virtual std::shared_ptr<arma::mat> netOutputAtTime(int time){return 0;}
+    virtual int getTime(){return 0;}
+    virtual void setTime(int t){}
+    virtual void updateInternalState(){}
+    virtual void saveLayerInputOutput(){}
+    virtual ~Net() { }
 };
 
 }

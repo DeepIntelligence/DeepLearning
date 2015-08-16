@@ -1,6 +1,8 @@
-#include<armadillo>
+//#include<armadillo>
+#include <memory>
 #include <cuda_runtime.h>
 #include "cublas_v2.h"
+#include <iostream>
 //#include "GPUMat.h"
 #define N 10
 void mat_prod_mat(const double* a, cublasOperation_t op_a, const double* b, cublasOperation_t op_b, double*c, int m, int n, int k);
@@ -11,6 +13,7 @@ void mat_prod_mat(const double* a, cublasOperation_t op_a, const double* b, cubl
 
 int main(){
 
+#if 0
 //	arma::mat a;	
 	arma::mat a(N, N, arma::fill::randu);
 	arma::mat b(N, N, arma::fill::randu);
@@ -18,13 +21,25 @@ int main(){
 	
 	c.save("armaresult.txt",arma::raw_ascii);	
 
+#endif
+	double *a;
+	double *b, *c;
+	a = (double *)malloc(N*N*sizeof(double));
+	b = (double *)malloc(N*N*sizeof(double));
+	c = (double *)malloc(N*N*sizeof(double));
 
-	
+	for (int i = 0; i < N*N; i++){
+		a[i] = 1.0* i / (N*N);
+		b[i] = -a[i];
+	}
+
 #if 1	
-	mat_prod_mat(a.memptr(), CUBLAS_OP_N, b.memptr(), CUBLAS_OP_N, c.memptr(), N, N, N);	
-
+	mat_prod_mat(a, CUBLAS_OP_N, b, CUBLAS_OP_N, c, N, N, N);	
+	for (int i = 0; i < N*N; i++){
+		std::cout << c[i] << std::endl;
+	}
 	
-	c.save("gpuresult.txt", arma::raw_ascii);
+//	c.save("gpuresult.txt", arma::raw_ascii);
 //	double *aa = nullptr;
 //	double *bb = nullptr;
 //	double *cc = nullptr;

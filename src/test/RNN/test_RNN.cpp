@@ -20,6 +20,7 @@ void testForward();
 void trainRNN();
 void testGrad();
 void testDynamicswithTrainer(char* filename);
+void testRLData(char* filename);
 void testDynamics();
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
         std::shared_ptr<arma::mat> trainingY);
@@ -30,8 +31,29 @@ std::bernoulli_distribution distribution(0.1);
 std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
-    testDynamicswithTrainer(argv[1]);
+//    testDynamicswithTrainer(argv[1]);
+    testRLData(argv[1]);
     return 0;
+}
+void testRLData(char* filename){
+   std::shared_ptr<arma::mat> trainingX(new arma::mat);
+    std::shared_ptr<arma::mat> trainingY(new arma::mat);
+    std::vector<std::shared_ptr<arma::mat>> X, Y;
+    trainingX->load("X.dat");
+    trainingY->load("Y.dat");
+    X.push_back(trainingX);
+    Y.push_back(trainingY);
+    NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);
+    
+    std::shared_ptr<Net> rnn(new RNN(message));
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
+
+    trainer->setTrainingSamples(X, Y);
+    trainer->train();
+    
+    trainingY->save("trainingY.dat", arma::raw_ascii);
+    (rnn->netOutput())->print();
 }
 
 void testDynamicswithTrainer(char* filename){
@@ -48,6 +70,11 @@ void testDynamicswithTrainer(char* filename){
     ReadProtoFromTextFile(filename, &message);
     
     std::shared_ptr<Net> rnn(new RNN(message));
+    
+
+    rnn->setTrainingSamples(trainingX, nullptr);
+    rnn->forward();
+    rnn->netOutputAtTime(0);
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
 
     trainer->setTrainingSamples(trainingX, trainingY);
