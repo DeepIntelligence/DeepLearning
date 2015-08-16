@@ -28,7 +28,7 @@ void testSimple(char* filename){
     
     double xmin = X->min();
     double xmax = X->max();
-    X->transform([&](double x){return x/(xmax - xmin);});
+    X->transform([&](double x){return x/(xmax - xmin)-0.5;});
     Y->ones();
     *Y = (*X); 
     Y->transform([](double val){return sin(val);});
@@ -46,6 +46,8 @@ void testSimple(char* filename){
     trainer->train();
     Y->save("target.dat",arma::raw_ascii);
     mlp->netOutput()->save("trainingResult.dat",arma::raw_ascii);
+    Y->print();
+     (mlp->netOutput())->print();
 
 }
 
