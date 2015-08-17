@@ -9,4 +9,6 @@
 #include "DeepLearning.pb.h"
 #include "Util.h"
 #include "Initializer.h"
+#include "ActivationFunc.h"
+#include "Layer.h"
 #include <armadillo>

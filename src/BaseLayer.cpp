@@ -29,8 +29,6 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
     }
 };
 
-
-
 void BaseLayer::initializeWeight() {
 
 	if (initializer_W == nullptr || initializer_B == nullptr) {
@@ -84,23 +82,12 @@ void BaseLayer::updatePara_accu(double learningRate){
 
 void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
     //for delta: each column is the delta of a sample
-    arma::mat deriv;
+    std::shared_ptr<arma::mat> deriv(new arma::mat);
+	GetActivationGradient(output, deriv, this->actType);
+
     arma::mat delta;
  
-    if (actType == softmax) {
-        deriv.ones(output->n_rows,output->n_cols);   
-    } else if (actType == sigmoid ) {
-        deriv = (1 - (*output)) % (*output);        
-    } else if ( actType == tanh) {
-        deriv = (1 - (*output) % (*output));
-    } else if ( actType == linear) {
-        deriv.ones(output->n_rows,output->n_cols);
-    } else if(actType == ReLU){
-        deriv = *delta_in;
-        deriv.transform([](double val) {return val > 0 ? 1.0: 0 ;});
-    }
-    
-    delta = (*delta_in) % deriv;
+    delta = (*delta_in) % (*deriv);
     *grad_B = arma::sum(delta,1);
     *grad_W = delta * (*input).st();
 
@@ -112,38 +99,6 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
 
 }
 
-void BaseLayer::applyActivation(){
-// then do the activation
-    std::shared_ptr<arma::mat> &p=output;
-    arma::mat maxVal = arma::max(*p,0);
-    arma::mat sumVal;
-    switch(actType) {
-    case softmax:
-        for (int i = 0; i < p->n_cols; i++) {
-                p->col(i)-= maxVal(i);            
-        }          
-        (*p).transform([](double val) {
-            return exp(val);
-        });
-
-         sumVal = arma::sum(*p,0);
-        for (int i = 0; i < p->n_cols; i++) {            
-               p->col(i) /=sumVal(i);
-        }
-        break;
-    case sigmoid:
-//        p->print("p");
-        (*p).transform([](double val) {
-            return 1.0/(1.0+exp(-val));
-        });
-        break;
-    case linear:
-        break;
-    case ReLU:
-        p->transform([](double val) {return val > 0 ? val: 0 ;});
-    	break;
-    }
-}
 void BaseLayer::activateUp(){
 	assert((this->input!=NULL)&&"null ptr in the activateUp()");
 	this->activateUp(this->input);
@@ -167,22 +122,8 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
 
     for (int i = 0; i < input->n_cols; i++) p->col(i) += *B;
 
-    applyActivation();
+    ApplyActivation(output, this->actType);
 }
-#if 0 
-void BaseLayer::activateUp(std::shared_ptr<arma::mat> W_external, std::shared_ptr<arma::vec> B_external, std::shared_ptr<arma::mat> input0){
-    input = input0;
-    output = std::make_shared<arma::mat>(outputDim, input->n_cols);
-    std::shared_ptr<arma::mat> &p=output;
-// first get the projection
-    (*output) = (*W_external) * (*input);
-
-    for (int i = 0; i < input->n_cols; i++) p->col(i) += (*B_external);
-
-    applyActivation();
-
-}
-#endif
 
 void BaseLayer::vectoriseGrad(std::shared_ptr<arma::vec> V){
     
@@ -219,7 +160,6 @@ void BaseLayer::vectoriseGrad(double *ptr, size_t offset){
         *(ptr + offset) = *(B_ptr+i);
         offset++;
     }
-
 }
 
 void BaseLayer::vectoriseWeight(double *ptr, size_t offset){

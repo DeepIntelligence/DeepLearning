@@ -2,8 +2,7 @@
 #include "common.h"
 namespace NeuralNet{
 
-struct BaseLayer {
-    enum ActivationType {softmax, sigmoid, linear, tanh, ReLU};
+struct BaseLayer: public Layer {
     BaseLayer() {}
     BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, std::shared_ptr<Initializer> init_w = nullptr, 
 	std::shared_ptr<Initializer> init_B = nullptr, bool dropout = false, double dropr=0.3);
@@ -14,7 +13,7 @@ struct BaseLayer {
 /*  given the input matrix, perform 
  outputY = sigma (W*input + B), sigma is the activation function
 */    
-    void activateUp();
+    virtual void activateUp();
     void activateUp(std::shared_ptr<arma::mat> input);
     
     
