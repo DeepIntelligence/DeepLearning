@@ -52,7 +52,7 @@ void BaseLayer_LSTM::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint)
         delta = delta % dropOutMat;
     }
 #endif    
-    (*delta_out) = W.st() * (delta);
+    (*delta_out) = W->st() * (delta);
 }
 
 void BaseLayer_LSTM::accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t) {

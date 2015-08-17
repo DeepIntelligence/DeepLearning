@@ -15,27 +15,47 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
     rnnOutputDim = neuralNetPara.rnnstruct().outputdim(); // this parameter is not used within sofar code
      
     for (int i = 0; i < numHiddenLayers; i++){
-        
+        int inputDim;
+		int outputDim;
         // i=0 is the first hidden layer with input consisting 
           // of data input and last time hidden
         if (i == 0) {
             
             // inputDim is the unrolled LSTM input for various layers, the same to outputDim
-            int inputDim = rnnInputDim + hiddenLayerOutputDim;
-            int outputDim = hiddenLayerOutputDim;
+            inputDim = rnnInputDim + hiddenLayerOutputDim;
+            outputDim = hiddenLayerOutputDim;
             
-            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
+
             
           // of hidden output from lower layer at the same time and
            // hidden output from same layer but at previous time
        } else if(i <= numHiddenLayers-1){
               
             // inputDim is the unrolled LSTM input for various layers, the same to outputDim
-            int inputDim = hiddenLayerOutputDim + hiddenLayerOutputDim;
-            int outputDim = hiddenLayerOutputDim;
+            inputDim = hiddenLayerOutputDim + hiddenLayerOutputDim;
+            outputDim = hiddenLayerOutputDim;
             
-            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
         }
+        
+			switch (neuralNetPara.rnnstruct().activationtype()) {
+				case RNNStructParameter_ActivationType_sigmoid:
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));     
+        			break;
+        		case RNNStructParameter_ActivationType_tanh:
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::tanh));     
+        			break;
+        		case RNNStructParameter_ActivationType_softmax:
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::softmax));     
+        			break;
+        		case RNNStructParameter_ActivationType_ReLU:
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::ReLU));     
+        			break;
+        		case RNNStructParameter_ActivationType_linear:
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::linear));     
+        			break;
+        		default:
+        			break;
+			}
 		}
 
  
@@ -55,6 +75,10 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
             case LayerStructParameter_ActivationType_linear:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
                         neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::linear);
+                break;
+            case LayerStructParameter_ActivationType_ReLU:
+                netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
+                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::ReLU);
                 break;
             default:break;
         }
@@ -263,11 +287,11 @@ void RNN::fillNetGradVector(){
 
 void RNN::applyUpdates(std::vector<std::shared_ptr<arma::mat>> inGradVector){
     for (int i = 0; i < this->numHiddenLayers; i++){
-        (this->hiddenLayers[i]).W -= *(inGradVector[2*i]);
-        (this->hiddenLayers[i]).B -= *(inGradVector[2*i+1]);
+        *(hiddenLayers[i].W) -= *(inGradVector[2*i]);
+        *(hiddenLayers[i].B) -= *(inGradVector[2*i+1]);
     }
-    netOutputLayer->W -= *(inGradVector[2*this->numHiddenLayers]);
-    netOutputLayer->B -= *(inGradVector[2*this->numHiddenLayers+1]);    
+    *(netOutputLayer->W) -= *(inGradVector[2*this->numHiddenLayers]);
+    *(netOutputLayer->B) -= *(inGradVector[2*this->numHiddenLayers+1]);    
 }
 
 void RNN::calGradient(){
@@ -342,7 +366,7 @@ void RNN::calNumericGrad(){
     
     for (int i = 0; i < dim1; i++) {
         for (int j = 0; j < dim2; j++) {
-            _LAYERS[0].W(i, j) += eps;
+            (_LAYERS[0].W)->at(i, j) += eps;
             this->forward();
             error = 0.0;
             //           outputY->transform([](double val){return log(val);});
@@ -352,7 +376,7 @@ void RNN::calNumericGrad(){
             }
             error *= 0.5;
             temp_left = error;
-            _LAYERS[0].W(i, j) -= 2.0 * eps;
+            (_LAYERS[0].W)->at(i, j) -= 2.0 * eps;
             this->forward();
             //           outputY->transform([](double val){return log(val);});
             error = 0.0;
@@ -362,7 +386,7 @@ void RNN::calNumericGrad(){
             }
             error *= 0.5;
             temp_right = error;
-            _LAYERS[0].W(i, j) += eps; // add back the change of the weights
+            (_LAYERS[0].W)->at(i, j) += eps; // add back the change of the weights
             dW(i, j) = (temp_left - temp_right) / 2.0 / eps;
             
         }

@@ -11,22 +11,29 @@ MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0) {
     testGrad = false;
     totalDim = 0;
     for (int i = 0; i < numLayers; i++) {
+        NeuralNetInitializerParameter_InitializerType w_type, b_type;
+        w_type = neuralNetPara.layerstruct(i).init_w().initializertype();
+        b_type = neuralNetPara.layerstruct(i).init_b().initializertype();
         switch (neuralNetPara.layerstruct(i).activationtype()) {
             case LayerStructParameter_ActivationType_sigmoid:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::sigmoid));
+                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::sigmoid, 
+                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
                 break;
             case LayerStructParameter_ActivationType_tanh:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::tanh));
+                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::tanh,
+                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
                 break;
             case LayerStructParameter_ActivationType_softmax:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::softmax));
+                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::softmax,
+                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
                 break;
             case LayerStructParameter_ActivationType_linear:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::linear));
+                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::linear,
+                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
                 break;
             default:break;
         }
@@ -140,14 +147,14 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, s
 
     for (int i = 0; i < dim1; i++) {
         for (int j = 0; j < dim2; j++) {
-            layers[0].W(i, j) += eps;
+            (layers[0].W)->at(i, j) += eps;
             feedForward(subInput);
             //           outputY->transform([](double val){return log(val);});
             (*delta) = (*netOutput_) - (*subInputY);
             *delta = arma::sum(*delta, 1);
             error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
             temp_left = error;
-            layers[0].W(i, j) -= 2.0 * eps;
+            (layers[0].W)->at(i, j) -= 2.0 * eps;
             feedForward(subInput);
             //           outputY->transform([](double val){return log(val);});
             (*delta) = (*netOutput_) - (*subInputY);
@@ -155,7 +162,7 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, s
             error = 0.5 * arma::as_scalar((*delta).st() * (*delta));
             ;
             temp_right = error;
-            layers[0].W(i, j) += eps;
+            (layers[0].W)->at(i, j) += eps;
             dW(i, j) = (temp_left - temp_right) / 2.0 / eps;
         }
     }
@@ -163,8 +170,8 @@ void MultiLayerPerceptron::calNumericGrad(std::shared_ptr<arma::mat> subInput, s
 }
 void MultiLayerPerceptron::applyUpdates(std::vector<std::shared_ptr<arma::mat>> updates){
     for (int i = 0; i < numLayers; i++){
-        this->layers[i].W -= *(updates[2*i]);
-        this->layers[i].B -= *(updates[2*i+1]);
+        *(this->layers[i].W) -= *(updates[2*i]);
+        *(this->layers[i].B) -= *(updates[2*i+1]);
     }
 }
 

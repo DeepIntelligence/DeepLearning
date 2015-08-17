@@ -8,4 +8,5 @@
 #include "io.h"
 #include "DeepLearning.pb.h"
 #include "Util.h"
+#include "Initializer.h"
 #include <armadillo>

@@ -1,15 +1,12 @@
 #pragma once
-#include <memory>
-#include <armadillo>
-#include <random>
-#include "Util.h"
-
+#include "common.h"
 namespace NeuralNet{
 
 struct BaseLayer {
-    enum ActivationType {softmax, sigmoid, linear, tanh};
+    enum ActivationType {softmax, sigmoid, linear, tanh, ReLU};
     BaseLayer() {}
-    BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, bool dropout = false, double dropr=0.3);
+    BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, std::shared_ptr<Initializer> init_w = nullptr, 
+	std::shared_ptr<Initializer> init_B = nullptr, bool dropout = false, double dropr=0.3);
 /*  save weights of the layers
  */
     void save(std::string filename = "BaseLayer");
@@ -44,13 +41,14 @@ struct BaseLayer {
     int W_size, B_size, totalSize;
     std::shared_ptr<arma::mat> input, output;
 /*  weight and bias for this layer*/
-    arma::mat W, B;
+    std::shared_ptr<arma::mat> W, B;
     std::shared_ptr<arma::mat> grad_W, grad_W_accu, grad_B, grad_B_accu;
 /* the error propogated from lower layers*/    
     std::shared_ptr<arma::mat> delta_out;
     bool dropOutFlag;
     double dropOutRate;
-    arma::mat dropOutMat;
+    std::shared_ptr<Initializer> initializer_W, initializer_B; 
+	arma::mat dropOutMat;
     ActivationType actType;
     Random_Bernoulli<double> *randomGen;
     void vectoriseGrad(std::shared_ptr<arma::vec> V);
@@ -60,6 +58,7 @@ struct BaseLayer {
     void deVectoriseWeight(double *ptr, size_t offset);
     void vectoriseWeight(double *ptr, size_t offset);
     void applyActivation();
+	
     void fill_Bernoulli(double *, int size); 
 };
 

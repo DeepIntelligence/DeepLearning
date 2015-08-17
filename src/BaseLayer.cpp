@@ -6,8 +6,11 @@
 using namespace NeuralNet;
 
 BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, 
-        bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
-    actType(actType0), dropOutFlag(dropout), dropOutRate(dropr){
+        std::shared_ptr<Initializer> init_W, std::shared_ptr<Initializer> init_B,
+		bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
+    actType(actType0), initializer_W(init_W), initializer_B(init_B), dropOutFlag(dropout), dropOutRate(dropr){
+    
+    
     initializeWeight();
     grad_W = std::make_shared<arma::mat>();
     grad_B = std::make_shared<arma::mat>();
@@ -29,37 +32,42 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
 
 
 void BaseLayer::initializeWeight() {
-    W.randu(outputDim,inputDim);
-    B.randu(outputDim);
-    W -= 0.5;
-    B -= 0.5;
 
-    if (actType == sigmoid) {
-        (W) *=4*sqrt(6.0/(inputDim+outputDim));
-        (B) *=4*sqrt(6.0/(inputDim+outputDim));
-    } else if (actType == softmax) {
-        (W) *=sqrt(6.0/(inputDim+outputDim));
-        (B) *=sqrt(6.0/(inputDim+outputDim));
-    } else {
-        (W) *=sqrt(6.0/(inputDim+outputDim));
-        (B) *=sqrt(6.0/(inputDim+outputDim));
-    }
+	if (initializer_W == nullptr || initializer_B == nullptr) {
+    	W->randu(outputDim,inputDim);
+    	B->randu(outputDim);
+    	(*W) -= 0.5;
+    	(*B) -= 0.5;
 
+    	if (actType == sigmoid) {
+        	(*W) *=4*sqrt(6.0/(inputDim+outputDim));
+        	(*B) *=4*sqrt(6.0/(inputDim+outputDim));
+    	} else if (actType == softmax) {
+        	(*W) *=sqrt(6.0/(inputDim+outputDim));
+        	(*B) *=sqrt(6.0/(inputDim+outputDim));
+    	} else {
+        	(*W) *=sqrt(6.0/(inputDim+outputDim));
+        	(*B) *=sqrt(6.0/(inputDim+outputDim));
+    	}
+	} else {
+		initializer_W->applyInitialization(W);
+		initializer_B->applyInitialization(B);
+	}
 }
 
 void BaseLayer::save(std::string filename) {
-    W.save(filename+"_W.dat",arma::raw_ascii);
-    B.save(filename+"_B.dat",arma::raw_ascii);
+    W->save(filename+"_W.dat",arma::raw_ascii);
+    B->save(filename+"_B.dat",arma::raw_ascii);
 }
 void BaseLayer::load(std::string filename) {
-    W.save(filename+"_W.dat",arma::raw_ascii);
-    B.save(filename+"_B.dat",arma::raw_ascii);
+    W->save(filename+"_W.dat",arma::raw_ascii);
+    B->save(filename+"_B.dat",arma::raw_ascii);
 }
 
 void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
     calGrad(delta_in);
-    B -= learningRate * (*grad_B);
-    W -= learningRate * (*grad_W);
+    (*B) -= learningRate * (*grad_B);
+    (*W) -= learningRate * (*grad_W);
 }
 
 void BaseLayer::accumulateGrad(std::shared_ptr<arma::mat> delta_in){
@@ -70,8 +78,8 @@ void BaseLayer::accumulateGrad(std::shared_ptr<arma::mat> delta_in){
 
 void BaseLayer::updatePara_accu(double learningRate){
    
-    B -= learningRate * (*grad_B_accu); 
-    W -= learningRate * (*grad_W_accu);
+    (*B) -= learningRate * (*grad_B_accu); 
+    (*W) -= learningRate * (*grad_W_accu);
 }
 
 void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
@@ -87,7 +95,11 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
         deriv = (1 - (*output) % (*output));
     } else if ( actType == linear) {
         deriv.ones(output->n_rows,output->n_cols);
+    } else if(actType == ReLU){
+        deriv = *delta_in;
+        deriv.transform([](double val) {return val > 0 ? 1.0: 0 ;});
     }
+    
     delta = (*delta_in) % deriv;
     *grad_B = arma::sum(delta,1);
     *grad_W = delta * (*input).st();
@@ -96,7 +108,7 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
         // for each column
        delta = delta % dropOutMat; 
     }
-    (*delta_out) = W.st() * (delta);
+    (*delta_out) = W->st() * (delta);
 
 }
 
@@ -127,6 +139,9 @@ void BaseLayer::applyActivation(){
         break;
     case linear:
         break;
+    case ReLU:
+        p->transform([](double val) {return val > 0 ? val: 0 ;});
+    	break;
     }
 }
 void BaseLayer::activateUp(){
@@ -148,9 +163,9 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
         *input = (*input) % dropOutMat;
     }
     
-    (*output) = W * (*input);
+    (*output) = (*W) * (*input);
 
-    for (int i = 0; i < input->n_cols; i++) p->col(i) += B;
+    for (int i = 0; i < input->n_cols; i++) p->col(i) += *B;
 
     applyActivation();
 }
@@ -178,18 +193,18 @@ void BaseLayer::vectoriseGrad(std::shared_ptr<arma::vec> V){
 
 void BaseLayer::vectoriseWeight(std::shared_ptr<arma::vec> V){
     
-    *V = arma::vectorise(W);
+    *V = arma::vectorise(*W);
     V->resize(W_size + B_size);
-    V->rows(W_size,W_size+B_size-1) = B;
+    V->rows(W_size,W_size+B_size-1) =*B;
 }
 
 
 void BaseLayer::deVectoriseWeight(std::shared_ptr<arma::vec> V){
     
-    B =  V->rows(W_size,W_size+B_size-1);
+    *B =  V->rows(W_size,W_size+B_size-1);
     V->resize(W_size);
-    W = *V;
-    W.reshape(outputDim, inputDim);
+    *W = *V;
+    W->reshape(outputDim, inputDim);
 }
 // vectorise grad is frequency used to pass out the gradient as a vector
 void BaseLayer::vectoriseGrad(double *ptr, size_t offset){
@@ -209,8 +224,8 @@ void BaseLayer::vectoriseGrad(double *ptr, size_t offset){
 
 void BaseLayer::vectoriseWeight(double *ptr, size_t offset){
     
-    double *W_ptr = W.memptr();
-    double *B_ptr = B.memptr();
+    double *W_ptr = W->memptr();
+    double *B_ptr = B->memptr();
     for (int i = 0; i < W_size; i++){
         *(ptr + offset) = *(W_ptr+i);
         offset++;
@@ -224,8 +239,8 @@ void BaseLayer::vectoriseWeight(double *ptr, size_t offset){
 // devectorise weight is frequency used to pass out the gradient as a vector
 void BaseLayer::deVectoriseWeight(double *ptr, size_t offset){
     
-    double *W_ptr = W.memptr();
-    double *B_ptr = B.memptr();
+    double *W_ptr = W->memptr();
+    double *B_ptr = B->memptr();
     for (int i = 0; i < W_size; i++){
         *(W_ptr+i) = *(ptr + offset) ;
         offset++;

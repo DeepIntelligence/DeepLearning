@@ -9,9 +9,9 @@ namespace NeuralNet{
 struct BaseLayer_LSTM: public BaseLayer {
    
         BaseLayer_LSTM(int inputDim0, int outputDim0, ActivationType actType0,
-                bool dropout = false, double dropr = 0.3, int T=0)
-                : BaseLayer(inputDim0, outputDim0, actType0, dropout, dropr),
-                timeLength(T){
+                std::shared_ptr<Initializer> init_W = nullptr, std::shared_ptr<Initializer> init_B = nullptr,
+				bool dropout = false, double dropr = 0.3)
+                : BaseLayer(inputDim0, outputDim0, actType0, init_W, init_B, dropout, dropr){
                   }
          
     int timeLength;
