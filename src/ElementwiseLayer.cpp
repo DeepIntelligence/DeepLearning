@@ -6,25 +6,17 @@ namespace NeuralNet{
 void ElementwiseLayer::activateUp(){
      // elementwise product
      (*output) = (*inputOne) % (*inputTwo); 
-
 };
-// save inputs at all time points during the LSTM forward pass
-void ElementwiseLayer::saveInputMemory() {
-    inputMemOne.push_back(inputOne);
-    inputMemTwo.push_back(inputTwo);
+
+void ElementwiseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
+	(*delta_outOne) = (*inputTwo) % (*delta_in);
+	(*delta_outTwo) = (*inputOne) % (*delta_in);
+
 }
 
-// no need to save outputs at all time points for LSTM backprop
-
-// extract out the specific input at time point t during backpropagation
-// to calculate the gradient
-//std::shared_ptr<arma::mat> ElementwiseLayer::getInputMemory(int t) {
-//    return inputMem[t];
-//}
-void ElementwiseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, int timePoint){
-
-	(*delta_outOne) = (*inputMemTwo[timePoint]) % (*delta_in);
-	(*delta_outTwo) = (*inputMemOne[timePoint]) % (*delta_in);
+void ElementwiseLayer::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint){
+	(*delta_outOne) = (*inputTwoMem[timePoint]) % (*delta_in);
+	(*delta_outTwo) = (*inputOneMem[timePoint]) % (*delta_in);
 
 }
 }

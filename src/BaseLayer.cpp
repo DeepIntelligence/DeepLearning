@@ -7,7 +7,7 @@ using namespace NeuralNet;
 
 BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0, 
         std::shared_ptr<Initializer> init_W, std::shared_ptr<Initializer> init_B,
-		bool dropout, double dropr): inputDim(inputDim0),outputDim(outputDim0),
+		bool dropout, double dropr): Layer_unitaryOp(inputDim0, outputDim0),
     actType(actType0), initializer_W(init_W), initializer_B(init_B), dropOutFlag(dropout), dropOutRate(dropr){
     
     
@@ -35,21 +35,8 @@ void BaseLayer::initializeWeight() {
 	B = std::make_shared<arma::mat>(outputDim, 1);
 
 	if (initializer_W == nullptr || initializer_B == nullptr) {
-    	W->randu();
-    	B->randu();
-    	(*W) -= 0.5;
-    	(*B) -= 0.5;
-
-    	if (actType == sigmoid) {
-        	(*W) *=4*sqrt(6.0/(inputDim+outputDim));
-        	(*B) *=4*sqrt(6.0/(inputDim+outputDim));
-    	} else if (actType == softmax) {
-        	(*W) *=sqrt(6.0/(inputDim+outputDim));
-        	(*B) *=sqrt(6.0/(inputDim+outputDim));
-    	} else {
-        	(*W) *=sqrt(6.0/(inputDim+outputDim));
-        	(*B) *=sqrt(6.0/(inputDim+outputDim));
-    	}
+		std::cerr << "initializer is null!" << std::endl;
+		exit(1);
 	} else {
 		initializer_W->applyInitialization(W);
 		initializer_B->applyInitialization(B);
@@ -110,23 +97,64 @@ void BaseLayer::activateUp(std::shared_ptr<arma::mat> input0) {
     if(dropOutFlag){
 //        BaseLayer::fill_Bernoulli(dropOutMat.memptr(),W_size);
     }
-    
-    
     input = input0;
-
     std::shared_ptr<arma::mat> &p=output;
-// first get the projection
     if( dropOutFlag) {
-    // for each column of the input
         *input = (*input) % dropOutMat;
     }
-    
     (*output) = (*W) * (*input);
-
     for (int i = 0; i < input->n_cols; i++) p->col(i) += *B;
-
     ApplyActivation(output, this->actType);
 }
+
+// extract out the specific input at time point t during backpropagation
+// to calculate the gradient
+std::shared_ptr<arma::mat> BaseLayer::getInputMemory(int t) {
+    return inputMem[t];
+}
+
+
+// extract out the specific output at time point t during backpropagation
+// to calculate the gradient
+std::shared_ptr<arma::mat> BaseLayer::getOutputMemory(int t){
+    return outputMem[t];
+}
+
+
+void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in, int timePoint) {
+    //for delta: each column is the delta of a sample
+    std::shared_ptr<arma::mat> deriv(new arma::mat);
+    arma::mat delta;
+    std::shared_ptr<arma::mat> tempOutput = getOutputMemory(timePoint);
+    GetActivationGradient(tempOutput, deriv, this->actType);
+    
+    delta_out = std::make_shared<arma::mat>(inputDim, delta_in->n_cols);
+
+    delta = (*delta_in) % (*deriv);
+    *grad_B = arma::sum(delta, 1);
+    
+    std::shared_ptr<arma::mat> tempInput = getInputMemory(timePoint);
+    *grad_W = delta * (*tempInput).st();
+#if 0
+    if (dropOutFlag) {
+        // for each column
+        delta = delta % dropOutMat;
+    }
+#endif    
+    (*delta_out) = W->st() * (delta);
+}
+
+void BaseLayer::accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t) {
+    calGrad(delta_in, t);
+    *grad_B_accu += *grad_B;
+    *grad_W_accu += *grad_W;
+}
+
+void BaseLayer::clearAccuGrad(){
+    (*grad_B_accu).zeros();
+    (*grad_W_accu).zeros();
+}
+
 
 void BaseLayer::vectoriseGrad(std::shared_ptr<arma::vec> V){
     
@@ -201,3 +229,5 @@ void BaseLayer::fill_Bernoulli(double *p, int size){
         else *(p+i) = 0.0;
     }
 }
+
+

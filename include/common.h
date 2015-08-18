@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -11,4 +12,6 @@
 #include "Initializer.h"
 #include "ActivationFunc.h"
 #include "Layer.h"
+#include "Layer_unitaryOp.h"
+#include "Layer_binaryOp.h"
 #include <armadillo>

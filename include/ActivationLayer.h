@@ -1,25 +1,16 @@
 #pragma once
-#include <memory>
-#include <armadillo>
+#include "common.h"
 
 namespace NeuralNet {
 
-    struct ActivationLayer {
+    struct ActivationLayer: public Layer_unitaryOp {
 
-        ActivationLayer() {
-//            inputSize = inputSize0;
-            //we only need to assign memory to the output
-//            deltaOut = std::make_shared<arma::mat>();
-            output = std::make_shared<arma::mat>();
+        ActivationLayer(ActivationType actType0) {
+        	actType = actType0;
         };
-
-
-        std::shared_ptr<arma::mat> input, output;
-        std::shared_ptr<arma::mat> delta_out;
-        void activateUp();
-        void updatePara(std::shared_ptr<arma::mat> delta_in);
-
-//        int inputSize;
+        ActivationType actType;
+		virtual void activateUp();
+        virtual void calGrad(std::shared_ptr<arma::mat> delta_in);
     };
 
 }
