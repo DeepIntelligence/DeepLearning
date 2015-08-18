@@ -1,5 +1,5 @@
-#include "MultiLayerPerceptron.h"
 #include "common.h"
+#include "MultiLayerPerceptron.h"
 #include "../Trainer/Trainer.h"
 using namespace NeuralNet;
 using namespace DeepLearning;

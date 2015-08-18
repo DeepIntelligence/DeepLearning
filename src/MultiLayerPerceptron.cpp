@@ -11,29 +11,29 @@ MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0) {
     testGrad = false;
     totalDim = 0;
     for (int i = 0; i < numLayers; i++) {
-        NeuralNetInitializerParameter_InitializerType w_type, b_type;
-        w_type = neuralNetPara.layerstruct(i).init_w().initializertype();
-        b_type = neuralNetPara.layerstruct(i).init_b().initializertype();
+        NeuralNetInitializerParameter  w_init, b_init;
+        w_init = neuralNetPara.layerstruct(i).init_w();
+        b_init = neuralNetPara.layerstruct(i).init_b();
         switch (neuralNetPara.layerstruct(i).activationtype()) {
             case LayerStructParameter_ActivationType_sigmoid:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::sigmoid, 
-                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
+                        neuralNetPara.layerstruct(i).outputdim(), sigmoid, 
+                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
                 break;
             case LayerStructParameter_ActivationType_tanh:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::tanh,
-                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
+                        neuralNetPara.layerstruct(i).outputdim(), tanh,
+                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
                 break;
             case LayerStructParameter_ActivationType_softmax:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::softmax,
-                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
+                        neuralNetPara.layerstruct(i).outputdim(), softmax,
+                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
                 break;
             case LayerStructParameter_ActivationType_linear:
                 layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), BaseLayer::linear,
-                        InitializerBuilder::GetInitializer(w_type), InitializerBuilder::GetInitializer(b_type)));
+                        neuralNetPara.layerstruct(i).outputdim(), linear,
+                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
                 break;
             default:break;
         }

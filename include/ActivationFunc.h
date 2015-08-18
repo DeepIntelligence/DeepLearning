@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include <armadillo>
 
@@ -34,17 +35,16 @@ namespace NeuralNet{
     	break;
     }
 }
-	}
 	inline void GetActivationGradient(std::shared_ptr<arma::mat> in, std::shared_ptr<arma::mat> out, ActivationType actType){
 	
     if (actType == softmax) {
         out->ones(in->n_rows,in->n_cols);   
     } else if (actType == sigmoid ) {
-        *out = (1 - (*output)) % (*output);        
+        *out = (1 - (*in)) % (*in);        
     } else if ( actType == tanh) {
-        *out = (1 - (*output) % (*output));
+        *out = (1 - (*in) % (*in));
     } else if ( actType == linear) {
-        out->ones(output->n_rows,output->n_cols);
+        out->ones(in->n_rows,in->n_cols);
     } else if(actType == ReLU){
         *out = *in;
         out->transform([](double val) {return val > 0 ? 1.0: 0 ;});

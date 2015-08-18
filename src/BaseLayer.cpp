@@ -31,9 +31,12 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
 
 void BaseLayer::initializeWeight() {
 
+	W = std::make_shared<arma::mat>(outputDim, inputDim);
+	B = std::make_shared<arma::mat>(outputDim, 1);
+
 	if (initializer_W == nullptr || initializer_B == nullptr) {
-    	W->randu(outputDim,inputDim);
-    	B->randu(outputDim);
+    	W->randu();
+    	B->randu();
     	(*W) -= 0.5;
     	(*B) -= 0.5;
 

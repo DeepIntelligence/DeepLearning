@@ -39,19 +39,19 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
         
 			switch (neuralNetPara.rnnstruct().activationtype()) {
 				case RNNStructParameter_ActivationType_sigmoid:
-					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));     
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, sigmoid));     
         			break;
         		case RNNStructParameter_ActivationType_tanh:
-					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::tanh));     
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, tanh));     
         			break;
         		case RNNStructParameter_ActivationType_softmax:
-					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::softmax));     
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, softmax));     
         			break;
         		case RNNStructParameter_ActivationType_ReLU:
-					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::ReLU));     
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, ReLU));     
         			break;
         		case RNNStructParameter_ActivationType_linear:
-					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::linear));     
+					hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, linear));     
         			break;
         		default:
         			break;
@@ -62,23 +62,23 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
         switch (neuralNetPara.layerstruct(0).activationtype()) {
             case LayerStructParameter_ActivationType_sigmoid:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::sigmoid);
+                        neuralNetPara.layerstruct(0).outputdim(), sigmoid);
                 break;
             case LayerStructParameter_ActivationType_tanh:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::tanh);
+                        neuralNetPara.layerstruct(0).outputdim(), tanh);
                 break;
             case LayerStructParameter_ActivationType_softmax:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::softmax);
+                        neuralNetPara.layerstruct(0).outputdim(), softmax);
                 break;
             case LayerStructParameter_ActivationType_linear:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::linear);
+                        neuralNetPara.layerstruct(0).outputdim(), linear);
                 break;
             case LayerStructParameter_ActivationType_ReLU:
                 netOutputLayer = std::make_shared<BaseLayer_LSTM>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), BaseLayer_LSTM::ReLU);
+                        neuralNetPara.layerstruct(0).outputdim(), ReLU);
                 break;
             default:break;
         }
@@ -93,7 +93,7 @@ RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0):
         // previously, netOutputLayer.actType = BaseLayer::tanh, here linear is for scaling up
-        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, BaseLayer::linear)){
+        netOutputLayer(new BaseLayer_LSTM(hiddenLayerOutputDim0, outputDim0, linear)){
 
     learningRate = 0.01;
     // at beginning, we assume all the hidden layers have the same size, 
@@ -115,7 +115,7 @@ RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
             int inputDim = rnnInputDim + hiddenLayerOutputDim0;
             int outputDim = hiddenLayerOutputDim0;
             
-            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
+            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, sigmoid));    
             
           // of hidden output from lower layer at the same time and
            // hidden output from same layer but at previous time
@@ -125,7 +125,7 @@ RNN::RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
             int inputDim = hiddenLayerOutputDim0 + hiddenLayerOutputDim0;
             int outputDim = hiddenLayerOutputDim0;
             
-            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, BaseLayer::sigmoid));    
+            hiddenLayers.push_back(BaseLayer_LSTM(inputDim, outputDim, sigmoid));    
         }
 		}
     

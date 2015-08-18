@@ -9,21 +9,7 @@ public:
 	virtual void applyInitialization(std::shared_ptr<arma::mat>) = 0;
 };
 
-class InitializerBuilder{
-public:
-	inline static std::shared_ptr<Initializer> GetInitializer(const DeepLearning::NeuralNetInitializerParameter_InitializerType type){
-		switch (type) {
-			case DeepLearning::NeuralNetInitializerParameter_InitializerType_normal:
-			break;
-			case DeepLearning::NeuralNetInitializerParameter_InitializerType_zero:
-			break;
-			default:
-			break;
-		}
-	}
-};
-
-class Initializer_normal{
+class Initializer_normal: public Initializer{
 public:
 	Initializer_normal(double std0, double mean0):std(std0), mean(mean0){}
 	virtual ~Initializer_normal(){}
@@ -36,7 +22,7 @@ private:
 
 };
 
-class Initializer_zero{
+class Initializer_zero: public Initializer{
 public:
 	Initializer_zero(){}
 	virtual ~Initializer_zero(){}
@@ -45,7 +31,7 @@ public:
 	}
 };
 
-class Initializer_identity{
+class Initializer_identity: public Initializer{
 public:
 	Initializer_identity(){}
 	virtual ~Initializer_identity(){}
@@ -53,6 +39,41 @@ public:
 		m->eye();
 	}
 };
+class Initializer_glorot_normal: public Initializer{
+public:
+	Initializer_glorot_normal(){}
+	virtual ~Initializer_glorot_normal(){}
+	virtual void applyInitialization(std::shared_ptr<arma::mat> W){
+		int inputDim = W->n_cols;
+		int outputDim = W->n_rows;
+		W->randu();
+    	(*W) -= 0.5;
+		(*W) *=sqrt(6.0/(inputDim+outputDim));
+	}
+};
+
+class InitializerBuilder{
+public:
+	inline static std::shared_ptr<Initializer> GetInitializer(const DeepLearning::NeuralNetInitializerParameter para){
+		switch (para.initializertype()) {
+			case DeepLearning::NeuralNetInitializerParameter_InitializerType_normal:
+			return std::shared_ptr<Initializer>(new Initializer_normal(para.normal_std(), para.normal_mean()));
+			break;
+			case DeepLearning::NeuralNetInitializerParameter_InitializerType_zero:
+			return std::shared_ptr<Initializer>(new Initializer_zero);
+			break;
+			case DeepLearning::NeuralNetInitializerParameter_InitializerType_identity:
+			return std::shared_ptr<Initializer>(new Initializer_identity);
+			break;
+			case DeepLearning::NeuralNetInitializerParameter_InitializerType_glorot_normal:
+			return std::shared_ptr<Initializer>(new Initializer_glorot_normal);
+			break;
+			default:
+			break;
+		}
+	}
+};
+
 
 }
 
