@@ -525,6 +525,24 @@ class LayerStructParameter : public ::google::protobuf::Message {
   ::DeepLearning::NeuralNetInitializerParameter* release_init_b();
   void set_allocated_init_b(::DeepLearning::NeuralNetInitializerParameter* init_b);
 
+  // optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 105;
+  bool has_init_w_one() const;
+  void clear_init_w_one();
+  static const int kInitWOneFieldNumber = 105;
+  const ::DeepLearning::NeuralNetInitializerParameter& init_w_one() const;
+  ::DeepLearning::NeuralNetInitializerParameter* mutable_init_w_one();
+  ::DeepLearning::NeuralNetInitializerParameter* release_init_w_one();
+  void set_allocated_init_w_one(::DeepLearning::NeuralNetInitializerParameter* init_w_one);
+
+  // optional .DeepLearning.NeuralNetInitializerParameter init_W_two = 106;
+  bool has_init_w_two() const;
+  void clear_init_w_two();
+  static const int kInitWTwoFieldNumber = 106;
+  const ::DeepLearning::NeuralNetInitializerParameter& init_w_two() const;
+  ::DeepLearning::NeuralNetInitializerParameter* mutable_init_w_two();
+  ::DeepLearning::NeuralNetInitializerParameter* release_init_w_two();
+  void set_allocated_init_w_two(::DeepLearning::NeuralNetInitializerParameter* init_w_two);
+
   // @@protoc_insertion_point(class_scope:DeepLearning.LayerStructParameter)
  private:
   inline void set_has_inputdim();
@@ -541,6 +559,10 @@ class LayerStructParameter : public ::google::protobuf::Message {
   inline void clear_has_init_w();
   inline void set_has_init_b();
   inline void clear_has_init_b();
+  inline void set_has_init_w_one();
+  inline void clear_has_init_w_one();
+  inline void set_has_init_w_two();
+  inline void clear_has_init_w_two();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 _has_bits_[1];
@@ -551,6 +573,8 @@ class LayerStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::internal::ArenaStringPtr type_;
   ::DeepLearning::NeuralNetInitializerParameter* init_w_;
   ::DeepLearning::NeuralNetInitializerParameter* init_b_;
+  ::DeepLearning::NeuralNetInitializerParameter* init_w_one_;
+  ::DeepLearning::NeuralNetInitializerParameter* init_w_two_;
   int activationtype_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
@@ -1769,6 +1793,92 @@ inline void LayerStructParameter::set_allocated_init_b(::DeepLearning::NeuralNet
     clear_has_init_b();
   }
   // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.init_B)
+}
+
+// optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 105;
+inline bool LayerStructParameter::has_init_w_one() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void LayerStructParameter::set_has_init_w_one() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void LayerStructParameter::clear_has_init_w_one() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void LayerStructParameter::clear_init_w_one() {
+  if (init_w_one_ != NULL) init_w_one_->::DeepLearning::NeuralNetInitializerParameter::Clear();
+  clear_has_init_w_one();
+}
+inline const ::DeepLearning::NeuralNetInitializerParameter& LayerStructParameter::init_w_one() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.init_W_one)
+  return init_w_one_ != NULL ? *init_w_one_ : *default_instance_->init_w_one_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* LayerStructParameter::mutable_init_w_one() {
+  set_has_init_w_one();
+  if (init_w_one_ == NULL) {
+    init_w_one_ = new ::DeepLearning::NeuralNetInitializerParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.init_W_one)
+  return init_w_one_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* LayerStructParameter::release_init_w_one() {
+  clear_has_init_w_one();
+  ::DeepLearning::NeuralNetInitializerParameter* temp = init_w_one_;
+  init_w_one_ = NULL;
+  return temp;
+}
+inline void LayerStructParameter::set_allocated_init_w_one(::DeepLearning::NeuralNetInitializerParameter* init_w_one) {
+  delete init_w_one_;
+  init_w_one_ = init_w_one;
+  if (init_w_one) {
+    set_has_init_w_one();
+  } else {
+    clear_has_init_w_one();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.init_W_one)
+}
+
+// optional .DeepLearning.NeuralNetInitializerParameter init_W_two = 106;
+inline bool LayerStructParameter::has_init_w_two() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void LayerStructParameter::set_has_init_w_two() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void LayerStructParameter::clear_has_init_w_two() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void LayerStructParameter::clear_init_w_two() {
+  if (init_w_two_ != NULL) init_w_two_->::DeepLearning::NeuralNetInitializerParameter::Clear();
+  clear_has_init_w_two();
+}
+inline const ::DeepLearning::NeuralNetInitializerParameter& LayerStructParameter::init_w_two() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.init_W_two)
+  return init_w_two_ != NULL ? *init_w_two_ : *default_instance_->init_w_two_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* LayerStructParameter::mutable_init_w_two() {
+  set_has_init_w_two();
+  if (init_w_two_ == NULL) {
+    init_w_two_ = new ::DeepLearning::NeuralNetInitializerParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.LayerStructParameter.init_W_two)
+  return init_w_two_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* LayerStructParameter::release_init_w_two() {
+  clear_has_init_w_two();
+  ::DeepLearning::NeuralNetInitializerParameter* temp = init_w_two_;
+  init_w_two_ = NULL;
+  return temp;
+}
+inline void LayerStructParameter::set_allocated_init_w_two(::DeepLearning::NeuralNetInitializerParameter* init_w_two) {
+  delete init_w_two_;
+  init_w_two_ = init_w_two;
+  if (init_w_two) {
+    set_has_init_w_two();
+  } else {
+    clear_has_init_w_two();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.LayerStructParameter.init_W_two)
 }
 
 // -------------------------------------------------------------------

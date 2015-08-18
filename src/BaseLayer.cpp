@@ -48,26 +48,15 @@ void BaseLayer::save(std::string filename) {
     B->save(filename+"_B.dat",arma::raw_ascii);
 }
 void BaseLayer::load(std::string filename) {
-    W->save(filename+"_W.dat",arma::raw_ascii);
-    B->save(filename+"_B.dat",arma::raw_ascii);
+    W->load(filename+"_W.dat",arma::raw_ascii);
+    B->load(filename+"_B.dat",arma::raw_ascii);
 }
 
-void BaseLayer::updatePara(std::shared_ptr<arma::mat> delta_in, double learningRate) {
-    calGrad(delta_in);
-    (*B) -= learningRate * (*grad_B);
-    (*W) -= learningRate * (*grad_W);
-}
 
 void BaseLayer::accumulateGrad(std::shared_ptr<arma::mat> delta_in){
     calGrad(delta_in);
     *grad_B_accu += *grad_B;
     *grad_W_accu += *grad_W;
-}
-
-void BaseLayer::updatePara_accu(double learningRate){
-   
-    (*B) -= learningRate * (*grad_B_accu); 
-    (*W) -= learningRate * (*grad_W_accu);
 }
 
 void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){

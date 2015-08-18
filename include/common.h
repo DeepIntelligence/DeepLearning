@@ -14,4 +14,5 @@
 #include "Layer.h"
 #include "Layer_unitaryOp.h"
 #include "Layer_binaryOp.h"
+#include "Net.h"
 #include <armadillo>

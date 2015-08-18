@@ -13,6 +13,7 @@ public:
 	virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int t) {}
 	virtual void save(std::string filename){}
     virtual void load(std::string filename){}
+    virtual void initializeWeight(){}
 	int outputDim;
 	std::shared_ptr<arma::mat> output;
 	std::vector<std::shared_ptr<arma::mat>> outputMem;
@@ -20,6 +21,6 @@ public:
 };
 
 inline void Layer::saveOutputMemory(){
-    outputMem.push_back(output);
+    outputMem.push_back(std::shared_ptr<arma::mat>(new arma::mat(*output)));
 }
 }

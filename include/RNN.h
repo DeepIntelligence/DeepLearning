@@ -3,8 +3,8 @@
 #include <armadillo>
 #include <iostream>
 #include <vector>
-#include "BaseLayer_LSTM.h"
-#include "Net.h"
+#include "BaseLayer.h"
+#include "MultiAddLayer.h"
 #include "common.h"
 namespace NeuralNet {
 
@@ -38,7 +38,7 @@ namespace NeuralNet {
         virtual void setTime(int t);
         virtual void updateInternalState();
         virtual void saveLayerInputOutput();
-        std::shared_ptr<BaseLayer_LSTM> getOutputLayer(){return netOutputLayer;}
+        std::shared_ptr<BaseLayer> getOutputLayer(){return netOutputLayer;}
     private:
         void fillNetGradVector();
         DeepLearning::NeuralNetParameter neuralNetPara;
@@ -46,8 +46,8 @@ namespace NeuralNet {
         /* network gradients*/
         std::vector<std::shared_ptr<arma::mat>> netGradVector;
         std::shared_ptr<arma::mat> netOutput_;
-        std::vector<BaseLayer_LSTM> hiddenLayers;
-        std::shared_ptr<BaseLayer_LSTM> netOutputLayer;
+        std::vector<MultiAddLayer> hiddenLayers;
+        std::shared_ptr<BaseLayer> netOutputLayer;
         std::shared_ptr<arma::mat> trainingY, trainingX;
         std::vector<std::shared_ptr<arma::mat>> outputLayers_prev_output;
         int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;
