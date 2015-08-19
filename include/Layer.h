@@ -14,6 +14,7 @@ public:
 	virtual void save(std::string filename){}
     virtual void load(std::string filename){}
     virtual void initializeWeight(){}
+	virtual std::shared_ptr<arma::mat> getOutput(){ return output;}
 	int outputDim;
 	std::shared_ptr<arma::mat> output;
 	std::vector<std::shared_ptr<arma::mat>> outputMem;

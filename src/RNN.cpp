@@ -16,18 +16,19 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
      
     for (int i = 0; i < numHiddenLayers; i++){
         int inputOneDim, inputTwoDim;
-		int outputDim;
-		NeuralNetInitializerParameter  w_one_init, w_two_init, b_init;
-        w_one_init = neuralNetPara.layerstruct(i).init_w_one();
-        w_two_init = neuralNetPara.layerstruct(i).init_w_two();
-        b_init = neuralNetPara.layerstruct(i).init_b();
+	int outputDim;
+	NeuralNetInitializerParameter  w_one_init, w_two_init, b_init;
+        w_one_init = neuralNetPara.rnnstruct().init_w_one();
+        w_two_init = neuralNetPara.rnnstruct().init_w_two();
+        b_init = neuralNetPara.rnnstruct().init_b();
+       
         // i=0 is the first hidden layer with input consisting 
           // of data input and last time hidden
         if (i == 0) {
             
             // inputDim is the unrolled LSTM input for various layers, the same to outputDim
-            inputOneDim = rnnInputDim;
-			inputTwoDim = hiddenLayerOutputDim;
+            inputOneDim = hiddenLayerOutputDim;
+            inputTwoDim = rnnInputDim;
             outputDim = hiddenLayerOutputDim;
             
 
@@ -122,42 +123,37 @@ arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
         for (int l = 0; l < numHiddenLayers; l++) {
             (outputLayers_prev_output[l])->zeros(hiddenLayerOutputDim, 1);
             hiddenLayers[l].inputOneMem.clear();
-			hiddenLayers[l].inputTwoMem.clear();
+            hiddenLayers[l].inputTwoMem.clear();
             hiddenLayers[l].outputMem.clear();
         }
         netOutputLayer->inputMem.clear();
         netOutputLayer->outputMem.clear();
     }
     for (int l = 0; l < numHiddenLayers; l++) {
-        // concatenate to a large vector            
         if (l == 0) {
-			hiddenLayers[l].inputOne = outputLayers_prev_output[l];
-			hiddenLayers[l].inputTwo = input;
+            hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(outputLayers_prev_output[l])));
+            hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*input));
         } else {
-			hiddenLayers[l].inputOne = outputLayers_prev_output[l];
-			hiddenLayers[l].inputTwo = hiddenLayers[l - 1].output;
+            hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(outputLayers_prev_output[l])));
+            hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*(hiddenLayers[l - 1].output)));
         }
-
-        hiddenLayers[l].activateUp();
- 
-        if (l == numHiddenLayers - 1) {
-
-            netOutputLayer->input = hiddenLayers[l].output;
-            netOutputLayer->activateUp();
-        }
+        hiddenLayers[l].activateUp(); 
     }
+    netOutputLayer->input = hiddenLayers[numHiddenLayers-1].output;
+    netOutputLayer->activateUp();
+    
+
     return *(netOutputLayer->output);
 }
 void RNN::saveLayerInputOutput(){
     for (int l = 0; l < numHiddenLayers; l++) {
         hiddenLayers[l].saveInputMemory();
         hiddenLayers[l].saveOutputMemory();
- 
-        if (l == numHiddenLayers - 1) {
-            netOutputLayer->saveInputMemory();
-            netOutputLayer->saveOutputMemory();
-        }
     }
+    netOutputLayer->saveInputMemory();
+    netOutputLayer->saveOutputMemory();
+    
+    
 }
 
 

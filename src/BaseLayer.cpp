@@ -12,12 +12,12 @@ BaseLayer::BaseLayer(int inputDim0, int outputDim0, ActivationType actType0,
     
     
     initializeWeight();
-    grad_W = std::make_shared<arma::mat>();
-    grad_B = std::make_shared<arma::mat>();
-    grad_W_accu = std::make_shared<arma::mat>();
-    grad_B_accu = std::make_shared<arma::mat>();
-    grad_W_accu->zeros(outputDim,inputDim);
-    grad_B_accu->zeros(outputDim, 1);
+    grad_W = std::make_shared<arma::mat>(outputDim,inputDim);
+    grad_B = std::make_shared<arma::mat>(outputDim,1);
+    grad_W_accu = std::make_shared<arma::mat>(outputDim,inputDim);
+    grad_B_accu = std::make_shared<arma::mat>(outputDim,1);
+    grad_W_accu->zeros();
+    grad_B_accu->zeros();
     W_size = inputDim * outputDim;
     B_size = outputDim;
     totalSize = W_size + B_size;
@@ -67,6 +67,8 @@ void BaseLayer::calGrad(std::shared_ptr<arma::mat> delta_in){
     arma::mat delta;
  
     delta = (*delta_in) % (*deriv);
+//    delta_in->print();
+//    delta.print();
     *grad_B = arma::sum(delta,1);
     *grad_W = delta * (*input).st();
 

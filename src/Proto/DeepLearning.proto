@@ -34,29 +34,33 @@ message RNNStructParameter{
 	optional int32 inputDim = 4;
 	optional int32 outputDim = 5;
 	optional ActivationType activationType = 6;
+	optional NeuralNetInitializerParameter init_W_one = 103;
+	optional NeuralNetInitializerParameter init_B = 104;
+	optional NeuralNetInitializerParameter init_W_two = 105;
 }
 
 message NeuralNetInitializerParameter{
-	enum InitializerType {custom = 1; identity = 2; zero = 3; normal = 4; glorot_normal = 5; IRNN = 6;}
+	enum InitializerType {custom = 1; identity = 2; zero = 3; normal = 4; glorot_normal = 5; IRNN = 6; orthogonal = 7;}
 	optional double normal_std = 1;
 	optional double normal_mean = 2;
 	optional InitializerType initializerType = 3;
 }
 
 message NeuralNetTrainingParameter {
- enum TrainerType {SGD = 1; iRProp = 2; SGDRNN=3;}
+ enum TrainerType {SGD = 1; RMSProp = 2; SGDRNN=3;}
 	optional double learningRate = 1;
 	optional int32 maxIter = 2;
 	optional int32 miniBatchSize = 3;
 	optional int32 NEpoch = 4;
 	optional double epi = 5 [default = 1e-6];
 	optional TrainerType trainerType = 6 [default = SGD];
- optional double decayRate = 7 [default = 10];
+ 	optional double decayRate = 7 [default = 10];
 	optional double momentum = 8 [default = 0.9];
 	optional bool verbose = 9 [default = true];
 	optional int32 printInfoFrequency = 10 [default = 1];
 	optional bool clipFlag = 11 [default = false];
-	optional double clipThreashold = 12 [default = 1];
+	optional double clipThreshold = 12 [default = 1];
+	optional double RMSProp_rho = 13 [default = 0.9];
 }
 
 message QLearningSolverParameter{

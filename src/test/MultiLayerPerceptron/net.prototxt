@@ -20,8 +20,8 @@ layerStruct{
 }
 
 neuralNetTrainingParameter{
-        trainerType: SGD
-	learningRate: 0.1
+        trainerType: RMSprop
+	learningRate: 0.01
 	miniBatchSize: 100
 	NEpoch: 20000
         decayRate: 100000

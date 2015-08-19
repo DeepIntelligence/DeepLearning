@@ -20,6 +20,7 @@ void testForward();
 void trainRNN();
 void testGrad();
 void testDynamicswithTrainer(char* filename);
+void testSimpleDynamics(char* filename);
 void testRLData(char* filename);
 void testDynamics();
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
@@ -32,7 +33,8 @@ std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
 //    testDynamicswithTrainer(argv[1]);
-    testRLData(argv[1]);
+    testSimpleDynamics(argv[1]);
+//    testRLData(argv[1]);
     return 0;
 }
 void testRLData(char* filename){
@@ -54,6 +56,39 @@ void testRLData(char* filename){
     
     trainingY->save("trainingY.dat", arma::raw_ascii);
     (rnn->netOutput())->print();
+}
+
+void testSimpleDynamics(char* filename){
+    
+    double T = 20;
+    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
+    arma::arma_rng::set_seed_random();
+    trainingX->zeros();
+    for (int i = 0; i < T; i++)
+        trainingY->at(i) = sin(0.1*i);
+
+    NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);
+    
+    std::shared_ptr<Net> rnn(new RNN(message));
+    
+
+    rnn->setTrainingSamples(trainingX, nullptr);
+    rnn->forward();
+    rnn->netOutputAtTime(0);
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
+
+    trainer->setTrainingSamples(trainingX, trainingY);
+    trainer->train();
+    
+    trainingY->save("trainingY.dat", arma::raw_ascii);
+    (rnn->netOutput())->print();
+    std::cout<<std::endl;
+    trainingY->print();
+    
+    
+    
 }
 
 void testDynamicswithTrainer(char* filename){
@@ -176,46 +211,8 @@ void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,
     *trainingY = output;
 }
 
-void testDynamics(){
-    
-    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,10));
-    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,10));
-    
-    // initialize 
-    trainingX->zeros();
-    trainingY->at(0) = 0.99;
-    //trainingY->at(1) = 0.2;
-    //trainingY->at(2) = 0.1;
-    for (int i = 1; i < trainingY->n_elem; i++){
-        //trainingY->at(i) = sin(trainingY->at(i-1)); // sine wave xt = sin(xt-1))
-        // trainingY->at(i) = pow(trainingY->at(i-1),1); // xt = xt-1 ^ 2 
-        //trainingY->at(i) = trainingY->at(i-1) + trainingY->at(i-2) - trainingY->at(i-3);
-        trainingY->at(i) = trainingY->at(i-1)*trainingY->at(i-1);
-//        trainingY->at(i) = sin(i);
-        
-    }
-    
-    int iterations = 20000;
-
-    /* RNN constructor parameters passed as:
-        RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
-        std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
-     */
-    RNN rnn(4, 8, 8, 1, 1, trainingX, trainingY);
-    // train the LSTM model by iterations
-    for (int iter = 0; iter < iterations; iter++) {
-        rnn.train();
-    }    
-    for (int k = 0; k < trainingY->n_elem; k++) {
-        (rnn.getOutputLayer()->outputMem[k])->print();
-    }
-    trainingY->print();
-}
-
-
-
 // test the gradients by numerical gradients checking
+#if 0
 void testGrad() {
     
     std::shared_ptr<arma::mat> trainingX(new arma::mat);
@@ -236,12 +233,6 @@ void testGrad() {
     rnn.backward();    
 }
 
-void workOnSequenceGeneration(std::shared_ptr<arma::mat> trainingY){
-    // std::shared_ptr<arma::mat> trainingY(new arma::mat);
-    // junhyukoh's data with only y labeled, no input x
-    trainingY->load("testdata.dat",arma::raw_ascii);
-    trainingY->print();
-}
 
 
 void testForward(){
@@ -260,42 +251,4 @@ void testForward(){
 
 }
 
-void trainRNN(){
-    /*std::shared_ptr<arma::mat> trainingX(new arma::mat(1,10));
-    
-    trainingX->randn(1, 10);
-    std::shared_ptr<arma::mat> trainingY(new arma::mat());
-    trainingY->ones(3, 10);
-     */
-    
-    std::shared_ptr<arma::mat> trainingX(new arma::mat());
-
-    std::shared_ptr<arma::mat> trainingY(new arma::mat());
-//    trainingY->load("testdata.dat");
-//    *trainingY = arma::trans(*trainingY);
-//    trainingX->zeros(trainingY->n_cols,1);
-    
-
-    
-    trainingX->zeros(1, 10);
-    trainingY->zeros(1,10);
-    for (int i = 0; i <10; i++)
-        trainingY->at(i) = i;
-    trainingY->transform([](double val){return sin(val);});
-    
-    int iterations = 50000;
-    
-    /* RNN constructor parameters passed as:
-        RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
-        int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
-        std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
-     */
-    RNN rnn(2, 5, 5, 1, 1, trainingX, trainingY);
-    // train the LSTM model by iterations
-    for (int iter = 0; iter < iterations;iter++){
-        rnn.train();
-    }
-    
-    trainingY->save("trainingY.dat",arma::raw_ascii);
-}
-
+#endif

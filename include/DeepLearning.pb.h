@@ -95,11 +95,12 @@ enum NeuralNetInitializerParameter_InitializerType {
   NeuralNetInitializerParameter_InitializerType_zero = 3,
   NeuralNetInitializerParameter_InitializerType_normal = 4,
   NeuralNetInitializerParameter_InitializerType_glorot_normal = 5,
-  NeuralNetInitializerParameter_InitializerType_IRNN = 6
+  NeuralNetInitializerParameter_InitializerType_IRNN = 6,
+  NeuralNetInitializerParameter_InitializerType_orthogonal = 7
 };
 bool NeuralNetInitializerParameter_InitializerType_IsValid(int value);
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter_InitializerType_InitializerType_MIN = NeuralNetInitializerParameter_InitializerType_custom;
-const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter_InitializerType_InitializerType_MAX = NeuralNetInitializerParameter_InitializerType_IRNN;
+const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter_InitializerType_InitializerType_MAX = NeuralNetInitializerParameter_InitializerType_orthogonal;
 const int NeuralNetInitializerParameter_InitializerType_InitializerType_ARRAYSIZE = NeuralNetInitializerParameter_InitializerType_InitializerType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* NeuralNetInitializerParameter_InitializerType_descriptor();
@@ -114,7 +115,7 @@ inline bool NeuralNetInitializerParameter_InitializerType_Parse(
 }
 enum NeuralNetTrainingParameter_TrainerType {
   NeuralNetTrainingParameter_TrainerType_SGD = 1,
-  NeuralNetTrainingParameter_TrainerType_iRProp = 2,
+  NeuralNetTrainingParameter_TrainerType_RMSProp = 2,
   NeuralNetTrainingParameter_TrainerType_SGDRNN = 3
 };
 bool NeuralNetTrainingParameter_TrainerType_IsValid(int value);
@@ -718,6 +719,33 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::DeepLearning::RNNStructParameter_ActivationType activationtype() const;
   void set_activationtype(::DeepLearning::RNNStructParameter_ActivationType value);
 
+  // optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 103;
+  bool has_init_w_one() const;
+  void clear_init_w_one();
+  static const int kInitWOneFieldNumber = 103;
+  const ::DeepLearning::NeuralNetInitializerParameter& init_w_one() const;
+  ::DeepLearning::NeuralNetInitializerParameter* mutable_init_w_one();
+  ::DeepLearning::NeuralNetInitializerParameter* release_init_w_one();
+  void set_allocated_init_w_one(::DeepLearning::NeuralNetInitializerParameter* init_w_one);
+
+  // optional .DeepLearning.NeuralNetInitializerParameter init_B = 104;
+  bool has_init_b() const;
+  void clear_init_b();
+  static const int kInitBFieldNumber = 104;
+  const ::DeepLearning::NeuralNetInitializerParameter& init_b() const;
+  ::DeepLearning::NeuralNetInitializerParameter* mutable_init_b();
+  ::DeepLearning::NeuralNetInitializerParameter* release_init_b();
+  void set_allocated_init_b(::DeepLearning::NeuralNetInitializerParameter* init_b);
+
+  // optional .DeepLearning.NeuralNetInitializerParameter init_W_two = 105;
+  bool has_init_w_two() const;
+  void clear_init_w_two();
+  static const int kInitWTwoFieldNumber = 105;
+  const ::DeepLearning::NeuralNetInitializerParameter& init_w_two() const;
+  ::DeepLearning::NeuralNetInitializerParameter* mutable_init_w_two();
+  ::DeepLearning::NeuralNetInitializerParameter* release_init_w_two();
+  void set_allocated_init_w_two(::DeepLearning::NeuralNetInitializerParameter* init_w_two);
+
   // @@protoc_insertion_point(class_scope:DeepLearning.RNNStructParameter)
  private:
   inline void set_has_numhiddenlayers();
@@ -732,6 +760,12 @@ class RNNStructParameter : public ::google::protobuf::Message {
   inline void clear_has_outputdim();
   inline void set_has_activationtype();
   inline void clear_has_activationtype();
+  inline void set_has_init_w_one();
+  inline void clear_has_init_w_one();
+  inline void set_has_init_b();
+  inline void clear_has_init_b();
+  inline void set_has_init_w_two();
+  inline void clear_has_init_w_two();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 _has_bits_[1];
@@ -742,6 +776,9 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 inputdim_;
   ::google::protobuf::int32 outputdim_;
   int activationtype_;
+  ::DeepLearning::NeuralNetInitializerParameter* init_w_one_;
+  ::DeepLearning::NeuralNetInitializerParameter* init_b_;
+  ::DeepLearning::NeuralNetInitializerParameter* init_w_two_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -820,6 +857,7 @@ class NeuralNetInitializerParameter : public ::google::protobuf::Message {
   static const InitializerType normal = NeuralNetInitializerParameter_InitializerType_normal;
   static const InitializerType glorot_normal = NeuralNetInitializerParameter_InitializerType_glorot_normal;
   static const InitializerType IRNN = NeuralNetInitializerParameter_InitializerType_IRNN;
+  static const InitializerType orthogonal = NeuralNetInitializerParameter_InitializerType_orthogonal;
   static inline bool InitializerType_IsValid(int value) {
     return NeuralNetInitializerParameter_InitializerType_IsValid(value);
   }
@@ -952,7 +990,7 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
 
   typedef NeuralNetTrainingParameter_TrainerType TrainerType;
   static const TrainerType SGD = NeuralNetTrainingParameter_TrainerType_SGD;
-  static const TrainerType iRProp = NeuralNetTrainingParameter_TrainerType_iRProp;
+  static const TrainerType RMSProp = NeuralNetTrainingParameter_TrainerType_RMSProp;
   static const TrainerType SGDRNN = NeuralNetTrainingParameter_TrainerType_SGDRNN;
   static inline bool TrainerType_IsValid(int value) {
     return NeuralNetTrainingParameter_TrainerType_IsValid(value);
@@ -1054,12 +1092,19 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   bool clipflag() const;
   void set_clipflag(bool value);
 
-  // optional double clipThreashold = 12 [default = 1];
-  bool has_clipthreashold() const;
-  void clear_clipthreashold();
-  static const int kClipThreasholdFieldNumber = 12;
-  double clipthreashold() const;
-  void set_clipthreashold(double value);
+  // optional double clipThreshold = 12 [default = 1];
+  bool has_clipthreshold() const;
+  void clear_clipthreshold();
+  static const int kClipThresholdFieldNumber = 12;
+  double clipthreshold() const;
+  void set_clipthreshold(double value);
+
+  // optional double RMSProp_rho = 13 [default = 0.9];
+  bool has_rmsprop_rho() const;
+  void clear_rmsprop_rho();
+  static const int kRMSPropRhoFieldNumber = 13;
+  double rmsprop_rho() const;
+  void set_rmsprop_rho(double value);
 
   // @@protoc_insertion_point(class_scope:DeepLearning.NeuralNetTrainingParameter)
  private:
@@ -1085,8 +1130,10 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   inline void clear_has_printinfofrequency();
   inline void set_has_clipflag();
   inline void clear_has_clipflag();
-  inline void set_has_clipthreashold();
-  inline void clear_has_clipthreashold();
+  inline void set_has_clipthreshold();
+  inline void clear_has_clipthreshold();
+  inline void set_has_rmsprop_rho();
+  inline void clear_has_rmsprop_rho();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 _has_bits_[1];
@@ -1102,7 +1149,8 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 printinfofrequency_;
   bool verbose_;
   bool clipflag_;
-  double clipthreashold_;
+  double clipthreshold_;
+  double rmsprop_rho_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -2030,6 +2078,135 @@ inline void RNNStructParameter::set_activationtype(::DeepLearning::RNNStructPara
   // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.activationType)
 }
 
+// optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 103;
+inline bool RNNStructParameter::has_init_w_one() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void RNNStructParameter::set_has_init_w_one() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void RNNStructParameter::clear_has_init_w_one() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void RNNStructParameter::clear_init_w_one() {
+  if (init_w_one_ != NULL) init_w_one_->::DeepLearning::NeuralNetInitializerParameter::Clear();
+  clear_has_init_w_one();
+}
+inline const ::DeepLearning::NeuralNetInitializerParameter& RNNStructParameter::init_w_one() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.init_W_one)
+  return init_w_one_ != NULL ? *init_w_one_ : *default_instance_->init_w_one_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::mutable_init_w_one() {
+  set_has_init_w_one();
+  if (init_w_one_ == NULL) {
+    init_w_one_ = new ::DeepLearning::NeuralNetInitializerParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.RNNStructParameter.init_W_one)
+  return init_w_one_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::release_init_w_one() {
+  clear_has_init_w_one();
+  ::DeepLearning::NeuralNetInitializerParameter* temp = init_w_one_;
+  init_w_one_ = NULL;
+  return temp;
+}
+inline void RNNStructParameter::set_allocated_init_w_one(::DeepLearning::NeuralNetInitializerParameter* init_w_one) {
+  delete init_w_one_;
+  init_w_one_ = init_w_one;
+  if (init_w_one) {
+    set_has_init_w_one();
+  } else {
+    clear_has_init_w_one();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.RNNStructParameter.init_W_one)
+}
+
+// optional .DeepLearning.NeuralNetInitializerParameter init_B = 104;
+inline bool RNNStructParameter::has_init_b() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void RNNStructParameter::set_has_init_b() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void RNNStructParameter::clear_has_init_b() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void RNNStructParameter::clear_init_b() {
+  if (init_b_ != NULL) init_b_->::DeepLearning::NeuralNetInitializerParameter::Clear();
+  clear_has_init_b();
+}
+inline const ::DeepLearning::NeuralNetInitializerParameter& RNNStructParameter::init_b() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.init_B)
+  return init_b_ != NULL ? *init_b_ : *default_instance_->init_b_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::mutable_init_b() {
+  set_has_init_b();
+  if (init_b_ == NULL) {
+    init_b_ = new ::DeepLearning::NeuralNetInitializerParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.RNNStructParameter.init_B)
+  return init_b_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::release_init_b() {
+  clear_has_init_b();
+  ::DeepLearning::NeuralNetInitializerParameter* temp = init_b_;
+  init_b_ = NULL;
+  return temp;
+}
+inline void RNNStructParameter::set_allocated_init_b(::DeepLearning::NeuralNetInitializerParameter* init_b) {
+  delete init_b_;
+  init_b_ = init_b;
+  if (init_b) {
+    set_has_init_b();
+  } else {
+    clear_has_init_b();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.RNNStructParameter.init_B)
+}
+
+// optional .DeepLearning.NeuralNetInitializerParameter init_W_two = 105;
+inline bool RNNStructParameter::has_init_w_two() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void RNNStructParameter::set_has_init_w_two() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void RNNStructParameter::clear_has_init_w_two() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void RNNStructParameter::clear_init_w_two() {
+  if (init_w_two_ != NULL) init_w_two_->::DeepLearning::NeuralNetInitializerParameter::Clear();
+  clear_has_init_w_two();
+}
+inline const ::DeepLearning::NeuralNetInitializerParameter& RNNStructParameter::init_w_two() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.init_W_two)
+  return init_w_two_ != NULL ? *init_w_two_ : *default_instance_->init_w_two_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::mutable_init_w_two() {
+  set_has_init_w_two();
+  if (init_w_two_ == NULL) {
+    init_w_two_ = new ::DeepLearning::NeuralNetInitializerParameter;
+  }
+  // @@protoc_insertion_point(field_mutable:DeepLearning.RNNStructParameter.init_W_two)
+  return init_w_two_;
+}
+inline ::DeepLearning::NeuralNetInitializerParameter* RNNStructParameter::release_init_w_two() {
+  clear_has_init_w_two();
+  ::DeepLearning::NeuralNetInitializerParameter* temp = init_w_two_;
+  init_w_two_ = NULL;
+  return temp;
+}
+inline void RNNStructParameter::set_allocated_init_w_two(::DeepLearning::NeuralNetInitializerParameter* init_w_two) {
+  delete init_w_two_;
+  init_w_two_ = init_w_two;
+  if (init_w_two) {
+    set_has_init_w_two();
+  } else {
+    clear_has_init_w_two();
+  }
+  // @@protoc_insertion_point(field_set_allocated:DeepLearning.RNNStructParameter.init_W_two)
+}
+
 // -------------------------------------------------------------------
 
 // NeuralNetInitializerParameter
@@ -2376,28 +2553,52 @@ inline void NeuralNetTrainingParameter::set_clipflag(bool value) {
   // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.clipFlag)
 }
 
-// optional double clipThreashold = 12 [default = 1];
-inline bool NeuralNetTrainingParameter::has_clipthreashold() const {
+// optional double clipThreshold = 12 [default = 1];
+inline bool NeuralNetTrainingParameter::has_clipthreshold() const {
   return (_has_bits_[0] & 0x00000800u) != 0;
 }
-inline void NeuralNetTrainingParameter::set_has_clipthreashold() {
+inline void NeuralNetTrainingParameter::set_has_clipthreshold() {
   _has_bits_[0] |= 0x00000800u;
 }
-inline void NeuralNetTrainingParameter::clear_has_clipthreashold() {
+inline void NeuralNetTrainingParameter::clear_has_clipthreshold() {
   _has_bits_[0] &= ~0x00000800u;
 }
-inline void NeuralNetTrainingParameter::clear_clipthreashold() {
-  clipthreashold_ = 1;
-  clear_has_clipthreashold();
+inline void NeuralNetTrainingParameter::clear_clipthreshold() {
+  clipthreshold_ = 1;
+  clear_has_clipthreshold();
 }
-inline double NeuralNetTrainingParameter::clipthreashold() const {
-  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.clipThreashold)
-  return clipthreashold_;
+inline double NeuralNetTrainingParameter::clipthreshold() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.clipThreshold)
+  return clipthreshold_;
 }
-inline void NeuralNetTrainingParameter::set_clipthreashold(double value) {
-  set_has_clipthreashold();
-  clipthreashold_ = value;
-  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.clipThreashold)
+inline void NeuralNetTrainingParameter::set_clipthreshold(double value) {
+  set_has_clipthreshold();
+  clipthreshold_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.clipThreshold)
+}
+
+// optional double RMSProp_rho = 13 [default = 0.9];
+inline bool NeuralNetTrainingParameter::has_rmsprop_rho() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_rmsprop_rho() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void NeuralNetTrainingParameter::clear_has_rmsprop_rho() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void NeuralNetTrainingParameter::clear_rmsprop_rho() {
+  rmsprop_rho_ = 0.9;
+  clear_has_rmsprop_rho();
+}
+inline double NeuralNetTrainingParameter::rmsprop_rho() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.RMSProp_rho)
+  return rmsprop_rho_;
+}
+inline void NeuralNetTrainingParameter::set_rmsprop_rho(double value) {
+  set_has_rmsprop_rho();
+  rmsprop_rho_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.RMSProp_rho)
 }
 
 // -------------------------------------------------------------------

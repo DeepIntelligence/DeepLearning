@@ -30,9 +30,12 @@ namespace NeuralNet {
             net = net0;
         };
         virtual void train() = 0;
+        virtual void trainHelper(std::shared_ptr<arma::mat> X, 
+                                 std::shared_ptr<arma::mat> Y);
+        virtual void printInfo();
     protected:
         int iter;
-        double learningRate;
+        double learningRate, errorTotal;
 
         std::shared_ptr<arma::mat> trainingX, trainingY;
         std::vector<std::shared_ptr<arma::mat>> trainingXVec, trainingYVec;
@@ -96,25 +99,27 @@ namespace NeuralNet {
             
     };
     
-    
-    
-    class Trainer_iRProp : public Trainer {
+        
+    class Trainer_RMSProp : public Trainer {
     public:
-        Trainer_iRProp(std::shared_ptr<Net> net, const DeepLearning::NeuralNetParameter& nnPara):Trainer(net,nnPara){
+        Trainer_RMSProp(std::shared_ptr<Net> net, const DeepLearning::NeuralNetParameter& nnPara):Trainer(net,nnPara){
+            this->epsilon = this->trainingParameter.neuralnettrainingparameter().epi();
+            this->rho = this->trainingParameter.neuralnettrainingparameter().rmsprop_rho();
             currUpdate = net->netGradients();
-            // allocat memory for the prevUpdate
+            // allocat memory
             for (int i = 0; i < currUpdate.size(); i++) {
-               prevUpdate.push_back(std::shared_ptr<arma::mat>(new arma::mat));
-               prevDelta.push_back(std::shared_ptr<arma::mat>(new arma::mat));
-               currDelta.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+               squared_accu.push_back(std::shared_ptr<arma::mat>(new arma::mat));
+               squared_accu[i]->zeros(currUpdate[i]->n_rows, currUpdate[i]->n_cols);
             }
         }
-        virtual ~Trainer_iRProp(){}
+        virtual ~Trainer_RMSProp(){}
         virtual void train();
         virtual void calUpdates();
-        
     private:
-        std::vector<std::shared_ptr<arma::mat>> currDelta, prevDelta;
+        double rho, epsilon;
+        std::vector<std::shared_ptr<arma::mat>> squared_accu;
+        
+        
     };
     
     class TrainerBuilder {
@@ -124,8 +129,8 @@ namespace NeuralNet {
                 case DeepLearning::NeuralNetTrainingParameter_TrainerType_SGD:
                     return std::shared_ptr<Trainer>(new Trainer_SGD(net, nnPara));
                     break;
-                case DeepLearning::NeuralNetTrainingParameter_TrainerType_iRProp:
-                    return std::shared_ptr<Trainer>(new Trainer_iRProp(net, nnPara));
+                case DeepLearning::NeuralNetTrainingParameter_TrainerType_RMSProp:
+                    return std::shared_ptr<Trainer>(new Trainer_RMSProp(net, nnPara));
                     break;
                 case DeepLearning::NeuralNetTrainingParameter_TrainerType_SGDRNN:
                     return std::shared_ptr<Trainer>(new Trainer_SGDRNN(net, nnPara));

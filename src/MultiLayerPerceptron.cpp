@@ -64,11 +64,9 @@ double MultiLayerPerceptron::getLoss(){
 
 void MultiLayerPerceptron::calGradient(){
      this->feedForward(this->trainingX);
- // now calculate propogate the error
     std::shared_ptr<arma::mat> delta(new arma::mat);
     *delta = (-*trainingY + *netOutput_);
-    backProp(delta);
-     
+    backProp(delta);     
     this->calLoss(delta);
 
 }
@@ -179,14 +177,6 @@ std::vector<std::shared_ptr<arma::mat>> MultiLayerPerceptron::netGradients(){
     return netGradVector;
 }
 
-
-void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target, double learningRate) {
-    std::shared_ptr<arma::mat> delta_in = delta_target;
-    for (int i = numLayers - 1; i >= 0; i--) {
-        layers[i].updatePara(delta_in, learningRate);
-        delta_in = layers[i].delta_out;
-    }
-}
 
 void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target) {
     std::shared_ptr<arma::mat> delta_in = delta_target;
