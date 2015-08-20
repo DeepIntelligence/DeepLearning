@@ -15,14 +15,10 @@
 
 using namespace NeuralNet;
 using namespace DeepLearning;
-void workOnSequenceGeneration(std::shared_ptr<arma::mat> trainingY);
-void testForward();
-void trainRNN();
-void testGrad();
+void testGrad(char* filename);
 void testDynamicswithTrainer(char* filename);
 void testSimpleDynamics(char* filename);
 void testRLData(char* filename);
-void testDynamics();
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
         std::shared_ptr<arma::mat> trainingY);
 
@@ -32,6 +28,7 @@ std::bernoulli_distribution distribution(0.1);
 std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
+//    testGrad(argv[1]);
 //    testDynamicswithTrainer(argv[1]);
     testSimpleDynamics(argv[1]);
 //    testRLData(argv[1]);
@@ -60,13 +57,16 @@ void testRLData(char* filename){
 
 void testSimpleDynamics(char* filename){
     
-    double T = 20;
+    double T = 10;
     std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
     std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
     arma::arma_rng::set_seed_random();
     trainingX->zeros();
-    for (int i = 0; i < T; i++)
-        trainingY->at(i) = sin(0.1*i);
+    trainingY->at(0) = 0;
+    for (int i = 1; i < T; i++)
+        trainingY->at(i) = sin(0.01*i) + 0.1* std::abs(trainingY->at(i));
+    for (int i = 1; i < T; i++)
+        trainingY->at(i) = 1.0*i / T;
 
     NeuralNetParameter message; 
     ReadProtoFromTextFile(filename, &message);
@@ -87,8 +87,19 @@ void testSimpleDynamics(char* filename){
     std::cout<<std::endl;
     trainingY->print();
     
+    std::vector<std::shared_ptr<arma::mat>> gradVec;
+    rnn->calGradient();
+    gradVec = rnn->netGradients();
     
+    for (int i = 0; i < gradVec.size(); i++){
+        std::cout << i << std::endl;
+        gradVec[i]->print();
+    }
     
+    rnn->setTrainingSamples(trainingX, nullptr);
+    rnn->forward();
+    (rnn->netOutput())->print();
+    rnn->save("RNN");
 }
 
 void testDynamicswithTrainer(char* filename){
@@ -125,7 +136,7 @@ void testDynamicswithTrainer(char* filename){
     (rnn->netOutput())->print("output for testing");
     testingY->print("testing Y");
     
-    
+
 }
 
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
@@ -212,29 +223,40 @@ void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,
 }
 
 // test the gradients by numerical gradients checking
-#if 0
-void testGrad() {
+
+void testGrad(char* filename) {
     
     std::shared_ptr<arma::mat> trainingX(new arma::mat);
     std::shared_ptr<arma::mat> trainingY(new arma::mat);
-    
-    trainingX->randn(1, 10);
-     trainingY->ones(1, 10);
+    int T = 2;
+    trainingX->zeros(1, T);
+     trainingY->ones(1, T);
     /* RNN constructor parameters passed as:
         RNN(int numHiddenLayers0, int hiddenLayerInputDim0,
         int hiddenLayerOutputDim0, int inputDim0, int outputDim0, 
         std::shared_ptr<arma::mat> trainingX0, std::shared_ptr<arma::mat> trainingY0)
      */
-    RNN rnn(2, 2, 2, 1, 1, trainingX, trainingY);
+    NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);
+    RNN rnn(message);
+    rnn.setTrainingSamples(trainingX, trainingY);
     // before applying the LSTM backprop model, generate numerical gradients by just forward pass.
     rnn.calNumericGrad();
+
+    std::vector<std::shared_ptr<arma::mat>> gradVec;
+    rnn.calGradient();
+    gradVec = rnn.netGradients();
     
-    rnn.forward();
-    rnn.backward();    
+    for (int i = 0; i < gradVec.size(); i++){
+        std::cout << i << std::endl;
+        gradVec[i]->print();
+    }
+    
+    
 }
 
 
-
+#if 0
 void testForward(){
     
     std::shared_ptr<arma::mat> trainingX(new arma::mat());

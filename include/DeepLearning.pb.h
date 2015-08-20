@@ -705,13 +705,6 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 inputdim() const;
   void set_inputdim(::google::protobuf::int32 value);
 
-  // optional int32 outputDim = 5;
-  bool has_outputdim() const;
-  void clear_outputdim();
-  static const int kOutputDimFieldNumber = 5;
-  ::google::protobuf::int32 outputdim() const;
-  void set_outputdim(::google::protobuf::int32 value);
-
   // optional .DeepLearning.RNNStructParameter.ActivationType activationType = 6;
   bool has_activationtype() const;
   void clear_activationtype();
@@ -756,8 +749,6 @@ class RNNStructParameter : public ::google::protobuf::Message {
   inline void clear_has_hiddenlayeroutputdim();
   inline void set_has_inputdim();
   inline void clear_has_inputdim();
-  inline void set_has_outputdim();
-  inline void clear_has_outputdim();
   inline void set_has_activationtype();
   inline void clear_has_activationtype();
   inline void set_has_init_w_one();
@@ -774,11 +765,10 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 hiddenlayerinputdim_;
   ::google::protobuf::int32 hiddenlayeroutputdim_;
   ::google::protobuf::int32 inputdim_;
-  ::google::protobuf::int32 outputdim_;
-  int activationtype_;
   ::DeepLearning::NeuralNetInitializerParameter* init_w_one_;
   ::DeepLearning::NeuralNetInitializerParameter* init_b_;
   ::DeepLearning::NeuralNetInitializerParameter* init_w_two_;
+  int activationtype_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -1071,10 +1061,10 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   double momentum() const;
   void set_momentum(double value);
 
-  // optional bool verbose = 9 [default = true];
+  // optional bool verbose = 101 [default = true];
   bool has_verbose() const;
   void clear_verbose();
-  static const int kVerboseFieldNumber = 9;
+  static const int kVerboseFieldNumber = 101;
   bool verbose() const;
   void set_verbose(bool value);
 
@@ -1106,6 +1096,34 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   double rmsprop_rho() const;
   void set_rmsprop_rho(double value);
 
+  // optional bool showGradNorm = 102 [default = false];
+  bool has_showgradnorm() const;
+  void clear_showgradnorm();
+  static const int kShowGradNormFieldNumber = 102;
+  bool showgradnorm() const;
+  void set_showgradnorm(bool value);
+
+  // optional bool RNNScanFlag = 103 [default = false];
+  bool has_rnnscanflag() const;
+  void clear_rnnscanflag();
+  static const int kRNNScanFlagFieldNumber = 103;
+  bool rnnscanflag() const;
+  void set_rnnscanflag(bool value);
+
+  // optional int32 RNNScanStep = 104 [default = 1];
+  bool has_rnnscanstep() const;
+  void clear_rnnscanstep();
+  static const int kRNNScanStepFieldNumber = 104;
+  ::google::protobuf::int32 rnnscanstep() const;
+  void set_rnnscanstep(::google::protobuf::int32 value);
+
+  // optional int32 RNNTruncateLength = 105 [default = 10];
+  bool has_rnntruncatelength() const;
+  void clear_rnntruncatelength();
+  static const int kRNNTruncateLengthFieldNumber = 105;
+  ::google::protobuf::int32 rnntruncatelength() const;
+  void set_rnntruncatelength(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:DeepLearning.NeuralNetTrainingParameter)
  private:
   inline void set_has_learningrate();
@@ -1134,6 +1152,14 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   inline void clear_has_clipthreshold();
   inline void set_has_rmsprop_rho();
   inline void clear_has_rmsprop_rho();
+  inline void set_has_showgradnorm();
+  inline void clear_has_showgradnorm();
+  inline void set_has_rnnscanflag();
+  inline void clear_has_rnnscanflag();
+  inline void set_has_rnnscanstep();
+  inline void clear_has_rnnscanstep();
+  inline void set_has_rnntruncatelength();
+  inline void clear_has_rnntruncatelength();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 _has_bits_[1];
@@ -1149,8 +1175,12 @@ class NeuralNetTrainingParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 printinfofrequency_;
   bool verbose_;
   bool clipflag_;
+  bool showgradnorm_;
+  bool rnnscanflag_;
   double clipthreshold_;
   double rmsprop_rho_;
+  ::google::protobuf::int32 rnnscanstep_;
+  ::google::protobuf::int32 rnntruncatelength_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -2029,39 +2059,15 @@ inline void RNNStructParameter::set_inputdim(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.inputDim)
 }
 
-// optional int32 outputDim = 5;
-inline bool RNNStructParameter::has_outputdim() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void RNNStructParameter::set_has_outputdim() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void RNNStructParameter::clear_has_outputdim() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void RNNStructParameter::clear_outputdim() {
-  outputdim_ = 0;
-  clear_has_outputdim();
-}
-inline ::google::protobuf::int32 RNNStructParameter::outputdim() const {
-  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.outputDim)
-  return outputdim_;
-}
-inline void RNNStructParameter::set_outputdim(::google::protobuf::int32 value) {
-  set_has_outputdim();
-  outputdim_ = value;
-  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.outputDim)
-}
-
 // optional .DeepLearning.RNNStructParameter.ActivationType activationType = 6;
 inline bool RNNStructParameter::has_activationtype() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void RNNStructParameter::set_has_activationtype() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void RNNStructParameter::clear_has_activationtype() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void RNNStructParameter::clear_activationtype() {
   activationtype_ = 1;
@@ -2080,13 +2086,13 @@ inline void RNNStructParameter::set_activationtype(::DeepLearning::RNNStructPara
 
 // optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 103;
 inline bool RNNStructParameter::has_init_w_one() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void RNNStructParameter::set_has_init_w_one() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void RNNStructParameter::clear_has_init_w_one() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void RNNStructParameter::clear_init_w_one() {
   if (init_w_one_ != NULL) init_w_one_->::DeepLearning::NeuralNetInitializerParameter::Clear();
@@ -2123,13 +2129,13 @@ inline void RNNStructParameter::set_allocated_init_w_one(::DeepLearning::NeuralN
 
 // optional .DeepLearning.NeuralNetInitializerParameter init_B = 104;
 inline bool RNNStructParameter::has_init_b() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void RNNStructParameter::set_has_init_b() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void RNNStructParameter::clear_has_init_b() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void RNNStructParameter::clear_init_b() {
   if (init_b_ != NULL) init_b_->::DeepLearning::NeuralNetInitializerParameter::Clear();
@@ -2166,13 +2172,13 @@ inline void RNNStructParameter::set_allocated_init_b(::DeepLearning::NeuralNetIn
 
 // optional .DeepLearning.NeuralNetInitializerParameter init_W_two = 105;
 inline bool RNNStructParameter::has_init_w_two() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void RNNStructParameter::set_has_init_w_two() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void RNNStructParameter::clear_has_init_w_two() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void RNNStructParameter::clear_init_w_two() {
   if (init_w_two_ != NULL) init_w_two_->::DeepLearning::NeuralNetInitializerParameter::Clear();
@@ -2481,7 +2487,7 @@ inline void NeuralNetTrainingParameter::set_momentum(double value) {
   // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.momentum)
 }
 
-// optional bool verbose = 9 [default = true];
+// optional bool verbose = 101 [default = true];
 inline bool NeuralNetTrainingParameter::has_verbose() const {
   return (_has_bits_[0] & 0x00000100u) != 0;
 }
@@ -2599,6 +2605,102 @@ inline void NeuralNetTrainingParameter::set_rmsprop_rho(double value) {
   set_has_rmsprop_rho();
   rmsprop_rho_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.RMSProp_rho)
+}
+
+// optional bool showGradNorm = 102 [default = false];
+inline bool NeuralNetTrainingParameter::has_showgradnorm() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_showgradnorm() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void NeuralNetTrainingParameter::clear_has_showgradnorm() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void NeuralNetTrainingParameter::clear_showgradnorm() {
+  showgradnorm_ = false;
+  clear_has_showgradnorm();
+}
+inline bool NeuralNetTrainingParameter::showgradnorm() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.showGradNorm)
+  return showgradnorm_;
+}
+inline void NeuralNetTrainingParameter::set_showgradnorm(bool value) {
+  set_has_showgradnorm();
+  showgradnorm_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.showGradNorm)
+}
+
+// optional bool RNNScanFlag = 103 [default = false];
+inline bool NeuralNetTrainingParameter::has_rnnscanflag() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_rnnscanflag() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void NeuralNetTrainingParameter::clear_has_rnnscanflag() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void NeuralNetTrainingParameter::clear_rnnscanflag() {
+  rnnscanflag_ = false;
+  clear_has_rnnscanflag();
+}
+inline bool NeuralNetTrainingParameter::rnnscanflag() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.RNNScanFlag)
+  return rnnscanflag_;
+}
+inline void NeuralNetTrainingParameter::set_rnnscanflag(bool value) {
+  set_has_rnnscanflag();
+  rnnscanflag_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.RNNScanFlag)
+}
+
+// optional int32 RNNScanStep = 104 [default = 1];
+inline bool NeuralNetTrainingParameter::has_rnnscanstep() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_rnnscanstep() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void NeuralNetTrainingParameter::clear_has_rnnscanstep() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void NeuralNetTrainingParameter::clear_rnnscanstep() {
+  rnnscanstep_ = 1;
+  clear_has_rnnscanstep();
+}
+inline ::google::protobuf::int32 NeuralNetTrainingParameter::rnnscanstep() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.RNNScanStep)
+  return rnnscanstep_;
+}
+inline void NeuralNetTrainingParameter::set_rnnscanstep(::google::protobuf::int32 value) {
+  set_has_rnnscanstep();
+  rnnscanstep_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.RNNScanStep)
+}
+
+// optional int32 RNNTruncateLength = 105 [default = 10];
+inline bool NeuralNetTrainingParameter::has_rnntruncatelength() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void NeuralNetTrainingParameter::set_has_rnntruncatelength() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void NeuralNetTrainingParameter::clear_has_rnntruncatelength() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void NeuralNetTrainingParameter::clear_rnntruncatelength() {
+  rnntruncatelength_ = 10;
+  clear_has_rnntruncatelength();
+}
+inline ::google::protobuf::int32 NeuralNetTrainingParameter::rnntruncatelength() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.NeuralNetTrainingParameter.RNNTruncateLength)
+  return rnntruncatelength_;
+}
+inline void NeuralNetTrainingParameter::set_rnntruncatelength(::google::protobuf::int32 value) {
+  set_has_rnntruncatelength();
+  rnntruncatelength_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.NeuralNetTrainingParameter.RNNTruncateLength)
 }
 
 // -------------------------------------------------------------------

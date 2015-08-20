@@ -31,6 +31,18 @@ void Trainer::printInfo() {
     }
 }
 
+void Trainer::printGradNorm() {
+    if (trainingParameter.neuralnettrainingparameter().verbose() &&
+            trainingParameter.neuralnettrainingparameter().showgradnorm()) {
+        for (int i = 0; i < currUpdate.size(); i++) {
+            double grad_norm = arma::norm(*(currUpdate[i]), 2);
+            std::cout << "norm of gradients are:" << "\t";
+            std::cout << grad_norm << "\t";
+        }
+        std::cout << std::endl;
+        }
+}
+
 void Trainer_SGD::calUpdates() {
     double momentum = trainingParameter.neuralnettrainingparameter().momentum();
     for (int i = 0; i < currUpdate.size(); i++) {
@@ -38,13 +50,8 @@ void Trainer_SGD::calUpdates() {
             *(currUpdate[i]) = momentum * (*(prevUpdate[i])) + (*(currUpdate[i])) * learningRate;
         } else {
             *(currUpdate[i]) = (*(currUpdate[i])) * learningRate;
-        }   
-        if (trainingParameter.neuralnettrainingparameter().verbose()){
-            double grad_norm = arma::norm(*(currUpdate[i]),2);
-            std::cout << "norm of gradients are:" <<"\t";
-            std::cout << grad_norm <<"\t";
+        } 
         
-        }
         if (trainingParameter.neuralnettrainingparameter().clipflag()){
             double grad_norm = arma::norm(*(currUpdate[i]),2);
             double threshold = trainingParameter.neuralnettrainingparameter().clipthreshold();
@@ -54,7 +61,7 @@ void Trainer_SGD::calUpdates() {
         }
         *(prevUpdate[i]) = *(currUpdate[i]);
     }
-    std::cout << std::endl;
+    this->printGradNorm();
 }
 
 void Trainer_SGD::train() {
@@ -63,20 +70,31 @@ void Trainer_SGD::train() {
     int size = trainingParameter.neuralnettrainingparameter().minibatchsize();
     if (size < 0 || size >= trainingX->n_cols) {
         size = trainingX->n_cols;
-    }
-
-    
+    }    
     for (iter = 0; iter < trainingParameter.neuralnettrainingparameter().nepoch(); iter++) {
         errorTotal = 0.0;
-        learningRate = trainingParameter.neuralnettrainingparameter().learningrate() / 
-        trainingParameter.neuralnettrainingparameter().minibatchsize();    
+        learningRate = trainingParameter.neuralnettrainingparameter().learningrate() / size;    
         double decayRate = trainingParameter.neuralnettrainingparameter().decayrate();
         learningRate = learningRate * exp(-iter / decayRate);
     
         int ntimes = this->trainingX->n_cols / size;
+            if (trainingParameter.neuralnettrainingparameter().rnnscanflag()){
+                
+                int RNNScanStep = trainingParameter.neuralnettrainingparameter().rnnscanstep();
+                int RNNTruncateLength = trainingParameter.neuralnettrainingparameter().rnntruncatelength();
+                learningRate *= size / RNNTruncateLength;
+                ntimes = (this->trainingX->n_cols - RNNTruncateLength) / RNNScanStep;
+            }
         for (int i = 0; i < ntimes; i++) {
-            subTrainingX = std::make_shared<arma::mat>(trainingX->cols(i*size, (i + 1) * size - 1));
-            subTrainingY= std::make_shared<arma::mat>(trainingY->cols(i*size, (i + 1) * size - 1));           
+            int startPoint, endPoint; 
+            startPoint = i*size;
+            endPoint = (i + 1) * size - 1;
+            if (trainingParameter.neuralnettrainingparameter().rnnscanflag()){
+                startPoint = i * trainingParameter.neuralnettrainingparameter().rnnscanstep();
+                endPoint = startPoint + trainingParameter.neuralnettrainingparameter().rnntruncatelength() - 1;
+            }
+            subTrainingX = std::make_shared<arma::mat>(trainingX->cols(startPoint, endPoint));
+            subTrainingY= std::make_shared<arma::mat>(trainingY->cols(startPoint, endPoint));           
             trainHelper(subTrainingX, subTrainingY);
         }
         printInfo();

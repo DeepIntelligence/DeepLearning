@@ -22,9 +22,9 @@ struct BaseLayer: public Layer_unitaryOp {
 /*
  calculate the gradient and propogate the error but not update W and B
  */    
-	virtual void calGrad(std::shared_ptr<arma::mat> delta_in);
-	virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int t);	
-	void accumulateGrad(std::shared_ptr<arma::mat> delta_in);
+    virtual void calGrad(std::shared_ptr<arma::mat> delta_in);
+    virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int t);	
+    void accumulateGrad(std::shared_ptr<arma::mat> delta_in);
     virtual void accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t);
     void updatePara_accu(double learningRate);
     

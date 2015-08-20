@@ -12,8 +12,8 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
     hiddenLayerInputDim = neuralNetPara.rnnstruct().hiddenlayeroutputdim();
     hiddenLayerOutputDim = neuralNetPara.rnnstruct().hiddenlayeroutputdim();
     rnnInputDim = neuralNetPara.rnnstruct().inputdim();
-    rnnOutputDim = neuralNetPara.rnnstruct().outputdim(); // this parameter is not used within sofar code
-     
+    rnnOutputDim = neuralNetPara.layerstruct(0).outputdim();
+    
     for (int i = 0; i < numHiddenLayers; i++){
         int inputOneDim, inputTwoDim;
 	int outputDim;
@@ -304,7 +304,7 @@ void RNN::calNumericGrad(){
     arma::mat delta;
     int dim1 = hiddenLayers[0].outputDim;
     int dim2 = hiddenLayers[0].inputOneDim;
-    double eps = 1e-5;
+    double eps = 1e-9;
 
     arma::mat dW(dim1, dim2, arma::fill::zeros);
 

@@ -33,6 +33,7 @@ namespace NeuralNet {
         virtual void trainHelper(std::shared_ptr<arma::mat> X, 
                                  std::shared_ptr<arma::mat> Y);
         virtual void printInfo();
+        virtual void printGradNorm();
     protected:
         int iter;
         double learningRate, errorTotal;

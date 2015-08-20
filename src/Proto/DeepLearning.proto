@@ -32,7 +32,6 @@ message RNNStructParameter{
 	optional int32 hiddenLayerInputDim = 2;
 	optional int32 hiddenLayerOutputDim = 3;
 	optional int32 inputDim = 4;
-	optional int32 outputDim = 5;
 	optional ActivationType activationType = 6;
 	optional NeuralNetInitializerParameter init_W_one = 103;
 	optional NeuralNetInitializerParameter init_B = 104;
@@ -56,11 +55,15 @@ message NeuralNetTrainingParameter {
 	optional TrainerType trainerType = 6 [default = SGD];
  	optional double decayRate = 7 [default = 10];
 	optional double momentum = 8 [default = 0.9];
-	optional bool verbose = 9 [default = true];
+	optional bool verbose = 101 [default = true];
 	optional int32 printInfoFrequency = 10 [default = 1];
 	optional bool clipFlag = 11 [default = false];
 	optional double clipThreshold = 12 [default = 1];
 	optional double RMSProp_rho = 13 [default = 0.9];
+	optional bool showGradNorm = 102 [default = false];
+	optional bool RNNScanFlag = 103 [default = false];
+	optional int32 RNNScanStep = 104 [default = 1];
+	optional int32 RNNTruncateLength = 105 [default = 10];
 }
 
 message QLearningSolverParameter{

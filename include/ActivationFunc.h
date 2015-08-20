@@ -10,29 +10,37 @@ namespace NeuralNet{
     arma::mat maxVal = arma::max(*p,0);
     arma::mat sumVal;
     switch(actType) {
-    case softmax:
-        for (int i = 0; i < p->n_cols; i++) {
-                p->col(i)-= maxVal(i);            
-        }          
-        (*p).transform([](double val) {
-            return exp(val);
-        });
+            case softmax:
+                for (int i = 0; i < p->n_cols; i++) {
+                    p->col(i) -= maxVal(i);
+                }
+                (*p).transform([](double val) {
+                    return exp(val);
+                });
 
-         sumVal = arma::sum(*p,0);
-        for (int i = 0; i < p->n_cols; i++) {            
-               p->col(i) /=sumVal(i);
-        }
-        break;
-    case sigmoid:
-        (*p).transform([](double val) {
-            return 1.0/(1.0+exp(-val));
-        });
-        break;
-    case linear:
-        break;
-    case ReLU:
-        p->transform([](double val) {return val > 0 ? val: 0 ;});
-    	break;
+                sumVal = arma::sum(*p, 0);
+                for (int i = 0; i < p->n_cols; i++) {
+                    p->col(i) /= sumVal(i);
+                }
+                break;
+            case sigmoid:
+                (*p).transform([](double val) {
+                    return 1.0 / (1.0 + exp(-val));
+                });
+                break;
+            case linear:
+                break;
+            case ReLU:
+                p->transform([](double val) {
+                    return val > 0 ? val : 0;
+                });
+                break;
+            case tanh:
+                p->transform([](double val){return std::tanh(val);});
+                break;
+            default:
+                std::cerr << "invalid activation type" << std::endl;
+                break;
     }
 }
 	inline void GetActivationGradient(std::shared_ptr<arma::mat> in, std::shared_ptr<arma::mat> out, ActivationType actType){
