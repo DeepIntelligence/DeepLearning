@@ -1,0 +1,46 @@
+rnnStruct{
+	numHiddenLayers: 1
+	hiddenLayerInputDim: 8
+	hiddenLayerOutputDim: 8
+	inputDim: 1
+        activationType: tanh
+        init_W_one{
+            initializerType: normal
+            normal_std: 0.2
+            normal_mean:0
+        }
+        init_B {
+            initializerType: zero
+        }
+        init_W_two{
+            initializerType: glorot_normal
+        }
+}
+
+layerStruct{
+	name: "BaseLayer2"
+	inputDim: 8
+	outputDim: 1
+	activationType: linear
+        init_W{
+            initializerType: glorot_normal
+        }
+        init_B {
+            initializerType: zero
+        }
+}
+
+neuralNetTrainingParameter{
+        trainerType: RMSProp
+	learningRate: 0.1
+	miniBatchSize: 100
+	NEpoch: 5000
+        momentum: 0.9
+        decayRate: 500
+        showGradNorm: false
+        RNNScanFlag: true
+        RNNScanStep: 5
+        RNNTruncateLength: 10
+}
+
+

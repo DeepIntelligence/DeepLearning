@@ -39,6 +39,7 @@ namespace NeuralNet {
         virtual void updateInternalState();
         virtual void saveLayerInputOutput();
         std::shared_ptr<BaseLayer> getOutputLayer(){return netOutputLayer;}
+        std::vector<MultiAddLayer> getHiddenLayers(){ return hiddenLayers;}
     private:
         void fillNetGradVector();
         DeepLearning::NeuralNetParameter neuralNetPara;

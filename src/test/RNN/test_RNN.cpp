@@ -18,6 +18,7 @@ using namespace DeepLearning;
 void testGrad(char* filename);
 void testDynamicswithTrainer(char* filename);
 void testSimpleDynamics(char* filename);
+void testForward(char* filename);
 void testRLData(char* filename);
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
         std::shared_ptr<arma::mat> trainingY);
@@ -32,7 +33,37 @@ int main(int argc, char *argv[]) {
 //    testDynamicswithTrainer(argv[1]);
     testSimpleDynamics(argv[1]);
 //    testRLData(argv[1]);
+//    testForward(argv[1]);
     return 0;
+}
+
+void testForward(char* filename){
+    double T = 10;
+    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
+    arma::arma_rng::set_seed_random();
+    trainingX->randn();
+    trainingY->at(0) = 0;
+    for (int i = 1; i < T; i++)
+        trainingY->at(i) = sin(0.01*i) + 0.1* std::abs(trainingY->at(i));
+    for (int i = 1; i < T; i++)
+        trainingY->at(i) = 1.0*i / T;
+
+
+    NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);
+    
+    std::shared_ptr<RNN> rnnptr(new RNN(message));
+    
+    rnnptr->setTrainingSamples(trainingX, nullptr);
+    rnnptr->forward();
+    (rnnptr->netOutput())->print();
+    std::vector<MultiAddLayer> vec = rnnptr->getHiddenLayers();
+    for (int i = 0; i < vec[0].outputMem.size(); i++){
+        vec[0].outputMem[i]->print("start");
+        std::cout << vec[0].outputMem[i].get() << std::endl;
+    
+    }
 }
 void testRLData(char* filename){
    std::shared_ptr<arma::mat> trainingX(new arma::mat);
@@ -57,7 +88,7 @@ void testRLData(char* filename){
 
 void testSimpleDynamics(char* filename){
     
-    double T = 10;
+    double T = 100;
     std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
     std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
     arma::arma_rng::set_seed_random();
@@ -65,13 +96,15 @@ void testSimpleDynamics(char* filename){
     trainingY->at(0) = 0;
     for (int i = 1; i < T; i++)
         trainingY->at(i) = sin(0.01*i) + 0.1* std::abs(trainingY->at(i));
-    for (int i = 1; i < T; i++)
-        trainingY->at(i) = 1.0*i / T;
-
+    for (int i = 1; i < T; i++){
+        trainingX->at(i) = 1.0*i / T;
+        trainingY->at(i) = (1 - trainingX->at(i));
+    }
     NeuralNetParameter message; 
     ReadProtoFromTextFile(filename, &message);
     
-    std::shared_ptr<Net> rnn(new RNN(message));
+    std::shared_ptr<RNN> rnnptr(new RNN(message));
+    std::shared_ptr<Net> rnn(rnnptr);
     
 
     rnn->setTrainingSamples(trainingX, nullptr);
@@ -86,7 +119,7 @@ void testSimpleDynamics(char* filename){
     (rnn->netOutput())->print();
     std::cout<<std::endl;
     trainingY->print();
-    
+#if 0    
     std::vector<std::shared_ptr<arma::mat>> gradVec;
     rnn->calGradient();
     gradVec = rnn->netGradients();
@@ -100,6 +133,14 @@ void testSimpleDynamics(char* filename){
     rnn->forward();
     (rnn->netOutput())->print();
     rnn->save("RNN");
+    std::vector<MultiAddLayer> vec = rnnptr->getHiddenLayers();
+    for (int i = 0; i < vec[0].outputMem.size(); i++){
+        vec[0].outputMem[i]->print("start");
+        std::cout << vec[0].outputMem[i].get() << std::endl;
+    
+    }
+#endif    
+
 }
 
 void testDynamicswithTrainer(char* filename){

@@ -137,7 +137,15 @@ arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
             hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(outputLayers_prev_output[l])));
             hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*(hiddenLayers[l - 1].output)));
         }
-        hiddenLayers[l].activateUp(); 
+        hiddenLayers[l].activateUp();
+#if 0
+        hiddenLayers[l].W_one->print("W_one");
+        hiddenLayers[l].W_two->print("W_two");
+        hiddenLayers[l].B->print("B");
+        hiddenLayers[l].inputOne->print("input one");
+        hiddenLayers[l].inputTwo->print("input two");
+        hiddenLayers[l].output->print("output");
+#endif        
     }
     netOutputLayer->input = hiddenLayers[numHiddenLayers-1].output;
     netOutputLayer->activateUp();
