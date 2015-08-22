@@ -18,6 +18,7 @@ using namespace DeepLearning;
 void testGrad(char* filename);
 void testDynamicswithTrainer(char* filename);
 void testSimpleDynamics(char* filename);
+void testIntermediateDynamics(char* filename);
 void testForward(char* filename);
 void testRLData(char* filename);
 void aLittleTimerGenerator(std::shared_ptr<arma::mat> trainingX,  
@@ -31,8 +32,9 @@ std::uniform_real_distribution<> dis(0, 1);
 int main(int argc, char *argv[]) {
 //    testGrad(argv[1]);
 //    testDynamicswithTrainer(argv[1]);
-    testSimpleDynamics(argv[1]);
-//    testRLData(argv[1]);
+//    testSimpleDynamics(argv[1]);
+//    testIntermediateDynamics(argv[1]);
+        testRLData(argv[1]);
 //    testForward(argv[1]);
     return 0;
 }
@@ -79,11 +81,50 @@ void testRLData(char* filename){
     std::shared_ptr<Net> rnn(new RNN(message));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
 
-    trainer->setTrainingSamples(X, Y);
+    trainer->setTrainingSamples(trainingX, trainingY);
+    trainer->train();
+    
+    trainingY->print("trainingY");
+    (rnn->netOutput())->print("output");
+}
+
+void testIntermediateDynamics(char* filename){
+
+        
+    double T = 100;
+    std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
+    std::shared_ptr<arma::mat> trainingY(new arma::mat(1,T));
+    arma::arma_rng::set_seed_random();
+    trainingX->zeros();
+    trainingY->at(0) = 0;
+    for (int i = 1; i < T; i++)
+        trainingY->at(i) = sin(0.01*i) + 0.1* std::abs(trainingY->at(i));
+    for (int i = 1; i < T; i++){
+        trainingX->at(i) = 1.0*i / T;
+        trainingY->at(i) = (1 - trainingX->at(i)) + 0.2*trainingY->at(i-1);
+        if (i >= 2) {
+        trainingY->at(i) = (1 - trainingX->at(i)) + 0.2*trainingY->at(i-1) - 0.3*trainingY->at(i-2);
+        }
+    }
+    NeuralNetParameter message; 
+    ReadProtoFromTextFile(filename, &message);
+    
+    std::shared_ptr<RNN> rnnptr(new RNN(message));
+    std::shared_ptr<Net> rnn(rnnptr);
+    
+
+    rnn->setTrainingSamples(trainingX, nullptr);
+    rnn->forward();
+    rnn->netOutputAtTime(0);
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
+
+    trainer->setTrainingSamples(trainingX, trainingY);
     trainer->train();
     
     trainingY->save("trainingY.dat", arma::raw_ascii);
     (rnn->netOutput())->print();
+    std::cout<<std::endl;
+    trainingY->print();
 }
 
 void testSimpleDynamics(char* filename){
