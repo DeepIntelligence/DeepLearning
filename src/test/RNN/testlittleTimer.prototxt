@@ -2,7 +2,7 @@ rnnStruct{
 	numHiddenLayers: 2
 	hiddenLayerInputDim: 8
 	hiddenLayerOutputDim: 8
-	inputDim: 3
+	inputDim: 2
         activationType: tanh
         init_W_one{
             initializerType: normal
@@ -38,7 +38,7 @@ neuralNetTrainingParameter{
         momentum: 0.9
         decayRate: 2500
         showGradNorm: false
-        RNNScanFlag: false
+        RNNScanFlag: true
         RNNScanStep: 5
         RNNTruncateLength: 10
 }

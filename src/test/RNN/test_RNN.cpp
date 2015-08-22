@@ -16,7 +16,7 @@
 using namespace NeuralNet;
 using namespace DeepLearning;
 void testGrad(char* filename);
-void testDynamicswithTrainer(char* filename);
+void testLittleTimer(char* filename);
 void testSimpleDynamics(char* filename);
 void testIntermediateDynamics(char* filename);
 void testForward(char* filename);
@@ -31,10 +31,10 @@ std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
 //    testGrad(argv[1]);
-//    testDynamicswithTrainer(argv[1]);
+    testLittleTimer(argv[1]);
 //    testSimpleDynamics(argv[1]);
 //    testIntermediateDynamics(argv[1]);
-        testRLData(argv[1]);
+//        testRLData(argv[1]);
 //    testForward(argv[1]);
     return 0;
 }
@@ -184,7 +184,7 @@ void testSimpleDynamics(char* filename){
 
 }
 
-void testDynamicswithTrainer(char* filename){
+void testLittleTimer(char* filename){
     
     double T = 100;
     std::shared_ptr<arma::mat> trainingX(new arma::mat(1,T));
@@ -199,10 +199,6 @@ void testDynamicswithTrainer(char* filename){
     
     std::shared_ptr<Net> rnn(new RNN(message));
     
-
-    rnn->setTrainingSamples(trainingX, nullptr);
-    rnn->forward();
-    rnn->netOutputAtTime(0);
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
 
     trainer->setTrainingSamples(trainingX, trainingY);
