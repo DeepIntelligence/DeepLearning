@@ -31,8 +31,8 @@ std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
 //    testGrad(argv[1]);
-    testLittleTimer(argv[1]);
-//    testSimpleDynamics(argv[1]);
+//    testLittleTimer(argv[1]);
+    testSimpleDynamics(argv[1]);
 //    testIntermediateDynamics(argv[1]);
 //        testRLData(argv[1]);
 //    testForward(argv[1]);
@@ -60,7 +60,7 @@ void testForward(char* filename){
     rnnptr->setTrainingSamples(trainingX, nullptr);
     rnnptr->forward();
     (rnnptr->netOutput())->print();
-    std::vector<MultiAddLayer> vec = rnnptr->getHiddenLayers();
+    std::vector<RecurrLayer> vec = rnnptr->getHiddenLayers();
     for (int i = 0; i < vec[0].outputMem.size(); i++){
         vec[0].outputMem[i]->print("start");
         std::cout << vec[0].outputMem[i].get() << std::endl;
@@ -144,8 +144,8 @@ void testSimpleDynamics(char* filename){
     NeuralNetParameter message; 
     ReadProtoFromTextFile(filename, &message);
     
-    std::shared_ptr<RNN> rnnptr(new RNN(message));
-    std::shared_ptr<Net> rnn(rnnptr);
+//    std::shared_ptr<RNN> rnnptr(new RNN(message));
+    std::shared_ptr<Net> rnn(new RNN(message));
     
 
     rnn->setTrainingSamples(trainingX, nullptr);

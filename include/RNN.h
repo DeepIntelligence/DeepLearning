@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "BaseLayer.h"
-#include "MultiAddLayer.h"
+#include "RecurrLayer.h"
 #include "common.h"
 namespace NeuralNet {
 
@@ -35,11 +35,11 @@ namespace NeuralNet {
         virtual int getTime();
         virtual void setTime(int t);
         std::shared_ptr<BaseLayer> getOutputLayer(){return netOutputLayer;}
-        std::vector<MultiAddLayer> getHiddenLayers(){ return hiddenLayers;}
+        std::vector<RecurrLayer> getHiddenLayers(){ return hiddenLayers;}
     private:
         void fillNetGradVector();
         std::shared_ptr<arma::mat> netOutput_;
-        std::vector<MultiAddLayer> hiddenLayers;
+        std::vector<RecurrLayer> hiddenLayers;
         std::shared_ptr<BaseLayer> netOutputLayer;
         std::vector<std::shared_ptr<arma::mat>> outputLayers_prev_output;
         int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;

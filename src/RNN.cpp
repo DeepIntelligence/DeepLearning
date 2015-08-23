@@ -16,8 +16,8 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
     
     for (int i = 0; i < numHiddenLayers; i++){
         int inputOneDim, inputTwoDim;
-	int outputDim;
-	NeuralNetInitializerParameter  w_one_init, w_two_init, b_init;
+		int outputDim;
+		NeuralNetInitializerParameter  w_one_init, w_two_init, b_init;
         w_one_init = neuralNetPara.rnnstruct().init_w_one();
         w_two_init = neuralNetPara.rnnstruct().init_w_two();
         b_init = neuralNetPara.rnnstruct().init_b();       
@@ -38,7 +38,7 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
             outputDim = hiddenLayerOutputDim;            
        }
         
-		hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, GetActivationType(neuralNetPara.rnnstruct().activationtype()),
+		hiddenLayers.push_back(RecurrLayer(inputOneDim, inputTwoDim, outputDim, GetActivationType(neuralNetPara.rnnstruct().activationtype()),
 		InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
 		InitializerBuilder::GetInitializer(b_init)));     
 	}
@@ -51,9 +51,6 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
         InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
 
         fillNetGradVector();
-         for (int l = 0; l < numHiddenLayers; l++) {
-            outputLayers_prev_output.push_back(std::shared_ptr<arma::mat>(new arma::mat));
-        }
 }
 
 void RNN::resetWeight(){
@@ -70,7 +67,7 @@ arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
     std::shared_ptr<arma::mat> commonInput(new arma::mat);
     if (this->time == 0) {
         for (int l = 0; l < numHiddenLayers; l++) {
-            (outputLayers_prev_output[l])->zeros(hiddenLayerOutputDim, 1);
+            (hiddenLayers[l].getPrevOutput())->zeros(hiddenLayerOutputDim, 1);
             hiddenLayers[l].inputOneMem.clear();
             hiddenLayers[l].inputTwoMem.clear();
             hiddenLayers[l].outputMem.clear();
@@ -79,12 +76,12 @@ arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
         netOutputLayer->outputMem.clear();
     }
     for (int l = 0; l < numHiddenLayers; l++) {
+    	hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(hiddenLayers[l].getPrevOutput())));
+  
         if (l == 0) {
-            hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(outputLayers_prev_output[l])));
-            hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*input));
+			hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*input));
         } else {
-            hiddenLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(outputLayers_prev_output[l])));
-            hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*(hiddenLayers[l - 1].output)));
+			hiddenLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*(hiddenLayers[l - 1].output)));
         }
         hiddenLayers[l].activateUp();
 #if 0
@@ -112,8 +109,8 @@ void RNN::saveLayerInputOutput(){
 }
 
 void RNN::updateInternalState(){
-    for (int l = 0; l < numHiddenLayers; l++) {        
-        *(outputLayers_prev_output[l]) = *(hiddenLayers[l].output);
+    for (int l = 0; l < numHiddenLayers; l++) {
+    	hiddenLayers[l].savePrevOutput();
     }
 }
 
@@ -130,12 +127,10 @@ void RNN::forward() {
  
 void RNN::backward() {
    
-    arma::mat hiddenLayer_upstream_deltaOut[numHiddenLayers]; 
-    
     std::shared_ptr<arma::mat> delta(new arma::mat);
 
     for (int l = 0; l < numHiddenLayers; l++) {
-        hiddenLayer_upstream_deltaOut[l].zeros(hiddenLayerOutputDim, 1);
+//        hiddenLayer_upstream_deltaOut[l].zeros(hiddenLayerOutputDim, 1);
         hiddenLayers[l].clearAccuGrad();
     }
     netOutputLayer->clearAccuGrad();
@@ -153,11 +148,12 @@ void RNN::backward() {
             }   
             
             if (t < T - 1) {
-               *delta += hiddenLayer_upstream_deltaOut[l];
+               *delta += *(hiddenLayers[l].getPrevDeltaOutOne());
             }              
             // so far, the generated delta error is for the output h of each layer at each time
             hiddenLayers[l].accumulateGrad(delta, t);
-            hiddenLayer_upstream_deltaOut[l] = *(hiddenLayers[l].delta_outOne);
+            hiddenLayers[l].savePrevDeltaOutOne();
+//            hiddenLayer_upstream_deltaOut[l] = *(hiddenLayers[l].delta_outOne);
         }
 	}  
 }
@@ -215,18 +211,18 @@ std::shared_ptr<arma::mat> RNN::netOutputAtTime(int time){
 }
 
 void RNN::save(std::string filename){
-    char tag[10];    
+    std::stringstream tag;   
     for (int l=0;l<numHiddenLayers;l++){
-        sprintf(tag,"%d",l);
-        hiddenLayers[l].save(filename+"_hiddenLayer_"+(std::string)tag);
+        tag << l;
+        hiddenLayers[l].save(filename+"_hiddenLayer_"+tag.str());
     }
     this->netOutputLayer->save(filename+"netOutputLayer");
 }
 void RNN::load(std::string filename){
-    char tag[10];    
+    std::stringstream tag;
     for (int l=0;l<numHiddenLayers;l++){
-        sprintf(tag,"%d",l);
-        hiddenLayers[l].load(filename+"_hiddenLayer_"+(std::string)tag);
+        tag << l;
+        hiddenLayers[l].load(filename+"_hiddenLayer_"+tag.str());
     }
     this->netOutputLayer->load(filename+"netOutputLayer");
 }

@@ -8,7 +8,7 @@ public:
     virtual void applyUpdates(std::vector<std::shared_ptr<arma::mat>>) = 0;
     virtual std::vector<std::shared_ptr<arma::mat>> netGradients() { return netGradVector;}
     virtual void setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y){ trainingX = X; trainingY = Y;}
-   virtual void calGradient() = 0;
+	virtual void calGradient() = 0;
     virtual double getLoss() = 0;
     virtual void save(std::string filename) = 0;
     virtual void load(std::string filename) = 0;

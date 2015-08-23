@@ -1,5 +1,6 @@
 #pragma once
 #include "common.h"
+#include "MultiAddLayer.h"
 namespace NeuralNet {
 
     struct RecurrLayer : public MultiAddLayer {
@@ -9,8 +10,10 @@ namespace NeuralNet {
         std::shared_ptr<Initializer> init_B);
         virtual ~RecurrLayer(){}
         void savePrevOutput();
-        void savePrevDelta_outTwo();
+        void savePrevDeltaOutOne();
+        std::shared_ptr<arma::mat> getPrevOutput(){ return output_prev;}
+        std::shared_ptr<arma::mat> getPrevDeltaOutOne() { return delta_outOne_prev;}
         std::shared_ptr<arma::mat> output_prev;
-        std::shared_ptr<arma::mat> delta_outTwo_prev;
+        std::shared_ptr<arma::mat> delta_outOne_prev;
     };
 }
