@@ -20,19 +20,14 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
 	NeuralNetInitializerParameter  w_one_init, w_two_init, b_init;
         w_one_init = neuralNetPara.rnnstruct().init_w_one();
         w_two_init = neuralNetPara.rnnstruct().init_w_two();
-        b_init = neuralNetPara.rnnstruct().init_b();
-       
+        b_init = neuralNetPara.rnnstruct().init_b();       
         // i=0 is the first hidden layer with input consisting 
           // of data input and last time hidden
-        if (i == 0) {
-            
+        if (i == 0) {           
             // inputDim is the unrolled LSTM input for various layers, the same to outputDim
             inputOneDim = hiddenLayerOutputDim;
             inputTwoDim = rnnInputDim;
-            outputDim = hiddenLayerOutputDim;
-            
-
-            
+            outputDim = hiddenLayerOutputDim;           
           // of hidden output from lower layer at the same time and
            // hidden output from same layer but at previous time
        } else if(i <= numHiddenLayers-1){
@@ -40,74 +35,21 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
             // inputDim is the unrolled LSTM input for various layers, the same to outputDim
             inputOneDim = hiddenLayerOutputDim;
 			inputTwoDim = hiddenLayerOutputDim;
-            outputDim = hiddenLayerOutputDim;
-            
-        }
+            outputDim = hiddenLayerOutputDim;            
+       }
         
-			switch (neuralNetPara.rnnstruct().activationtype()) {
-				case RNNStructParameter_ActivationType_sigmoid:
-					hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, sigmoid,
-					InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
-					InitializerBuilder::GetInitializer(b_init)));     
-        			break;
-        		case RNNStructParameter_ActivationType_tanh:
-					hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, tanh,
-					InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
-					InitializerBuilder::GetInitializer(b_init)));     
-        			break;
-        		case RNNStructParameter_ActivationType_softmax:
-					hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, softmax,
-					InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
-					InitializerBuilder::GetInitializer(b_init)));     
-        			break;
-        		case RNNStructParameter_ActivationType_ReLU:
-					hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, ReLU,
-					InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
-					InitializerBuilder::GetInitializer(b_init)));     
-        			break;
-        		case RNNStructParameter_ActivationType_linear:
-					hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, linear,
-					InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
-					InitializerBuilder::GetInitializer(b_init)));     
-        			break;
-        		default:
-        			break;
-			}
-		}
-
+		hiddenLayers.push_back(MultiAddLayer(inputOneDim, inputTwoDim, outputDim, GetActivationType(neuralNetPara.rnnstruct().activationtype()),
+		InitializerBuilder::GetInitializer(w_one_init), InitializerBuilder::GetInitializer(w_two_init), 
+		InitializerBuilder::GetInitializer(b_init)));     
+	}
         NeuralNetInitializerParameter  w_init, b_init;
         w_init = neuralNetPara.layerstruct(0).init_w();
         b_init = neuralNetPara.layerstruct(0).init_b();
  
-        switch (neuralNetPara.layerstruct(0).activationtype()) {
-            case LayerStructParameter_ActivationType_sigmoid:
-                netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), sigmoid,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
-                break;
-            case LayerStructParameter_ActivationType_tanh:
-                netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), tanh,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
-                break;
-            case LayerStructParameter_ActivationType_softmax:
-                netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), softmax,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
-                break;
-            case LayerStructParameter_ActivationType_linear:
-                netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), linear,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
-                break;
-            case LayerStructParameter_ActivationType_ReLU:
-                netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
-                        neuralNetPara.layerstruct(0).outputdim(), ReLU,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
-                break;
-            default:break;
-        }
-    
+		netOutputLayer = std::make_shared<BaseLayer>(neuralNetPara.layerstruct(0).inputdim(),
+        neuralNetPara.layerstruct(0).outputdim(), GetActivationType(neuralNetPara.layerstruct(0).activationtype()),
+        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init));
+
         fillNetGradVector();
          for (int l = 0; l < numHiddenLayers; l++) {
             outputLayers_prev_output.push_back(std::shared_ptr<arma::mat>(new arma::mat));

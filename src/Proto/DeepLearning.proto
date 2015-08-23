@@ -3,6 +3,7 @@ package DeepLearning;
 message NeuralNetParameter {
 	optional string name = 1;
 	optional string type = 2;
+	enum ActivationType {sigmoid = 1; tanh = 2; linear = 3; softmax = 4; ReLU = 5;}
 	repeated LayerStructParameter layerStruct = 100;
 	optional NeuralNetTrainingParameter neuralNetTrainingParameter= 101;
 	optional RNNStructParameter rnnStruct = 102;
@@ -14,10 +15,9 @@ message ReinforcementLearningParameter{
 }
 
 message LayerStructParameter {
-	enum ActivationType {sigmoid = 1; tanh = 2; linear = 3; softmax = 4; ReLU = 5;}
 	optional int32 inputDim = 1;
 	optional int32 outputDim = 2;
-	optional ActivationType activationType = 3;
+	optional NeuralNetParameter.ActivationType activationType = 3;
 	optional string name = 4;
 	optional string type = 5;
 	optional NeuralNetInitializerParameter init_W = 103;
@@ -27,12 +27,11 @@ message LayerStructParameter {
 }
 
 message RNNStructParameter{
-	enum ActivationType {sigmoid = 1; tanh = 2; linear = 3; softmax = 4; ReLU = 5;}
 	optional int32 numHiddenLayers = 1;
 	optional int32 hiddenLayerInputDim = 2;
 	optional int32 hiddenLayerOutputDim = 3;
 	optional int32 inputDim = 4;
-	optional ActivationType activationType = 6;
+	optional NeuralNetParameter.ActivationType activationType = 6;
 	optional NeuralNetInitializerParameter init_W_one = 103;
 	optional NeuralNetInitializerParameter init_B = 104;
 	optional NeuralNetInitializerParameter init_W_two = 105;

@@ -45,49 +45,27 @@ class NeuralNetInitializerParameter;
 class NeuralNetTrainingParameter;
 class QLearningSolverParameter;
 
-enum LayerStructParameter_ActivationType {
-  LayerStructParameter_ActivationType_sigmoid = 1,
-  LayerStructParameter_ActivationType_tanh = 2,
-  LayerStructParameter_ActivationType_linear = 3,
-  LayerStructParameter_ActivationType_softmax = 4,
-  LayerStructParameter_ActivationType_ReLU = 5
+enum NeuralNetParameter_ActivationType {
+  NeuralNetParameter_ActivationType_sigmoid = 1,
+  NeuralNetParameter_ActivationType_tanh = 2,
+  NeuralNetParameter_ActivationType_linear = 3,
+  NeuralNetParameter_ActivationType_softmax = 4,
+  NeuralNetParameter_ActivationType_ReLU = 5
 };
-bool LayerStructParameter_ActivationType_IsValid(int value);
-const LayerStructParameter_ActivationType LayerStructParameter_ActivationType_ActivationType_MIN = LayerStructParameter_ActivationType_sigmoid;
-const LayerStructParameter_ActivationType LayerStructParameter_ActivationType_ActivationType_MAX = LayerStructParameter_ActivationType_ReLU;
-const int LayerStructParameter_ActivationType_ActivationType_ARRAYSIZE = LayerStructParameter_ActivationType_ActivationType_MAX + 1;
+bool NeuralNetParameter_ActivationType_IsValid(int value);
+const NeuralNetParameter_ActivationType NeuralNetParameter_ActivationType_ActivationType_MIN = NeuralNetParameter_ActivationType_sigmoid;
+const NeuralNetParameter_ActivationType NeuralNetParameter_ActivationType_ActivationType_MAX = NeuralNetParameter_ActivationType_ReLU;
+const int NeuralNetParameter_ActivationType_ActivationType_ARRAYSIZE = NeuralNetParameter_ActivationType_ActivationType_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* LayerStructParameter_ActivationType_descriptor();
-inline const ::std::string& LayerStructParameter_ActivationType_Name(LayerStructParameter_ActivationType value) {
+const ::google::protobuf::EnumDescriptor* NeuralNetParameter_ActivationType_descriptor();
+inline const ::std::string& NeuralNetParameter_ActivationType_Name(NeuralNetParameter_ActivationType value) {
   return ::google::protobuf::internal::NameOfEnum(
-    LayerStructParameter_ActivationType_descriptor(), value);
+    NeuralNetParameter_ActivationType_descriptor(), value);
 }
-inline bool LayerStructParameter_ActivationType_Parse(
-    const ::std::string& name, LayerStructParameter_ActivationType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<LayerStructParameter_ActivationType>(
-    LayerStructParameter_ActivationType_descriptor(), name, value);
-}
-enum RNNStructParameter_ActivationType {
-  RNNStructParameter_ActivationType_sigmoid = 1,
-  RNNStructParameter_ActivationType_tanh = 2,
-  RNNStructParameter_ActivationType_linear = 3,
-  RNNStructParameter_ActivationType_softmax = 4,
-  RNNStructParameter_ActivationType_ReLU = 5
-};
-bool RNNStructParameter_ActivationType_IsValid(int value);
-const RNNStructParameter_ActivationType RNNStructParameter_ActivationType_ActivationType_MIN = RNNStructParameter_ActivationType_sigmoid;
-const RNNStructParameter_ActivationType RNNStructParameter_ActivationType_ActivationType_MAX = RNNStructParameter_ActivationType_ReLU;
-const int RNNStructParameter_ActivationType_ActivationType_ARRAYSIZE = RNNStructParameter_ActivationType_ActivationType_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* RNNStructParameter_ActivationType_descriptor();
-inline const ::std::string& RNNStructParameter_ActivationType_Name(RNNStructParameter_ActivationType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    RNNStructParameter_ActivationType_descriptor(), value);
-}
-inline bool RNNStructParameter_ActivationType_Parse(
-    const ::std::string& name, RNNStructParameter_ActivationType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<RNNStructParameter_ActivationType>(
-    RNNStructParameter_ActivationType_descriptor(), name, value);
+inline bool NeuralNetParameter_ActivationType_Parse(
+    const ::std::string& name, NeuralNetParameter_ActivationType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<NeuralNetParameter_ActivationType>(
+    NeuralNetParameter_ActivationType_descriptor(), name, value);
 }
 enum NeuralNetInitializerParameter_InitializerType {
   NeuralNetInitializerParameter_InitializerType_custom = 1,
@@ -196,6 +174,33 @@ class NeuralNetParameter : public ::google::protobuf::Message {
   ::google::protobuf::Metadata GetMetadata() const;
 
   // nested types ----------------------------------------------------
+
+  typedef NeuralNetParameter_ActivationType ActivationType;
+  static const ActivationType sigmoid = NeuralNetParameter_ActivationType_sigmoid;
+  static const ActivationType tanh = NeuralNetParameter_ActivationType_tanh;
+  static const ActivationType linear = NeuralNetParameter_ActivationType_linear;
+  static const ActivationType softmax = NeuralNetParameter_ActivationType_softmax;
+  static const ActivationType ReLU = NeuralNetParameter_ActivationType_ReLU;
+  static inline bool ActivationType_IsValid(int value) {
+    return NeuralNetParameter_ActivationType_IsValid(value);
+  }
+  static const ActivationType ActivationType_MIN =
+    NeuralNetParameter_ActivationType_ActivationType_MIN;
+  static const ActivationType ActivationType_MAX =
+    NeuralNetParameter_ActivationType_ActivationType_MAX;
+  static const int ActivationType_ARRAYSIZE =
+    NeuralNetParameter_ActivationType_ActivationType_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ActivationType_descriptor() {
+    return NeuralNetParameter_ActivationType_descriptor();
+  }
+  static inline const ::std::string& ActivationType_Name(ActivationType value) {
+    return NeuralNetParameter_ActivationType_Name(value);
+  }
+  static inline bool ActivationType_Parse(const ::std::string& name,
+      ActivationType* value) {
+    return NeuralNetParameter_ActivationType_Parse(name, value);
+  }
 
   // accessors -------------------------------------------------------
 
@@ -434,33 +439,6 @@ class LayerStructParameter : public ::google::protobuf::Message {
 
   // nested types ----------------------------------------------------
 
-  typedef LayerStructParameter_ActivationType ActivationType;
-  static const ActivationType sigmoid = LayerStructParameter_ActivationType_sigmoid;
-  static const ActivationType tanh = LayerStructParameter_ActivationType_tanh;
-  static const ActivationType linear = LayerStructParameter_ActivationType_linear;
-  static const ActivationType softmax = LayerStructParameter_ActivationType_softmax;
-  static const ActivationType ReLU = LayerStructParameter_ActivationType_ReLU;
-  static inline bool ActivationType_IsValid(int value) {
-    return LayerStructParameter_ActivationType_IsValid(value);
-  }
-  static const ActivationType ActivationType_MIN =
-    LayerStructParameter_ActivationType_ActivationType_MIN;
-  static const ActivationType ActivationType_MAX =
-    LayerStructParameter_ActivationType_ActivationType_MAX;
-  static const int ActivationType_ARRAYSIZE =
-    LayerStructParameter_ActivationType_ActivationType_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  ActivationType_descriptor() {
-    return LayerStructParameter_ActivationType_descriptor();
-  }
-  static inline const ::std::string& ActivationType_Name(ActivationType value) {
-    return LayerStructParameter_ActivationType_Name(value);
-  }
-  static inline bool ActivationType_Parse(const ::std::string& name,
-      ActivationType* value) {
-    return LayerStructParameter_ActivationType_Parse(name, value);
-  }
-
   // accessors -------------------------------------------------------
 
   // optional int32 inputDim = 1;
@@ -477,12 +455,12 @@ class LayerStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 outputdim() const;
   void set_outputdim(::google::protobuf::int32 value);
 
-  // optional .DeepLearning.LayerStructParameter.ActivationType activationType = 3;
+  // optional .DeepLearning.NeuralNetParameter.ActivationType activationType = 3;
   bool has_activationtype() const;
   void clear_activationtype();
   static const int kActivationTypeFieldNumber = 3;
-  ::DeepLearning::LayerStructParameter_ActivationType activationtype() const;
-  void set_activationtype(::DeepLearning::LayerStructParameter_ActivationType value);
+  ::DeepLearning::NeuralNetParameter_ActivationType activationtype() const;
+  void set_activationtype(::DeepLearning::NeuralNetParameter_ActivationType value);
 
   // optional string name = 4;
   bool has_name() const;
@@ -648,33 +626,6 @@ class RNNStructParameter : public ::google::protobuf::Message {
 
   // nested types ----------------------------------------------------
 
-  typedef RNNStructParameter_ActivationType ActivationType;
-  static const ActivationType sigmoid = RNNStructParameter_ActivationType_sigmoid;
-  static const ActivationType tanh = RNNStructParameter_ActivationType_tanh;
-  static const ActivationType linear = RNNStructParameter_ActivationType_linear;
-  static const ActivationType softmax = RNNStructParameter_ActivationType_softmax;
-  static const ActivationType ReLU = RNNStructParameter_ActivationType_ReLU;
-  static inline bool ActivationType_IsValid(int value) {
-    return RNNStructParameter_ActivationType_IsValid(value);
-  }
-  static const ActivationType ActivationType_MIN =
-    RNNStructParameter_ActivationType_ActivationType_MIN;
-  static const ActivationType ActivationType_MAX =
-    RNNStructParameter_ActivationType_ActivationType_MAX;
-  static const int ActivationType_ARRAYSIZE =
-    RNNStructParameter_ActivationType_ActivationType_ARRAYSIZE;
-  static inline const ::google::protobuf::EnumDescriptor*
-  ActivationType_descriptor() {
-    return RNNStructParameter_ActivationType_descriptor();
-  }
-  static inline const ::std::string& ActivationType_Name(ActivationType value) {
-    return RNNStructParameter_ActivationType_Name(value);
-  }
-  static inline bool ActivationType_Parse(const ::std::string& name,
-      ActivationType* value) {
-    return RNNStructParameter_ActivationType_Parse(name, value);
-  }
-
   // accessors -------------------------------------------------------
 
   // optional int32 numHiddenLayers = 1;
@@ -705,12 +656,12 @@ class RNNStructParameter : public ::google::protobuf::Message {
   ::google::protobuf::int32 inputdim() const;
   void set_inputdim(::google::protobuf::int32 value);
 
-  // optional .DeepLearning.RNNStructParameter.ActivationType activationType = 6;
+  // optional .DeepLearning.NeuralNetParameter.ActivationType activationType = 6;
   bool has_activationtype() const;
   void clear_activationtype();
   static const int kActivationTypeFieldNumber = 6;
-  ::DeepLearning::RNNStructParameter_ActivationType activationtype() const;
-  void set_activationtype(::DeepLearning::RNNStructParameter_ActivationType value);
+  ::DeepLearning::NeuralNetParameter_ActivationType activationtype() const;
+  void set_activationtype(::DeepLearning::NeuralNetParameter_ActivationType value);
 
   // optional .DeepLearning.NeuralNetInitializerParameter init_W_one = 103;
   bool has_init_w_one() const;
@@ -1656,7 +1607,7 @@ inline void LayerStructParameter::set_outputdim(::google::protobuf::int32 value)
   // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.outputDim)
 }
 
-// optional .DeepLearning.LayerStructParameter.ActivationType activationType = 3;
+// optional .DeepLearning.NeuralNetParameter.ActivationType activationType = 3;
 inline bool LayerStructParameter::has_activationtype() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1670,12 +1621,12 @@ inline void LayerStructParameter::clear_activationtype() {
   activationtype_ = 1;
   clear_has_activationtype();
 }
-inline ::DeepLearning::LayerStructParameter_ActivationType LayerStructParameter::activationtype() const {
+inline ::DeepLearning::NeuralNetParameter_ActivationType LayerStructParameter::activationtype() const {
   // @@protoc_insertion_point(field_get:DeepLearning.LayerStructParameter.activationType)
-  return static_cast< ::DeepLearning::LayerStructParameter_ActivationType >(activationtype_);
+  return static_cast< ::DeepLearning::NeuralNetParameter_ActivationType >(activationtype_);
 }
-inline void LayerStructParameter::set_activationtype(::DeepLearning::LayerStructParameter_ActivationType value) {
-  assert(::DeepLearning::LayerStructParameter_ActivationType_IsValid(value));
+inline void LayerStructParameter::set_activationtype(::DeepLearning::NeuralNetParameter_ActivationType value) {
+  assert(::DeepLearning::NeuralNetParameter_ActivationType_IsValid(value));
   set_has_activationtype();
   activationtype_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.LayerStructParameter.activationType)
@@ -2059,7 +2010,7 @@ inline void RNNStructParameter::set_inputdim(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.inputDim)
 }
 
-// optional .DeepLearning.RNNStructParameter.ActivationType activationType = 6;
+// optional .DeepLearning.NeuralNetParameter.ActivationType activationType = 6;
 inline bool RNNStructParameter::has_activationtype() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2073,12 +2024,12 @@ inline void RNNStructParameter::clear_activationtype() {
   activationtype_ = 1;
   clear_has_activationtype();
 }
-inline ::DeepLearning::RNNStructParameter_ActivationType RNNStructParameter::activationtype() const {
+inline ::DeepLearning::NeuralNetParameter_ActivationType RNNStructParameter::activationtype() const {
   // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.activationType)
-  return static_cast< ::DeepLearning::RNNStructParameter_ActivationType >(activationtype_);
+  return static_cast< ::DeepLearning::NeuralNetParameter_ActivationType >(activationtype_);
 }
-inline void RNNStructParameter::set_activationtype(::DeepLearning::RNNStructParameter_ActivationType value) {
-  assert(::DeepLearning::RNNStructParameter_ActivationType_IsValid(value));
+inline void RNNStructParameter::set_activationtype(::DeepLearning::NeuralNetParameter_ActivationType value) {
+  assert(::DeepLearning::NeuralNetParameter_ActivationType_IsValid(value));
   set_has_activationtype();
   activationtype_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.activationType)
@@ -2873,15 +2824,10 @@ inline void QLearningSolverParameter::set_numepisodesbeforetraining(::google::pr
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::DeepLearning::LayerStructParameter_ActivationType> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::DeepLearning::NeuralNetParameter_ActivationType> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::DeepLearning::LayerStructParameter_ActivationType>() {
-  return ::DeepLearning::LayerStructParameter_ActivationType_descriptor();
-}
-template <> struct is_proto_enum< ::DeepLearning::RNNStructParameter_ActivationType> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::DeepLearning::RNNStructParameter_ActivationType>() {
-  return ::DeepLearning::RNNStructParameter_ActivationType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::DeepLearning::NeuralNetParameter_ActivationType>() {
+  return ::DeepLearning::NeuralNetParameter_ActivationType_descriptor();
 }
 template <> struct is_proto_enum< ::DeepLearning::NeuralNetInitializerParameter_InitializerType> : ::google::protobuf::internal::true_type {};
 template <>

@@ -1,9 +1,33 @@
 #pragma once
-#include <memory>
-#include <armadillo>
+#include "common.h"
+
 
 namespace NeuralNet{
 	enum ActivationType {softmax, sigmoid, linear, tanh, ReLU};
+	
+	inline ActivationType GetActivationType(DeepLearning::NeuralNetParameter_ActivationType type){
+		switch (type) {
+			case DeepLearning::NeuralNetParameter_ActivationType_sigmoid:
+				return sigmoid;
+				break;
+			case DeepLearning::NeuralNetParameter_ActivationType_linear:
+				return linear;
+				break;
+			case DeepLearning::NeuralNetParameter_ActivationType_tanh:
+				return tanh;
+				break;						
+			case DeepLearning::NeuralNetParameter_ActivationType_softmax:
+				return softmax;
+				break;		
+			case DeepLearning::NeuralNetParameter_ActivationType_ReLU:
+				return ReLU;
+				break;		
+			default:
+				std::cerr << "invalid activation type" << std::endl;
+				exit(1);
+				break;
+		}
+	}
 	
 	inline void ApplyActivation(std::shared_ptr<arma::mat> output, ActivationType actType){
     std::shared_ptr<arma::mat> &p=output;

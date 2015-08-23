@@ -14,29 +14,9 @@ MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0) {
         NeuralNetInitializerParameter  w_init, b_init;
         w_init = neuralNetPara.layerstruct(i).init_w();
         b_init = neuralNetPara.layerstruct(i).init_b();
-        switch (neuralNetPara.layerstruct(i).activationtype()) {
-            case LayerStructParameter_ActivationType_sigmoid:
-                layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), sigmoid, 
+        layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
+                        neuralNetPara.layerstruct(i).outputdim(), GetActivationType(neuralNetPara.layerstruct(i).activationtype()), 
                         InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
-                break;
-            case LayerStructParameter_ActivationType_tanh:
-                layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), tanh,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
-                break;
-            case LayerStructParameter_ActivationType_softmax:
-                layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), softmax,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
-                break;
-            case LayerStructParameter_ActivationType_linear:
-                layers.push_back(BaseLayer(neuralNetPara.layerstruct(i).inputdim(),
-                        neuralNetPara.layerstruct(i).outputdim(), linear,
-                        InitializerBuilder::GetInitializer(w_init), InitializerBuilder::GetInitializer(b_init)));
-                break;
-            default:break;
-        }
         totalDim += layers[i].totalSize;
     }
 
@@ -44,12 +24,6 @@ MultiLayerPerceptron::MultiLayerPerceptron(NeuralNetParameter neuralNetPara0) {
         netGradVector.push_back(this->layers[i].grad_W);
         netGradVector.push_back(this->layers[i].grad_B);
     }
-}
-
-void MultiLayerPerceptron::setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y) {
-    trainingX = X;
-    trainingY = Y;
-    numInstance = trainingX->n_cols;
 }
 
 void MultiLayerPerceptron::calLoss(std::shared_ptr<arma::mat> delta){
@@ -172,11 +146,6 @@ void MultiLayerPerceptron::applyUpdates(std::vector<std::shared_ptr<arma::mat>> 
         *(this->layers[i].B) -= *(updates[2*i+1]);
     }
 }
-
-std::vector<std::shared_ptr<arma::mat>> MultiLayerPerceptron::netGradients(){
-    return netGradVector;
-}
-
 
 void MultiLayerPerceptron::backProp(std::shared_ptr<arma::mat> delta_target) {
     std::shared_ptr<arma::mat> delta_in = delta_target;
