@@ -26,6 +26,9 @@ namespace NeuralNet {
             trainingXVec = X;
             trainingYVec = Y;
         }
+        virtual std::shared_ptr<arma::mat> resetWeight(){ net->resetWeight();}
+        virtual std::shared_ptr<arma::mat> predict(std::shared_ptr<arma::mat> X);
+        virtual std::vector<std::shared_ptr<arma::mat>> predict(std::vector<std::shared_ptr<arma::mat>> X);
         void setNet(std::shared_ptr<Net> net0) {
             net = net0;
         };

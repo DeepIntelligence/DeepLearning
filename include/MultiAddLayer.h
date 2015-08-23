@@ -12,14 +12,14 @@ namespace NeuralNet {
         virtual void save(std::string filename = "MultiAddLayer");
         virtual void load(std::string filename = "MultiAddLayer");
         virtual void calGrad(std::shared_ptr<arma::mat> delta_in);
-	virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int t);
+		virtual void calGrad(std::shared_ptr<arma::mat> delta_in, int t);
         virtual void initializeWeight();
         void accumulateGrad(std::shared_ptr<arma::mat> delta_in, int t);
         void clearAccuGrad();
         ActivationType actType;
         std::shared_ptr<arma::mat> W_one, W_two, B;
         std::shared_ptr<arma::mat> grad_W_one, grad_W_two, grad_B;
-                std::shared_ptr<arma::mat> grad_W_one_accu, grad_W_two_accu, grad_B_accu;
+        std::shared_ptr<arma::mat> grad_W_one_accu, grad_W_two_accu, grad_B_accu;
         std::shared_ptr<Initializer> initializer_W_one, initializer_W_two, initializer_B; 
 
 

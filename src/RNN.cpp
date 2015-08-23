@@ -114,8 +114,15 @@ RNN::RNN(NeuralNetParameter neuralNetPara0){
         }
 }
 
+void RNN::resetWeight(){
+	for (int l = 0; l < numHiddenLayers; l++) {
+        hiddenLayers[l].initializeWeight();
+    }
+    netOutputLayer->initializeWeight();
+}
 void RNN::setTime(int t){ this->time = t;}
 int RNN::getTime(){return this->time;}
+void RNN::zeroTime(){this->time = 0;}
 
 arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
     std::shared_ptr<arma::mat> commonInput(new arma::mat);
@@ -149,7 +156,6 @@ arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
     }
     netOutputLayer->input = hiddenLayers[numHiddenLayers-1].output;
     netOutputLayer->activateUp();
-    
 
     return *(netOutputLayer->output);
 }
@@ -160,11 +166,8 @@ void RNN::saveLayerInputOutput(){
     }
     netOutputLayer->saveInputMemory();
     netOutputLayer->saveOutputMemory();
-    
-    
+        
 }
-
-
 
 void RNN::updateInternalState(){
     for (int l = 0; l < numHiddenLayers; l++) {        
@@ -187,8 +190,7 @@ void RNN::backward() {
    
     arma::mat hiddenLayer_upstream_deltaOut[numHiddenLayers]; 
     
-    std::shared_ptr<arma::mat> delta, delta_upstream; // temporal delta is a vector
-    delta = std::make_shared<arma::mat>();
+    std::shared_ptr<arma::mat> delta(new arma::mat);
 
     for (int l = 0; l < numHiddenLayers; l++) {
         hiddenLayer_upstream_deltaOut[l].zeros(hiddenLayerOutputDim, 1);
@@ -215,20 +217,7 @@ void RNN::backward() {
             hiddenLayers[l].accumulateGrad(delta, t);
             hiddenLayer_upstream_deltaOut[l] = *(hiddenLayers[l].delta_outOne);
         }
-	}
-        // save this accumulated gradients for comparing with numerical gradients
-  //      if (l==0){ // save this l layer
-  //         hiddenLayers[l].grad_W_accu.save("hiddenLayer0_Grad.dat", arma::raw_ascii);
-  //      }   
-}
-
-void RNN::test(){
-
-}
-
-void RNN::setTrainingSamples(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y){
-    this->trainingX = X;
-    this->trainingY = Y;
+	}  
 }
 
 void RNN::fillNetGradVector(){
@@ -256,14 +245,11 @@ void RNN::calGradient(){
         backward();
 }
 
-std::vector<std::shared_ptr<arma::mat>> RNN::netGradients(){
-    return this->netGradVector;
-}
 double RNN::getLoss(){
 //  for calcuating the total error
     double error = 0.0;
     arma::mat delta;
-    //           outputY->transform([](double val){return log(val);});
+
     for (int k = 0; k < trainingY->n_cols; k++) {
         delta = *((netOutputLayer->outputMem)[k]) - trainingY->col(k);
         error += arma::as_scalar(delta.st() * delta); 

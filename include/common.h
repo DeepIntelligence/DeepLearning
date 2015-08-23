@@ -6,6 +6,7 @@
 #include <string>
 #include <cmath>
 #include <limits>
+#include <sstream>
 #include "io.h"
 #include "DeepLearning.pb.h"
 #include "Util.h"

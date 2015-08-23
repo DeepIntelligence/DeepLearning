@@ -45,14 +45,14 @@ void testSolver(char* filename1, char* filename2){
 
 void testSolverFull(char* filename1, char* filename2){
 
-    double dt = 0.02;
+    double dt = 0.05;
     NeuralNetParameter message1;
     ReinforcementLearningParameter message2;
     QLearningSolverParameter message3;
     ReadProtoFromTextFile(filename1, &message1);
     ReadProtoFromTextFile(filename2, &message2);
     message3 = message2.qlearningsolverparameter();
-    arma::arma_rng::set_seed_random();
+    arma::arma_rng::set_seed(1);
     std::shared_ptr<Net> net(new RNN(message1));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net,message1));
     std::shared_ptr<BaseModel> model(new Model_PoleFull(dt));

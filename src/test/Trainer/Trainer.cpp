@@ -11,6 +11,22 @@ void Trainer::applyUpdatesToNet(std::vector<std::shared_ptr<arma::mat>> update) 
     net->applyUpdates(update);
 }
 
+std::shared_ptr<arma::mat> Trainer::predict(std::shared_ptr<arma::mat> X) {
+    net->setTrainingSamples(X, nullptr);
+    net->forward();
+    return net->netOutput();
+}
+
+std::vector<std::shared_ptr<arma::mat>> Trainer::predict(std::vector<std::shared_ptr<arma::mat>> X) {
+    std::vector<std::shared_ptr<arma::mat>> outputVec;
+    for (int i = 0; i < X.size(); i++){
+        net->setTrainingSamples(X[i], nullptr);
+        net->forward();
+        outputVec.push_back(net->netOutput());
+    }
+    return outputVec;
+}
+
 void Trainer::trainHelper(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::mat> Y) {
     net->setTrainingSamples(X, Y);
     net->calGradient();
