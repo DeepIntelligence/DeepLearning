@@ -39,7 +39,7 @@ message RNNStructParameter{
 }
 
 message NeuralNetInitializerParameter{
-	enum InitializerType {custom = 1; identity = 2; zero = 3; normal = 4; glorot_normal = 5; IRNN = 6; orthogonal = 7;}
+	enum InitializerType {custom = 1; identity = 2; zero = 3; normal = 4; glorot_uniform = 5; IRNN = 6; orthogonal = 7;}
 	optional double normal_std = 1;
 	optional double normal_mean = 2;
 	optional InitializerType initializerType = 3;

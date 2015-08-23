@@ -39,10 +39,10 @@ public:
 		m->eye();
 	}
 };
-class Initializer_glorot_normal: public Initializer{
+class Initializer_glorot_uniform: public Initializer{
 public:
-	Initializer_glorot_normal(){}
-	virtual ~Initializer_glorot_normal(){}
+	Initializer_glorot_uniform(){}
+	virtual ~Initializer_glorot_uniform(){}
 	virtual void applyInitialization(std::shared_ptr<arma::mat> W){
 		int inputDim = W->n_cols;
 		int outputDim = W->n_rows;
@@ -65,8 +65,8 @@ public:
 			case DeepLearning::NeuralNetInitializerParameter_InitializerType_identity:
 			return std::shared_ptr<Initializer>(new Initializer_identity);
 			break;
-			case DeepLearning::NeuralNetInitializerParameter_InitializerType_glorot_normal:
-			return std::shared_ptr<Initializer>(new Initializer_glorot_normal);
+			case DeepLearning::NeuralNetInitializerParameter_InitializerType_glorot_uniform:
+			return std::shared_ptr<Initializer>(new Initializer_glorot_uniform);
 			break;
 			default:
 			break;

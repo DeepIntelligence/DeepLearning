@@ -293,32 +293,32 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
     "\n\ninit_W_two\030i \001(\0132+.DeepLearning.Neural"
     "NetInitializerParameter\"J\n\016ActivationTyp"
     "e\022\013\n\007sigmoid\020\001\022\010\n\004tanh\020\002\022\n\n\006linear\020\003\022\013\n\007"
-    "softmax\020\004\022\010\n\004ReLU\020\005\"\216\002\n\035NeuralNetInitial"
+    "softmax\020\004\022\010\n\004ReLU\020\005\"\217\002\n\035NeuralNetInitial"
     "izerParameter\022\022\n\nnormal_std\030\001 \001(\001\022\023\n\013nor"
     "mal_mean\030\002 \001(\001\022T\n\017initializerType\030\003 \001(\0162"
     ";.DeepLearning.NeuralNetInitializerParam"
-    "eter.InitializerType\"n\n\017InitializerType\022"
+    "eter.InitializerType\"o\n\017InitializerType\022"
     "\n\n\006custom\020\001\022\014\n\010identity\020\002\022\010\n\004zero\020\003\022\n\n\006n"
-    "ormal\020\004\022\021\n\rglorot_normal\020\005\022\010\n\004IRNN\020\006\022\016\n\n"
-    "orthogonal\020\007\"\240\004\n\032NeuralNetTrainingParame"
-    "ter\022\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 \001"
-    "(\005\022\025\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001("
-    "\005\022\022\n\003epi\030\005 \001(\001:\0051e-06\022N\n\013trainerType\030\006 \001"
-    "(\01624.DeepLearning.NeuralNetTrainingParam"
-    "eter.TrainerType:\003SGD\022\025\n\tdecayRate\030\007 \001(\001"
-    ":\00210\022\025\n\010momentum\030\010 \001(\001:\0030.9\022\025\n\007verbose\030e"
-    " \001(\010:\004true\022\035\n\022printInfoFrequency\030\n \001(\005:\001"
-    "1\022\027\n\010clipFlag\030\013 \001(\010:\005false\022\030\n\rclipThresh"
-    "old\030\014 \001(\001:\0011\022\030\n\013RMSProp_rho\030\r \001(\001:\0030.9\022\033"
-    "\n\014showGradNorm\030f \001(\010:\005false\022\032\n\013RNNScanFl"
-    "ag\030g \001(\010:\005false\022\026\n\013RNNScanStep\030h \001(\005:\0011\022"
-    "\035\n\021RNNTruncateLength\030i \001(\005:\00210\"/\n\013Traine"
-    "rType\022\007\n\003SGD\020\001\022\013\n\007RMSProp\020\002\022\n\n\006SGDRNN\020\003\""
-    "\252\001\n\030QLearningSolverParameter\022\033\n\023numTrain"
-    "ingEpisodes\030\001 \001(\005\022\024\n\014learningRate\030\002 \001(\001\022"
-    "\017\n\007epsilon\030\003 \001(\001\022\025\n\rEpisodeLength\030\004 \001(\005\022"
-    "\020\n\010discount\030\005 \001(\001\022!\n\031numEpisodesBeforeTr"
-    "aining\030\006 \001(\005", 2332);
+    "ormal\020\004\022\022\n\016glorot_uniform\020\005\022\010\n\004IRNN\020\006\022\016\n"
+    "\northogonal\020\007\"\240\004\n\032NeuralNetTrainingParam"
+    "eter\022\024\n\014learningRate\030\001 \001(\001\022\017\n\007maxIter\030\002 "
+    "\001(\005\022\025\n\rminiBatchSize\030\003 \001(\005\022\016\n\006NEpoch\030\004 \001"
+    "(\005\022\022\n\003epi\030\005 \001(\001:\0051e-06\022N\n\013trainerType\030\006 "
+    "\001(\01624.DeepLearning.NeuralNetTrainingPara"
+    "meter.TrainerType:\003SGD\022\025\n\tdecayRate\030\007 \001("
+    "\001:\00210\022\025\n\010momentum\030\010 \001(\001:\0030.9\022\025\n\007verbose\030"
+    "e \001(\010:\004true\022\035\n\022printInfoFrequency\030\n \001(\005:"
+    "\0011\022\027\n\010clipFlag\030\013 \001(\010:\005false\022\030\n\rclipThres"
+    "hold\030\014 \001(\001:\0011\022\030\n\013RMSProp_rho\030\r \001(\001:\0030.9\022"
+    "\033\n\014showGradNorm\030f \001(\010:\005false\022\032\n\013RNNScanF"
+    "lag\030g \001(\010:\005false\022\026\n\013RNNScanStep\030h \001(\005:\0011"
+    "\022\035\n\021RNNTruncateLength\030i \001(\005:\00210\"/\n\013Train"
+    "erType\022\007\n\003SGD\020\001\022\013\n\007RMSProp\020\002\022\n\n\006SGDRNN\020\003"
+    "\"\252\001\n\030QLearningSolverParameter\022\033\n\023numTrai"
+    "ningEpisodes\030\001 \001(\005\022\024\n\014learningRate\030\002 \001(\001"
+    "\022\017\n\007epsilon\030\003 \001(\001\022\025\n\rEpisodeLength\030\004 \001(\005"
+    "\022\020\n\010discount\030\005 \001(\001\022!\n\031numEpisodesBeforeT"
+    "raining\030\006 \001(\005", 2333);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DeepLearning.proto", &protobuf_RegisterTypes);
   NeuralNetParameter::default_instance_ = new NeuralNetParameter();
@@ -3151,7 +3151,7 @@ const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParamete
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::identity;
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::zero;
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::normal;
-const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::glorot_normal;
+const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::glorot_uniform;
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::IRNN;
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::orthogonal;
 const NeuralNetInitializerParameter_InitializerType NeuralNetInitializerParameter::InitializerType_MIN;

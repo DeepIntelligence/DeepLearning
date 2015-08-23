@@ -94,7 +94,7 @@ enum NeuralNetInitializerParameter_InitializerType {
   NeuralNetInitializerParameter_InitializerType_identity = 2,
   NeuralNetInitializerParameter_InitializerType_zero = 3,
   NeuralNetInitializerParameter_InitializerType_normal = 4,
-  NeuralNetInitializerParameter_InitializerType_glorot_normal = 5,
+  NeuralNetInitializerParameter_InitializerType_glorot_uniform = 5,
   NeuralNetInitializerParameter_InitializerType_IRNN = 6,
   NeuralNetInitializerParameter_InitializerType_orthogonal = 7
 };
@@ -845,7 +845,7 @@ class NeuralNetInitializerParameter : public ::google::protobuf::Message {
   static const InitializerType identity = NeuralNetInitializerParameter_InitializerType_identity;
   static const InitializerType zero = NeuralNetInitializerParameter_InitializerType_zero;
   static const InitializerType normal = NeuralNetInitializerParameter_InitializerType_normal;
-  static const InitializerType glorot_normal = NeuralNetInitializerParameter_InitializerType_glorot_normal;
+  static const InitializerType glorot_uniform = NeuralNetInitializerParameter_InitializerType_glorot_uniform;
   static const InitializerType IRNN = NeuralNetInitializerParameter_InitializerType_IRNN;
   static const InitializerType orthogonal = NeuralNetInitializerParameter_InitializerType_orthogonal;
   static inline bool InitializerType_IsValid(int value) {

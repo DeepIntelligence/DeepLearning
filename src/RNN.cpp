@@ -174,8 +174,9 @@ void RNN::updateInternalState(){
 
 void RNN::forward() {
     int T = trainingX->n_cols; 
+    std::shared_ptr<arma::mat> input(new arma::mat);
     for (this->time = 0; this->time < T; (this->time)++){
-        std::shared_ptr<arma::mat> input = std::make_shared<arma::mat>(trainingX->col(this->time));
+        *input = trainingX->col(this->time);
         this->forwardInTime(input);
         this->saveLayerInputOutput();
         this->updateInternalState();

@@ -13,7 +13,7 @@ rnnStruct{
             initializerType: zero
         }
         init_W_two{
-            initializerType: glorot_normal
+            initializerType: glorot_uniform
         }
 }
 
@@ -23,7 +23,7 @@ layerStruct{
 	outputDim: 1
 	activationType: linear
         init_W{
-            initializerType: glorot_normal
+            initializerType: glorot_uniform
         }
         init_B {
             initializerType: zero
