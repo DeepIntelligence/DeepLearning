@@ -1,7 +1,7 @@
 rnnStruct{
-	numHiddenLayers: 2
-	hiddenLayerInputDim: 8
-	hiddenLayerOutputDim: 8
+	numRecurrLayers: 2
+	recurrLayerInputDim: 8
+	recurrLayerOutputDim: 8
 	inputDim: 1
         activationType: tanh
         init_W_one{

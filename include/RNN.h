@@ -22,27 +22,26 @@ namespace NeuralNet {
         virtual void save(std::string filename);
         virtual void load(std::string filename);
         virtual std::shared_ptr<arma::mat> netOutput();
-        virtual std::shared_ptr<arma::mat> netOutputAtTime(int time);
+//        virtual std::shared_ptr<arma::mat> netOutputAtTime(int time);
         virtual arma::mat forwardInTime(std::shared_ptr<arma::mat> x);
         virtual void updateInternalState();
         virtual void resetWeight();
         virtual void zeroTime();
         
         
-        void backward();
-        void calNumericGrad();        
-        void saveLayerInputOutput();
+        virtual void backward();
+        virtual void calNumericGrad();        
+        virtual void saveLayerInputOutput();
         virtual int getTime();
         virtual void setTime(int t);
-        std::shared_ptr<BaseLayer> getOutputLayer(){return netOutputLayer;}
-        std::vector<RecurrLayer> getHiddenLayers(){ return hiddenLayers;}
-    private:
+        virtual BaseLayer getOutputLayer(){return baseLayers[numBaseLayers - 1];}
+        virtual std::vector<RecurrLayer> getRecurrLayers(){ return recurrLayers;}
+    protected:
         void fillNetGradVector();
         std::shared_ptr<arma::mat> netOutput_;
-        std::vector<RecurrLayer> hiddenLayers;
-        std::shared_ptr<BaseLayer> netOutputLayer;
-        std::vector<std::shared_ptr<arma::mat>> outputLayers_prev_output;
-        int numHiddenLayers, hiddenLayerInputDim, hiddenLayerOutputDim;
+        std::vector<RecurrLayer> recurrLayers;
+        std::vector<BaseLayer> baseLayers;
+        int numRecurrLayers, recurrLayerInputDim, recurrLayerOutputDim, numBaseLayers;
         int rnnInputDim, rnnOutputDim;
         int time;
     };

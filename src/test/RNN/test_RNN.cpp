@@ -31,8 +31,8 @@ std::uniform_real_distribution<> dis(0, 1);
 
 int main(int argc, char *argv[]) {
 //    testGrad(argv[1]);
-//    testLittleTimer(argv[1]);
-    testSimpleDynamics(argv[1]);
+    testLittleTimer(argv[1]);
+//    testSimpleDynamics(argv[1]);
 //    testIntermediateDynamics(argv[1]);
 //        testRLData(argv[1]);
 //    testForward(argv[1]);
@@ -60,7 +60,7 @@ void testForward(char* filename){
     rnnptr->setTrainingSamples(trainingX, nullptr);
     rnnptr->forward();
     (rnnptr->netOutput())->print();
-    std::vector<RecurrLayer> vec = rnnptr->getHiddenLayers();
+    std::vector<RecurrLayer> vec = rnnptr->getRecurrLayers();
     for (int i = 0; i < vec[0].outputMem.size(); i++){
         vec[0].outputMem[i]->print("start");
         std::cout << vec[0].outputMem[i].get() << std::endl;
@@ -68,7 +68,7 @@ void testForward(char* filename){
     }
 }
 void testRLData(char* filename){
-   std::shared_ptr<arma::mat> trainingX(new arma::mat);
+	std::shared_ptr<arma::mat> trainingX(new arma::mat);
     std::shared_ptr<arma::mat> trainingY(new arma::mat);
     std::vector<std::shared_ptr<arma::mat>> X, Y;
     trainingX->load("X.dat");
@@ -115,7 +115,6 @@ void testIntermediateDynamics(char* filename){
 
     rnn->setTrainingSamples(trainingX, nullptr);
     rnn->forward();
-    rnn->netOutputAtTime(0);
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
 
     trainer->setTrainingSamples(trainingX, trainingY);
@@ -150,7 +149,6 @@ void testSimpleDynamics(char* filename){
 
     rnn->setTrainingSamples(trainingX, nullptr);
     rnn->forward();
-    rnn->netOutputAtTime(0);
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(rnn,message));
 
     trainer->setTrainingSamples(trainingX, trainingY);

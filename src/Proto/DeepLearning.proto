@@ -27,9 +27,9 @@ message LayerStructParameter {
 }
 
 message RNNStructParameter{
-	optional int32 numHiddenLayers = 1;
-	optional int32 hiddenLayerInputDim = 2;
-	optional int32 hiddenLayerOutputDim = 3;
+	optional int32 numRecurrLayers = 1;
+	optional int32 recurrLayerInputDim = 2;
+	optional int32 recurrLayerOutputDim = 3;
 	optional int32 inputDim = 4;
 	optional NeuralNetParameter.ActivationType activationType = 6;
 	optional NeuralNetInitializerParameter init_W_one = 103;

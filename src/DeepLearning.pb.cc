@@ -114,9 +114,9 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
       -1);
   RNNStructParameter_descriptor_ = file->message_type(3);
   static const int RNNStructParameter_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, numhiddenlayers_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayerinputdim_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, hiddenlayeroutputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, numrecurrlayers_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, recurrlayerinputdim_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, recurrlayeroutputdim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, inputdim_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, activationtype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RNNStructParameter, init_w_one_),
@@ -280,8 +280,8 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
     "(\0132+.DeepLearning.NeuralNetInitializerPa"
     "rameter\022\?\n\ninit_W_two\030j \001(\0132+.DeepLearni"
     "ng.NeuralNetInitializerParameter\"\202\003\n\022RNN"
-    "StructParameter\022\027\n\017numHiddenLayers\030\001 \001(\005"
-    "\022\033\n\023hiddenLayerInputDim\030\002 \001(\005\022\034\n\024hiddenL"
+    "StructParameter\022\027\n\017numRecurrLayers\030\001 \001(\005"
+    "\022\033\n\023recurrLayerInputDim\030\002 \001(\005\022\034\n\024recurrL"
     "ayerOutputDim\030\003 \001(\005\022\020\n\010inputDim\030\004 \001(\005\022G\n"
     "\016activationType\030\006 \001(\0162/.DeepLearning.Neu"
     "ralNetParameter.ActivationType\022\?\n\ninit_W"
@@ -2305,9 +2305,9 @@ void LayerStructParameter::clear_init_w_two() {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RNNStructParameter::kNumHiddenLayersFieldNumber;
-const int RNNStructParameter::kHiddenLayerInputDimFieldNumber;
-const int RNNStructParameter::kHiddenLayerOutputDimFieldNumber;
+const int RNNStructParameter::kNumRecurrLayersFieldNumber;
+const int RNNStructParameter::kRecurrLayerInputDimFieldNumber;
+const int RNNStructParameter::kRecurrLayerOutputDimFieldNumber;
 const int RNNStructParameter::kInputDimFieldNumber;
 const int RNNStructParameter::kActivationTypeFieldNumber;
 const int RNNStructParameter::kInitWOneFieldNumber;
@@ -2337,9 +2337,9 @@ RNNStructParameter::RNNStructParameter(const RNNStructParameter& from)
 
 void RNNStructParameter::SharedCtor() {
   _cached_size_ = 0;
-  numhiddenlayers_ = 0;
-  hiddenlayerinputdim_ = 0;
-  hiddenlayeroutputdim_ = 0;
+  numrecurrlayers_ = 0;
+  recurrlayerinputdim_ = 0;
+  recurrlayeroutputdim_ = 0;
   inputdim_ = 0;
   activationtype_ = 1;
   init_w_one_ = NULL;
@@ -2396,7 +2396,7 @@ void RNNStructParameter::Clear() {
 } while (0)
 
   if (_has_bits_[0 / 32] & 255u) {
-    ZR_(numhiddenlayers_, inputdim_);
+    ZR_(numrecurrlayers_, inputdim_);
     activationtype_ = 1;
     if (has_init_w_one()) {
       if (init_w_one_ != NULL) init_w_one_->::DeepLearning::NeuralNetInitializerParameter::Clear();
@@ -2428,43 +2428,43 @@ bool RNNStructParameter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 numHiddenLayers = 1;
+      // optional int32 numRecurrLayers = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &numhiddenlayers_)));
-          set_has_numhiddenlayers();
+                 input, &numrecurrlayers_)));
+          set_has_numrecurrlayers();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_hiddenLayerInputDim;
+        if (input->ExpectTag(16)) goto parse_recurrLayerInputDim;
         break;
       }
 
-      // optional int32 hiddenLayerInputDim = 2;
+      // optional int32 recurrLayerInputDim = 2;
       case 2: {
         if (tag == 16) {
-         parse_hiddenLayerInputDim:
+         parse_recurrLayerInputDim:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &hiddenlayerinputdim_)));
-          set_has_hiddenlayerinputdim();
+                 input, &recurrlayerinputdim_)));
+          set_has_recurrlayerinputdim();
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_hiddenLayerOutputDim;
+        if (input->ExpectTag(24)) goto parse_recurrLayerOutputDim;
         break;
       }
 
-      // optional int32 hiddenLayerOutputDim = 3;
+      // optional int32 recurrLayerOutputDim = 3;
       case 3: {
         if (tag == 24) {
-         parse_hiddenLayerOutputDim:
+         parse_recurrLayerOutputDim:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &hiddenlayeroutputdim_)));
-          set_has_hiddenlayeroutputdim();
+                 input, &recurrlayeroutputdim_)));
+          set_has_recurrlayeroutputdim();
         } else {
           goto handle_unusual;
         }
@@ -2571,19 +2571,19 @@ failure:
 void RNNStructParameter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:DeepLearning.RNNStructParameter)
-  // optional int32 numHiddenLayers = 1;
-  if (has_numhiddenlayers()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->numhiddenlayers(), output);
+  // optional int32 numRecurrLayers = 1;
+  if (has_numrecurrlayers()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->numrecurrlayers(), output);
   }
 
-  // optional int32 hiddenLayerInputDim = 2;
-  if (has_hiddenlayerinputdim()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->hiddenlayerinputdim(), output);
+  // optional int32 recurrLayerInputDim = 2;
+  if (has_recurrlayerinputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->recurrlayerinputdim(), output);
   }
 
-  // optional int32 hiddenLayerOutputDim = 3;
-  if (has_hiddenlayeroutputdim()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->hiddenlayeroutputdim(), output);
+  // optional int32 recurrLayerOutputDim = 3;
+  if (has_recurrlayeroutputdim()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->recurrlayeroutputdim(), output);
   }
 
   // optional int32 inputDim = 4;
@@ -2625,19 +2625,19 @@ void RNNStructParameter::SerializeWithCachedSizes(
 ::google::protobuf::uint8* RNNStructParameter::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:DeepLearning.RNNStructParameter)
-  // optional int32 numHiddenLayers = 1;
-  if (has_numhiddenlayers()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->numhiddenlayers(), target);
+  // optional int32 numRecurrLayers = 1;
+  if (has_numrecurrlayers()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->numrecurrlayers(), target);
   }
 
-  // optional int32 hiddenLayerInputDim = 2;
-  if (has_hiddenlayerinputdim()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->hiddenlayerinputdim(), target);
+  // optional int32 recurrLayerInputDim = 2;
+  if (has_recurrlayerinputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->recurrlayerinputdim(), target);
   }
 
-  // optional int32 hiddenLayerOutputDim = 3;
-  if (has_hiddenlayeroutputdim()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->hiddenlayeroutputdim(), target);
+  // optional int32 recurrLayerOutputDim = 3;
+  if (has_recurrlayeroutputdim()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->recurrlayeroutputdim(), target);
   }
 
   // optional int32 inputDim = 4;
@@ -2684,25 +2684,25 @@ int RNNStructParameter::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & 255) {
-    // optional int32 numHiddenLayers = 1;
-    if (has_numhiddenlayers()) {
+    // optional int32 numRecurrLayers = 1;
+    if (has_numrecurrlayers()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->numhiddenlayers());
+          this->numrecurrlayers());
     }
 
-    // optional int32 hiddenLayerInputDim = 2;
-    if (has_hiddenlayerinputdim()) {
+    // optional int32 recurrLayerInputDim = 2;
+    if (has_recurrlayerinputdim()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->hiddenlayerinputdim());
+          this->recurrlayerinputdim());
     }
 
-    // optional int32 hiddenLayerOutputDim = 3;
-    if (has_hiddenlayeroutputdim()) {
+    // optional int32 recurrLayerOutputDim = 3;
+    if (has_recurrlayeroutputdim()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->hiddenlayeroutputdim());
+          this->recurrlayeroutputdim());
     }
 
     // optional int32 inputDim = 4;
@@ -2766,14 +2766,14 @@ void RNNStructParameter::MergeFrom(const ::google::protobuf::Message& from) {
 void RNNStructParameter::MergeFrom(const RNNStructParameter& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_numhiddenlayers()) {
-      set_numhiddenlayers(from.numhiddenlayers());
+    if (from.has_numrecurrlayers()) {
+      set_numrecurrlayers(from.numrecurrlayers());
     }
-    if (from.has_hiddenlayerinputdim()) {
-      set_hiddenlayerinputdim(from.hiddenlayerinputdim());
+    if (from.has_recurrlayerinputdim()) {
+      set_recurrlayerinputdim(from.recurrlayerinputdim());
     }
-    if (from.has_hiddenlayeroutputdim()) {
-      set_hiddenlayeroutputdim(from.hiddenlayeroutputdim());
+    if (from.has_recurrlayeroutputdim()) {
+      set_recurrlayeroutputdim(from.recurrlayeroutputdim());
     }
     if (from.has_inputdim()) {
       set_inputdim(from.inputdim());
@@ -2818,9 +2818,9 @@ void RNNStructParameter::Swap(RNNStructParameter* other) {
   InternalSwap(other);
 }
 void RNNStructParameter::InternalSwap(RNNStructParameter* other) {
-  std::swap(numhiddenlayers_, other->numhiddenlayers_);
-  std::swap(hiddenlayerinputdim_, other->hiddenlayerinputdim_);
-  std::swap(hiddenlayeroutputdim_, other->hiddenlayeroutputdim_);
+  std::swap(numrecurrlayers_, other->numrecurrlayers_);
+  std::swap(recurrlayerinputdim_, other->recurrlayerinputdim_);
+  std::swap(recurrlayeroutputdim_, other->recurrlayeroutputdim_);
   std::swap(inputdim_, other->inputdim_);
   std::swap(activationtype_, other->activationtype_);
   std::swap(init_w_one_, other->init_w_one_);
@@ -2842,76 +2842,76 @@ void RNNStructParameter::InternalSwap(RNNStructParameter* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // RNNStructParameter
 
-// optional int32 numHiddenLayers = 1;
-bool RNNStructParameter::has_numhiddenlayers() const {
+// optional int32 numRecurrLayers = 1;
+bool RNNStructParameter::has_numrecurrlayers() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-void RNNStructParameter::set_has_numhiddenlayers() {
+void RNNStructParameter::set_has_numrecurrlayers() {
   _has_bits_[0] |= 0x00000001u;
 }
-void RNNStructParameter::clear_has_numhiddenlayers() {
+void RNNStructParameter::clear_has_numrecurrlayers() {
   _has_bits_[0] &= ~0x00000001u;
 }
-void RNNStructParameter::clear_numhiddenlayers() {
-  numhiddenlayers_ = 0;
-  clear_has_numhiddenlayers();
+void RNNStructParameter::clear_numrecurrlayers() {
+  numrecurrlayers_ = 0;
+  clear_has_numrecurrlayers();
 }
- ::google::protobuf::int32 RNNStructParameter::numhiddenlayers() const {
-  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.numHiddenLayers)
-  return numhiddenlayers_;
+ ::google::protobuf::int32 RNNStructParameter::numrecurrlayers() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.numRecurrLayers)
+  return numrecurrlayers_;
 }
- void RNNStructParameter::set_numhiddenlayers(::google::protobuf::int32 value) {
-  set_has_numhiddenlayers();
-  numhiddenlayers_ = value;
-  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.numHiddenLayers)
+ void RNNStructParameter::set_numrecurrlayers(::google::protobuf::int32 value) {
+  set_has_numrecurrlayers();
+  numrecurrlayers_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.numRecurrLayers)
 }
 
-// optional int32 hiddenLayerInputDim = 2;
-bool RNNStructParameter::has_hiddenlayerinputdim() const {
+// optional int32 recurrLayerInputDim = 2;
+bool RNNStructParameter::has_recurrlayerinputdim() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-void RNNStructParameter::set_has_hiddenlayerinputdim() {
+void RNNStructParameter::set_has_recurrlayerinputdim() {
   _has_bits_[0] |= 0x00000002u;
 }
-void RNNStructParameter::clear_has_hiddenlayerinputdim() {
+void RNNStructParameter::clear_has_recurrlayerinputdim() {
   _has_bits_[0] &= ~0x00000002u;
 }
-void RNNStructParameter::clear_hiddenlayerinputdim() {
-  hiddenlayerinputdim_ = 0;
-  clear_has_hiddenlayerinputdim();
+void RNNStructParameter::clear_recurrlayerinputdim() {
+  recurrlayerinputdim_ = 0;
+  clear_has_recurrlayerinputdim();
 }
- ::google::protobuf::int32 RNNStructParameter::hiddenlayerinputdim() const {
-  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.hiddenLayerInputDim)
-  return hiddenlayerinputdim_;
+ ::google::protobuf::int32 RNNStructParameter::recurrlayerinputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.recurrLayerInputDim)
+  return recurrlayerinputdim_;
 }
- void RNNStructParameter::set_hiddenlayerinputdim(::google::protobuf::int32 value) {
-  set_has_hiddenlayerinputdim();
-  hiddenlayerinputdim_ = value;
-  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.hiddenLayerInputDim)
+ void RNNStructParameter::set_recurrlayerinputdim(::google::protobuf::int32 value) {
+  set_has_recurrlayerinputdim();
+  recurrlayerinputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.recurrLayerInputDim)
 }
 
-// optional int32 hiddenLayerOutputDim = 3;
-bool RNNStructParameter::has_hiddenlayeroutputdim() const {
+// optional int32 recurrLayerOutputDim = 3;
+bool RNNStructParameter::has_recurrlayeroutputdim() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-void RNNStructParameter::set_has_hiddenlayeroutputdim() {
+void RNNStructParameter::set_has_recurrlayeroutputdim() {
   _has_bits_[0] |= 0x00000004u;
 }
-void RNNStructParameter::clear_has_hiddenlayeroutputdim() {
+void RNNStructParameter::clear_has_recurrlayeroutputdim() {
   _has_bits_[0] &= ~0x00000004u;
 }
-void RNNStructParameter::clear_hiddenlayeroutputdim() {
-  hiddenlayeroutputdim_ = 0;
-  clear_has_hiddenlayeroutputdim();
+void RNNStructParameter::clear_recurrlayeroutputdim() {
+  recurrlayeroutputdim_ = 0;
+  clear_has_recurrlayeroutputdim();
 }
- ::google::protobuf::int32 RNNStructParameter::hiddenlayeroutputdim() const {
-  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.hiddenLayerOutputDim)
-  return hiddenlayeroutputdim_;
+ ::google::protobuf::int32 RNNStructParameter::recurrlayeroutputdim() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.RNNStructParameter.recurrLayerOutputDim)
+  return recurrlayeroutputdim_;
 }
- void RNNStructParameter::set_hiddenlayeroutputdim(::google::protobuf::int32 value) {
-  set_has_hiddenlayeroutputdim();
-  hiddenlayeroutputdim_ = value;
-  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.hiddenLayerOutputDim)
+ void RNNStructParameter::set_recurrlayeroutputdim(::google::protobuf::int32 value) {
+  set_has_recurrlayeroutputdim();
+  recurrlayeroutputdim_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.RNNStructParameter.recurrLayerOutputDim)
 }
 
 // optional int32 inputDim = 4;
