@@ -24,6 +24,7 @@ namespace NeuralNet {
         virtual std::shared_ptr<arma::mat> netOutput();
 //        virtual std::shared_ptr<arma::mat> netOutputAtTime(int time);
         virtual arma::mat forwardInTime(std::shared_ptr<arma::mat> x);
+        virtual void resetNetState();
         virtual void updateInternalState();
         virtual void resetWeight();
         virtual void zeroTime();

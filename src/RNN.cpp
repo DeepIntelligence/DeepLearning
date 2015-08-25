@@ -69,20 +69,19 @@ void RNN::setTime(int t){ this->time = t;}
 int RNN::getTime(){return this->time;}
 void RNN::zeroTime(){this->time = 0;}
 
-arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
-    std::shared_ptr<arma::mat> commonInput(new arma::mat);
-    if (this->time == 0) {
-        for (int l = 0; l < numRecurrLayers; l++) {
-            (recurrLayers[l].getPrevOutput())->zeros(recurrLayerOutputDim, 1);
-            recurrLayers[l].inputOneMem.clear();
-            recurrLayers[l].inputTwoMem.clear();
-            recurrLayers[l].outputMem.clear();
-        }
-        for (int l = 0; l < numBaseLayers; l++) {
-        	baseLayers[l].inputMem.clear();
-        	baseLayers[l].outputMem.clear();
-    	}
+void RNN::resetNetState(){
+	for (int l = 0; l < numRecurrLayers; l++) {
+		(recurrLayers[l].getPrevOutput())->zeros(recurrLayerOutputDim, 1);
+		recurrLayers[l].inputOneMem.clear();
+		recurrLayers[l].inputTwoMem.clear();
+		recurrLayers[l].outputMem.clear();
     }
+	for (int l = 0; l < numBaseLayers; l++) {
+		baseLayers[l].inputMem.clear();
+		baseLayers[l].outputMem.clear();
+    }
+}
+arma::mat RNN::forwardInTime(std::shared_ptr<arma::mat> input) {
     for (int l = 0; l < numRecurrLayers; l++) {
     	recurrLayers[l].inputOne = std::shared_ptr<arma::mat>(new arma::mat(*(recurrLayers[l].getPrevOutput())));
   
@@ -132,6 +131,7 @@ void RNN::updateInternalState(){
 void RNN::forward() {
     int T = trainingX->n_cols; 
     std::shared_ptr<arma::mat> input(new arma::mat);
+    this->resetNetState();
     for (this->time = 0; this->time < T; (this->time)++){
         *input = trainingX->col(this->time);
         this->forwardInTime(input);

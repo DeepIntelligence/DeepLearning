@@ -6,12 +6,14 @@
 #include "NN_RLSolverFull.h"
 #include "MultiLayerPerceptron.h"
 #include "RNN.h"
+#include "ElmanRL.h"
 #include "Util.h"
 #include "common.h"
 void testModel();
 void testModelFull();
 void testSolver(char* filename, char*);
-void testSolverFull(char* filename, char*);
+void testSolverRNN(char* filename, char*);
+void testSolverElman(char* filename, char*);
 using namespace ReinforcementLearning;
 using namespace DeepLearning;
 using namespace NeuralNet;
@@ -21,7 +23,8 @@ int main(int argc, char* argv[]){
  //       testModel();
  //   testModelFull();
  //   testSolver(argv[1], argv[2]);
-    testSolverFull(argv[1],argv[2]);
+ //   testSolverRNN(argv[1],argv[2]);
+    testSolverElman(argv[1],argv[2]);
     return 0;
 }
 #if 1
@@ -43,7 +46,7 @@ void testSolver(char* filename1, char* filename2){
     net->save("trainedresult");
 }
 
-void testSolverFull(char* filename1, char* filename2){
+void testSolverRNN(char* filename1, char* filename2){
 
     double dt = 0.05;
     NeuralNetParameter message1;
@@ -60,6 +63,26 @@ void testSolverFull(char* filename1, char* filename2){
     rlSolver.train();
     net->save("trainedresult");
 }
+
+
+void testSolverElman(char* filename1, char* filename2){
+
+    double dt = 0.05;
+    NeuralNetParameter message1;
+    ReinforcementLearningParameter message2;
+    QLearningSolverParameter message3;
+    ReadProtoFromTextFile(filename1, &message1);
+    ReadProtoFromTextFile(filename2, &message2);
+    message3 = message2.qlearningsolverparameter();
+    arma::arma_rng::set_seed(1);
+    std::shared_ptr<Net> net(new ElmanRL(message1));
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net,message1));
+    std::shared_ptr<BaseModel> model(new Model_PoleFull(dt));
+    NN_RLSolverFull rlSolver(model, net, trainer, 2, message3);
+    rlSolver.train();
+    net->save("trainedresult");
+}
+
 
 void testModel(){
 // dt = 0.1 is from the paper Neural Fitted Q iteration - First Experiences with..   

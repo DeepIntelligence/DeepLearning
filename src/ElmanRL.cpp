@@ -25,7 +25,7 @@ arma::mat ElmanRL::forwardInTime(std::shared_ptr<arma::mat> input) {
   
         if (l == 0) {
         	
-			recurrLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(input->rows(0, recurrLayerOutputDim - 1)));
+			recurrLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(input->rows(0, rnnInputDim - 1)));
         } else {
 			recurrLayers[l].inputTwo = std::shared_ptr<arma::mat>(new arma::mat(*(recurrLayers[l - 1].output)));
         }
@@ -42,8 +42,9 @@ arma::mat ElmanRL::forwardInTime(std::shared_ptr<arma::mat> input) {
     	
     for (int l = 0; l < numBaseLayers; l++) {
        	if (l == 0) {
-       		arma::mat action(input->rows(recurrLayerOutputDim - 1, input->n_rows - 1));
-    		*(baseLayers[l].input) = arma::join_cols(*recurrLayers[numRecurrLayers-1].output, action);   	
+       		arma::mat action(input->rows(rnnInputDim, input->n_rows - 1));
+                *commonInput = arma::join_cols(*(recurrLayers[numRecurrLayers-1].output), action);
+    		baseLayers[l].input = commonInput;   	
        	} else {
        		baseLayers[l].input = baseLayers[l - 1].output;
        	}

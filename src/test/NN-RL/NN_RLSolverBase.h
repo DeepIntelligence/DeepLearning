@@ -14,14 +14,15 @@ namespace ReinforcementLearning {
                 std::shared_ptr<NeuralNet::Net> net0,
                 std::shared_ptr<NeuralNet::Trainer> trainer0, int Dim, DeepLearning::QLearningSolverParameter para);
         virtual ~NN_RLSolverBase(){}
-        virtual void train();
+        virtual void train() = 0;
         virtual void test(){}
         virtual void generateTrainingSample(std::shared_ptr<arma::mat> trainingSampleX, std::shared_ptr<arma::mat> trainingSampleY);
         virtual void generateExperience();
-        virtual void getMaxQ(const State& S,double* Q, int* action);
-        virtual double getRewards(const State& newS) const;
-        virtual bool terminate(const State& S) const;
-        virtual void setNormalizationConst(){}
+		virtual double calQFromNet(std::shared_ptr<arma::mat> input) const = 0
+		virtual void getMaxQ(const State& S,double* Q, int* action);
+        virtual double getRewards(const State& newS) const = 0;
+        virtual bool terminate(const State& S) const = 0;
+        virtual void setNormalizationConst() = 0;
     protected:
         int stateDim;
         int netInputDim;

@@ -15,6 +15,7 @@ public:
     virtual void forward() = 0;
     virtual std::shared_ptr<arma::mat> netOutput() = 0;
     // the following are RNN specific
+    virtual void resetNetState(){}
     virtual arma::mat forwardInTime(std::shared_ptr<arma::mat> x){}
     //virtual std::shared_ptr<arma::mat> netOutputAtTime(int time){return 0;}
     virtual void zeroTime(){}
