@@ -31,8 +31,10 @@ void Model_PoleSimple::run(int action) {
     }
     double &theta = currState[0];
     double &theta_v = currState[1];
+    // we assume l = 0.5
+    // mp/(mc+mp) = 0.1, mp = 1, mc = 9)
     accer = 9.8 * sin(theta) - 0.1 * 2.0 * 0.5 * pow(theta_v, 2.0) * sin(2.0 * theta) / 2.0 - 0.1 * cos(theta) * force;
-    accer /= (4.0 * 0.5 / 3.0 - 0.1 * 2.0 * 0.5 * cos(theta) * cos(theta) );
+    accer /= (4.0 * 0.5 / 3.0 - 0.1 * 0.5 * cos(theta) * cos(theta) );
     prevState = currState;
     theta += theta_v * dt;
     if (theta > M_PI) theta -= 2.0*M_PI;
@@ -41,7 +43,7 @@ void Model_PoleSimple::run(int action) {
 }
 
 void Model_PoleSimple::createInitialState() {
-    this->currState[0] = (randNoise->nextDou() - 0.5) * 0.1 * M_PI;
+    this->currState[0] = (randNoise->nextDou() - 0.5) * 0.2 * M_PI;
     this->currState[1] = 0.0;
 }
 

@@ -1,0 +1,34 @@
+layerStruct{
+	name: "BaseLayer1"
+	inputDim: 1
+	outputDim: 10
+	activationType: tanh
+        init_W{ 
+            initializerType: glorot_uniform
+        }
+        init_B{ 
+            initializerType: zero
+        }
+}
+
+layerStruct{
+	name: "BaseLayer1"
+	inputDim: 10
+	outputDim: 1
+	activationType: linear
+        init_W{ 
+            initializerType: glorot_uniform
+        }
+        init_B{ 
+            initializerType: zero
+        }
+}
+
+neuralNetTrainingParameter{
+        trainerType: RMSProp
+	learningRate: 0.15
+	miniBatchSize: 10
+	NEpoch: 1000
+        decayRate: 100
+        momentum: 0.99
+}

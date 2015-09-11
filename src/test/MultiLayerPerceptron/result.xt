@@ -1,0 +1,5180 @@
+   0.1573   0.1567   0.1562   0.1556   0.1551   0.1545   0.1540   0.1534   0.1528   0.1523   0.1517   0.1512   0.1506   0.1501   0.1495   0.1490   0.1484   0.1479   0.1473   0.1468   0.1462   0.1457   0.1451   0.1446   0.1440   0.1435   0.1429   0.1424   0.1418   0.1413   0.1407   0.1402   0.1396   0.1391   0.1386   0.1380   0.1375   0.1369   0.1364   0.1359   0.1353   0.1348   0.1342   0.1337   0.1332   0.1326   0.1321   0.1316   0.1310   0.1305   0.1300   0.1294   0.1289   0.1284   0.1278   0.1273   0.1268   0.1262   0.1257   0.1252   0.1247   0.1241   0.1236   0.1231   0.1226   0.1220   0.1215   0.1210   0.1205   0.1200   0.1194   0.1189   0.1184   0.1179   0.1174   0.1169   0.1163   0.1158   0.1153   0.1148   0.1143   0.1138   0.1133   0.1128   0.1123   0.1118   0.1113   0.1108   0.1103   0.1098   0.1093   0.1088   0.1083   0.1078   0.1073   0.1068   0.1063   0.1058   0.1053   0.1048
+iteration: 0
+errorTotal: 49.5302
+learningRate:0.001
+iteration: 1
+errorTotal: 48.6443
+learningRate:0.00099999
+iteration: 2
+errorTotal: 49.0143
+learningRate:0.00099998
+iteration: 3
+errorTotal: 49.3971
+learningRate:0.00099997
+iteration: 4
+errorTotal: 48.7646
+learningRate:0.00099996
+iteration: 5
+errorTotal: 48.7098
+learningRate:0.00099995
+iteration: 6
+errorTotal: 49.1554
+learningRate:0.00099994
+iteration: 7
+errorTotal: 48.8556
+learningRate:0.00099993
+iteration: 8
+errorTotal: 48.5809
+learningRate:0.00099992
+iteration: 9
+errorTotal: 48.9016
+learningRate:0.00099991
+iteration: 10
+errorTotal: 48.8682
+learningRate:0.0009999
+iteration: 11
+errorTotal: 48.5589
+learningRate:0.00099989
+iteration: 12
+errorTotal: 48.6976
+learningRate:0.00099988
+iteration: 13
+errorTotal: 48.8087
+learningRate:0.00099987
+iteration: 14
+errorTotal: 48.5762
+learningRate:0.00099986
+iteration: 15
+errorTotal: 48.5646
+learningRate:0.00099985
+iteration: 16
+errorTotal: 48.7087
+learningRate:0.00099984
+iteration: 17
+errorTotal: 48.5876
+learningRate:0.00099983
+iteration: 18
+errorTotal: 48.4939
+learningRate:0.00099982
+iteration: 19
+errorTotal: 48.6015
+learningRate:0.00099981
+iteration: 20
+errorTotal: 48.5742
+learningRate:0.0009998
+iteration: 21
+errorTotal: 48.4625
+learningRate:0.00099979
+iteration: 22
+errorTotal: 48.5099
+learningRate:0.00099978
+iteration: 23
+errorTotal: 48.5364
+learningRate:0.00099977
+iteration: 24
+errorTotal: 48.4473
+learningRate:0.00099976
+iteration: 25
+errorTotal: 48.4424
+learningRate:0.00099975
+iteration: 26
+errorTotal: 48.4842
+learningRate:0.00099974
+iteration: 27
+errorTotal: 48.4321
+learningRate:0.00099973
+iteration: 28
+errorTotal: 48.397
+learningRate:0.00099972
+iteration: 29
+errorTotal: 48.4292
+learningRate:0.00099971
+iteration: 30
+errorTotal: 48.4098
+learningRate:0.0009997
+iteration: 31
+errorTotal: 48.3663
+learningRate:0.00099969
+iteration: 32
+errorTotal: 48.3792
+learningRate:0.00099968
+iteration: 33
+errorTotal: 48.3798
+learningRate:0.00099967
+iteration: 34
+errorTotal: 48.3424
+learningRate:0.00099966
+iteration: 35
+errorTotal: 48.3376
+learningRate:0.00099965
+iteration: 36
+errorTotal: 48.3453
+learningRate:0.00099964
+iteration: 37
+errorTotal: 48.3199
+learningRate:0.00099963
+iteration: 38
+errorTotal: 48.304
+learningRate:0.00099962
+iteration: 39
+errorTotal: 48.3099
+learningRate:0.00099961
+iteration: 40
+errorTotal: 48.2959
+learningRate:0.0009996
+iteration: 41
+errorTotal: 48.2763
+learningRate:0.00099959
+iteration: 42
+errorTotal: 48.2764
+learningRate:0.00099958
+iteration: 43
+errorTotal: 48.2701
+learningRate:0.00099957
+iteration: 44
+errorTotal: 48.2518
+learningRate:0.00099956
+iteration: 45
+errorTotal: 48.2461
+learningRate:0.00099955
+iteration: 46
+errorTotal: 48.2431
+learningRate:0.00099954
+iteration: 47
+errorTotal: 48.2287
+learningRate:0.00099953
+iteration: 48
+errorTotal: 48.2191
+learningRate:0.00099952
+iteration: 49
+errorTotal: 48.2163
+learningRate:0.00099951
+iteration: 50
+errorTotal: 48.2058
+learningRate:0.0009995
+iteration: 51
+errorTotal: 48.1947
+learningRate:0.00099949
+iteration: 52
+errorTotal: 48.1905
+learningRate:0.00099948
+iteration: 53
+errorTotal: 48.183
+learningRate:0.00099947
+iteration: 54
+errorTotal: 48.1721
+learningRate:0.00099946
+iteration: 55
+errorTotal: 48.1662
+learningRate:0.00099945
+iteration: 56
+errorTotal: 48.1603
+learningRate:0.00099944
+iteration: 57
+errorTotal: 48.1507
+learningRate:0.00099943
+iteration: 58
+errorTotal: 48.1435
+learningRate:0.00099942
+iteration: 59
+errorTotal: 48.1382
+learningRate:0.00099941
+iteration: 60
+errorTotal: 48.13
+learningRate:0.0009994
+iteration: 61
+errorTotal: 48.1223
+learningRate:0.00099939
+iteration: 62
+errorTotal: 48.1169
+learningRate:0.00099938
+iteration: 63
+errorTotal: 48.11
+learningRate:0.00099937
+iteration: 64
+errorTotal: 48.1024
+learningRate:0.00099936
+iteration: 65
+errorTotal: 48.0966
+learningRate:0.00099935
+iteration: 66
+errorTotal: 48.0905
+learningRate:0.00099934
+iteration: 67
+errorTotal: 48.0834
+learningRate:0.00099933
+iteration: 68
+errorTotal: 48.0774
+learningRate:0.00099932
+iteration: 69
+errorTotal: 48.0718
+learningRate:0.00099931
+iteration: 70
+errorTotal: 48.0653
+learningRate:0.0009993
+iteration: 71
+errorTotal: 48.0592
+learningRate:0.00099929
+iteration: 72
+errorTotal: 48.0538
+learningRate:0.00099928
+iteration: 73
+errorTotal: 48.0479
+learningRate:0.00099927
+iteration: 74
+errorTotal: 48.042
+learningRate:0.00099926
+iteration: 75
+errorTotal: 48.0367
+learningRate:0.00099925
+iteration: 76
+errorTotal: 48.0313
+learningRate:0.00099924
+iteration: 77
+errorTotal: 48.0256
+learningRate:0.00099923
+iteration: 78
+errorTotal: 48.0205
+learningRate:0.00099922
+iteration: 79
+errorTotal: 48.0154
+learningRate:0.00099921
+iteration: 80
+errorTotal: 48.0101
+learningRate:0.0009992
+iteration: 81
+errorTotal: 48.0051
+learningRate:0.00099919
+iteration: 82
+errorTotal: 48.0003
+learningRate:0.00099918
+iteration: 83
+errorTotal: 47.9953
+learningRate:0.00099917
+iteration: 84
+errorTotal: 47.9905
+learningRate:0.00099916
+iteration: 85
+errorTotal: 47.9859
+learningRate:0.00099915
+iteration: 86
+errorTotal: 47.9813
+learningRate:0.00099914
+iteration: 87
+errorTotal: 47.9767
+learningRate:0.00099913
+iteration: 88
+errorTotal: 47.9723
+learningRate:0.00099912
+iteration: 89
+errorTotal: 47.968
+learningRate:0.00099911
+iteration: 90
+errorTotal: 47.9636
+learningRate:0.0009991
+iteration: 91
+errorTotal: 47.9595
+learningRate:0.00099909
+iteration: 92
+errorTotal: 47.9554
+learningRate:0.00099908
+iteration: 93
+errorTotal: 47.9513
+learningRate:0.00099907
+iteration: 94
+errorTotal: 47.9473
+learningRate:0.00099906
+iteration: 95
+errorTotal: 47.9435
+learningRate:0.00099905
+iteration: 96
+errorTotal: 47.9397
+learningRate:0.00099904
+iteration: 97
+errorTotal: 47.9359
+learningRate:0.00099903
+iteration: 98
+errorTotal: 47.9323
+learningRate:0.00099902
+iteration: 99
+errorTotal: 47.9287
+learningRate:0.00099901
+iteration: 100
+errorTotal: 47.9252
+learningRate:0.000999
+iteration: 101
+errorTotal: 47.9218
+learningRate:0.000998991
+iteration: 102
+errorTotal: 47.9184
+learningRate:0.000998981
+iteration: 103
+errorTotal: 47.9151
+learningRate:0.000998971
+iteration: 104
+errorTotal: 47.9119
+learningRate:0.000998961
+iteration: 105
+errorTotal: 47.9087
+learningRate:0.000998951
+iteration: 106
+errorTotal: 47.9056
+learningRate:0.000998941
+iteration: 107
+errorTotal: 47.9026
+learningRate:0.000998931
+iteration: 108
+errorTotal: 47.8997
+learningRate:0.000998921
+iteration: 109
+errorTotal: 47.8968
+learningRate:0.000998911
+iteration: 110
+errorTotal: 47.8939
+learningRate:0.000998901
+iteration: 111
+errorTotal: 47.8912
+learningRate:0.000998891
+iteration: 112
+errorTotal: 47.8885
+learningRate:0.000998881
+iteration: 113
+errorTotal: 47.8858
+learningRate:0.000998871
+iteration: 114
+errorTotal: 47.8832
+learningRate:0.000998861
+iteration: 115
+errorTotal: 47.8807
+learningRate:0.000998851
+iteration: 116
+errorTotal: 47.8782
+learningRate:0.000998841
+iteration: 117
+errorTotal: 47.8758
+learningRate:0.000998831
+iteration: 118
+errorTotal: 47.8735
+learningRate:0.000998821
+iteration: 119
+errorTotal: 47.8712
+learningRate:0.000998811
+iteration: 120
+errorTotal: 47.869
+learningRate:0.000998801
+iteration: 121
+errorTotal: 47.8668
+learningRate:0.000998791
+iteration: 122
+errorTotal: 47.8646
+learningRate:0.000998781
+iteration: 123
+errorTotal: 47.8626
+learningRate:0.000998771
+iteration: 124
+errorTotal: 47.8605
+learningRate:0.000998761
+iteration: 125
+errorTotal: 47.8585
+learningRate:0.000998751
+iteration: 126
+errorTotal: 47.8566
+learningRate:0.000998741
+iteration: 127
+errorTotal: 47.8547
+learningRate:0.000998731
+iteration: 128
+errorTotal: 47.8529
+learningRate:0.000998721
+iteration: 129
+errorTotal: 47.8511
+learningRate:0.000998711
+iteration: 130
+errorTotal: 47.8494
+learningRate:0.000998701
+iteration: 131
+errorTotal: 47.8477
+learningRate:0.000998691
+iteration: 132
+errorTotal: 47.846
+learningRate:0.000998681
+iteration: 133
+errorTotal: 47.8444
+learningRate:0.000998671
+iteration: 134
+errorTotal: 47.8428
+learningRate:0.000998661
+iteration: 135
+errorTotal: 47.8413
+learningRate:0.000998651
+iteration: 136
+errorTotal: 47.8398
+learningRate:0.000998641
+iteration: 137
+errorTotal: 47.8384
+learningRate:0.000998631
+iteration: 138
+errorTotal: 47.8369
+learningRate:0.000998621
+iteration: 139
+errorTotal: 47.8356
+learningRate:0.000998611
+iteration: 140
+errorTotal: 47.8342
+learningRate:0.000998601
+iteration: 141
+errorTotal: 47.8329
+learningRate:0.000998591
+iteration: 142
+errorTotal: 47.8317
+learningRate:0.000998581
+iteration: 143
+errorTotal: 47.8304
+learningRate:0.000998571
+iteration: 144
+errorTotal: 47.8292
+learningRate:0.000998561
+iteration: 145
+errorTotal: 47.8281
+learningRate:0.000998551
+iteration: 146
+errorTotal: 47.8269
+learningRate:0.000998541
+iteration: 147
+errorTotal: 47.8258
+learningRate:0.000998531
+iteration: 148
+errorTotal: 47.8248
+learningRate:0.000998521
+iteration: 149
+errorTotal: 47.8237
+learningRate:0.000998511
+iteration: 150
+errorTotal: 47.8227
+learningRate:0.000998501
+iteration: 151
+errorTotal: 47.8217
+learningRate:0.000998491
+iteration: 152
+errorTotal: 47.8208
+learningRate:0.000998481
+iteration: 153
+errorTotal: 47.8198
+learningRate:0.000998471
+iteration: 154
+errorTotal: 47.8189
+learningRate:0.000998461
+iteration: 155
+errorTotal: 47.818
+learningRate:0.000998451
+iteration: 156
+errorTotal: 47.8172
+learningRate:0.000998441
+iteration: 157
+errorTotal: 47.8164
+learningRate:0.000998431
+iteration: 158
+errorTotal: 47.8155
+learningRate:0.000998421
+iteration: 159
+errorTotal: 47.8148
+learningRate:0.000998411
+iteration: 160
+errorTotal: 47.814
+learningRate:0.000998401
+iteration: 161
+errorTotal: 47.8133
+learningRate:0.000998391
+iteration: 162
+errorTotal: 47.8125
+learningRate:0.000998381
+iteration: 163
+errorTotal: 47.8118
+learningRate:0.000998371
+iteration: 164
+errorTotal: 47.8112
+learningRate:0.000998361
+iteration: 165
+errorTotal: 47.8105
+learningRate:0.000998351
+iteration: 166
+errorTotal: 47.8099
+learningRate:0.000998341
+iteration: 167
+errorTotal: 47.8092
+learningRate:0.000998331
+iteration: 168
+errorTotal: 47.8086
+learningRate:0.000998321
+iteration: 169
+errorTotal: 47.8081
+learningRate:0.000998311
+iteration: 170
+errorTotal: 47.8075
+learningRate:0.000998301
+iteration: 171
+errorTotal: 47.8069
+learningRate:0.000998291
+iteration: 172
+errorTotal: 47.8064
+learningRate:0.000998281
+iteration: 173
+errorTotal: 47.8059
+learningRate:0.000998271
+iteration: 174
+errorTotal: 47.8054
+learningRate:0.000998262
+iteration: 175
+errorTotal: 47.8049
+learningRate:0.000998252
+iteration: 176
+errorTotal: 47.8044
+learningRate:0.000998242
+iteration: 177
+errorTotal: 47.8039
+learningRate:0.000998232
+iteration: 178
+errorTotal: 47.8035
+learningRate:0.000998222
+iteration: 179
+errorTotal: 47.803
+learningRate:0.000998212
+iteration: 180
+errorTotal: 47.8026
+learningRate:0.000998202
+iteration: 181
+errorTotal: 47.8022
+learningRate:0.000998192
+iteration: 182
+errorTotal: 47.8018
+learningRate:0.000998182
+iteration: 183
+errorTotal: 47.8014
+learningRate:0.000998172
+iteration: 184
+errorTotal: 47.801
+learningRate:0.000998162
+iteration: 185
+errorTotal: 47.8007
+learningRate:0.000998152
+iteration: 186
+errorTotal: 47.8003
+learningRate:0.000998142
+iteration: 187
+errorTotal: 47.8
+learningRate:0.000998132
+iteration: 188
+errorTotal: 47.7996
+learningRate:0.000998122
+iteration: 189
+errorTotal: 47.7993
+learningRate:0.000998112
+iteration: 190
+errorTotal: 47.799
+learningRate:0.000998102
+iteration: 191
+errorTotal: 47.7987
+learningRate:0.000998092
+iteration: 192
+errorTotal: 47.7984
+learningRate:0.000998082
+iteration: 193
+errorTotal: 47.7981
+learningRate:0.000998072
+iteration: 194
+errorTotal: 47.7978
+learningRate:0.000998062
+iteration: 195
+errorTotal: 47.7975
+learningRate:0.000998052
+iteration: 196
+errorTotal: 47.7972
+learningRate:0.000998042
+iteration: 197
+errorTotal: 47.797
+learningRate:0.000998032
+iteration: 198
+errorTotal: 47.7967
+learningRate:0.000998022
+iteration: 199
+errorTotal: 47.7964
+learningRate:0.000998012
+iteration: 200
+errorTotal: 47.7962
+learningRate:0.000998002
+iteration: 201
+errorTotal: 47.796
+learningRate:0.000997992
+iteration: 202
+errorTotal: 47.7957
+learningRate:0.000997982
+iteration: 203
+errorTotal: 47.7955
+learningRate:0.000997972
+iteration: 204
+errorTotal: 47.7953
+learningRate:0.000997962
+iteration: 205
+errorTotal: 47.7951
+learningRate:0.000997952
+iteration: 206
+errorTotal: 47.7949
+learningRate:0.000997942
+iteration: 207
+errorTotal: 47.7946
+learningRate:0.000997932
+iteration: 208
+errorTotal: 47.7944
+learningRate:0.000997922
+iteration: 209
+errorTotal: 47.7943
+learningRate:0.000997912
+iteration: 210
+errorTotal: 47.7941
+learningRate:0.000997902
+iteration: 211
+errorTotal: 47.7939
+learningRate:0.000997892
+iteration: 212
+errorTotal: 47.7937
+learningRate:0.000997882
+iteration: 213
+errorTotal: 47.7935
+learningRate:0.000997872
+iteration: 214
+errorTotal: 47.7933
+learningRate:0.000997862
+iteration: 215
+errorTotal: 47.7932
+learningRate:0.000997852
+iteration: 216
+errorTotal: 47.793
+learningRate:0.000997842
+iteration: 217
+errorTotal: 47.7928
+learningRate:0.000997832
+iteration: 218
+errorTotal: 47.7927
+learningRate:0.000997822
+iteration: 219
+errorTotal: 47.7925
+learningRate:0.000997812
+iteration: 220
+errorTotal: 47.7924
+learningRate:0.000997802
+iteration: 221
+errorTotal: 47.7922
+learningRate:0.000997792
+iteration: 222
+errorTotal: 47.7921
+learningRate:0.000997782
+iteration: 223
+errorTotal: 47.7919
+learningRate:0.000997772
+iteration: 224
+errorTotal: 47.7918
+learningRate:0.000997763
+iteration: 225
+errorTotal: 47.7916
+learningRate:0.000997753
+iteration: 226
+errorTotal: 47.7915
+learningRate:0.000997743
+iteration: 227
+errorTotal: 47.7914
+learningRate:0.000997733
+iteration: 228
+errorTotal: 47.7912
+learningRate:0.000997723
+iteration: 229
+errorTotal: 47.7911
+learningRate:0.000997713
+iteration: 230
+errorTotal: 47.791
+learningRate:0.000997703
+iteration: 231
+errorTotal: 47.7908
+learningRate:0.000997693
+iteration: 232
+errorTotal: 47.7907
+learningRate:0.000997683
+iteration: 233
+errorTotal: 47.7906
+learningRate:0.000997673
+iteration: 234
+errorTotal: 47.7905
+learningRate:0.000997663
+iteration: 235
+errorTotal: 47.7904
+learningRate:0.000997653
+iteration: 236
+errorTotal: 47.7902
+learningRate:0.000997643
+iteration: 237
+errorTotal: 47.7901
+learningRate:0.000997633
+iteration: 238
+errorTotal: 47.79
+learningRate:0.000997623
+iteration: 239
+errorTotal: 47.7899
+learningRate:0.000997613
+iteration: 240
+errorTotal: 47.7898
+learningRate:0.000997603
+iteration: 241
+errorTotal: 47.7897
+learningRate:0.000997593
+iteration: 242
+errorTotal: 47.7896
+learningRate:0.000997583
+iteration: 243
+errorTotal: 47.7895
+learningRate:0.000997573
+iteration: 244
+errorTotal: 47.7894
+learningRate:0.000997563
+iteration: 245
+errorTotal: 47.7892
+learningRate:0.000997553
+iteration: 246
+errorTotal: 47.7891
+learningRate:0.000997543
+iteration: 247
+errorTotal: 47.789
+learningRate:0.000997533
+iteration: 248
+errorTotal: 47.7889
+learningRate:0.000997523
+iteration: 249
+errorTotal: 47.7888
+learningRate:0.000997513
+iteration: 250
+errorTotal: 47.7887
+learningRate:0.000997503
+iteration: 251
+errorTotal: 47.7886
+learningRate:0.000997493
+iteration: 252
+errorTotal: 47.7885
+learningRate:0.000997483
+iteration: 253
+errorTotal: 47.7885
+learningRate:0.000997473
+iteration: 254
+errorTotal: 47.7884
+learningRate:0.000997463
+iteration: 255
+errorTotal: 47.7883
+learningRate:0.000997453
+iteration: 256
+errorTotal: 47.7882
+learningRate:0.000997443
+iteration: 257
+errorTotal: 47.7881
+learningRate:0.000997433
+iteration: 258
+errorTotal: 47.788
+learningRate:0.000997423
+iteration: 259
+errorTotal: 47.7879
+learningRate:0.000997413
+iteration: 260
+errorTotal: 47.7878
+learningRate:0.000997403
+iteration: 261
+errorTotal: 47.7877
+learningRate:0.000997393
+iteration: 262
+errorTotal: 47.7876
+learningRate:0.000997383
+iteration: 263
+errorTotal: 47.7875
+learningRate:0.000997373
+iteration: 264
+errorTotal: 47.7874
+learningRate:0.000997363
+iteration: 265
+errorTotal: 47.7874
+learningRate:0.000997354
+iteration: 266
+errorTotal: 47.7873
+learningRate:0.000997344
+iteration: 267
+errorTotal: 47.7872
+learningRate:0.000997334
+iteration: 268
+errorTotal: 47.7871
+learningRate:0.000997324
+iteration: 269
+errorTotal: 47.787
+learningRate:0.000997314
+iteration: 270
+errorTotal: 47.7869
+learningRate:0.000997304
+iteration: 271
+errorTotal: 47.7868
+learningRate:0.000997294
+iteration: 272
+errorTotal: 47.7868
+learningRate:0.000997284
+iteration: 273
+errorTotal: 47.7867
+learningRate:0.000997274
+iteration: 274
+errorTotal: 47.7866
+learningRate:0.000997264
+iteration: 275
+errorTotal: 47.7865
+learningRate:0.000997254
+iteration: 276
+errorTotal: 47.7864
+learningRate:0.000997244
+iteration: 277
+errorTotal: 47.7863
+learningRate:0.000997234
+iteration: 278
+errorTotal: 47.7862
+learningRate:0.000997224
+iteration: 279
+errorTotal: 47.7862
+learningRate:0.000997214
+iteration: 280
+errorTotal: 47.7861
+learningRate:0.000997204
+iteration: 281
+errorTotal: 47.786
+learningRate:0.000997194
+iteration: 282
+errorTotal: 47.7859
+learningRate:0.000997184
+iteration: 283
+errorTotal: 47.7858
+learningRate:0.000997174
+iteration: 284
+errorTotal: 47.7858
+learningRate:0.000997164
+iteration: 285
+errorTotal: 47.7857
+learningRate:0.000997154
+iteration: 286
+errorTotal: 47.7856
+learningRate:0.000997144
+iteration: 287
+errorTotal: 47.7855
+learningRate:0.000997134
+iteration: 288
+errorTotal: 47.7854
+learningRate:0.000997124
+iteration: 289
+errorTotal: 47.7854
+learningRate:0.000997114
+iteration: 290
+errorTotal: 47.7853
+learningRate:0.000997104
+iteration: 291
+errorTotal: 47.7852
+learningRate:0.000997094
+iteration: 292
+errorTotal: 47.7851
+learningRate:0.000997084
+iteration: 293
+errorTotal: 47.785
+learningRate:0.000997074
+iteration: 294
+errorTotal: 47.785
+learningRate:0.000997064
+iteration: 295
+errorTotal: 47.7849
+learningRate:0.000997054
+iteration: 296
+errorTotal: 47.7848
+learningRate:0.000997044
+iteration: 297
+errorTotal: 47.7847
+learningRate:0.000997034
+iteration: 298
+errorTotal: 47.7846
+learningRate:0.000997024
+iteration: 299
+errorTotal: 47.7846
+learningRate:0.000997014
+iteration: 300
+errorTotal: 47.7845
+learningRate:0.000997004
+iteration: 301
+errorTotal: 47.7844
+learningRate:0.000996995
+iteration: 302
+errorTotal: 47.7843
+learningRate:0.000996985
+iteration: 303
+errorTotal: 47.7842
+learningRate:0.000996975
+iteration: 304
+errorTotal: 47.7842
+learningRate:0.000996965
+iteration: 305
+errorTotal: 47.7841
+learningRate:0.000996955
+iteration: 306
+errorTotal: 47.784
+learningRate:0.000996945
+iteration: 307
+errorTotal: 47.7839
+learningRate:0.000996935
+iteration: 308
+errorTotal: 47.7839
+learningRate:0.000996925
+iteration: 309
+errorTotal: 47.7838
+learningRate:0.000996915
+iteration: 310
+errorTotal: 47.7837
+learningRate:0.000996905
+iteration: 311
+errorTotal: 47.7836
+learningRate:0.000996895
+iteration: 312
+errorTotal: 47.7835
+learningRate:0.000996885
+iteration: 313
+errorTotal: 47.7835
+learningRate:0.000996875
+iteration: 314
+errorTotal: 47.7834
+learningRate:0.000996865
+iteration: 315
+errorTotal: 47.7833
+learningRate:0.000996855
+iteration: 316
+errorTotal: 47.7832
+learningRate:0.000996845
+iteration: 317
+errorTotal: 47.7832
+learningRate:0.000996835
+iteration: 318
+errorTotal: 47.7831
+learningRate:0.000996825
+iteration: 319
+errorTotal: 47.783
+learningRate:0.000996815
+iteration: 320
+errorTotal: 47.7829
+learningRate:0.000996805
+iteration: 321
+errorTotal: 47.7828
+learningRate:0.000996795
+iteration: 322
+errorTotal: 47.7828
+learningRate:0.000996785
+iteration: 323
+errorTotal: 47.7827
+learningRate:0.000996775
+iteration: 324
+errorTotal: 47.7826
+learningRate:0.000996765
+iteration: 325
+errorTotal: 47.7825
+learningRate:0.000996755
+iteration: 326
+errorTotal: 47.7825
+learningRate:0.000996745
+iteration: 327
+errorTotal: 47.7824
+learningRate:0.000996735
+iteration: 328
+errorTotal: 47.7823
+learningRate:0.000996725
+iteration: 329
+errorTotal: 47.7822
+learningRate:0.000996715
+iteration: 330
+errorTotal: 47.7821
+learningRate:0.000996705
+iteration: 331
+errorTotal: 47.7821
+learningRate:0.000996695
+iteration: 332
+errorTotal: 47.782
+learningRate:0.000996686
+iteration: 333
+errorTotal: 47.7819
+learningRate:0.000996676
+iteration: 334
+errorTotal: 47.7818
+learningRate:0.000996666
+iteration: 335
+errorTotal: 47.7818
+learningRate:0.000996656
+iteration: 336
+errorTotal: 47.7817
+learningRate:0.000996646
+iteration: 337
+errorTotal: 47.7816
+learningRate:0.000996636
+iteration: 338
+errorTotal: 47.7815
+learningRate:0.000996626
+iteration: 339
+errorTotal: 47.7815
+learningRate:0.000996616
+iteration: 340
+errorTotal: 47.7814
+learningRate:0.000996606
+iteration: 341
+errorTotal: 47.7813
+learningRate:0.000996596
+iteration: 342
+errorTotal: 47.7812
+learningRate:0.000996586
+iteration: 343
+errorTotal: 47.7811
+learningRate:0.000996576
+iteration: 344
+errorTotal: 47.7811
+learningRate:0.000996566
+iteration: 345
+errorTotal: 47.781
+learningRate:0.000996556
+iteration: 346
+errorTotal: 47.7809
+learningRate:0.000996546
+iteration: 347
+errorTotal: 47.7808
+learningRate:0.000996536
+iteration: 348
+errorTotal: 47.7808
+learningRate:0.000996526
+iteration: 349
+errorTotal: 47.7807
+learningRate:0.000996516
+iteration: 350
+errorTotal: 47.7806
+learningRate:0.000996506
+iteration: 351
+errorTotal: 47.7805
+learningRate:0.000996496
+iteration: 352
+errorTotal: 47.7805
+learningRate:0.000996486
+iteration: 353
+errorTotal: 47.7804
+learningRate:0.000996476
+iteration: 354
+errorTotal: 47.7803
+learningRate:0.000996466
+iteration: 355
+errorTotal: 47.7802
+learningRate:0.000996456
+iteration: 356
+errorTotal: 47.7801
+learningRate:0.000996446
+iteration: 357
+errorTotal: 47.7801
+learningRate:0.000996436
+iteration: 358
+errorTotal: 47.78
+learningRate:0.000996426
+iteration: 359
+errorTotal: 47.7799
+learningRate:0.000996416
+iteration: 360
+errorTotal: 47.7798
+learningRate:0.000996406
+iteration: 361
+errorTotal: 47.7798
+learningRate:0.000996397
+iteration: 362
+errorTotal: 47.7797
+learningRate:0.000996387
+iteration: 363
+errorTotal: 47.7796
+learningRate:0.000996377
+iteration: 364
+errorTotal: 47.7795
+learningRate:0.000996367
+iteration: 365
+errorTotal: 47.7795
+learningRate:0.000996357
+iteration: 366
+errorTotal: 47.7794
+learningRate:0.000996347
+iteration: 367
+errorTotal: 47.7793
+learningRate:0.000996337
+iteration: 368
+errorTotal: 47.7792
+learningRate:0.000996327
+iteration: 369
+errorTotal: 47.7791
+learningRate:0.000996317
+iteration: 370
+errorTotal: 47.7791
+learningRate:0.000996307
+iteration: 371
+errorTotal: 47.779
+learningRate:0.000996297
+iteration: 372
+errorTotal: 47.7789
+learningRate:0.000996287
+iteration: 373
+errorTotal: 47.7788
+learningRate:0.000996277
+iteration: 374
+errorTotal: 47.7788
+learningRate:0.000996267
+iteration: 375
+errorTotal: 47.7787
+learningRate:0.000996257
+iteration: 376
+errorTotal: 47.7786
+learningRate:0.000996247
+iteration: 377
+errorTotal: 47.7785
+learningRate:0.000996237
+iteration: 378
+errorTotal: 47.7785
+learningRate:0.000996227
+iteration: 379
+errorTotal: 47.7784
+learningRate:0.000996217
+iteration: 380
+errorTotal: 47.7783
+learningRate:0.000996207
+iteration: 381
+errorTotal: 47.7782
+learningRate:0.000996197
+iteration: 382
+errorTotal: 47.7781
+learningRate:0.000996187
+iteration: 383
+errorTotal: 47.7781
+learningRate:0.000996177
+iteration: 384
+errorTotal: 47.778
+learningRate:0.000996167
+iteration: 385
+errorTotal: 47.7779
+learningRate:0.000996157
+iteration: 386
+errorTotal: 47.7778
+learningRate:0.000996147
+iteration: 387
+errorTotal: 47.7778
+learningRate:0.000996137
+iteration: 388
+errorTotal: 47.7777
+learningRate:0.000996128
+iteration: 389
+errorTotal: 47.7776
+learningRate:0.000996118
+iteration: 390
+errorTotal: 47.7775
+learningRate:0.000996108
+iteration: 391
+errorTotal: 47.7774
+learningRate:0.000996098
+iteration: 392
+errorTotal: 47.7774
+learningRate:0.000996088
+iteration: 393
+errorTotal: 47.7773
+learningRate:0.000996078
+iteration: 394
+errorTotal: 47.7772
+learningRate:0.000996068
+iteration: 395
+errorTotal: 47.7771
+learningRate:0.000996058
+iteration: 396
+errorTotal: 47.7771
+learningRate:0.000996048
+iteration: 397
+errorTotal: 47.777
+learningRate:0.000996038
+iteration: 398
+errorTotal: 47.7769
+learningRate:0.000996028
+iteration: 399
+errorTotal: 47.7768
+learningRate:0.000996018
+iteration: 400
+errorTotal: 47.7768
+learningRate:0.000996008
+iteration: 401
+errorTotal: 47.7767
+learningRate:0.000995998
+iteration: 402
+errorTotal: 47.7766
+learningRate:0.000995988
+iteration: 403
+errorTotal: 47.7765
+learningRate:0.000995978
+iteration: 404
+errorTotal: 47.7764
+learningRate:0.000995968
+iteration: 405
+errorTotal: 47.7764
+learningRate:0.000995958
+iteration: 406
+errorTotal: 47.7763
+learningRate:0.000995948
+iteration: 407
+errorTotal: 47.7762
+learningRate:0.000995938
+iteration: 408
+errorTotal: 47.7761
+learningRate:0.000995928
+iteration: 409
+errorTotal: 47.7761
+learningRate:0.000995918
+iteration: 410
+errorTotal: 47.776
+learningRate:0.000995908
+iteration: 411
+errorTotal: 47.7759
+learningRate:0.000995898
+iteration: 412
+errorTotal: 47.7758
+learningRate:0.000995888
+iteration: 413
+errorTotal: 47.7757
+learningRate:0.000995879
+iteration: 414
+errorTotal: 47.7757
+learningRate:0.000995869
+iteration: 415
+errorTotal: 47.7756
+learningRate:0.000995859
+iteration: 416
+errorTotal: 47.7755
+learningRate:0.000995849
+iteration: 417
+errorTotal: 47.7754
+learningRate:0.000995839
+iteration: 418
+errorTotal: 47.7754
+learningRate:0.000995829
+iteration: 419
+errorTotal: 47.7753
+learningRate:0.000995819
+iteration: 420
+errorTotal: 47.7752
+learningRate:0.000995809
+iteration: 421
+errorTotal: 47.7751
+learningRate:0.000995799
+iteration: 422
+errorTotal: 47.7751
+learningRate:0.000995789
+iteration: 423
+errorTotal: 47.775
+learningRate:0.000995779
+iteration: 424
+errorTotal: 47.7749
+learningRate:0.000995769
+iteration: 425
+errorTotal: 47.7748
+learningRate:0.000995759
+iteration: 426
+errorTotal: 47.7747
+learningRate:0.000995749
+iteration: 427
+errorTotal: 47.7747
+learningRate:0.000995739
+iteration: 428
+errorTotal: 47.7746
+learningRate:0.000995729
+iteration: 429
+errorTotal: 47.7745
+learningRate:0.000995719
+iteration: 430
+errorTotal: 47.7744
+learningRate:0.000995709
+iteration: 431
+errorTotal: 47.7744
+learningRate:0.000995699
+iteration: 432
+errorTotal: 47.7743
+learningRate:0.000995689
+iteration: 433
+errorTotal: 47.7742
+learningRate:0.000995679
+iteration: 434
+errorTotal: 47.7741
+learningRate:0.000995669
+iteration: 435
+errorTotal: 47.774
+learningRate:0.000995659
+iteration: 436
+errorTotal: 47.774
+learningRate:0.000995649
+iteration: 437
+errorTotal: 47.7739
+learningRate:0.00099564
+iteration: 438
+errorTotal: 47.7738
+learningRate:0.00099563
+iteration: 439
+errorTotal: 47.7737
+learningRate:0.00099562
+iteration: 440
+errorTotal: 47.7737
+learningRate:0.00099561
+iteration: 441
+errorTotal: 47.7736
+learningRate:0.0009956
+iteration: 442
+errorTotal: 47.7735
+learningRate:0.00099559
+iteration: 443
+errorTotal: 47.7734
+learningRate:0.00099558
+iteration: 444
+errorTotal: 47.7733
+learningRate:0.00099557
+iteration: 445
+errorTotal: 47.7733
+learningRate:0.00099556
+iteration: 446
+errorTotal: 47.7732
+learningRate:0.00099555
+iteration: 447
+errorTotal: 47.7731
+learningRate:0.00099554
+iteration: 448
+errorTotal: 47.773
+learningRate:0.00099553
+iteration: 449
+errorTotal: 47.773
+learningRate:0.00099552
+iteration: 450
+errorTotal: 47.7729
+learningRate:0.00099551
+iteration: 451
+errorTotal: 47.7728
+learningRate:0.0009955
+iteration: 452
+errorTotal: 47.7727
+learningRate:0.00099549
+iteration: 453
+errorTotal: 47.7726
+learningRate:0.00099548
+iteration: 454
+errorTotal: 47.7726
+learningRate:0.00099547
+iteration: 455
+errorTotal: 47.7725
+learningRate:0.00099546
+iteration: 456
+errorTotal: 47.7724
+learningRate:0.00099545
+iteration: 457
+errorTotal: 47.7723
+learningRate:0.00099544
+iteration: 458
+errorTotal: 47.7723
+learningRate:0.00099543
+iteration: 459
+errorTotal: 47.7722
+learningRate:0.000995421
+iteration: 460
+errorTotal: 47.7721
+learningRate:0.000995411
+iteration: 461
+errorTotal: 47.772
+learningRate:0.000995401
+iteration: 462
+errorTotal: 47.7719
+learningRate:0.000995391
+iteration: 463
+errorTotal: 47.7719
+learningRate:0.000995381
+iteration: 464
+errorTotal: 47.7718
+learningRate:0.000995371
+iteration: 465
+errorTotal: 47.7717
+learningRate:0.000995361
+iteration: 466
+errorTotal: 47.7716
+learningRate:0.000995351
+iteration: 467
+errorTotal: 47.7716
+learningRate:0.000995341
+iteration: 468
+errorTotal: 47.7715
+learningRate:0.000995331
+iteration: 469
+errorTotal: 47.7714
+learningRate:0.000995321
+iteration: 470
+errorTotal: 47.7713
+learningRate:0.000995311
+iteration: 471
+errorTotal: 47.7712
+learningRate:0.000995301
+iteration: 472
+errorTotal: 47.7712
+learningRate:0.000995291
+iteration: 473
+errorTotal: 47.7711
+learningRate:0.000995281
+iteration: 474
+errorTotal: 47.771
+learningRate:0.000995271
+iteration: 475
+errorTotal: 47.7709
+learningRate:0.000995261
+iteration: 476
+errorTotal: 47.7709
+learningRate:0.000995251
+iteration: 477
+errorTotal: 47.7708
+learningRate:0.000995241
+iteration: 478
+errorTotal: 47.7707
+learningRate:0.000995231
+iteration: 479
+errorTotal: 47.7706
+learningRate:0.000995221
+iteration: 480
+errorTotal: 47.7705
+learningRate:0.000995212
+iteration: 481
+errorTotal: 47.7705
+learningRate:0.000995202
+iteration: 482
+errorTotal: 47.7704
+learningRate:0.000995192
+iteration: 483
+errorTotal: 47.7703
+learningRate:0.000995182
+iteration: 484
+errorTotal: 47.7702
+learningRate:0.000995172
+iteration: 485
+errorTotal: 47.7702
+learningRate:0.000995162
+iteration: 486
+errorTotal: 47.7701
+learningRate:0.000995152
+iteration: 487
+errorTotal: 47.77
+learningRate:0.000995142
+iteration: 488
+errorTotal: 47.7699
+learningRate:0.000995132
+iteration: 489
+errorTotal: 47.7698
+learningRate:0.000995122
+iteration: 490
+errorTotal: 47.7698
+learningRate:0.000995112
+iteration: 491
+errorTotal: 47.7697
+learningRate:0.000995102
+iteration: 492
+errorTotal: 47.7696
+learningRate:0.000995092
+iteration: 493
+errorTotal: 47.7695
+learningRate:0.000995082
+iteration: 494
+errorTotal: 47.7694
+learningRate:0.000995072
+iteration: 495
+errorTotal: 47.7694
+learningRate:0.000995062
+iteration: 496
+errorTotal: 47.7693
+learningRate:0.000995052
+iteration: 497
+errorTotal: 47.7692
+learningRate:0.000995042
+iteration: 498
+errorTotal: 47.7691
+learningRate:0.000995032
+iteration: 499
+errorTotal: 47.7691
+learningRate:0.000995022
+iteration: 500
+errorTotal: 47.769
+learningRate:0.000995012
+iteration: 501
+errorTotal: 47.7689
+learningRate:0.000995003
+iteration: 502
+errorTotal: 47.7688
+learningRate:0.000994993
+iteration: 503
+errorTotal: 47.7687
+learningRate:0.000994983
+iteration: 504
+errorTotal: 47.7687
+learningRate:0.000994973
+iteration: 505
+errorTotal: 47.7686
+learningRate:0.000994963
+iteration: 506
+errorTotal: 47.7685
+learningRate:0.000994953
+iteration: 507
+errorTotal: 47.7684
+learningRate:0.000994943
+iteration: 508
+errorTotal: 47.7684
+learningRate:0.000994933
+iteration: 509
+errorTotal: 47.7683
+learningRate:0.000994923
+iteration: 510
+errorTotal: 47.7682
+learningRate:0.000994913
+iteration: 511
+errorTotal: 47.7681
+learningRate:0.000994903
+iteration: 512
+errorTotal: 47.768
+learningRate:0.000994893
+iteration: 513
+errorTotal: 47.768
+learningRate:0.000994883
+iteration: 514
+errorTotal: 47.7679
+learningRate:0.000994873
+iteration: 515
+errorTotal: 47.7678
+learningRate:0.000994863
+iteration: 516
+errorTotal: 47.7677
+learningRate:0.000994853
+iteration: 517
+errorTotal: 47.7677
+learningRate:0.000994843
+iteration: 518
+errorTotal: 47.7676
+learningRate:0.000994833
+iteration: 519
+errorTotal: 47.7675
+learningRate:0.000994823
+iteration: 520
+errorTotal: 47.7674
+learningRate:0.000994813
+iteration: 521
+errorTotal: 47.7673
+learningRate:0.000994804
+iteration: 522
+errorTotal: 47.7673
+learningRate:0.000994794
+iteration: 523
+errorTotal: 47.7672
+learningRate:0.000994784
+iteration: 524
+errorTotal: 47.7671
+learningRate:0.000994774
+iteration: 525
+errorTotal: 47.767
+learningRate:0.000994764
+iteration: 526
+errorTotal: 47.7669
+learningRate:0.000994754
+iteration: 527
+errorTotal: 47.7669
+learningRate:0.000994744
+iteration: 528
+errorTotal: 47.7668
+learningRate:0.000994734
+iteration: 529
+errorTotal: 47.7667
+learningRate:0.000994724
+iteration: 530
+errorTotal: 47.7666
+learningRate:0.000994714
+iteration: 531
+errorTotal: 47.7666
+learningRate:0.000994704
+iteration: 532
+errorTotal: 47.7665
+learningRate:0.000994694
+iteration: 533
+errorTotal: 47.7664
+learningRate:0.000994684
+iteration: 534
+errorTotal: 47.7663
+learningRate:0.000994674
+iteration: 535
+errorTotal: 47.7662
+learningRate:0.000994664
+iteration: 536
+errorTotal: 47.7662
+learningRate:0.000994654
+iteration: 537
+errorTotal: 47.7661
+learningRate:0.000994644
+iteration: 538
+errorTotal: 47.766
+learningRate:0.000994634
+iteration: 539
+errorTotal: 47.7659
+learningRate:0.000994624
+iteration: 540
+errorTotal: 47.7658
+learningRate:0.000994615
+iteration: 541
+errorTotal: 47.7658
+learningRate:0.000994605
+iteration: 542
+errorTotal: 47.7657
+learningRate:0.000994595
+iteration: 543
+errorTotal: 47.7656
+learningRate:0.000994585
+iteration: 544
+errorTotal: 47.7655
+learningRate:0.000994575
+iteration: 545
+errorTotal: 47.7655
+learningRate:0.000994565
+iteration: 546
+errorTotal: 47.7654
+learningRate:0.000994555
+iteration: 547
+errorTotal: 47.7653
+learningRate:0.000994545
+iteration: 548
+errorTotal: 47.7652
+learningRate:0.000994535
+iteration: 549
+errorTotal: 47.7651
+learningRate:0.000994525
+iteration: 550
+errorTotal: 47.7651
+learningRate:0.000994515
+iteration: 551
+errorTotal: 47.765
+learningRate:0.000994505
+iteration: 552
+errorTotal: 47.7649
+learningRate:0.000994495
+iteration: 553
+errorTotal: 47.7648
+learningRate:0.000994485
+iteration: 554
+errorTotal: 47.7647
+learningRate:0.000994475
+iteration: 555
+errorTotal: 47.7647
+learningRate:0.000994465
+iteration: 556
+errorTotal: 47.7646
+learningRate:0.000994455
+iteration: 557
+errorTotal: 47.7645
+learningRate:0.000994445
+iteration: 558
+errorTotal: 47.7644
+learningRate:0.000994436
+iteration: 559
+errorTotal: 47.7644
+learningRate:0.000994426
+iteration: 560
+errorTotal: 47.7643
+learningRate:0.000994416
+iteration: 561
+errorTotal: 47.7642
+learningRate:0.000994406
+iteration: 562
+errorTotal: 47.7641
+learningRate:0.000994396
+iteration: 563
+errorTotal: 47.764
+learningRate:0.000994386
+iteration: 564
+errorTotal: 47.764
+learningRate:0.000994376
+iteration: 565
+errorTotal: 47.7639
+learningRate:0.000994366
+iteration: 566
+errorTotal: 47.7638
+learningRate:0.000994356
+iteration: 567
+errorTotal: 47.7637
+learningRate:0.000994346
+iteration: 568
+errorTotal: 47.7636
+learningRate:0.000994336
+iteration: 569
+errorTotal: 47.7636
+learningRate:0.000994326
+iteration: 570
+errorTotal: 47.7635
+learningRate:0.000994316
+iteration: 571
+errorTotal: 47.7634
+learningRate:0.000994306
+iteration: 572
+errorTotal: 47.7633
+learningRate:0.000994296
+iteration: 573
+errorTotal: 47.7633
+learningRate:0.000994286
+iteration: 574
+errorTotal: 47.7632
+learningRate:0.000994276
+iteration: 575
+errorTotal: 47.7631
+learningRate:0.000994266
+iteration: 576
+errorTotal: 47.763
+learningRate:0.000994257
+iteration: 577
+errorTotal: 47.7629
+learningRate:0.000994247
+iteration: 578
+errorTotal: 47.7629
+learningRate:0.000994237
+iteration: 579
+errorTotal: 47.7628
+learningRate:0.000994227
+iteration: 580
+errorTotal: 47.7627
+learningRate:0.000994217
+iteration: 581
+errorTotal: 47.7626
+learningRate:0.000994207
+iteration: 582
+errorTotal: 47.7625
+learningRate:0.000994197
+iteration: 583
+errorTotal: 47.7625
+learningRate:0.000994187
+iteration: 584
+errorTotal: 47.7624
+learningRate:0.000994177
+iteration: 585
+errorTotal: 47.7623
+learningRate:0.000994167
+iteration: 586
+errorTotal: 47.7622
+learningRate:0.000994157
+iteration: 587
+errorTotal: 47.7622
+learningRate:0.000994147
+iteration: 588
+errorTotal: 47.7621
+learningRate:0.000994137
+iteration: 589
+errorTotal: 47.762
+learningRate:0.000994127
+iteration: 590
+errorTotal: 47.7619
+learningRate:0.000994117
+iteration: 591
+errorTotal: 47.7618
+learningRate:0.000994107
+iteration: 592
+errorTotal: 47.7618
+learningRate:0.000994097
+iteration: 593
+errorTotal: 47.7617
+learningRate:0.000994088
+iteration: 594
+errorTotal: 47.7616
+learningRate:0.000994078
+iteration: 595
+errorTotal: 47.7615
+learningRate:0.000994068
+iteration: 596
+errorTotal: 47.7614
+learningRate:0.000994058
+iteration: 597
+errorTotal: 47.7614
+learningRate:0.000994048
+iteration: 598
+errorTotal: 47.7613
+learningRate:0.000994038
+iteration: 599
+errorTotal: 47.7612
+learningRate:0.000994028
+iteration: 600
+errorTotal: 47.7611
+learningRate:0.000994018
+iteration: 601
+errorTotal: 47.761
+learningRate:0.000994008
+iteration: 602
+errorTotal: 47.761
+learningRate:0.000993998
+iteration: 603
+errorTotal: 47.7609
+learningRate:0.000993988
+iteration: 604
+errorTotal: 47.7608
+learningRate:0.000993978
+iteration: 605
+errorTotal: 47.7607
+learningRate:0.000993968
+iteration: 606
+errorTotal: 47.7607
+learningRate:0.000993958
+iteration: 607
+errorTotal: 47.7606
+learningRate:0.000993948
+iteration: 608
+errorTotal: 47.7605
+learningRate:0.000993938
+iteration: 609
+errorTotal: 47.7604
+learningRate:0.000993929
+iteration: 610
+errorTotal: 47.7603
+learningRate:0.000993919
+iteration: 611
+errorTotal: 47.7603
+learningRate:0.000993909
+iteration: 612
+errorTotal: 47.7602
+learningRate:0.000993899
+iteration: 613
+errorTotal: 47.7601
+learningRate:0.000993889
+iteration: 614
+errorTotal: 47.76
+learningRate:0.000993879
+iteration: 615
+errorTotal: 47.7599
+learningRate:0.000993869
+iteration: 616
+errorTotal: 47.7599
+learningRate:0.000993859
+iteration: 617
+errorTotal: 47.7598
+learningRate:0.000993849
+iteration: 618
+errorTotal: 47.7597
+learningRate:0.000993839
+iteration: 619
+errorTotal: 47.7596
+learningRate:0.000993829
+iteration: 620
+errorTotal: 47.7595
+learningRate:0.000993819
+iteration: 621
+errorTotal: 47.7595
+learningRate:0.000993809
+iteration: 622
+errorTotal: 47.7594
+learningRate:0.000993799
+iteration: 623
+errorTotal: 47.7593
+learningRate:0.000993789
+iteration: 624
+errorTotal: 47.7592
+learningRate:0.000993779
+iteration: 625
+errorTotal: 47.7592
+learningRate:0.000993769
+iteration: 626
+errorTotal: 47.7591
+learningRate:0.00099376
+iteration: 627
+errorTotal: 47.759
+learningRate:0.00099375
+iteration: 628
+errorTotal: 47.7589
+learningRate:0.00099374
+iteration: 629
+errorTotal: 47.7588
+learningRate:0.00099373
+iteration: 630
+errorTotal: 47.7588
+learningRate:0.00099372
+iteration: 631
+errorTotal: 47.7587
+learningRate:0.00099371
+iteration: 632
+errorTotal: 47.7586
+learningRate:0.0009937
+iteration: 633
+errorTotal: 47.7585
+learningRate:0.00099369
+iteration: 634
+errorTotal: 47.7584
+learningRate:0.00099368
+iteration: 635
+errorTotal: 47.7584
+learningRate:0.00099367
+iteration: 636
+errorTotal: 47.7583
+learningRate:0.00099366
+iteration: 637
+errorTotal: 47.7582
+learningRate:0.00099365
+iteration: 638
+errorTotal: 47.7581
+learningRate:0.00099364
+iteration: 639
+errorTotal: 47.758
+learningRate:0.00099363
+iteration: 640
+errorTotal: 47.758
+learningRate:0.00099362
+iteration: 641
+errorTotal: 47.7579
+learningRate:0.000993611
+iteration: 642
+errorTotal: 47.7578
+learningRate:0.000993601
+iteration: 643
+errorTotal: 47.7577
+learningRate:0.000993591
+iteration: 644
+errorTotal: 47.7576
+learningRate:0.000993581
+iteration: 645
+errorTotal: 47.7576
+learningRate:0.000993571
+iteration: 646
+errorTotal: 47.7575
+learningRate:0.000993561
+iteration: 647
+errorTotal: 47.7574
+learningRate:0.000993551
+iteration: 648
+errorTotal: 47.7573
+learningRate:0.000993541
+iteration: 649
+errorTotal: 47.7573
+learningRate:0.000993531
+iteration: 650
+errorTotal: 47.7572
+learningRate:0.000993521
+iteration: 651
+errorTotal: 47.7571
+learningRate:0.000993511
+iteration: 652
+errorTotal: 47.757
+learningRate:0.000993501
+iteration: 653
+errorTotal: 47.7569
+learningRate:0.000993491
+iteration: 654
+errorTotal: 47.7569
+learningRate:0.000993481
+iteration: 655
+errorTotal: 47.7568
+learningRate:0.000993471
+iteration: 656
+errorTotal: 47.7567
+learningRate:0.000993461
+iteration: 657
+errorTotal: 47.7566
+learningRate:0.000993452
+iteration: 658
+errorTotal: 47.7565
+learningRate:0.000993442
+iteration: 659
+errorTotal: 47.7565
+learningRate:0.000993432
+iteration: 660
+errorTotal: 47.7564
+learningRate:0.000993422
+iteration: 661
+errorTotal: 47.7563
+learningRate:0.000993412
+iteration: 662
+errorTotal: 47.7562
+learningRate:0.000993402
+iteration: 663
+errorTotal: 47.7561
+learningRate:0.000993392
+iteration: 664
+errorTotal: 47.7561
+learningRate:0.000993382
+iteration: 665
+errorTotal: 47.756
+learningRate:0.000993372
+iteration: 666
+errorTotal: 47.7559
+learningRate:0.000993362
+iteration: 667
+errorTotal: 47.7558
+learningRate:0.000993352
+iteration: 668
+errorTotal: 47.7557
+learningRate:0.000993342
+iteration: 669
+errorTotal: 47.7557
+learningRate:0.000993332
+iteration: 670
+errorTotal: 47.7556
+learningRate:0.000993322
+iteration: 671
+errorTotal: 47.7555
+learningRate:0.000993312
+iteration: 672
+errorTotal: 47.7554
+learningRate:0.000993303
+iteration: 673
+errorTotal: 47.7553
+learningRate:0.000993293
+iteration: 674
+errorTotal: 47.7553
+learningRate:0.000993283
+iteration: 675
+errorTotal: 47.7552
+learningRate:0.000993273
+iteration: 676
+errorTotal: 47.7551
+learningRate:0.000993263
+iteration: 677
+errorTotal: 47.755
+learningRate:0.000993253
+iteration: 678
+errorTotal: 47.7549
+learningRate:0.000993243
+iteration: 679
+errorTotal: 47.7549
+learningRate:0.000993233
+iteration: 680
+errorTotal: 47.7548
+learningRate:0.000993223
+iteration: 681
+errorTotal: 47.7547
+learningRate:0.000993213
+iteration: 682
+errorTotal: 47.7546
+learningRate:0.000993203
+iteration: 683
+errorTotal: 47.7545
+learningRate:0.000993193
+iteration: 684
+errorTotal: 47.7545
+learningRate:0.000993183
+iteration: 685
+errorTotal: 47.7544
+learningRate:0.000993173
+iteration: 686
+errorTotal: 47.7543
+learningRate:0.000993163
+iteration: 687
+errorTotal: 47.7542
+learningRate:0.000993154
+iteration: 688
+errorTotal: 47.7541
+learningRate:0.000993144
+iteration: 689
+errorTotal: 47.7541
+learningRate:0.000993134
+iteration: 690
+errorTotal: 47.754
+learningRate:0.000993124
+iteration: 691
+errorTotal: 47.7539
+learningRate:0.000993114
+iteration: 692
+errorTotal: 47.7538
+learningRate:0.000993104
+iteration: 693
+errorTotal: 47.7538
+learningRate:0.000993094
+iteration: 694
+errorTotal: 47.7537
+learningRate:0.000993084
+iteration: 695
+errorTotal: 47.7536
+learningRate:0.000993074
+iteration: 696
+errorTotal: 47.7535
+learningRate:0.000993064
+iteration: 697
+errorTotal: 47.7534
+learningRate:0.000993054
+iteration: 698
+errorTotal: 47.7534
+learningRate:0.000993044
+iteration: 699
+errorTotal: 47.7533
+learningRate:0.000993034
+iteration: 700
+errorTotal: 47.7532
+learningRate:0.000993024
+iteration: 701
+errorTotal: 47.7531
+learningRate:0.000993015
+iteration: 702
+errorTotal: 47.753
+learningRate:0.000993005
+iteration: 703
+errorTotal: 47.753
+learningRate:0.000992995
+iteration: 704
+errorTotal: 47.7529
+learningRate:0.000992985
+iteration: 705
+errorTotal: 47.7528
+learningRate:0.000992975
+iteration: 706
+errorTotal: 47.7527
+learningRate:0.000992965
+iteration: 707
+errorTotal: 47.7526
+learningRate:0.000992955
+iteration: 708
+errorTotal: 47.7526
+learningRate:0.000992945
+iteration: 709
+errorTotal: 47.7525
+learningRate:0.000992935
+iteration: 710
+errorTotal: 47.7524
+learningRate:0.000992925
+iteration: 711
+errorTotal: 47.7523
+learningRate:0.000992915
+iteration: 712
+errorTotal: 47.7522
+learningRate:0.000992905
+iteration: 713
+errorTotal: 47.7522
+learningRate:0.000992895
+iteration: 714
+errorTotal: 47.7521
+learningRate:0.000992885
+iteration: 715
+errorTotal: 47.752
+learningRate:0.000992876
+iteration: 716
+errorTotal: 47.7519
+learningRate:0.000992866
+iteration: 717
+errorTotal: 47.7518
+learningRate:0.000992856
+iteration: 718
+errorTotal: 47.7518
+learningRate:0.000992846
+iteration: 719
+errorTotal: 47.7517
+learningRate:0.000992836
+iteration: 720
+errorTotal: 47.7516
+learningRate:0.000992826
+iteration: 721
+errorTotal: 47.7515
+learningRate:0.000992816
+iteration: 722
+errorTotal: 47.7514
+learningRate:0.000992806
+iteration: 723
+errorTotal: 47.7514
+learningRate:0.000992796
+iteration: 724
+errorTotal: 47.7513
+learningRate:0.000992786
+iteration: 725
+errorTotal: 47.7512
+learningRate:0.000992776
+iteration: 726
+errorTotal: 47.7511
+learningRate:0.000992766
+iteration: 727
+errorTotal: 47.751
+learningRate:0.000992756
+iteration: 728
+errorTotal: 47.7509
+learningRate:0.000992746
+iteration: 729
+errorTotal: 47.7509
+learningRate:0.000992737
+iteration: 730
+errorTotal: 47.7508
+learningRate:0.000992727
+iteration: 731
+errorTotal: 47.7507
+learningRate:0.000992717
+iteration: 732
+errorTotal: 47.7506
+learningRate:0.000992707
+iteration: 733
+errorTotal: 47.7505
+learningRate:0.000992697
+iteration: 734
+errorTotal: 47.7505
+learningRate:0.000992687
+iteration: 735
+errorTotal: 47.7504
+learningRate:0.000992677
+iteration: 736
+errorTotal: 47.7503
+learningRate:0.000992667
+iteration: 737
+errorTotal: 47.7502
+learningRate:0.000992657
+iteration: 738
+errorTotal: 47.7501
+learningRate:0.000992647
+iteration: 739
+errorTotal: 47.7501
+learningRate:0.000992637
+iteration: 740
+errorTotal: 47.75
+learningRate:0.000992627
+iteration: 741
+errorTotal: 47.7499
+learningRate:0.000992617
+iteration: 742
+errorTotal: 47.7498
+learningRate:0.000992607
+iteration: 743
+errorTotal: 47.7497
+learningRate:0.000992598
+iteration: 744
+errorTotal: 47.7497
+learningRate:0.000992588
+iteration: 745
+errorTotal: 47.7496
+learningRate:0.000992578
+iteration: 746
+errorTotal: 47.7495
+learningRate:0.000992568
+iteration: 747
+errorTotal: 47.7494
+learningRate:0.000992558
+iteration: 748
+errorTotal: 47.7493
+learningRate:0.000992548
+iteration: 749
+errorTotal: 47.7493
+learningRate:0.000992538
+iteration: 750
+errorTotal: 47.7492
+learningRate:0.000992528
+iteration: 751
+errorTotal: 47.7491
+learningRate:0.000992518
+iteration: 752
+errorTotal: 47.749
+learningRate:0.000992508
+iteration: 753
+errorTotal: 47.7489
+learningRate:0.000992498
+iteration: 754
+errorTotal: 47.7489
+learningRate:0.000992488
+iteration: 755
+errorTotal: 47.7488
+learningRate:0.000992478
+iteration: 756
+errorTotal: 47.7487
+learningRate:0.000992469
+iteration: 757
+errorTotal: 47.7486
+learningRate:0.000992459
+iteration: 758
+errorTotal: 47.7485
+learningRate:0.000992449
+iteration: 759
+errorTotal: 47.7485
+learningRate:0.000992439
+iteration: 760
+errorTotal: 47.7484
+learningRate:0.000992429
+iteration: 761
+errorTotal: 47.7483
+learningRate:0.000992419
+iteration: 762
+errorTotal: 47.7482
+learningRate:0.000992409
+iteration: 763
+errorTotal: 47.7481
+learningRate:0.000992399
+iteration: 764
+errorTotal: 47.7481
+learningRate:0.000992389
+iteration: 765
+errorTotal: 47.748
+learningRate:0.000992379
+iteration: 766
+errorTotal: 47.7479
+learningRate:0.000992369
+iteration: 767
+errorTotal: 47.7478
+learningRate:0.000992359
+iteration: 768
+errorTotal: 47.7477
+learningRate:0.000992349
+iteration: 769
+errorTotal: 47.7476
+learningRate:0.000992339
+iteration: 770
+errorTotal: 47.7476
+learningRate:0.00099233
+iteration: 771
+errorTotal: 47.7475
+learningRate:0.00099232
+iteration: 772
+errorTotal: 47.7474
+learningRate:0.00099231
+iteration: 773
+errorTotal: 47.7473
+learningRate:0.0009923
+iteration: 774
+errorTotal: 47.7472
+learningRate:0.00099229
+iteration: 775
+errorTotal: 47.7472
+learningRate:0.00099228
+iteration: 776
+errorTotal: 47.7471
+learningRate:0.00099227
+iteration: 777
+errorTotal: 47.747
+learningRate:0.00099226
+iteration: 778
+errorTotal: 47.7469
+learningRate:0.00099225
+iteration: 779
+errorTotal: 47.7468
+learningRate:0.00099224
+iteration: 780
+errorTotal: 47.7468
+learningRate:0.00099223
+iteration: 781
+errorTotal: 47.7467
+learningRate:0.00099222
+iteration: 782
+errorTotal: 47.7466
+learningRate:0.00099221
+iteration: 783
+errorTotal: 47.7465
+learningRate:0.000992201
+iteration: 784
+errorTotal: 47.7464
+learningRate:0.000992191
+iteration: 785
+errorTotal: 47.7464
+learningRate:0.000992181
+iteration: 786
+errorTotal: 47.7463
+learningRate:0.000992171
+iteration: 787
+errorTotal: 47.7462
+learningRate:0.000992161
+iteration: 788
+errorTotal: 47.7461
+learningRate:0.000992151
+iteration: 789
+errorTotal: 47.746
+learningRate:0.000992141
+iteration: 790
+errorTotal: 47.7459
+learningRate:0.000992131
+iteration: 791
+errorTotal: 47.7459
+learningRate:0.000992121
+iteration: 792
+errorTotal: 47.7458
+learningRate:0.000992111
+iteration: 793
+errorTotal: 47.7457
+learningRate:0.000992101
+iteration: 794
+errorTotal: 47.7456
+learningRate:0.000992091
+iteration: 795
+errorTotal: 47.7455
+learningRate:0.000992082
+iteration: 796
+errorTotal: 47.7455
+learningRate:0.000992072
+iteration: 797
+errorTotal: 47.7454
+learningRate:0.000992062
+iteration: 798
+errorTotal: 47.7453
+learningRate:0.000992052
+iteration: 799
+errorTotal: 47.7452
+learningRate:0.000992042
+iteration: 800
+errorTotal: 47.7451
+learningRate:0.000992032
+iteration: 801
+errorTotal: 47.7451
+learningRate:0.000992022
+iteration: 802
+errorTotal: 47.745
+learningRate:0.000992012
+iteration: 803
+errorTotal: 47.7449
+learningRate:0.000992002
+iteration: 804
+errorTotal: 47.7448
+learningRate:0.000991992
+iteration: 805
+errorTotal: 47.7447
+learningRate:0.000991982
+iteration: 806
+errorTotal: 47.7446
+learningRate:0.000991972
+iteration: 807
+errorTotal: 47.7446
+learningRate:0.000991962
+iteration: 808
+errorTotal: 47.7445
+learningRate:0.000991953
+iteration: 809
+errorTotal: 47.7444
+learningRate:0.000991943
+iteration: 810
+errorTotal: 47.7443
+learningRate:0.000991933
+iteration: 811
+errorTotal: 47.7442
+learningRate:0.000991923
+iteration: 812
+errorTotal: 47.7442
+learningRate:0.000991913
+iteration: 813
+errorTotal: 47.7441
+learningRate:0.000991903
+iteration: 814
+errorTotal: 47.744
+learningRate:0.000991893
+iteration: 815
+errorTotal: 47.7439
+learningRate:0.000991883
+iteration: 816
+errorTotal: 47.7438
+learningRate:0.000991873
+iteration: 817
+errorTotal: 47.7437
+learningRate:0.000991863
+iteration: 818
+errorTotal: 47.7437
+learningRate:0.000991853
+iteration: 819
+errorTotal: 47.7436
+learningRate:0.000991843
+iteration: 820
+errorTotal: 47.7435
+learningRate:0.000991834
+iteration: 821
+errorTotal: 47.7434
+learningRate:0.000991824
+iteration: 822
+errorTotal: 47.7433
+learningRate:0.000991814
+iteration: 823
+errorTotal: 47.7433
+learningRate:0.000991804
+iteration: 824
+errorTotal: 47.7432
+learningRate:0.000991794
+iteration: 825
+errorTotal: 47.7431
+learningRate:0.000991784
+iteration: 826
+errorTotal: 47.743
+learningRate:0.000991774
+iteration: 827
+errorTotal: 47.7429
+learningRate:0.000991764
+iteration: 828
+errorTotal: 47.7429
+learningRate:0.000991754
+iteration: 829
+errorTotal: 47.7428
+learningRate:0.000991744
+iteration: 830
+errorTotal: 47.7427
+learningRate:0.000991734
+iteration: 831
+errorTotal: 47.7426
+learningRate:0.000991724
+iteration: 832
+errorTotal: 47.7425
+learningRate:0.000991715
+iteration: 833
+errorTotal: 47.7424
+learningRate:0.000991705
+iteration: 834
+errorTotal: 47.7424
+learningRate:0.000991695
+iteration: 835
+errorTotal: 47.7423
+learningRate:0.000991685
+iteration: 836
+errorTotal: 47.7422
+learningRate:0.000991675
+iteration: 837
+errorTotal: 47.7421
+learningRate:0.000991665
+iteration: 838
+errorTotal: 47.742
+learningRate:0.000991655
+iteration: 839
+errorTotal: 47.7419
+learningRate:0.000991645
+iteration: 840
+errorTotal: 47.7419
+learningRate:0.000991635
+iteration: 841
+errorTotal: 47.7418
+learningRate:0.000991625
+iteration: 842
+errorTotal: 47.7417
+learningRate:0.000991615
+iteration: 843
+errorTotal: 47.7416
+learningRate:0.000991605
+iteration: 844
+errorTotal: 47.7415
+learningRate:0.000991596
+iteration: 845
+errorTotal: 47.7415
+learningRate:0.000991586
+iteration: 846
+errorTotal: 47.7414
+learningRate:0.000991576
+iteration: 847
+errorTotal: 47.7413
+learningRate:0.000991566
+iteration: 848
+errorTotal: 47.7412
+learningRate:0.000991556
+iteration: 849
+errorTotal: 47.7411
+learningRate:0.000991546
+iteration: 850
+errorTotal: 47.741
+learningRate:0.000991536
+iteration: 851
+errorTotal: 47.741
+learningRate:0.000991526
+iteration: 852
+errorTotal: 47.7409
+learningRate:0.000991516
+iteration: 853
+errorTotal: 47.7408
+learningRate:0.000991506
+iteration: 854
+errorTotal: 47.7407
+learningRate:0.000991496
+iteration: 855
+errorTotal: 47.7406
+learningRate:0.000991486
+iteration: 856
+errorTotal: 47.7406
+learningRate:0.000991477
+iteration: 857
+errorTotal: 47.7405
+learningRate:0.000991467
+iteration: 858
+errorTotal: 47.7404
+learningRate:0.000991457
+iteration: 859
+errorTotal: 47.7403
+learningRate:0.000991447
+iteration: 860
+errorTotal: 47.7402
+learningRate:0.000991437
+iteration: 861
+errorTotal: 47.7401
+learningRate:0.000991427
+iteration: 862
+errorTotal: 47.7401
+learningRate:0.000991417
+iteration: 863
+errorTotal: 47.74
+learningRate:0.000991407
+iteration: 864
+errorTotal: 47.7399
+learningRate:0.000991397
+iteration: 865
+errorTotal: 47.7398
+learningRate:0.000991387
+iteration: 866
+errorTotal: 47.7397
+learningRate:0.000991377
+iteration: 867
+errorTotal: 47.7396
+learningRate:0.000991367
+iteration: 868
+errorTotal: 47.7396
+learningRate:0.000991358
+iteration: 869
+errorTotal: 47.7395
+learningRate:0.000991348
+iteration: 870
+errorTotal: 47.7394
+learningRate:0.000991338
+iteration: 871
+errorTotal: 47.7393
+learningRate:0.000991328
+iteration: 872
+errorTotal: 47.7392
+learningRate:0.000991318
+iteration: 873
+errorTotal: 47.7391
+learningRate:0.000991308
+iteration: 874
+errorTotal: 47.7391
+learningRate:0.000991298
+iteration: 875
+errorTotal: 47.739
+learningRate:0.000991288
+iteration: 876
+errorTotal: 47.7389
+learningRate:0.000991278
+iteration: 877
+errorTotal: 47.7388
+learningRate:0.000991268
+iteration: 878
+errorTotal: 47.7387
+learningRate:0.000991258
+iteration: 879
+errorTotal: 47.7387
+learningRate:0.000991249
+iteration: 880
+errorTotal: 47.7386
+learningRate:0.000991239
+iteration: 881
+errorTotal: 47.7385
+learningRate:0.000991229
+iteration: 882
+errorTotal: 47.7384
+learningRate:0.000991219
+iteration: 883
+errorTotal: 47.7383
+learningRate:0.000991209
+iteration: 884
+errorTotal: 47.7382
+learningRate:0.000991199
+iteration: 885
+errorTotal: 47.7382
+learningRate:0.000991189
+iteration: 886
+errorTotal: 47.7381
+learningRate:0.000991179
+iteration: 887
+errorTotal: 47.738
+learningRate:0.000991169
+iteration: 888
+errorTotal: 47.7379
+learningRate:0.000991159
+iteration: 889
+errorTotal: 47.7378
+learningRate:0.000991149
+iteration: 890
+errorTotal: 47.7377
+learningRate:0.000991139
+iteration: 891
+errorTotal: 47.7377
+learningRate:0.00099113
+iteration: 892
+errorTotal: 47.7376
+learningRate:0.00099112
+iteration: 893
+errorTotal: 47.7375
+learningRate:0.00099111
+iteration: 894
+errorTotal: 47.7374
+learningRate:0.0009911
+iteration: 895
+errorTotal: 47.7373
+learningRate:0.00099109
+iteration: 896
+errorTotal: 47.7372
+learningRate:0.00099108
+iteration: 897
+errorTotal: 47.7372
+learningRate:0.00099107
+iteration: 898
+errorTotal: 47.7371
+learningRate:0.00099106
+iteration: 899
+errorTotal: 47.737
+learningRate:0.00099105
+iteration: 900
+errorTotal: 47.7369
+learningRate:0.00099104
+iteration: 901
+errorTotal: 47.7368
+learningRate:0.00099103
+iteration: 902
+errorTotal: 47.7367
+learningRate:0.000991021
+iteration: 903
+errorTotal: 47.7367
+learningRate:0.000991011
+iteration: 904
+errorTotal: 47.7366
+learningRate:0.000991001
+iteration: 905
+errorTotal: 47.7365
+learningRate:0.000990991
+iteration: 906
+errorTotal: 47.7364
+learningRate:0.000990981
+iteration: 907
+errorTotal: 47.7363
+learningRate:0.000990971
+iteration: 908
+errorTotal: 47.7362
+learningRate:0.000990961
+iteration: 909
+errorTotal: 47.7362
+learningRate:0.000990951
+iteration: 910
+errorTotal: 47.7361
+learningRate:0.000990941
+iteration: 911
+errorTotal: 47.736
+learningRate:0.000990931
+iteration: 912
+errorTotal: 47.7359
+learningRate:0.000990921
+iteration: 913
+errorTotal: 47.7358
+learningRate:0.000990912
+iteration: 914
+errorTotal: 47.7357
+learningRate:0.000990902
+iteration: 915
+errorTotal: 47.7357
+learningRate:0.000990892
+iteration: 916
+errorTotal: 47.7356
+learningRate:0.000990882
+iteration: 917
+errorTotal: 47.7355
+learningRate:0.000990872
+iteration: 918
+errorTotal: 47.7354
+learningRate:0.000990862
+iteration: 919
+errorTotal: 47.7353
+learningRate:0.000990852
+iteration: 920
+errorTotal: 47.7352
+learningRate:0.000990842
+iteration: 921
+errorTotal: 47.7351
+learningRate:0.000990832
+iteration: 922
+errorTotal: 47.7351
+learningRate:0.000990822
+iteration: 923
+errorTotal: 47.735
+learningRate:0.000990812
+iteration: 924
+errorTotal: 47.7349
+learningRate:0.000990803
+iteration: 925
+errorTotal: 47.7348
+learningRate:0.000990793
+iteration: 926
+errorTotal: 47.7347
+learningRate:0.000990783
+iteration: 927
+errorTotal: 47.7346
+learningRate:0.000990773
+iteration: 928
+errorTotal: 47.7346
+learningRate:0.000990763
+iteration: 929
+errorTotal: 47.7345
+learningRate:0.000990753
+iteration: 930
+errorTotal: 47.7344
+learningRate:0.000990743
+iteration: 931
+errorTotal: 47.7343
+learningRate:0.000990733
+iteration: 932
+errorTotal: 47.7342
+learningRate:0.000990723
+iteration: 933
+errorTotal: 47.7341
+learningRate:0.000990713
+iteration: 934
+errorTotal: 47.7341
+learningRate:0.000990703
+iteration: 935
+errorTotal: 47.734
+learningRate:0.000990694
+iteration: 936
+errorTotal: 47.7339
+learningRate:0.000990684
+iteration: 937
+errorTotal: 47.7338
+learningRate:0.000990674
+iteration: 938
+errorTotal: 47.7337
+learningRate:0.000990664
+iteration: 939
+errorTotal: 47.7336
+learningRate:0.000990654
+iteration: 940
+errorTotal: 47.7336
+learningRate:0.000990644
+iteration: 941
+errorTotal: 47.7335
+learningRate:0.000990634
+iteration: 942
+errorTotal: 47.7334
+learningRate:0.000990624
+iteration: 943
+errorTotal: 47.7333
+learningRate:0.000990614
+iteration: 944
+errorTotal: 47.7332
+learningRate:0.000990604
+iteration: 945
+errorTotal: 47.7331
+learningRate:0.000990595
+iteration: 946
+errorTotal: 47.733
+learningRate:0.000990585
+iteration: 947
+errorTotal: 47.733
+learningRate:0.000990575
+iteration: 948
+errorTotal: 47.7329
+learningRate:0.000990565
+iteration: 949
+errorTotal: 47.7328
+learningRate:0.000990555
+iteration: 950
+errorTotal: 47.7327
+learningRate:0.000990545
+iteration: 951
+errorTotal: 47.7326
+learningRate:0.000990535
+iteration: 952
+errorTotal: 47.7325
+learningRate:0.000990525
+iteration: 953
+errorTotal: 47.7325
+learningRate:0.000990515
+iteration: 954
+errorTotal: 47.7324
+learningRate:0.000990505
+iteration: 955
+errorTotal: 47.7323
+learningRate:0.000990495
+iteration: 956
+errorTotal: 47.7322
+learningRate:0.000990486
+iteration: 957
+errorTotal: 47.7321
+learningRate:0.000990476
+iteration: 958
+errorTotal: 47.732
+learningRate:0.000990466
+iteration: 959
+errorTotal: 47.7319
+learningRate:0.000990456
+iteration: 960
+errorTotal: 47.7319
+learningRate:0.000990446
+iteration: 961
+errorTotal: 47.7318
+learningRate:0.000990436
+iteration: 962
+errorTotal: 47.7317
+learningRate:0.000990426
+iteration: 963
+errorTotal: 47.7316
+learningRate:0.000990416
+iteration: 964
+errorTotal: 47.7315
+learningRate:0.000990406
+iteration: 965
+errorTotal: 47.7314
+learningRate:0.000990396
+iteration: 966
+errorTotal: 47.7313
+learningRate:0.000990387
+iteration: 967
+errorTotal: 47.7313
+learningRate:0.000990377
+iteration: 968
+errorTotal: 47.7312
+learningRate:0.000990367
+iteration: 969
+errorTotal: 47.7311
+learningRate:0.000990357
+iteration: 970
+errorTotal: 47.731
+learningRate:0.000990347
+iteration: 971
+errorTotal: 47.7309
+learningRate:0.000990337
+iteration: 972
+errorTotal: 47.7308
+learningRate:0.000990327
+iteration: 973
+errorTotal: 47.7308
+learningRate:0.000990317
+iteration: 974
+errorTotal: 47.7307
+learningRate:0.000990307
+iteration: 975
+errorTotal: 47.7306
+learningRate:0.000990297
+iteration: 976
+errorTotal: 47.7305
+learningRate:0.000990287
+iteration: 977
+errorTotal: 47.7304
+learningRate:0.000990278
+iteration: 978
+errorTotal: 47.7303
+learningRate:0.000990268
+iteration: 979
+errorTotal: 47.7302
+learningRate:0.000990258
+iteration: 980
+errorTotal: 47.7302
+learningRate:0.000990248
+iteration: 981
+errorTotal: 47.7301
+learningRate:0.000990238
+iteration: 982
+errorTotal: 47.73
+learningRate:0.000990228
+iteration: 983
+errorTotal: 47.7299
+learningRate:0.000990218
+iteration: 984
+errorTotal: 47.7298
+learningRate:0.000990208
+iteration: 985
+errorTotal: 47.7297
+learningRate:0.000990198
+iteration: 986
+errorTotal: 47.7296
+learningRate:0.000990188
+iteration: 987
+errorTotal: 47.7296
+learningRate:0.000990179
+iteration: 988
+errorTotal: 47.7295
+learningRate:0.000990169
+iteration: 989
+errorTotal: 47.7294
+learningRate:0.000990159
+iteration: 990
+errorTotal: 47.7293
+learningRate:0.000990149
+iteration: 991
+errorTotal: 47.7292
+learningRate:0.000990139
+iteration: 992
+errorTotal: 47.7291
+learningRate:0.000990129
+iteration: 993
+errorTotal: 47.729
+learningRate:0.000990119
+iteration: 994
+errorTotal: 47.729
+learningRate:0.000990109
+iteration: 995
+errorTotal: 47.7289
+learningRate:0.000990099
+iteration: 996
+errorTotal: 47.7288
+learningRate:0.000990089
+iteration: 997
+errorTotal: 47.7287
+learningRate:0.00099008
+iteration: 998
+errorTotal: 47.7286
+learningRate:0.00099007
+iteration: 999
+errorTotal: 47.7285
+learningRate:0.00099006
+iteration: 1000
+errorTotal: 47.7284
+learningRate:0.00099005
+iteration: 1001
+errorTotal: 47.7284
+learningRate:0.00099004
+iteration: 1002
+errorTotal: 47.7283
+learningRate:0.00099003
+iteration: 1003
+errorTotal: 47.7282
+learningRate:0.00099002
+iteration: 1004
+errorTotal: 47.7281
+learningRate:0.00099001
+iteration: 1005
+errorTotal: 47.728
+learningRate:0.00099
+iteration: 1006
+errorTotal: 47.7279
+learningRate:0.00098999
+iteration: 1007
+errorTotal: 47.7278
+learningRate:0.000989981
+iteration: 1008
+errorTotal: 47.7278
+learningRate:0.000989971
+iteration: 1009
+errorTotal: 47.7277
+learningRate:0.000989961
+iteration: 1010
+errorTotal: 47.7276
+learningRate:0.000989951
+iteration: 1011
+errorTotal: 47.7275
+learningRate:0.000989941
+iteration: 1012
+errorTotal: 47.7274
+learningRate:0.000989931
+iteration: 1013
+errorTotal: 47.7273
+learningRate:0.000989921
+iteration: 1014
+errorTotal: 47.7272
+learningRate:0.000989911
+iteration: 1015
+errorTotal: 47.7271
+learningRate:0.000989901
+iteration: 1016
+errorTotal: 47.7271
+learningRate:0.000989891
+iteration: 1017
+errorTotal: 47.727
+learningRate:0.000989882
+iteration: 1018
+errorTotal: 47.7269
+learningRate:0.000989872
+iteration: 1019
+errorTotal: 47.7268
+learningRate:0.000989862
+iteration: 1020
+errorTotal: 47.7267
+learningRate:0.000989852
+iteration: 1021
+errorTotal: 47.7266
+learningRate:0.000989842
+iteration: 1022
+errorTotal: 47.7265
+learningRate:0.000989832
+iteration: 1023
+errorTotal: 47.7265
+learningRate:0.000989822
+iteration: 1024
+errorTotal: 47.7264
+learningRate:0.000989812
+iteration: 1025
+errorTotal: 47.7263
+learningRate:0.000989802
+iteration: 1026
+errorTotal: 47.7262
+learningRate:0.000989792
+iteration: 1027
+errorTotal: 47.7261
+learningRate:0.000989783
+iteration: 1028
+errorTotal: 47.726
+learningRate:0.000989773
+iteration: 1029
+errorTotal: 47.7259
+learningRate:0.000989763
+iteration: 1030
+errorTotal: 47.7258
+learningRate:0.000989753
+iteration: 1031
+errorTotal: 47.7258
+learningRate:0.000989743
+iteration: 1032
+errorTotal: 47.7257
+learningRate:0.000989733
+iteration: 1033
+errorTotal: 47.7256
+learningRate:0.000989723
+iteration: 1034
+errorTotal: 47.7255
+learningRate:0.000989713
+iteration: 1035
+errorTotal: 47.7254
+learningRate:0.000989703
+iteration: 1036
+errorTotal: 47.7253
+learningRate:0.000989693
+iteration: 1037
+errorTotal: 47.7252
+learningRate:0.000989684
+iteration: 1038
+errorTotal: 47.7252
+learningRate:0.000989674
+iteration: 1039
+errorTotal: 47.7251
+learningRate:0.000989664
+iteration: 1040
+errorTotal: 47.725
+learningRate:0.000989654
+iteration: 1041
+errorTotal: 47.7249
+learningRate:0.000989644
+iteration: 1042
+errorTotal: 47.7248
+learningRate:0.000989634
+iteration: 1043
+errorTotal: 47.7247
+learningRate:0.000989624
+iteration: 1044
+errorTotal: 47.7246
+learningRate:0.000989614
+iteration: 1045
+errorTotal: 47.7245
+learningRate:0.000989604
+iteration: 1046
+errorTotal: 47.7245
+learningRate:0.000989595
+iteration: 1047
+errorTotal: 47.7244
+learningRate:0.000989585
+iteration: 1048
+errorTotal: 47.7243
+learningRate:0.000989575
+iteration: 1049
+errorTotal: 47.7242
+learningRate:0.000989565
+iteration: 1050
+errorTotal: 47.7241
+learningRate:0.000989555
+iteration: 1051
+errorTotal: 47.724
+learningRate:0.000989545
+iteration: 1052
+errorTotal: 47.7239
+learningRate:0.000989535
+iteration: 1053
+errorTotal: 47.7238
+learningRate:0.000989525
+iteration: 1054
+errorTotal: 47.7238
+learningRate:0.000989515
+iteration: 1055
+errorTotal: 47.7237
+learningRate:0.000989505
+iteration: 1056
+errorTotal: 47.7236
+learningRate:0.000989496
+iteration: 1057
+errorTotal: 47.7235
+learningRate:0.000989486
+iteration: 1058
+errorTotal: 47.7234
+learningRate:0.000989476
+iteration: 1059
+errorTotal: 47.7233
+learningRate:0.000989466
+iteration: 1060
+errorTotal: 47.7232
+learningRate:0.000989456
+iteration: 1061
+errorTotal: 47.7231
+learningRate:0.000989446
+iteration: 1062
+errorTotal: 47.723
+learningRate:0.000989436
+iteration: 1063
+errorTotal: 47.723
+learningRate:0.000989426
+iteration: 1064
+errorTotal: 47.7229
+learningRate:0.000989416
+iteration: 1065
+errorTotal: 47.7228
+learningRate:0.000989407
+iteration: 1066
+errorTotal: 47.7227
+learningRate:0.000989397
+iteration: 1067
+errorTotal: 47.7226
+learningRate:0.000989387
+iteration: 1068
+errorTotal: 47.7225
+learningRate:0.000989377
+iteration: 1069
+errorTotal: 47.7224
+learningRate:0.000989367
+iteration: 1070
+errorTotal: 47.7223
+learningRate:0.000989357
+iteration: 1071
+errorTotal: 47.7223
+learningRate:0.000989347
+iteration: 1072
+errorTotal: 47.7222
+learningRate:0.000989337
+iteration: 1073
+errorTotal: 47.7221
+learningRate:0.000989327
+iteration: 1074
+errorTotal: 47.722
+learningRate:0.000989317
+iteration: 1075
+errorTotal: 47.7219
+learningRate:0.000989308
+iteration: 1076
+errorTotal: 47.7218
+learningRate:0.000989298
+iteration: 1077
+errorTotal: 47.7217
+learningRate:0.000989288
+iteration: 1078
+errorTotal: 47.7216
+learningRate:0.000989278
+iteration: 1079
+errorTotal: 47.7215
+learningRate:0.000989268
+iteration: 1080
+errorTotal: 47.7215
+learningRate:0.000989258
+iteration: 1081
+errorTotal: 47.7214
+learningRate:0.000989248
+iteration: 1082
+errorTotal: 47.7213
+learningRate:0.000989238
+iteration: 1083
+errorTotal: 47.7212
+learningRate:0.000989228
+iteration: 1084
+errorTotal: 47.7211
+learningRate:0.000989219
+iteration: 1085
+errorTotal: 47.721
+learningRate:0.000989209
+iteration: 1086
+errorTotal: 47.7209
+learningRate:0.000989199
+iteration: 1087
+errorTotal: 47.7208
+learningRate:0.000989189
+iteration: 1088
+errorTotal: 47.7207
+learningRate:0.000989179
+iteration: 1089
+errorTotal: 47.7207
+learningRate:0.000989169
+iteration: 1090
+errorTotal: 47.7206
+learningRate:0.000989159
+iteration: 1091
+errorTotal: 47.7205
+learningRate:0.000989149
+iteration: 1092
+errorTotal: 47.7204
+learningRate:0.000989139
+iteration: 1093
+errorTotal: 47.7203
+learningRate:0.00098913
+iteration: 1094
+errorTotal: 47.7202
+learningRate:0.00098912
+iteration: 1095
+errorTotal: 47.7201
+learningRate:0.00098911
+iteration: 1096
+errorTotal: 47.72
+learningRate:0.0009891
+iteration: 1097
+errorTotal: 47.7199
+learningRate:0.00098909
+iteration: 1098
+errorTotal: 47.7199
+learningRate:0.00098908
+iteration: 1099
+errorTotal: 47.7198
+learningRate:0.00098907
+iteration: 1100
+errorTotal: 47.7197
+learningRate:0.00098906
+iteration: 1101
+errorTotal: 47.7196
+learningRate:0.00098905
+iteration: 1102
+errorTotal: 47.7195
+learningRate:0.00098904
+iteration: 1103
+errorTotal: 47.7194
+learningRate:0.000989031
+iteration: 1104
+errorTotal: 47.7193
+learningRate:0.000989021
+iteration: 1105
+errorTotal: 47.7192
+learningRate:0.000989011
+iteration: 1106
+errorTotal: 47.7191
+learningRate:0.000989001
+iteration: 1107
+errorTotal: 47.7191
+learningRate:0.000988991
+iteration: 1108
+errorTotal: 47.719
+learningRate:0.000988981
+iteration: 1109
+errorTotal: 47.7189
+learningRate:0.000988971
+iteration: 1110
+errorTotal: 47.7188
+learningRate:0.000988961
+iteration: 1111
+errorTotal: 47.7187
+learningRate:0.000988951
+iteration: 1112
+errorTotal: 47.7186
+learningRate:0.000988942
+iteration: 1113
+errorTotal: 47.7185
+learningRate:0.000988932
+iteration: 1114
+errorTotal: 47.7184
+learningRate:0.000988922
+iteration: 1115
+errorTotal: 47.7183
+learningRate:0.000988912
+iteration: 1116
+errorTotal: 47.7182
+learningRate:0.000988902
+iteration: 1117
+errorTotal: 47.7182
+learningRate:0.000988892
+iteration: 1118
+errorTotal: 47.7181
+learningRate:0.000988882
+iteration: 1119
+errorTotal: 47.718
+learningRate:0.000988872
+iteration: 1120
+errorTotal: 47.7179
+learningRate:0.000988862
+iteration: 1121
+errorTotal: 47.7178
+learningRate:0.000988853
+iteration: 1122
+errorTotal: 47.7177
+learningRate:0.000988843
+iteration: 1123
+errorTotal: 47.7176
+learningRate:0.000988833
+iteration: 1124
+errorTotal: 47.7175
+learningRate:0.000988823
+iteration: 1125
+errorTotal: 47.7174
+learningRate:0.000988813
+iteration: 1126
+errorTotal: 47.7173
+learningRate:0.000988803
+iteration: 1127
+errorTotal: 47.7173
+learningRate:0.000988793
+iteration: 1128
+errorTotal: 47.7172
+learningRate:0.000988783
+iteration: 1129
+errorTotal: 47.7171
+learningRate:0.000988773
+iteration: 1130
+errorTotal: 47.717
+learningRate:0.000988764
+iteration: 1131
+errorTotal: 47.7169
+learningRate:0.000988754
+iteration: 1132
+errorTotal: 47.7168
+learningRate:0.000988744
+iteration: 1133
+errorTotal: 47.7167
+learningRate:0.000988734
+iteration: 1134
+errorTotal: 47.7166
+learningRate:0.000988724
+iteration: 1135
+errorTotal: 47.7165
+learningRate:0.000988714
+iteration: 1136
+errorTotal: 47.7164
+learningRate:0.000988704
+iteration: 1137
+errorTotal: 47.7163
+learningRate:0.000988694
+iteration: 1138
+errorTotal: 47.7163
+learningRate:0.000988685
+iteration: 1139
+errorTotal: 47.7162
+learningRate:0.000988675
+iteration: 1140
+errorTotal: 47.7161
+learningRate:0.000988665
+iteration: 1141
+errorTotal: 47.716
+learningRate:0.000988655
+iteration: 1142
+errorTotal: 47.7159
+learningRate:0.000988645
+iteration: 1143
+errorTotal: 47.7158
+learningRate:0.000988635
+iteration: 1144
+errorTotal: 47.7157
+learningRate:0.000988625
+iteration: 1145
+errorTotal: 47.7156
+learningRate:0.000988615
+iteration: 1146
+errorTotal: 47.7155
+learningRate:0.000988605
+iteration: 1147
+errorTotal: 47.7154
+learningRate:0.000988596
+iteration: 1148
+errorTotal: 47.7153
+learningRate:0.000988586
+iteration: 1149
+errorTotal: 47.7153
+learningRate:0.000988576
+iteration: 1150
+errorTotal: 47.7152
+learningRate:0.000988566
+iteration: 1151
+errorTotal: 47.7151
+learningRate:0.000988556
+iteration: 1152
+errorTotal: 47.715
+learningRate:0.000988546
+iteration: 1153
+errorTotal: 47.7149
+learningRate:0.000988536
+iteration: 1154
+errorTotal: 47.7148
+learningRate:0.000988526
+iteration: 1155
+errorTotal: 47.7147
+learningRate:0.000988516
+iteration: 1156
+errorTotal: 47.7146
+learningRate:0.000988507
+iteration: 1157
+errorTotal: 47.7145
+learningRate:0.000988497
+iteration: 1158
+errorTotal: 47.7144
+learningRate:0.000988487
+iteration: 1159
+errorTotal: 47.7143
+learningRate:0.000988477
+iteration: 1160
+errorTotal: 47.7142
+learningRate:0.000988467
+iteration: 1161
+errorTotal: 47.7142
+learningRate:0.000988457
+iteration: 1162
+errorTotal: 47.7141
+learningRate:0.000988447
+iteration: 1163
+errorTotal: 47.714
+learningRate:0.000988437
+iteration: 1164
+errorTotal: 47.7139
+learningRate:0.000988427
+iteration: 1165
+errorTotal: 47.7138
+learningRate:0.000988418
+iteration: 1166
+errorTotal: 47.7137
+learningRate:0.000988408
+iteration: 1167
+errorTotal: 47.7136
+learningRate:0.000988398
+iteration: 1168
+errorTotal: 47.7135
+learningRate:0.000988388
+iteration: 1169
+errorTotal: 47.7134
+learningRate:0.000988378
+iteration: 1170
+errorTotal: 47.7133
+learningRate:0.000988368
+iteration: 1171
+errorTotal: 47.7132
+learningRate:0.000988358
+iteration: 1172
+errorTotal: 47.7131
+learningRate:0.000988348
+iteration: 1173
+errorTotal: 47.7131
+learningRate:0.000988339
+iteration: 1174
+errorTotal: 47.713
+learningRate:0.000988329
+iteration: 1175
+errorTotal: 47.7129
+learningRate:0.000988319
+iteration: 1176
+errorTotal: 47.7128
+learningRate:0.000988309
+iteration: 1177
+errorTotal: 47.7127
+learningRate:0.000988299
+iteration: 1178
+errorTotal: 47.7126
+learningRate:0.000988289
+iteration: 1179
+errorTotal: 47.7125
+learningRate:0.000988279
+iteration: 1180
+errorTotal: 47.7124
+learningRate:0.000988269
+iteration: 1181
+errorTotal: 47.7123
+learningRate:0.000988259
+iteration: 1182
+errorTotal: 47.7122
+learningRate:0.00098825
+iteration: 1183
+errorTotal: 47.7121
+learningRate:0.00098824
+iteration: 1184
+errorTotal: 47.712
+learningRate:0.00098823
+iteration: 1185
+errorTotal: 47.7119
+learningRate:0.00098822
+iteration: 1186
+errorTotal: 47.7119
+learningRate:0.00098821
+iteration: 1187
+errorTotal: 47.7118
+learningRate:0.0009882
+iteration: 1188
+errorTotal: 47.7117
+learningRate:0.00098819
+iteration: 1189
+errorTotal: 47.7116
+learningRate:0.00098818
+iteration: 1190
+errorTotal: 47.7115
+learningRate:0.000988171
+iteration: 1191
+errorTotal: 47.7114
+learningRate:0.000988161
+iteration: 1192
+errorTotal: 47.7113
+learningRate:0.000988151
+iteration: 1193
+errorTotal: 47.7112
+learningRate:0.000988141
+iteration: 1194
+errorTotal: 47.7111
+learningRate:0.000988131
+iteration: 1195
+errorTotal: 47.711
+learningRate:0.000988121
+iteration: 1196
+errorTotal: 47.7109
+learningRate:0.000988111
+iteration: 1197
+errorTotal: 47.7108
+learningRate:0.000988101
+iteration: 1198
+errorTotal: 47.7107
+learningRate:0.000988091
+iteration: 1199
+errorTotal: 47.7106
+learningRate:0.000988082
+iteration: 1200
+errorTotal: 47.7105
+learningRate:0.000988072
+iteration: 1201
+errorTotal: 47.7105
+learningRate:0.000988062
+iteration: 1202
+errorTotal: 47.7104
+learningRate:0.000988052
+iteration: 1203
+errorTotal: 47.7103
+learningRate:0.000988042
+iteration: 1204
+errorTotal: 47.7102
+learningRate:0.000988032
+iteration: 1205
+errorTotal: 47.7101
+learningRate:0.000988022
+iteration: 1206
+errorTotal: 47.71
+learningRate:0.000988012
+iteration: 1207
+errorTotal: 47.7099
+learningRate:0.000988003
+iteration: 1208
+errorTotal: 47.7098
+learningRate:0.000987993
+iteration: 1209
+errorTotal: 47.7097
+learningRate:0.000987983
+iteration: 1210
+errorTotal: 47.7096
+learningRate:0.000987973
+iteration: 1211
+errorTotal: 47.7095
+learningRate:0.000987963
+iteration: 1212
+errorTotal: 47.7094
+learningRate:0.000987953
+iteration: 1213
+errorTotal: 47.7093
+learningRate:0.000987943
+iteration: 1214
+errorTotal: 47.7092
+learningRate:0.000987933
+iteration: 1215
+errorTotal: 47.7091
+learningRate:0.000987924
+iteration: 1216
+errorTotal: 47.709
+learningRate:0.000987914
+iteration: 1217
+errorTotal: 47.709
+learningRate:0.000987904
+iteration: 1218
+errorTotal: 47.7089
+learningRate:0.000987894
+iteration: 1219
+errorTotal: 47.7088
+learningRate:0.000987884
+iteration: 1220
+errorTotal: 47.7087
+learningRate:0.000987874
+iteration: 1221
+errorTotal: 47.7086
+learningRate:0.000987864
+iteration: 1222
+errorTotal: 47.7085
+learningRate:0.000987854
+iteration: 1223
+errorTotal: 47.7084
+learningRate:0.000987844
+iteration: 1224
+errorTotal: 47.7083
+learningRate:0.000987835
+iteration: 1225
+errorTotal: 47.7082
+learningRate:0.000987825
+iteration: 1226
+errorTotal: 47.7081
+learningRate:0.000987815
+iteration: 1227
+errorTotal: 47.708
+learningRate:0.000987805
+iteration: 1228
+errorTotal: 47.7079
+learningRate:0.000987795
+iteration: 1229
+errorTotal: 47.7078
+learningRate:0.000987785
+iteration: 1230
+errorTotal: 47.7077
+learningRate:0.000987775
+iteration: 1231
+errorTotal: 47.7076
+learningRate:0.000987765
+iteration: 1232
+errorTotal: 47.7075
+learningRate:0.000987756
+iteration: 1233
+errorTotal: 47.7074
+learningRate:0.000987746
+iteration: 1234
+errorTotal: 47.7073
+learningRate:0.000987736
+iteration: 1235
+errorTotal: 47.7073
+learningRate:0.000987726
+iteration: 1236
+errorTotal: 47.7072
+learningRate:0.000987716
+iteration: 1237
+errorTotal: 47.7071
+learningRate:0.000987706
+iteration: 1238
+errorTotal: 47.707
+learningRate:0.000987696
+iteration: 1239
+errorTotal: 47.7069
+learningRate:0.000987686
+iteration: 1240
+errorTotal: 47.7068
+learningRate:0.000987677
+iteration: 1241
+errorTotal: 47.7067
+learningRate:0.000987667
+iteration: 1242
+errorTotal: 47.7066
+learningRate:0.000987657
+iteration: 1243
+errorTotal: 47.7065
+learningRate:0.000987647
+iteration: 1244
+errorTotal: 47.7064
+learningRate:0.000987637
+iteration: 1245
+errorTotal: 47.7063
+learningRate:0.000987627
+iteration: 1246
+errorTotal: 47.7062
+learningRate:0.000987617
+iteration: 1247
+errorTotal: 47.7061
+learningRate:0.000987607
+iteration: 1248
+errorTotal: 47.706
+learningRate:0.000987598
+iteration: 1249
+errorTotal: 47.7059
+learningRate:0.000987588
+iteration: 1250
+errorTotal: 47.7058
+learningRate:0.000987578
+iteration: 1251
+errorTotal: 47.7057
+learningRate:0.000987568
+iteration: 1252
+errorTotal: 47.7056
+learningRate:0.000987558
+iteration: 1253
+errorTotal: 47.7055
+learningRate:0.000987548
+iteration: 1254
+errorTotal: 47.7054
+learningRate:0.000987538
+iteration: 1255
+errorTotal: 47.7053
+learningRate:0.000987528
+iteration: 1256
+errorTotal: 47.7052
+learningRate:0.000987519
+iteration: 1257
+errorTotal: 47.7052
+learningRate:0.000987509
+iteration: 1258
+errorTotal: 47.7051
+learningRate:0.000987499
+iteration: 1259
+errorTotal: 47.705
+learningRate:0.000987489
+iteration: 1260
+errorTotal: 47.7049
+learningRate:0.000987479
+iteration: 1261
+errorTotal: 47.7048
+learningRate:0.000987469
+iteration: 1262
+errorTotal: 47.7047
+learningRate:0.000987459
+iteration: 1263
+errorTotal: 47.7046
+learningRate:0.000987449
+iteration: 1264
+errorTotal: 47.7045
+learningRate:0.00098744
+iteration: 1265
+errorTotal: 47.7044
+learningRate:0.00098743
+iteration: 1266
+errorTotal: 47.7043
+learningRate:0.00098742
+iteration: 1267
+errorTotal: 47.7042
+learningRate:0.00098741
+iteration: 1268
+errorTotal: 47.7041
+learningRate:0.0009874
+iteration: 1269
+errorTotal: 47.704
+learningRate:0.00098739
+iteration: 1270
+errorTotal: 47.7039
+learningRate:0.00098738
+iteration: 1271
+errorTotal: 47.7038
+learningRate:0.00098737
+iteration: 1272
+errorTotal: 47.7037
+learningRate:0.000987361
+iteration: 1273
+errorTotal: 47.7036
+learningRate:0.000987351
+iteration: 1274
+errorTotal: 47.7035
+learningRate:0.000987341
+iteration: 1275
+errorTotal: 47.7034
+learningRate:0.000987331
+iteration: 1276
+errorTotal: 47.7033
+learningRate:0.000987321
+iteration: 1277
+errorTotal: 47.7032
+learningRate:0.000987311
+iteration: 1278
+errorTotal: 47.7031
+learningRate:0.000987301
+iteration: 1279
+errorTotal: 47.703
+learningRate:0.000987291
+iteration: 1280
+errorTotal: 47.7029
+learningRate:0.000987282
+iteration: 1281
+errorTotal: 47.7028
+learningRate:0.000987272
+iteration: 1282
+errorTotal: 47.7027
+learningRate:0.000987262
+iteration: 1283
+errorTotal: 47.7026
+learningRate:0.000987252
+iteration: 1284
+errorTotal: 47.7025
+learningRate:0.000987242
+iteration: 1285
+errorTotal: 47.7024
+learningRate:0.000987232
+iteration: 1286
+errorTotal: 47.7023
+learningRate:0.000987222
+iteration: 1287
+errorTotal: 47.7023
+learningRate:0.000987212
+iteration: 1288
+errorTotal: 47.7022
+learningRate:0.000987203
+iteration: 1289
+errorTotal: 47.7021
+learningRate:0.000987193
+iteration: 1290
+errorTotal: 47.702
+learningRate:0.000987183
+iteration: 1291
+errorTotal: 47.7019
+learningRate:0.000987173
+iteration: 1292
+errorTotal: 47.7018
+learningRate:0.000987163
+iteration: 1293
+errorTotal: 47.7017
+learningRate:0.000987153
+iteration: 1294
+errorTotal: 47.7016
+learningRate:0.000987143
+iteration: 1295
+errorTotal: 47.7015
+learningRate:0.000987133
+iteration: 1296
+errorTotal: 47.7014
+learningRate:0.000987124
+iteration: 1297
+errorTotal: 47.7013
+learningRate:0.000987114
+iteration: 1298
+errorTotal: 47.7012
+learningRate:0.000987104
+iteration: 1299
+errorTotal: 47.7011
+learningRate:0.000987094
+iteration: 1300
+errorTotal: 47.701
+learningRate:0.000987084
+iteration: 1301
+errorTotal: 47.7009
+learningRate:0.000987074
+iteration: 1302
+errorTotal: 47.7008
+learningRate:0.000987064
+iteration: 1303
+errorTotal: 47.7007
+learningRate:0.000987055
+iteration: 1304
+errorTotal: 47.7006
+learningRate:0.000987045
+iteration: 1305
+errorTotal: 47.7005
+learningRate:0.000987035
+iteration: 1306
+errorTotal: 47.7004
+learningRate:0.000987025
+iteration: 1307
+errorTotal: 47.7003
+learningRate:0.000987015
+iteration: 1308
+errorTotal: 47.7002
+learningRate:0.000987005
+iteration: 1309
+errorTotal: 47.7001
+learningRate:0.000986995
+iteration: 1310
+errorTotal: 47.7
+learningRate:0.000986985
+iteration: 1311
+errorTotal: 47.6999
+learningRate:0.000986976
+iteration: 1312
+errorTotal: 47.6998
+learningRate:0.000986966
+iteration: 1313
+errorTotal: 47.6997
+learningRate:0.000986956
+iteration: 1314
+errorTotal: 47.6996
+learningRate:0.000986946
+iteration: 1315
+errorTotal: 47.6995
+learningRate:0.000986936
+iteration: 1316
+errorTotal: 47.6994
+learningRate:0.000986926
+iteration: 1317
+errorTotal: 47.6993
+learningRate:0.000986916
+iteration: 1318
+errorTotal: 47.6992
+learningRate:0.000986906
+iteration: 1319
+errorTotal: 47.6991
+learningRate:0.000986897
+iteration: 1320
+errorTotal: 47.699
+learningRate:0.000986887
+iteration: 1321
+errorTotal: 47.6989
+learningRate:0.000986877
+iteration: 1322
+errorTotal: 47.6988
+learningRate:0.000986867
+iteration: 1323
+errorTotal: 47.6987
+learningRate:0.000986857
+iteration: 1324
+errorTotal: 47.6986
+learningRate:0.000986847
+iteration: 1325
+errorTotal: 47.6985
+learningRate:0.000986837
+iteration: 1326
+errorTotal: 47.6984
+learningRate:0.000986828
+iteration: 1327
+errorTotal: 47.6983
+learningRate:0.000986818
+iteration: 1328
+errorTotal: 47.6982
+learningRate:0.000986808
+iteration: 1329
+errorTotal: 47.6981
+learningRate:0.000986798
+iteration: 1330
+errorTotal: 47.698
+learningRate:0.000986788
+iteration: 1331
+errorTotal: 47.6979
+learningRate:0.000986778
+iteration: 1332
+errorTotal: 47.6978
+learningRate:0.000986768
+iteration: 1333
+errorTotal: 47.6977
+learningRate:0.000986758
+iteration: 1334
+errorTotal: 47.6976
+learningRate:0.000986749
+iteration: 1335
+errorTotal: 47.6975
+learningRate:0.000986739
+iteration: 1336
+errorTotal: 47.6974
+learningRate:0.000986729
+iteration: 1337
+errorTotal: 47.6973
+learningRate:0.000986719
+iteration: 1338
+errorTotal: 47.6972
+learningRate:0.000986709
+iteration: 1339
+errorTotal: 47.6971
+learningRate:0.000986699
+iteration: 1340
+errorTotal: 47.697
+learningRate:0.000986689
+iteration: 1341
+errorTotal: 47.6969
+learningRate:0.00098668
+iteration: 1342
+errorTotal: 47.6968
+learningRate:0.00098667
+iteration: 1343
+errorTotal: 47.6967
+learningRate:0.00098666
+iteration: 1344
+errorTotal: 47.6966
+learningRate:0.00098665
+iteration: 1345
+errorTotal: 47.6965
+learningRate:0.00098664
+iteration: 1346
+errorTotal: 47.6964
+learningRate:0.00098663
+iteration: 1347
+errorTotal: 47.6963
+learningRate:0.00098662
+iteration: 1348
+errorTotal: 47.6962
+learningRate:0.00098661
+iteration: 1349
+errorTotal: 47.6961
+learningRate:0.000986601
+iteration: 1350
+errorTotal: 47.696
+learningRate:0.000986591
+iteration: 1351
+errorTotal: 47.6959
+learningRate:0.000986581
+iteration: 1352
+errorTotal: 47.6958
+learningRate:0.000986571
+iteration: 1353
+errorTotal: 47.6957
+learningRate:0.000986561
+iteration: 1354
+errorTotal: 47.6956
+learningRate:0.000986551
+iteration: 1355
+errorTotal: 47.6955
+learningRate:0.000986541
+iteration: 1356
+errorTotal: 47.6954
+learningRate:0.000986532
+iteration: 1357
+errorTotal: 47.6953
+learningRate:0.000986522
+iteration: 1358
+errorTotal: 47.6952
+learningRate:0.000986512
+iteration: 1359
+errorTotal: 47.6951
+learningRate:0.000986502
+iteration: 1360
+errorTotal: 47.695
+learningRate:0.000986492
+iteration: 1361
+errorTotal: 47.6949
+learningRate:0.000986482
+iteration: 1362
+errorTotal: 47.6948
+learningRate:0.000986472
+iteration: 1363
+errorTotal: 47.6947
+learningRate:0.000986462
+iteration: 1364
+errorTotal: 47.6946
+learningRate:0.000986453
+iteration: 1365
+errorTotal: 47.6945
+learningRate:0.000986443
+iteration: 1366
+errorTotal: 47.6944
+learningRate:0.000986433
+iteration: 1367
+errorTotal: 47.6943
+learningRate:0.000986423
+iteration: 1368
+errorTotal: 47.6942
+learningRate:0.000986413
+iteration: 1369
+errorTotal: 47.6941
+learningRate:0.000986403
+iteration: 1370
+errorTotal: 47.694
+learningRate:0.000986393
+iteration: 1371
+errorTotal: 47.6939
+learningRate:0.000986384
+iteration: 1372
+errorTotal: 47.6938
+learningRate:0.000986374
+iteration: 1373
+errorTotal: 47.6937
+learningRate:0.000986364
+iteration: 1374
+errorTotal: 47.6936
+learningRate:0.000986354
+iteration: 1375
+errorTotal: 47.6935
+learningRate:0.000986344
+iteration: 1376
+errorTotal: 47.6934
+learningRate:0.000986334
+iteration: 1377
+errorTotal: 47.6933
+learningRate:0.000986324
+iteration: 1378
+errorTotal: 47.6932
+learningRate:0.000986315
+iteration: 1379
+errorTotal: 47.6931
+learningRate:0.000986305
+iteration: 1380
+errorTotal: 47.693
+learningRate:0.000986295
+iteration: 1381
+errorTotal: 47.6929
+learningRate:0.000986285
+iteration: 1382
+errorTotal: 47.6928
+learningRate:0.000986275
+iteration: 1383
+errorTotal: 47.6927
+learningRate:0.000986265
+iteration: 1384
+errorTotal: 47.6926
+learningRate:0.000986255
+iteration: 1385
+errorTotal: 47.6924
+learningRate:0.000986245
+iteration: 1386
+errorTotal: 47.6923
+learningRate:0.000986236
+iteration: 1387
+errorTotal: 47.6922
+learningRate:0.000986226
+iteration: 1388
+errorTotal: 47.6921
+learningRate:0.000986216
+iteration: 1389
+errorTotal: 47.692
+learningRate:0.000986206
+iteration: 1390
+errorTotal: 47.6919
+learningRate:0.000986196
+iteration: 1391
+errorTotal: 47.6918
+learningRate:0.000986186
+iteration: 1392
+errorTotal: 47.6917
+learningRate:0.000986176
+iteration: 1393
+errorTotal: 47.6916
+learningRate:0.000986167
+iteration: 1394
+errorTotal: 47.6915
+learningRate:0.000986157
+iteration: 1395
+errorTotal: 47.6914
+learningRate:0.000986147
+iteration: 1396
+errorTotal: 47.6913
+learningRate:0.000986137
+iteration: 1397
+errorTotal: 47.6912
+learningRate:0.000986127
+iteration: 1398
+errorTotal: 47.6911
+learningRate:0.000986117
+iteration: 1399
+errorTotal: 47.691
+learningRate:0.000986107
+iteration: 1400
+errorTotal: 47.6909
+learningRate:0.000986098
+iteration: 1401
+errorTotal: 47.6908
+learningRate:0.000986088
+iteration: 1402
+errorTotal: 47.6907
+learningRate:0.000986078
+iteration: 1403
+errorTotal: 47.6906
+learningRate:0.000986068
+iteration: 1404
+errorTotal: 47.6905
+learningRate:0.000986058
+iteration: 1405
+errorTotal: 47.6904
+learningRate:0.000986048
+iteration: 1406
+errorTotal: 47.6903
+learningRate:0.000986038
+iteration: 1407
+errorTotal: 47.6902
+learningRate:0.000986029
+iteration: 1408
+errorTotal: 47.6901
+learningRate:0.000986019
+iteration: 1409
+errorTotal: 47.69
+learningRate:0.000986009
+iteration: 1410
+errorTotal: 47.6899
+learningRate:0.000985999
+iteration: 1411
+errorTotal: 47.6898
+learningRate:0.000985989
+iteration: 1412
+errorTotal: 47.6897
+learningRate:0.000985979
+iteration: 1413
+errorTotal: 47.6896
+learningRate:0.000985969
+iteration: 1414
+errorTotal: 47.6894
+learningRate:0.00098596
+iteration: 1415
+errorTotal: 47.6893
+learningRate:0.00098595
+iteration: 1416
+errorTotal: 47.6892
+learningRate:0.00098594
+iteration: 1417
+errorTotal: 47.6891
+learningRate:0.00098593
+iteration: 1418
+errorTotal: 47.689
+learningRate:0.00098592
+iteration: 1419
+errorTotal: 47.6889
+learningRate:0.00098591
+iteration: 1420
+errorTotal: 47.6888
+learningRate:0.0009859
+iteration: 1421
+errorTotal: 47.6887
+learningRate:0.00098589
+iteration: 1422
+errorTotal: 47.6886
+learningRate:0.000985881
+iteration: 1423
+errorTotal: 47.6885
+learningRate:0.000985871
+iteration: 1424
+errorTotal: 47.6884
+learningRate:0.000985861
+iteration: 1425
+errorTotal: 47.6883
+learningRate:0.000985851
+iteration: 1426
+errorTotal: 47.6882
+learningRate:0.000985841
+iteration: 1427
+errorTotal: 47.6881
+learningRate:0.000985831
+iteration: 1428
+errorTotal: 47.688
+learningRate:0.000985821
+iteration: 1429
+errorTotal: 47.6879
+learningRate:0.000985812
+iteration: 1430
+errorTotal: 47.6878
+learningRate:0.000985802
+iteration: 1431
+errorTotal: 47.6877
+learningRate:0.000985792
+iteration: 1432
+errorTotal: 47.6876
+learningRate:0.000985782
+iteration: 1433
+errorTotal: 47.6875
+learningRate:0.000985772
+iteration: 1434
+errorTotal: 47.6873
+learningRate:0.000985762
+iteration: 1435
+errorTotal: 47.6872
+learningRate:0.000985752
+iteration: 1436
+errorTotal: 47.6871
+learningRate:0.000985743
+iteration: 1437
+errorTotal: 47.687
+learningRate:0.000985733
+iteration: 1438
+errorTotal: 47.6869
+learningRate:0.000985723
+iteration: 1439
+errorTotal: 47.6868
+learningRate:0.000985713
+iteration: 1440
+errorTotal: 47.6867
+learningRate:0.000985703
+iteration: 1441
+errorTotal: 47.6866
+learningRate:0.000985693
+iteration: 1442
+errorTotal: 47.6865
+learningRate:0.000985683
+iteration: 1443
+errorTotal: 47.6864
+learningRate:0.000985674
+iteration: 1444
+errorTotal: 47.6863
+learningRate:0.000985664
+iteration: 1445
+errorTotal: 47.6862
+learningRate:0.000985654
+iteration: 1446
+errorTotal: 47.6861
+learningRate:0.000985644
+iteration: 1447
+errorTotal: 47.686
+learningRate:0.000985634
+iteration: 1448
+errorTotal: 47.6859
+learningRate:0.000985624
+iteration: 1449
+errorTotal: 47.6858
+learningRate:0.000985614
+iteration: 1450
+errorTotal: 47.6856
+learningRate:0.000985605
+iteration: 1451
+errorTotal: 47.6855
+learningRate:0.000985595
+iteration: 1452
+errorTotal: 47.6854
+learningRate:0.000985585
+iteration: 1453
+errorTotal: 47.6853
+learningRate:0.000985575
+iteration: 1454
+errorTotal: 47.6852
+learningRate:0.000985565
+iteration: 1455
+errorTotal: 47.6851
+learningRate:0.000985555
+iteration: 1456
+errorTotal: 47.685
+learningRate:0.000985545
+iteration: 1457
+errorTotal: 47.6849
+learningRate:0.000985536
+iteration: 1458
+errorTotal: 47.6848
+learningRate:0.000985526
+iteration: 1459
+errorTotal: 47.6847
+learningRate:0.000985516
+iteration: 1460
+errorTotal: 47.6846
+learningRate:0.000985506
+iteration: 1461
+errorTotal: 47.6845
+learningRate:0.000985496
+iteration: 1462
+errorTotal: 47.6844
+learningRate:0.000985486
+iteration: 1463
+errorTotal: 47.6843
+learningRate:0.000985476
+iteration: 1464
+errorTotal: 47.6841
+learningRate:0.000985467
+iteration: 1465
+errorTotal: 47.684
+learningRate:0.000985457
+iteration: 1466
+errorTotal: 47.6839
+learningRate:0.000985447
+iteration: 1467
+errorTotal: 47.6838
+learningRate:0.000985437
+iteration: 1468
+errorTotal: 47.6837
+learningRate:0.000985427
+iteration: 1469
+errorTotal: 47.6836
+learningRate:0.000985417
+iteration: 1470
+errorTotal: 47.6835
+learningRate:0.000985408
+iteration: 1471
+errorTotal: 47.6834
+learningRate:0.000985398
+iteration: 1472
+errorTotal: 47.6833
+learningRate:0.000985388
+iteration: 1473
+errorTotal: 47.6832
+learningRate:0.000985378
+iteration: 1474
+errorTotal: 47.6831
+learningRate:0.000985368
+iteration: 1475
+errorTotal: 47.683
+learningRate:0.000985358
+iteration: 1476
+errorTotal: 47.6829
+learningRate:0.000985348
+iteration: 1477
+errorTotal: 47.6827
+learningRate:0.000985339
+iteration: 1478
+errorTotal: 47.6826
+learningRate:0.000985329
+iteration: 1479
+errorTotal: 47.6825
+learningRate:0.000985319
+iteration: 1480
+errorTotal: 47.6824
+learningRate:0.000985309
+iteration: 1481
+errorTotal: 47.6823
+learningRate:0.000985299
+iteration: 1482
+errorTotal: 47.6822
+learningRate:0.000985289
+iteration: 1483
+errorTotal: 47.6821
+learningRate:0.000985279
+iteration: 1484
+errorTotal: 47.682
+learningRate:0.00098527
+iteration: 1485
+errorTotal: 47.6819
+learningRate:0.00098526
+iteration: 1486
+errorTotal: 47.6818
+learningRate:0.00098525
+iteration: 1487
+errorTotal: 47.6817
+learningRate:0.00098524
+iteration: 1488
+errorTotal: 47.6815
+learningRate:0.00098523
+iteration: 1489
+errorTotal: 47.6814
+learningRate:0.00098522
+iteration: 1490
+errorTotal: 47.6813
+learningRate:0.00098521
+iteration: 1491
+errorTotal: 47.6812
+learningRate:0.000985201
+iteration: 1492
+errorTotal: 47.6811
+learningRate:0.000985191
+iteration: 1493
+errorTotal: 47.681
+learningRate:0.000985181
+iteration: 1494
+errorTotal: 47.6809
+learningRate:0.000985171
+iteration: 1495
+errorTotal: 47.6808
+learningRate:0.000985161
+iteration: 1496
+errorTotal: 47.6807
+learningRate:0.000985151
+iteration: 1497
+errorTotal: 47.6806
+learningRate:0.000985141
+iteration: 1498
+errorTotal: 47.6805
+learningRate:0.000985132
+iteration: 1499
+errorTotal: 47.6803
+learningRate:0.000985122
+iteration: 1500
+errorTotal: 47.6802
+learningRate:0.000985112
+iteration: 1501
+errorTotal: 47.6801
+learningRate:0.000985102
+iteration: 1502
+errorTotal: 47.68
+learningRate:0.000985092
+iteration: 1503
+errorTotal: 47.6799
+learningRate:0.000985082
+iteration: 1504
+errorTotal: 47.6798
+learningRate:0.000985073
+iteration: 1505
+errorTotal: 47.6797
+learningRate:0.000985063
+iteration: 1506
+errorTotal: 47.6796
+learningRate:0.000985053
+iteration: 1507
+errorTotal: 47.6795
+learningRate:0.000985043
+iteration: 1508
+errorTotal: 47.6794
+learningRate:0.000985033
+iteration: 1509
+errorTotal: 47.6792
+learningRate:0.000985023
+iteration: 1510
+errorTotal: 47.6791
+learningRate:0.000985013
+iteration: 1511
+errorTotal: 47.679
+learningRate:0.000985004
+iteration: 1512
+errorTotal: 47.6789
+learningRate:0.000984994
+iteration: 1513
+errorTotal: 47.6788
+learningRate:0.000984984
+iteration: 1514
+errorTotal: 47.6787
+learningRate:0.000984974
+iteration: 1515
+errorTotal: 47.6786
+learningRate:0.000984964
+iteration: 1516
+errorTotal: 47.6785
+learningRate:0.000984954
+iteration: 1517
+errorTotal: 47.6784
+learningRate:0.000984944
+iteration: 1518
+errorTotal: 47.6782
+learningRate:0.000984935
+iteration: 1519
+errorTotal: 47.6781
+learningRate:0.000984925
+iteration: 1520
+errorTotal: 47.678
+learningRate:0.000984915
+iteration: 1521
+errorTotal: 47.6779
+learningRate:0.000984905
+iteration: 1522
+errorTotal: 47.6778
+learningRate:0.000984895
+iteration: 1523
+errorTotal: 47.6777
+learningRate:0.000984885
+iteration: 1524
+errorTotal: 47.6776
+learningRate:0.000984876
+iteration: 1525
+errorTotal: 47.6775
+learningRate:0.000984866
+iteration: 1526
+errorTotal: 47.6774
+learningRate:0.000984856
+iteration: 1527
+errorTotal: 47.6772
+learningRate:0.000984846
+iteration: 1528
+errorTotal: 47.6771
+learningRate:0.000984836
+iteration: 1529
+errorTotal: 47.677
+learningRate:0.000984826
+iteration: 1530
+errorTotal: 47.6769
+learningRate:0.000984816
+iteration: 1531
+errorTotal: 47.6768
+learningRate:0.000984807
+iteration: 1532
+errorTotal: 47.6767
+learningRate:0.000984797
+iteration: 1533
+errorTotal: 47.6766
+learningRate:0.000984787
+iteration: 1534
+errorTotal: 47.6765
+learningRate:0.000984777
+iteration: 1535
+errorTotal: 47.6763
+learningRate:0.000984767
+iteration: 1536
+errorTotal: 47.6762
+learningRate:0.000984757
+iteration: 1537
+errorTotal: 47.6761
+learningRate:0.000984748
+iteration: 1538
+errorTotal: 47.676
+learningRate:0.000984738
+iteration: 1539
+errorTotal: 47.6759
+learningRate:0.000984728
+iteration: 1540
+errorTotal: 47.6758
+learningRate:0.000984718
+iteration: 1541
+errorTotal: 47.6757
+learningRate:0.000984708
+iteration: 1542
+errorTotal: 47.6756
+learningRate:0.000984698
+iteration: 1543
+errorTotal: 47.6754
+learningRate:0.000984688
+iteration: 1544
+errorTotal: 47.6753
+learningRate:0.000984679
+iteration: 1545
+errorTotal: 47.6752
+learningRate:0.000984669
+iteration: 1546
+errorTotal: 47.6751
+learningRate:0.000984659
+iteration: 1547
+errorTotal: 47.675
+learningRate:0.000984649
+iteration: 1548
+errorTotal: 47.6749
+learningRate:0.000984639
+iteration: 1549
+errorTotal: 47.6748
+learningRate:0.000984629
+iteration: 1550
+errorTotal: 47.6746
+learningRate:0.00098462
+iteration: 1551
+errorTotal: 47.6745
+learningRate:0.00098461
+iteration: 1552
+errorTotal: 47.6744
+learningRate:0.0009846
+iteration: 1553
+errorTotal: 47.6743
+learningRate:0.00098459
+iteration: 1554
+errorTotal: 47.6742
+learningRate:0.00098458
+iteration: 1555
+errorTotal: 47.6741
+learningRate:0.00098457
+iteration: 1556
+errorTotal: 47.674
+learningRate:0.00098456
+iteration: 1557
+errorTotal: 47.6739
+learningRate:0.000984551
+iteration: 1558
+errorTotal: 47.6737
+learningRate:0.000984541
+iteration: 1559
+errorTotal: 47.6736
+learningRate:0.000984531
+iteration: 1560
+errorTotal: 47.6735
+learningRate:0.000984521
+iteration: 1561
+errorTotal: 47.6734
+learningRate:0.000984511
+iteration: 1562
+errorTotal: 47.6733
+learningRate:0.000984501
+iteration: 1563
+errorTotal: 47.6732
+learningRate:0.000984492
+iteration: 1564
+errorTotal: 47.6731
+learningRate:0.000984482
+iteration: 1565
+errorTotal: 47.6729
+learningRate:0.000984472
+iteration: 1566
+errorTotal: 47.6728
+learningRate:0.000984462
+iteration: 1567
+errorTotal: 47.6727
+learningRate:0.000984452
+iteration: 1568
+errorTotal: 47.6726
+learningRate:0.000984442
+iteration: 1569
+errorTotal: 47.6725
+learningRate:0.000984432
+iteration: 1570
+errorTotal: 47.6724
+learningRate:0.000984423
+iteration: 1571
+errorTotal: 47.6723
+learningRate:0.000984413
+iteration: 1572
+errorTotal: 47.6721
+learningRate:0.000984403
+iteration: 1573
+errorTotal: 47.672
+learningRate:0.000984393
+iteration: 1574
+errorTotal: 47.6719
+learningRate:0.000984383
+iteration: 1575
+errorTotal: 47.6718
+learningRate:0.000984373
+iteration: 1576
+errorTotal: 47.6717
+learningRate:0.000984364
+iteration: 1577
+errorTotal: 47.6716
+learningRate:0.000984354
+iteration: 1578
+errorTotal: 47.6714
+learningRate:0.000984344
+iteration: 1579
+errorTotal: 47.6713
+learningRate:0.000984334
+iteration: 1580
+errorTotal: 47.6712
+learningRate:0.000984324
+iteration: 1581
+errorTotal: 47.6711
+learningRate:0.000984314
+iteration: 1582
+errorTotal: 47.671
+learningRate:0.000984304
+iteration: 1583
+errorTotal: 47.6709
+learningRate:0.000984295
+iteration: 1584
+errorTotal: 47.6707
+learningRate:0.000984285
+iteration: 1585
+errorTotal: 47.6706
+learningRate:0.000984275
+iteration: 1586
+errorTotal: 47.6705
+learningRate:0.000984265
+iteration: 1587
+errorTotal: 47.6704
+learningRate:0.000984255
+iteration: 1588
+errorTotal: 47.6703
+learningRate:0.000984245
+iteration: 1589
+errorTotal: 47.6702
+learningRate:0.000984236
+iteration: 1590
+errorTotal: 47.6701
+learningRate:0.000984226
+iteration: 1591
+errorTotal: 47.6699
+learningRate:0.000984216
+iteration: 1592
+errorTotal: 47.6698
+learningRate:0.000984206
+iteration: 1593
+errorTotal: 47.6697
+learningRate:0.000984196
+iteration: 1594
+errorTotal: 47.6696
+learningRate:0.000984186
+iteration: 1595
+errorTotal: 47.6695
+learningRate:0.000984177
+iteration: 1596
+errorTotal: 47.6694
+learningRate:0.000984167
+iteration: 1597
+errorTotal: 47.6692
+learningRate:0.000984157
+iteration: 1598
+errorTotal: 47.6691
+learningRate:0.000984147
+iteration: 1599
+errorTotal: 47.669
+learningRate:0.000984137
+iteration: 1600
+errorTotal: 47.6689
+learningRate:0.000984127
+iteration: 1601
+errorTotal: 47.6688
+learningRate:0.000984117
+iteration: 1602
+errorTotal: 47.6686
+learningRate:0.000984108
+iteration: 1603
+errorTotal: 47.6685
+learningRate:0.000984098
+iteration: 1604
+errorTotal: 47.6684
+learningRate:0.000984088
+iteration: 1605
+errorTotal: 47.6683
+learningRate:0.000984078
+iteration: 1606
+errorTotal: 47.6682
+learningRate:0.000984068
+iteration: 1607
+errorTotal: 47.6681
+learningRate:0.000984058
+iteration: 1608
+errorTotal: 47.6679
+learningRate:0.000984049
+iteration: 1609
+errorTotal: 47.6678
+learningRate:0.000984039
+iteration: 1610
+errorTotal: 47.6677
+learningRate:0.000984029
+iteration: 1611
+errorTotal: 47.6676
+learningRate:0.000984019
+iteration: 1612
+errorTotal: 47.6675
+learningRate:0.000984009
+iteration: 1613
+errorTotal: 47.6674
+learningRate:0.000983999
+iteration: 1614
+errorTotal: 47.6672
+learningRate:0.00098399
+iteration: 1615
+errorTotal: 47.6671
+learningRate:0.00098398
+iteration: 1616
+errorTotal: 47.667
+learningRate:0.00098397
+iteration: 1617
+errorTotal: 47.6669
+learningRate:0.00098396
+iteration: 1618
+errorTotal: 47.6668
+learningRate:0.00098395
+iteration: 1619
+errorTotal: 47.6666
+learningRate:0.00098394
+iteration: 1620
+errorTotal: 47.6665
+learningRate:0.000983931
+iteration: 1621
+errorTotal: 47.6664
+learningRate:0.000983921
+iteration: 1622
+errorTotal: 47.6663
+learningRate:0.000983911
+iteration: 1623
+errorTotal: 47.6662
+learningRate:0.000983901
+iteration: 1624
+errorTotal: 47.666
+learningRate:0.000983891
+iteration: 1625
+errorTotal: 47.6659
+learningRate:0.000983881
+iteration: 1626
+errorTotal: 47.6658
+learningRate:0.000983871
+iteration: 1627
+errorTotal: 47.6657
+learningRate:0.000983862
+iteration: 1628
+errorTotal: 47.6656
+learningRate:0.000983852
+iteration: 1629
+errorTotal: 47.6655
+learningRate:0.000983842
+iteration: 1630
+errorTotal: 47.6653
+learningRate:0.000983832
+iteration: 1631
+errorTotal: 47.6652
+learningRate:0.000983822
+iteration: 1632
+errorTotal: 47.6651
+learningRate:0.000983812
+iteration: 1633
+errorTotal: 47.665
+learningRate:0.000983803
+iteration: 1634
+errorTotal: 47.6649
+learningRate:0.000983793
+iteration: 1635
+errorTotal: 47.6647
+learningRate:0.000983783
+iteration: 1636
+errorTotal: 47.6646
+learningRate:0.000983773
+iteration: 1637
+errorTotal: 47.6645
+learningRate:0.000983763
+iteration: 1638
+errorTotal: 47.6644
+learningRate:0.000983753
+iteration: 1639
+errorTotal: 47.6643
+learningRate:0.000983744
+iteration: 1640
+errorTotal: 47.6641
+learningRate:0.000983734
+iteration: 1641
+errorTotal: 47.664
+learningRate:0.000983724
+iteration: 1642
+errorTotal: 47.6639
+learningRate:0.000983714
+iteration: 1643
+errorTotal: 47.6638
+learningRate:0.000983704
+iteration: 1644
+errorTotal: 47.6637
+learningRate:0.000983694
+iteration: 1645
+errorTotal: 47.6635
+learningRate:0.000983685
+iteration: 1646
+errorTotal: 47.6634
+learningRate:0.000983675
+iteration: 1647
+errorTotal: 47.6633
+learningRate:0.000983665
+iteration: 1648
+errorTotal: 47.6632
+learningRate:0.000983655
+iteration: 1649
+errorTotal: 47.663
+learningRate:0.000983645
+iteration: 1650
+errorTotal: 47.6629
+learningRate:0.000983635
+iteration: 1651
+errorTotal: 47.6628
+learningRate:0.000983626
+iteration: 1652
+errorTotal: 47.6627
+learningRate:0.000983616
+iteration: 1653
+errorTotal: 47.6626
+learningRate:0.000983606
+iteration: 1654
+errorTotal: 47.6624
+learningRate:0.000983596
+iteration: 1655
+errorTotal: 47.6623
+learningRate:0.000983586
+iteration: 1656
+errorTotal: 47.6622
+learningRate:0.000983576
+iteration: 1657
+errorTotal: 47.6621
+learningRate:0.000983567
+iteration: 1658
+errorTotal: 47.662
+learningRate:0.000983557
+iteration: 1659
+errorTotal: 47.6618
+learningRate:0.000983547
+iteration: 1660
+errorTotal: 47.6617
+learningRate:0.000983537
+iteration: 1661
+errorTotal: 47.6616
+learningRate:0.000983527
+iteration: 1662
+errorTotal: 47.6615
+learningRate:0.000983517
+iteration: 1663
+errorTotal: 47.6613
+learningRate:0.000983508
+iteration: 1664
+errorTotal: 47.6612
+learningRate:0.000983498
+iteration: 1665
+errorTotal: 47.6611
+learningRate:0.000983488
+iteration: 1666
+errorTotal: 47.661
+learningRate:0.000983478
+iteration: 1667
+errorTotal: 47.6609
+learningRate:0.000983468
+iteration: 1668
+errorTotal: 47.6607
+learningRate:0.000983458
+iteration: 1669
+errorTotal: 47.6606
+learningRate:0.000983449
+iteration: 1670
+errorTotal: 47.6605
+learningRate:0.000983439
+iteration: 1671
+errorTotal: 47.6604
+learningRate:0.000983429
+iteration: 1672
+errorTotal: 47.6602
+learningRate:0.000983419
+iteration: 1673
+errorTotal: 47.6601
+learningRate:0.000983409
+iteration: 1674
+errorTotal: 47.66
+learningRate:0.000983399
+iteration: 1675
+errorTotal: 47.6599
+learningRate:0.00098339
+iteration: 1676
+errorTotal: 47.6597
+learningRate:0.00098338
+iteration: 1677
+errorTotal: 47.6596
+learningRate:0.00098337
+iteration: 1678
+errorTotal: 47.6595
+learningRate:0.00098336
+iteration: 1679
+errorTotal: 47.6594
+learningRate:0.00098335
+iteration: 1680
+errorTotal: 47.6593
+learningRate:0.00098334
+iteration: 1681
+errorTotal: 47.6591
+learningRate:0.00098333
+iteration: 1682
+errorTotal: 47.659
+learningRate:0.000983321
+iteration: 1683
+errorTotal: 47.6589
+learningRate:0.000983311
+iteration: 1684
+errorTotal: 47.6588
+learningRate:0.000983301
+iteration: 1685
+errorTotal: 47.6586
+learningRate:0.000983291
+iteration: 1686
+errorTotal: 47.6585
+learningRate:0.000983281
+iteration: 1687
+errorTotal: 47.6584
+learningRate:0.000983272
+iteration: 1688
+errorTotal: 47.6583
+learningRate:0.000983262
+iteration: 1689
+errorTotal: 47.6581
+learningRate:0.000983252
+iteration: 1690
+errorTotal: 47.658
+learningRate:0.000983242
+iteration: 1691
+errorTotal: 47.6579
+learningRate:0.000983232
+iteration: 1692
+errorTotal: 47.6578
+learningRate:0.000983222
+iteration: 1693
+errorTotal: 47.6576
+learningRate:0.000983213
+iteration: 1694
+errorTotal: 47.6575
+learningRate:0.000983203
+iteration: 1695
+errorTotal: 47.6574
+learningRate:0.000983193
+iteration: 1696
+errorTotal: 47.6573
+learningRate:0.000983183
+iteration: 1697
+errorTotal: 47.6571
+learningRate:0.000983173
+iteration: 1698
+errorTotal: 47.657
+learningRate:0.000983163
+iteration: 1699
+errorTotal: 47.6569
+learningRate:0.000983154
+iteration: 1700
+errorTotal: 47.6568
+learningRate:0.000983144
+iteration: 1701
+errorTotal: 47.6566
+learningRate:0.000983134
+iteration: 1702
+errorTotal: 47.6565
+learningRate:0.000983124
+iteration: 1703
+errorTotal: 47.6564
+learningRate:0.000983114
+iteration: 1704
+errorTotal: 47.6563
+learningRate:0.000983104
+iteration: 1705
+errorTotal: 47.6561
+learningRate:0.000983095
+iteration: 1706
+errorTotal: 47.656
+learningRate:0.000983085
+iteration: 1707
+errorTotal: 47.6559
+learningRate:0.000983075
+iteration: 1708
+errorTotal: 47.6558
+learningRate:0.000983065
+iteration: 1709
+errorTotal: 47.6556
+learningRate:0.000983055
+iteration: 1710
+errorTotal: 47.6555
+learningRate:0.000983045
+iteration: 1711
+errorTotal: 47.6554
+learningRate:0.000983036
+iteration: 1712
+errorTotal: 47.6552
+learningRate:0.000983026
+iteration: 1713
+errorTotal: 47.6551
+learningRate:0.000983016
+iteration: 1714
+errorTotal: 47.655
+learningRate:0.000983006
+iteration: 1715
+errorTotal: 47.6549
+learningRate:0.000982996
+iteration: 1716
+errorTotal: 47.6547
+learningRate:0.000982986
+iteration: 1717
+errorTotal: 47.6546
+learningRate:0.000982977
+iteration: 1718
+errorTotal: 47.6545
+learningRate:0.000982967
+iteration: 1719
+errorTotal: 47.6544
+learningRate:0.000982957
+iteration: 1720
+errorTotal: 47.6542
+learningRate:0.000982947
+iteration: 1721
+errorTotal: 47.6541
+learningRate:0.000982937
+iteration: 1722
+errorTotal: 47.654
+learningRate:0.000982927
+iteration: 1723
+errorTotal: 47.6538
+learningRate:0.000982918
+iteration: 1724
+errorTotal: 47.6537
+learningRate:0.000982908
+iteration: 1725
+errorTotal: 47.6536
+learningRate:0.000982898
+iteration: 1726

@@ -2,18 +2,22 @@
 #include "Model_PoleFull.h"
 #include "BaseModel.h"
 #include "NN_RLSolverBase.h"
-#include "NN_RLSolverSimple.h"
-#include "NN_RLSolverFull.h"
+#include "NN_RLSolverMLP.h"
+#include "NN_RLSolverMultiMLP.h"
+#include "NN_RLSolverRNN.h"
 #include "MultiLayerPerceptron.h"
 #include "RNN.h"
 #include "ElmanRL.h"
 #include "Util.h"
 #include "common.h"
+#include "RLSolver_Table.h"
 void testModel();
 void testModelFull();
-void testSolver(char* filename, char*);
+void testSolverMLP(char* filename, char*);
+void testSolverMultiMLP(char* filename, char*);
 void testSolverRNN(char* filename, char*);
 void testSolverElman(char* filename, char*);
+void testTableSolver(char* filename);
 using namespace ReinforcementLearning;
 using namespace DeepLearning;
 using namespace NeuralNet;
@@ -22,14 +26,15 @@ int main(int argc, char* argv[]){
  //   for (int i = 0; i < 100; i++)
  //       testModel();
  //   testModelFull();
- //   testSolver(argv[1], argv[2]);
+// 	testTableSolver(argv[1]);
+    testSolverMultiMLP(argv[1], argv[2]);
  //   testSolverRNN(argv[1],argv[2]);
-    testSolverElman(argv[1],argv[2]);
+//    testSolverElman(argv[1],argv[2]);
     return 0;
 }
 #if 1
-void testSolver(char* filename1, char* filename2){
-
+void testSolverMultiMLP(char* filename1, char* filename2){
+//without learning, the average balancing duration is below 12
     double dt = 0.1;
     NeuralNetParameter message1;
     ReinforcementLearningParameter message2;
@@ -38,12 +43,46 @@ void testSolver(char* filename1, char* filename2){
     ReadProtoFromTextFile(filename2, &message2);
     message3 = message2.qlearningsolverparameter();
     arma::arma_rng::set_seed_random();
+    std::shared_ptr<BaseModel> model(new Model_PoleSimple(dt));    
+    
+    std::vector<std::shared_ptr<Net>> net;
+    for (int i = 0; i < model->getNumActions(); i++)
+        net.push_back(std::shared_ptr<Net>(new MultiLayerPerceptron(message1)));
+    std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net[0],message1));
+    NN_RLSolverMultiMLP rlSolver(model, net, trainer, 2, message3);
+    rlSolver.train();
+}
+
+
+
+void testSolverMLP(char* filename1, char* filename2){
+//without learning, the average balancing duration is below 12
+    double dt = 0.1;
+    NeuralNetParameter message1;
+    ReinforcementLearningParameter message2;
+    QLearningSolverParameter message3;
+    ReadProtoFromTextFile(filename1, &message1);
+    ReadProtoFromTextFile(filename2, &message2);
+    message3 = message2.qlearningsolverparameter();
+    arma::arma_rng::set_seed(1);
     std::shared_ptr<Net> net(new MultiLayerPerceptron(message1));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net,message1));
     std::shared_ptr<BaseModel> model(new Model_PoleSimple(dt));
-    NN_RLSolverSimple rlSolver(model, net, trainer, 2, message3);
+    NN_RLSolverMLP rlSolver(model, net, trainer, 2, message3);
     rlSolver.train();
     net->save("trainedresult");
+}
+
+void testTableSolver(char* filename2){
+    double dt = 0.1;
+    ReinforcementLearningParameter message2;
+    QLearningSolverParameter message3;
+    ReadProtoFromTextFile(filename2, &message2);
+    message3 = message2.qlearningsolverparameter();
+    arma::arma_rng::set_seed(1);
+    std::shared_ptr<BaseModel> model(new Model_PoleSimple(dt));
+    RLSolver_Table rlSolver(model, 2, message3);
+    rlSolver.train();
 }
 
 void testSolverRNN(char* filename1, char* filename2){
@@ -59,7 +98,7 @@ void testSolverRNN(char* filename1, char* filename2){
     std::shared_ptr<Net> net(new RNN(message1));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net,message1));
     std::shared_ptr<BaseModel> model(new Model_PoleFull(dt));
-    NN_RLSolverFull rlSolver(model, net, trainer, 2, message3);
+    NN_RLSolverRNN rlSolver(model, net, trainer, 2, message3);
     rlSolver.train();
     net->save("trainedresult");
 }
@@ -78,9 +117,9 @@ void testSolverElman(char* filename1, char* filename2){
     std::shared_ptr<Net> net(new ElmanRL(message1));
     std::shared_ptr<Trainer> trainer(TrainerBuilder::GetTrainer(net,message1));
     std::shared_ptr<BaseModel> model(new Model_PoleFull(dt));
-    NN_RLSolverFull rlSolver(model, net, trainer, 2, message3);
+    NN_RLSolverRNN rlSolver(model, net, trainer, 2, message3);
     rlSolver.train();
-    net->save("trainedresult");
+//    net->save("trainedresult");
 }
 
 

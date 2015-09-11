@@ -13,11 +13,11 @@ DEEPLEARNING_PATH=-L../../lib
 PROTO_PATH=-L/usr/local/lib
 
 DEBUGFLAG=-DDEBUG -g3
-RELEASEFLAG=
+RELEASEFLAG= -O3 -march=native -DARMA_NO_DEBUG
 CXXFLAGS=  -std=c++0x $(ARMA_INCLUDE) $(DEEPLEARNING_INCLUDE) $(GTEST_INCLUDE) $(BOOST_INCLUDE) $(PROTO_INCLUDE) -D__LINUX -DARMA_DONT_USE_WRAAPER 
-CXXFLAGS += $(DEBUGFLAG)
-
+#CXXFLAGS += $(DEBUGFLAG)
+CXXFLAGS += $(RELEASEFLAG)
 LINKOPTFLAGS= -O3 -flto=4 -fwhole-program
-LDFLAG=$(DEEPLEARNING_PATH) $(GTEST_PATH) $(PROTO_PATH) -ldeeplearning -llapack -lblas  -lprotobuf -pthread -lpthread 
+LDFLAG=$(DEEPLEARNING_PATH) $(GTEST_PATH) $(PROTO_PATH) -L/opt/OpenBLAS/lib -ldeeplearning -llapack -lopenblas  -lprotobuf -pthread -lpthread 
 
 

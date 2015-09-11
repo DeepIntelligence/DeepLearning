@@ -50,4 +50,4 @@ nbproject/
 *.pyc
 *data*
 MNIST
-test
+test_*

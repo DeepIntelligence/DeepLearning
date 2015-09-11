@@ -10,6 +10,7 @@ namespace NeuralNet {
         Trainer(std::shared_ptr<Net> net0, const DeepLearning::NeuralNetParameter& nnPara){
             net = net0;
             trainingParameter = nnPara;
+            learningRate_externalScalar = 1.0;
         }
 
         virtual ~Trainer() {
@@ -32,6 +33,7 @@ namespace NeuralNet {
         void setNet(std::shared_ptr<Net> net0) {
             net = net0;
         };
+        void setLearningScalar(double in) {learningRate_externalScalar = in;}
         virtual void train() = 0;
         virtual void trainHelper(std::shared_ptr<arma::mat> X, 
                                  std::shared_ptr<arma::mat> Y);
@@ -40,6 +42,7 @@ namespace NeuralNet {
     protected:
         int iter;
         double learningRate, errorTotal;
+        double learningRate_externalScalar;
 
         std::shared_ptr<arma::mat> trainingX, trainingY;
         std::vector<std::shared_ptr<arma::mat>> trainingXVec, trainingYVec;
@@ -66,6 +69,7 @@ namespace NeuralNet {
             }        
         }
     private:
+        int numInstances;
         std::vector<std::shared_ptr<arma::mat>> prevUpdate;
     };
     

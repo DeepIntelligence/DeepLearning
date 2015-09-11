@@ -12,6 +12,7 @@ void Trainer::applyUpdatesToNet(std::vector<std::shared_ptr<arma::mat>> update) 
 }
 
 std::shared_ptr<arma::mat> Trainer::predict(std::shared_ptr<arma::mat> X) {
+    if (X->n_cols == 0) return nullptr;
     net->setTrainingSamples(X, nullptr);
     net->forward();
     return net->netOutput();
@@ -40,9 +41,9 @@ void Trainer::trainHelper(std::shared_ptr<arma::mat> X, std::shared_ptr<arma::ma
 void Trainer::printInfo() {
     if (trainingParameter.neuralnettrainingparameter().verbose()&&
             (((iter + 1) % trainingParameter.neuralnettrainingparameter().printinfofrequency() == 0)
-            || iter == 0)) {
+            || iter == 0 || iter == (trainingParameter.neuralnettrainingparameter().nepoch() - 1))) {
         std::cout << "iteration: " << iter << std::endl;
-        std::cout << "errorTotal: " << errorTotal << std::endl;
+        std::cout << "errorTotal: " << errorTotal  <<std::endl;
         std::cout << "learningRate:" << learningRate << std::endl;
     }
 }
@@ -81,6 +82,7 @@ void Trainer_SGD::calUpdates() {
 }
 
 void Trainer_SGD::train() {
+    
     std::shared_ptr<arma::mat> subTrainingX;
     std::shared_ptr<arma::mat> subTrainingY;
     int size = trainingParameter.neuralnettrainingparameter().minibatchsize();
@@ -88,11 +90,12 @@ void Trainer_SGD::train() {
         size = trainingX->n_cols;
     }    
     for (iter = 0; iter < trainingParameter.neuralnettrainingparameter().nepoch(); iter++) {
+        numInstances = 0;
         errorTotal = 0.0;
         learningRate = trainingParameter.neuralnettrainingparameter().learningrate() / size;    
         double decayRate = trainingParameter.neuralnettrainingparameter().decayrate();
         learningRate = learningRate * exp(-iter / decayRate);
-    
+        learningRate *= learningRate_externalScalar;
         int ntimes = this->trainingX->n_cols / size;
             if (trainingParameter.neuralnettrainingparameter().rnnscanflag()){
                 
@@ -111,9 +114,15 @@ void Trainer_SGD::train() {
             }
             subTrainingX = std::make_shared<arma::mat>(trainingX->cols(startPoint, endPoint));
             subTrainingY= std::make_shared<arma::mat>(trainingY->cols(startPoint, endPoint));           
+            numInstances += subTrainingX->n_cols;
             trainHelper(subTrainingX, subTrainingY);
         }
         printInfo();
+        if (trainingParameter.neuralnettrainingparameter().verbose()&&
+            (((iter + 1) % trainingParameter.neuralnettrainingparameter().printinfofrequency() == 0)
+            || iter == 0 || iter == (trainingParameter.neuralnettrainingparameter().nepoch() - 1))) {
+            std::cout << "average Error: "<< errorTotal/(double)numInstances << std::endl;
+        }
     }
 }
 
@@ -191,6 +200,8 @@ void Trainer_RMSProp::train() {
 std::shared_ptr<arma::mat> subTrainingX;
     std::shared_ptr<arma::mat> subTrainingY;
     int size = trainingParameter.neuralnettrainingparameter().minibatchsize();
+    if (trainingX->n_cols == 0) return;
+    
     if (size < 0 || size >= trainingX->n_cols) {
         size = trainingX->n_cols;
     }

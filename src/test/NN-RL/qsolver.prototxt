@@ -1,0 +1,10 @@
+
+
+qLearningSolverParameter{
+	numTrainingEpisodes: 50000
+	epsilon: 0.2;
+	EpisodeLength: 1000
+	discount: 0.9
+}
+
+
