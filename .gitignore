@@ -51,3 +51,8 @@ nbproject/
 *data*
 MNIST
 test_*
+*.tlog
+*.idb
+*.pdb
+*.suo
+*.vcxproj
