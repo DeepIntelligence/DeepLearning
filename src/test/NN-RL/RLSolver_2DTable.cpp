@@ -1,47 +1,71 @@
-#include "RLSolver_Table.h"
+#include "RLSolver_2DTable.h"
 
 using namespace ReinforcementLearning;
 
-RLSolver_Table::RLSolver_Table(std::shared_ptr<BaseModel> m, int Dim, DeepLearning::QLearningSolverParameter para):
+RLSolver_2DTable::RLSolver_2DTable(std::shared_ptr<BaseModel> m, int Dim, 
+        DeepLearning::QLearningSolverParameter para, int n_row0, int n_col0, 
+        double dx, double dy, double min_x, double min_y):
     RLSolverBase(m,Dim,para){
-    n_rows = 40;
-    n_cols = 30;
     
-    dx1 = 2.0*M_PI / n_rows;
-    dx2 = 20.0 / n_cols;
-    minx1 = -1.0*M_PI;
-    minx2 = -10.0;
+    n_rows = n_row0;
+    n_cols = n_col0;
+    
+    dx1 = dx;
+    dx2 = dy;
+    minx1 = min_x;
+    minx2 = min_y;
     numActions = model->getNumActions();
     QTable.zeros(n_rows, n_cols, numActions);
     count.zeros(n_rows, n_cols);
 }
 
-void RLSolver_Table::train() {
+void RLSolver_2DTable::writeTrajectory(int iter, std::ostream &os, int action, State state, double reward) const {
+    os << iter << "\t";
+    for (int s = 0; s < this->stateDim; s++) {
+        os << state[s] << "\t";
+    }
+    os << action << "\t";
+    os << reward << std::endl;
+}
+
+void RLSolver_2DTable::train() {
     int iter;
-    double maxQ;
+    double maxQ, reward;
     int action;
-    double epi = 0.5;
-	int maxIter = trainingPara.numtrainingepisodes();
-	int epiLength = trainingPara.episodelength();
+    double epi = 0.95;
+    int maxIter = trainingPara.numtrainingepisodes();
+    int epiLength = trainingPara.episodelength();
+    int controlFreq = 100;
+    int trajOutputFreq = 10;
+    int episodeOutputFreq = 10;
     for (int i = 0; i < maxIter; i++) {
+        std::ofstream os;
+        std::stringstream ss;
+        ss << i;
+        if ( (i+1)%episodeOutputFreq == 0) {
+            os.open("traj/traj"+ss.str()+".dat");        
+        }
         std::cout << "training Episodes " << i << std::endl;
         iter = 0;
         model->createInitialState();
-        while (!this->terminate(model->getCurrState()) && iter < epiLength) {
+        while (!model->terminate() && iter < epiLength) {
             State oldState = model->getCurrState();
             if (randChoice->nextDou() < epi){
                 this->getMaxQ(oldState,&maxQ,&action);
             } else {
                 action = randChoice->nextInt();
             }
-            model->run(action);
+            model->run(action, controlFreq);
             State newState = model->getCurrState();
-            double reward = this->getRewards(newState);
+            reward = model->getRewards();
             this->updateQ(Experience(oldState, newState, action, reward));
-            iter++;
+            if ((iter == 0 || (iter+1)%trajOutputFreq == 0) && (i+1)%episodeOutputFreq == 0) {
+                this->writeTrajectory(iter, os, action, oldState, reward);
+            }
+             iter++;
         }
         std::cout << "duration: " << iter << std::endl;
-        if ((i + 1) % 1000 == 0) {
+        if ((i + 1) % 100 == 0) {
             std::stringstream ss;        
             ss << i;
             this->outputQ("QTable_" + ss.str() + "iter");
@@ -54,19 +78,19 @@ void RLSolver_Table::train() {
         std::cout << "testing Episodes " << i << std::endl;
         iter = 0;
         model->createInitialState();
-        while (!this->terminate(model->getCurrState()) && iter < epiLength) {
+        while (!model->terminate() && iter < epiLength) {
             State oldState = model->getCurrState();          
             this->getMaxQ(oldState,&maxQ,&action);
             model->run(action);
             State newState = model->getCurrState();
-            double reward = this->getRewards(newState);
+            double reward = model->getRewards();
             iter++;
         }  
          std::cout << "duration: " << iter << std::endl;
     }   
 }
 
-void RLSolver_Table::updateQ(Experience exp) {
+void RLSolver_2DTable::updateQ(Experience exp) {
     double learningRate = 0.1;
     int action;
     double maxQ;
@@ -78,7 +102,7 @@ void RLSolver_Table::updateQ(Experience exp) {
             learningRate * (exp.reward + discount * maxQ - QTable(index0.first, index0.second, exp.action));
 }
 
-void RLSolver_Table::getMaxQ(const State& S, double* maxQ, int* action) const{
+void RLSolver_2DTable::getMaxQ(const State& S, double* maxQ, int* action) const{
     std::pair<int, int> index = this->stateToIndex(S);
     double max = -std::numeric_limits<double>::max();
     *action = 2;
@@ -91,14 +115,14 @@ void RLSolver_Table::getMaxQ(const State& S, double* maxQ, int* action) const{
     *maxQ = max;
 }
 
-std::pair<int, int> RLSolver_Table::stateToIndex(const State& S) const {
+std::pair<int, int> RLSolver_2DTable::stateToIndex(const State& S) const {
     int idx1, idx2;
     idx1 = (int) ((S[0] - minx1)/dx1) + 1;
     idx2 = (int) ((S[1] - minx2)/dx2) + 1;
     return std::pair<int, int>(idx1,idx2);
 }
 
-void RLSolver_Table::outputQ(std::string filename) {
+void RLSolver_2DTable::outputQ(std::string filename) {
     
     for (int i = 0; i < numActions; ++i) {
         arma::mat temp = QTable.slice(i);
@@ -108,7 +132,7 @@ void RLSolver_Table::outputQ(std::string filename) {
     }
 }
 
-void RLSolver_Table::outputPolicy(){
+void RLSolver_2DTable::outputPolicy(){
     arma::Mat<int> actionMap(n_rows, n_cols, arma::fill::zeros);
     arma::mat QMap(n_rows, n_cols, arma::fill::ones);
     QMap *= -1;
@@ -134,14 +158,3 @@ void RLSolver_Table::outputPolicy(){
 
 }
 
-double RLSolver_Table::getRewards(const State &newS) const {
-    if (this->terminate(newS)) {
-        return -1.0;
-    } else {
-        return 0.0;
-    }
-}
-
-bool RLSolver_Table::terminate(const State& S) const {
-    return (S[0] < -0.5 * M_PI || S[0] > 0.5 * M_PI);
-}

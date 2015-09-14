@@ -17,7 +17,7 @@ namespace ReinforcementLearning {
         virtual ~RLSolverBase() {
         }
         virtual void train() = 0;
-        virtual double getRewards(const State& newS) const = 0;
+        virtual double getRewards(const State& newS) const {return 0.0;};
     protected:
         int stateDim;
         std::shared_ptr<BaseModel> model;

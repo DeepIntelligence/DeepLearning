@@ -47,3 +47,15 @@ void Model_PoleSimple::createInitialState() {
     this->currState[1] = 0.0;
 }
 
+
+double Model_PoleSimple::getRewards() const {
+    if (this->terminate()) {
+        return -1.0;
+    } else {
+        return 0.0;
+    }
+}
+
+bool Model_PoleSimple::terminate() const {
+    return (currState[0] < -0.5 * M_PI || currState[0] > 0.5 * M_PI);
+}

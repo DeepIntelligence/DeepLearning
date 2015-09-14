@@ -7,14 +7,19 @@ namespace ReinforcementLearning {
     class BaseModel {
     public:
         virtual ~BaseModel(){}
-        virtual void run(int actions) = 0;
-
+        virtual void run(int action) = 0;
+	virtual void run(int action, int steps){
+		for (int i = 0; i < steps; i++){
+			run(action);
+		}
+	};
         virtual State getCurrState() {
             return currState;
         }
         virtual void createInitialState() = 0;
         virtual int getNumActions(){ return numActions;}
-
+        virtual double getRewards() const{}
+        virtual bool terminate() const{}
     protected:
         State currState, prevState;
         int numActions;

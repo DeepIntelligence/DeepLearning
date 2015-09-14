@@ -10,7 +10,7 @@
 #include "ElmanRL.h"
 #include "Util.h"
 #include "common.h"
-#include "RLSolver_Table.h"
+#include "RLSolver_2DTable.h"
 void testModel();
 void testModelFull();
 void testSolverMLP(char* filename, char*);
@@ -81,7 +81,15 @@ void testTableSolver(char* filename2){
     message3 = message2.qlearningsolverparameter();
     arma::arma_rng::set_seed(1);
     std::shared_ptr<BaseModel> model(new Model_PoleSimple(dt));
-    RLSolver_Table rlSolver(model, 2, message3);
+    
+    int n_rows = 40;
+    int n_cols = 30;
+    
+    double dx1 = 2.0*M_PI / n_rows;
+    double dx2 = 20.0 / n_cols;
+    double minx1 = -1.0*M_PI;
+    double minx2 = -10.0;
+    RLSolver_2DTable rlSolver(model, 2, message3, n_rows, n_cols, dx1, dx2, minx1, minx2);
     rlSolver.train();
 }
 

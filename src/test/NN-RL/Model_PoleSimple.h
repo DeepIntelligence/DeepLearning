@@ -17,6 +17,8 @@ public:
     ~Model_PoleSimple(){}
     virtual void run(int action);
     virtual void createInitialState();
+    virtual double getRewards() const;
+    virtual bool terminate() const;
 private:
     std::shared_ptr<RandomStream> randNoise;    
     double dt;
