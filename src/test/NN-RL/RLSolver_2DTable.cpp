@@ -8,8 +8,7 @@ RLSolver_2DTable::RLSolver_2DTable(std::shared_ptr<BaseModel> m, int Dim,
     RLSolverBase(m,Dim,para){
     
     n_rows = n_row0;
-    n_cols = n_col0;
-    
+    n_cols = n_col0;    
     dx1 = dx;
     dx2 = dy;
     minx1 = min_x;
@@ -35,9 +34,10 @@ void RLSolver_2DTable::train() {
     double epi = 0.95;
     int maxIter = trainingPara.numtrainingepisodes();
     int epiLength = trainingPara.episodelength();
-    int controlFreq = 100;
+    int controlFreq = 1;
     int trajOutputFreq = 10;
     int episodeOutputFreq = 10;
+    bool experienceReplayFlag = false;
     for (int i = 0; i < maxIter; i++) {
         std::ofstream os;
         std::stringstream ss;
@@ -59,11 +59,17 @@ void RLSolver_2DTable::train() {
             State newState = model->getCurrState();
             reward = model->getRewards();
             this->updateQ(Experience(oldState, newState, action, reward));
+            if (experienceReplayFlag) {
+                this->experienceVec.push_back(Experience(oldState, newState, action, reward));
+            }
+            
             if ((iter == 0 || (iter+1)%trajOutputFreq == 0) && (i+1)%episodeOutputFreq == 0) {
                 this->writeTrajectory(iter, os, action, oldState, reward);
             }
              iter++;
         }
+        // after an episode, do experience reply
+        this->replayExperience();
         std::cout << "duration: " << iter << std::endl;
         if ((i + 1) % 100 == 0) {
             std::stringstream ss;        
@@ -73,7 +79,23 @@ void RLSolver_2DTable::train() {
     }
         this->outputQ("QTableFinal");
         this->outputPolicy();
+
+}
+
+void RLSolver_2DTable::replayExperience(){
+    for (auto exp = this->experienceVec.rbegin(); exp != this->experienceVec.rend(); ++exp){
+        this->updateQ(*exp);
+    }
+
+}
+
+void RLSolver_2DTable::test(){
 // do some test
+    int maxIter = trainingPara.numtrainingepisodes();
+    int epiLength = trainingPara.episodelength();
+    int iter;
+    int action;
+    double maxQ;
     for (int i = 0; i < 0.1*maxIter; i++) {
         std::cout << "testing Episodes " << i << std::endl;
         iter = 0;
@@ -105,7 +127,6 @@ void RLSolver_2DTable::updateQ(Experience exp) {
 void RLSolver_2DTable::getMaxQ(const State& S, double* maxQ, int* action) const{
     std::pair<int, int> index = this->stateToIndex(S);
     double max = -std::numeric_limits<double>::max();
-    *action = 2;
     for (int i = 0; i < numActions; i++){
         if(max < QTable(index.first,index.second, i)){
             max = QTable(index.first,index.second, i);

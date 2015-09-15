@@ -26,8 +26,8 @@ int main(int argc, char* argv[]){
  //   for (int i = 0; i < 100; i++)
  //       testModel();
  //   testModelFull();
-// 	testTableSolver(argv[1]);
-    testSolverMultiMLP(argv[1], argv[2]);
+ 	testTableSolver(argv[1]);
+//    testSolverMultiMLP(argv[1], argv[2]);
  //   testSolverRNN(argv[1],argv[2]);
 //    testSolverElman(argv[1],argv[2]);
     return 0;
@@ -86,11 +86,13 @@ void testTableSolver(char* filename2){
     int n_cols = 30;
     
     double dx1 = 2.0*M_PI / n_rows;
-    double dx2 = 20.0 / n_cols;
+    double dx2 = 30.0 / n_cols;
     double minx1 = -1.0*M_PI;
-    double minx2 = -10.0;
+    double minx2 = -15.0;
     RLSolver_2DTable rlSolver(model, 2, message3, n_rows, n_cols, dx1, dx2, minx1, minx2);
     rlSolver.train();
+    rlSolver.test();
+    
 }
 
 void testSolverRNN(char* filename1, char* filename2){
