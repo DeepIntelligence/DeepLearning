@@ -1138,14 +1138,14 @@ class QLearningSolverParameter : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 numtrainingepisodes() const;
   inline void set_numtrainingepisodes(::google::protobuf::int32 value);
 
-  // optional double learningRate = 2;
+  // optional double learningRate = 2 [default = 0.1];
   inline bool has_learningrate() const;
   inline void clear_learningrate();
   static const int kLearningRateFieldNumber = 2;
   inline double learningrate() const;
   inline void set_learningrate(double value);
 
-  // optional double epsilon = 3;
+  // optional double epsilon = 3 [default = 0.95];
   inline bool has_epsilon() const;
   inline void clear_epsilon();
   static const int kEpsilonFieldNumber = 3;
@@ -1159,7 +1159,7 @@ class QLearningSolverParameter : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 episodelength() const;
   inline void set_episodelength(::google::protobuf::int32 value);
 
-  // optional double discount = 5;
+  // optional double discount = 5 [default = 0.95];
   inline bool has_discount() const;
   inline void clear_discount();
   static const int kDiscountFieldNumber = 5;
@@ -1172,6 +1172,20 @@ class QLearningSolverParameter : public ::google::protobuf::Message {
   static const int kNumEpisodesBeforeTrainingFieldNumber = 6;
   inline ::google::protobuf::int32 numepisodesbeforetraining() const;
   inline void set_numepisodesbeforetraining(::google::protobuf::int32 value);
+
+  // optional int32 QTableOutputInterval = 7;
+  inline bool has_qtableoutputinterval() const;
+  inline void clear_qtableoutputinterval();
+  static const int kQTableOutputIntervalFieldNumber = 7;
+  inline ::google::protobuf::int32 qtableoutputinterval() const;
+  inline void set_qtableoutputinterval(::google::protobuf::int32 value);
+
+  // optional int32 controlInterval = 8 [default = 1];
+  inline bool has_controlinterval() const;
+  inline void clear_controlinterval();
+  static const int kControlIntervalFieldNumber = 8;
+  inline ::google::protobuf::int32 controlinterval() const;
+  inline void set_controlinterval(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:DeepLearning.QLearningSolverParameter)
  private:
@@ -1187,6 +1201,10 @@ class QLearningSolverParameter : public ::google::protobuf::Message {
   inline void clear_has_discount();
   inline void set_has_numepisodesbeforetraining();
   inline void clear_has_numepisodesbeforetraining();
+  inline void set_has_qtableoutputinterval();
+  inline void clear_has_qtableoutputinterval();
+  inline void set_has_controlinterval();
+  inline void clear_has_controlinterval();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1198,6 +1216,8 @@ class QLearningSolverParameter : public ::google::protobuf::Message {
   double epsilon_;
   double discount_;
   ::google::protobuf::int32 numepisodesbeforetraining_;
+  ::google::protobuf::int32 qtableoutputinterval_;
+  ::google::protobuf::int32 controlinterval_;
   friend void  protobuf_AddDesc_DeepLearning_2eproto();
   friend void protobuf_AssignDesc_DeepLearning_2eproto();
   friend void protobuf_ShutdownFile_DeepLearning_2eproto();
@@ -2680,7 +2700,7 @@ inline void QLearningSolverParameter::set_numtrainingepisodes(::google::protobuf
   // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.numTrainingEpisodes)
 }
 
-// optional double learningRate = 2;
+// optional double learningRate = 2 [default = 0.1];
 inline bool QLearningSolverParameter::has_learningrate() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -2691,7 +2711,7 @@ inline void QLearningSolverParameter::clear_has_learningrate() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void QLearningSolverParameter::clear_learningrate() {
-  learningrate_ = 0;
+  learningrate_ = 0.1;
   clear_has_learningrate();
 }
 inline double QLearningSolverParameter::learningrate() const {
@@ -2704,7 +2724,7 @@ inline void QLearningSolverParameter::set_learningrate(double value) {
   // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.learningRate)
 }
 
-// optional double epsilon = 3;
+// optional double epsilon = 3 [default = 0.95];
 inline bool QLearningSolverParameter::has_epsilon() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -2715,7 +2735,7 @@ inline void QLearningSolverParameter::clear_has_epsilon() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void QLearningSolverParameter::clear_epsilon() {
-  epsilon_ = 0;
+  epsilon_ = 0.95;
   clear_has_epsilon();
 }
 inline double QLearningSolverParameter::epsilon() const {
@@ -2752,7 +2772,7 @@ inline void QLearningSolverParameter::set_episodelength(::google::protobuf::int3
   // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.EpisodeLength)
 }
 
-// optional double discount = 5;
+// optional double discount = 5 [default = 0.95];
 inline bool QLearningSolverParameter::has_discount() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
@@ -2763,7 +2783,7 @@ inline void QLearningSolverParameter::clear_has_discount() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void QLearningSolverParameter::clear_discount() {
-  discount_ = 0;
+  discount_ = 0.95;
   clear_has_discount();
 }
 inline double QLearningSolverParameter::discount() const {
@@ -2798,6 +2818,54 @@ inline void QLearningSolverParameter::set_numepisodesbeforetraining(::google::pr
   set_has_numepisodesbeforetraining();
   numepisodesbeforetraining_ = value;
   // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.numEpisodesBeforeTraining)
+}
+
+// optional int32 QTableOutputInterval = 7;
+inline bool QLearningSolverParameter::has_qtableoutputinterval() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void QLearningSolverParameter::set_has_qtableoutputinterval() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void QLearningSolverParameter::clear_has_qtableoutputinterval() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void QLearningSolverParameter::clear_qtableoutputinterval() {
+  qtableoutputinterval_ = 0;
+  clear_has_qtableoutputinterval();
+}
+inline ::google::protobuf::int32 QLearningSolverParameter::qtableoutputinterval() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.QLearningSolverParameter.QTableOutputInterval)
+  return qtableoutputinterval_;
+}
+inline void QLearningSolverParameter::set_qtableoutputinterval(::google::protobuf::int32 value) {
+  set_has_qtableoutputinterval();
+  qtableoutputinterval_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.QTableOutputInterval)
+}
+
+// optional int32 controlInterval = 8 [default = 1];
+inline bool QLearningSolverParameter::has_controlinterval() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void QLearningSolverParameter::set_has_controlinterval() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void QLearningSolverParameter::clear_has_controlinterval() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void QLearningSolverParameter::clear_controlinterval() {
+  controlinterval_ = 1;
+  clear_has_controlinterval();
+}
+inline ::google::protobuf::int32 QLearningSolverParameter::controlinterval() const {
+  // @@protoc_insertion_point(field_get:DeepLearning.QLearningSolverParameter.controlInterval)
+  return controlinterval_;
+}
+inline void QLearningSolverParameter::set_controlinterval(::google::protobuf::int32 value) {
+  set_has_controlinterval();
+  controlinterval_ = value;
+  // @@protoc_insertion_point(field_set:DeepLearning.QLearningSolverParameter.controlInterval)
 }
 
 

@@ -19,6 +19,7 @@ namespace ReinforcementLearning {
         virtual void updateQ(Experience);
         virtual void getMaxQ(const State& S, double* Q, int* action) const;
         arma::cube& getQTable(){return QTable;}
+        virtual void loadQTable(std::string filetag);
         private:
         void outputPolicy();
 	void outputQ(std::string filename);

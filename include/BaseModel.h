@@ -18,8 +18,8 @@ namespace ReinforcementLearning {
         }
         virtual void createInitialState() = 0;
         virtual int getNumActions(){ return numActions;}
-        virtual double getRewards() const{}
-        virtual bool terminate() const{}
+        virtual double getRewards() {}
+        virtual bool terminate() {}
     protected:
         State currState, prevState;
         int numActions;

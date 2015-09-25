@@ -185,13 +185,15 @@ void protobuf_AssignDesc_DeepLearning_2eproto() {
       sizeof(NeuralNetTrainingParameter));
   NeuralNetTrainingParameter_TrainerType_descriptor_ = NeuralNetTrainingParameter_descriptor_->enum_type(0);
   QLearningSolverParameter_descriptor_ = file->message_type(6);
-  static const int QLearningSolverParameter_offsets_[6] = {
+  static const int QLearningSolverParameter_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, numtrainingepisodes_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, learningrate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, epsilon_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, episodelength_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, discount_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, numepisodesbeforetraining_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, qtableoutputinterval_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(QLearningSolverParameter, controlinterval_),
   };
   QLearningSolverParameter_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -310,11 +312,13 @@ void protobuf_AddDesc_DeepLearning_2eproto() {
     "nFlag\030g \001(\010:\005false\022\026\n\013RNNScanStep\030h \001(\005:"
     "\0011\022\035\n\021RNNTruncateLength\030i \001(\005:\00210\"/\n\013Tra"
     "inerType\022\007\n\003SGD\020\001\022\013\n\007RMSProp\020\002\022\n\n\006SGDRNN"
-    "\020\003\"\252\001\n\030QLearningSolverParameter\022\033\n\023numTr"
-    "ainingEpisodes\030\001 \001(\005\022\024\n\014learningRate\030\002 \001"
-    "(\001\022\017\n\007epsilon\030\003 \001(\001\022\025\n\rEpisodeLength\030\004 \001"
-    "(\005\022\020\n\010discount\030\005 \001(\001\022!\n\031numEpisodesBefor"
-    "eTraining\030\006 \001(\005", 2255);
+    "\020\003\"\365\001\n\030QLearningSolverParameter\022\033\n\023numTr"
+    "ainingEpisodes\030\001 \001(\005\022\031\n\014learningRate\030\002 \001"
+    "(\001:\0030.1\022\025\n\007epsilon\030\003 \001(\001:\0040.95\022\025\n\rEpisod"
+    "eLength\030\004 \001(\005\022\026\n\010discount\030\005 \001(\001:\0040.95\022!\n"
+    "\031numEpisodesBeforeTraining\030\006 \001(\005\022\034\n\024QTab"
+    "leOutputInterval\030\007 \001(\005\022\032\n\017controlInterva"
+    "l\030\010 \001(\005:\0011", 2330);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DeepLearning.proto", &protobuf_RegisterTypes);
   NeuralNetParameter::default_instance_ = new NeuralNetParameter();
@@ -3409,6 +3413,8 @@ const int QLearningSolverParameter::kEpsilonFieldNumber;
 const int QLearningSolverParameter::kEpisodeLengthFieldNumber;
 const int QLearningSolverParameter::kDiscountFieldNumber;
 const int QLearningSolverParameter::kNumEpisodesBeforeTrainingFieldNumber;
+const int QLearningSolverParameter::kQTableOutputIntervalFieldNumber;
+const int QLearningSolverParameter::kControlIntervalFieldNumber;
 #endif  // !_MSC_VER
 
 QLearningSolverParameter::QLearningSolverParameter()
@@ -3430,11 +3436,13 @@ QLearningSolverParameter::QLearningSolverParameter(const QLearningSolverParamete
 void QLearningSolverParameter::SharedCtor() {
   _cached_size_ = 0;
   numtrainingepisodes_ = 0;
-  learningrate_ = 0;
-  epsilon_ = 0;
+  learningrate_ = 0.1;
+  epsilon_ = 0.95;
   episodelength_ = 0;
-  discount_ = 0;
+  discount_ = 0.95;
   numepisodesbeforetraining_ = 0;
+  qtableoutputinterval_ = 0;
+  controlinterval_ = 1;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3480,8 +3488,13 @@ void QLearningSolverParameter::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 63) {
-    ZR_(learningrate_, numepisodesbeforetraining_);
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(numtrainingepisodes_, episodelength_);
+    ZR_(numepisodesbeforetraining_, qtableoutputinterval_);
+    learningrate_ = 0.1;
+    epsilon_ = 0.95;
+    discount_ = 0.95;
+    controlinterval_ = 1;
   }
 
 #undef OFFSET_OF_FIELD_
@@ -3515,7 +3528,7 @@ bool QLearningSolverParameter::MergePartialFromCodedStream(
         break;
       }
 
-      // optional double learningRate = 2;
+      // optional double learningRate = 2 [default = 0.1];
       case 2: {
         if (tag == 17) {
          parse_learningRate:
@@ -3530,7 +3543,7 @@ bool QLearningSolverParameter::MergePartialFromCodedStream(
         break;
       }
 
-      // optional double epsilon = 3;
+      // optional double epsilon = 3 [default = 0.95];
       case 3: {
         if (tag == 25) {
          parse_epsilon:
@@ -3560,7 +3573,7 @@ bool QLearningSolverParameter::MergePartialFromCodedStream(
         break;
       }
 
-      // optional double discount = 5;
+      // optional double discount = 5 [default = 0.95];
       case 5: {
         if (tag == 41) {
          parse_discount:
@@ -3583,6 +3596,36 @@ bool QLearningSolverParameter::MergePartialFromCodedStream(
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &numepisodesbeforetraining_)));
           set_has_numepisodesbeforetraining();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(56)) goto parse_QTableOutputInterval;
+        break;
+      }
+
+      // optional int32 QTableOutputInterval = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_QTableOutputInterval:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &qtableoutputinterval_)));
+          set_has_qtableoutputinterval();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_controlInterval;
+        break;
+      }
+
+      // optional int32 controlInterval = 8 [default = 1];
+      case 8: {
+        if (tag == 64) {
+         parse_controlInterval:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &controlinterval_)));
+          set_has_controlinterval();
         } else {
           goto handle_unusual;
         }
@@ -3620,12 +3663,12 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->numtrainingepisodes(), output);
   }
 
-  // optional double learningRate = 2;
+  // optional double learningRate = 2 [default = 0.1];
   if (has_learningrate()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(2, this->learningrate(), output);
   }
 
-  // optional double epsilon = 3;
+  // optional double epsilon = 3 [default = 0.95];
   if (has_epsilon()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->epsilon(), output);
   }
@@ -3635,7 +3678,7 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->episodelength(), output);
   }
 
-  // optional double discount = 5;
+  // optional double discount = 5 [default = 0.95];
   if (has_discount()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(5, this->discount(), output);
   }
@@ -3643,6 +3686,16 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
   // optional int32 numEpisodesBeforeTraining = 6;
   if (has_numepisodesbeforetraining()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->numepisodesbeforetraining(), output);
+  }
+
+  // optional int32 QTableOutputInterval = 7;
+  if (has_qtableoutputinterval()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->qtableoutputinterval(), output);
+  }
+
+  // optional int32 controlInterval = 8 [default = 1];
+  if (has_controlinterval()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->controlinterval(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3660,12 +3713,12 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->numtrainingepisodes(), target);
   }
 
-  // optional double learningRate = 2;
+  // optional double learningRate = 2 [default = 0.1];
   if (has_learningrate()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(2, this->learningrate(), target);
   }
 
-  // optional double epsilon = 3;
+  // optional double epsilon = 3 [default = 0.95];
   if (has_epsilon()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->epsilon(), target);
   }
@@ -3675,7 +3728,7 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->episodelength(), target);
   }
 
-  // optional double discount = 5;
+  // optional double discount = 5 [default = 0.95];
   if (has_discount()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(5, this->discount(), target);
   }
@@ -3683,6 +3736,16 @@ void QLearningSolverParameter::SerializeWithCachedSizes(
   // optional int32 numEpisodesBeforeTraining = 6;
   if (has_numepisodesbeforetraining()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->numepisodesbeforetraining(), target);
+  }
+
+  // optional int32 QTableOutputInterval = 7;
+  if (has_qtableoutputinterval()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->qtableoutputinterval(), target);
+  }
+
+  // optional int32 controlInterval = 8 [default = 1];
+  if (has_controlinterval()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->controlinterval(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3704,12 +3767,12 @@ int QLearningSolverParameter::ByteSize() const {
           this->numtrainingepisodes());
     }
 
-    // optional double learningRate = 2;
+    // optional double learningRate = 2 [default = 0.1];
     if (has_learningrate()) {
       total_size += 1 + 8;
     }
 
-    // optional double epsilon = 3;
+    // optional double epsilon = 3 [default = 0.95];
     if (has_epsilon()) {
       total_size += 1 + 8;
     }
@@ -3721,7 +3784,7 @@ int QLearningSolverParameter::ByteSize() const {
           this->episodelength());
     }
 
-    // optional double discount = 5;
+    // optional double discount = 5 [default = 0.95];
     if (has_discount()) {
       total_size += 1 + 8;
     }
@@ -3731,6 +3794,20 @@ int QLearningSolverParameter::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->numepisodesbeforetraining());
+    }
+
+    // optional int32 QTableOutputInterval = 7;
+    if (has_qtableoutputinterval()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->qtableoutputinterval());
+    }
+
+    // optional int32 controlInterval = 8 [default = 1];
+    if (has_controlinterval()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->controlinterval());
     }
 
   }
@@ -3778,6 +3855,12 @@ void QLearningSolverParameter::MergeFrom(const QLearningSolverParameter& from) {
     if (from.has_numepisodesbeforetraining()) {
       set_numepisodesbeforetraining(from.numepisodesbeforetraining());
     }
+    if (from.has_qtableoutputinterval()) {
+      set_qtableoutputinterval(from.qtableoutputinterval());
+    }
+    if (from.has_controlinterval()) {
+      set_controlinterval(from.controlinterval());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -3807,6 +3890,8 @@ void QLearningSolverParameter::Swap(QLearningSolverParameter* other) {
     std::swap(episodelength_, other->episodelength_);
     std::swap(discount_, other->discount_);
     std::swap(numepisodesbeforetraining_, other->numepisodesbeforetraining_);
+    std::swap(qtableoutputinterval_, other->qtableoutputinterval_);
+    std::swap(controlinterval_, other->controlinterval_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

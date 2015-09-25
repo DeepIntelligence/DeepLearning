@@ -18,33 +18,18 @@ RLSolver_2DTable::RLSolver_2DTable(std::shared_ptr<BaseModel> m, int Dim,
     count.zeros(n_rows, n_cols);
 }
 
-void RLSolver_2DTable::writeTrajectory(int iter, std::ostream &os, int action, State state, double reward) const {
-    os << iter << "\t";
-    for (int s = 0; s < this->stateDim; s++) {
-        os << state[s] << "\t";
-    }
-    os << action << "\t";
-    os << reward << std::endl;
-}
 
 void RLSolver_2DTable::train() {
     int iter;
     double maxQ, reward;
     int action;
-    double epi = 0.95;
+    double epi = trainingPara.epsilon();
     int maxIter = trainingPara.numtrainingepisodes();
     int epiLength = trainingPara.episodelength();
-    int controlFreq = 1;
-    int trajOutputFreq = 10;
-    int episodeOutputFreq = 10;
-    bool experienceReplayFlag = false;
+    int controlInterval = trainingPara.controlinterval();
+    int QTableOutputInterval = trainingPara.qtableoutputinterval();
+    bool experienceReplayFlag = true;
     for (int i = 0; i < maxIter; i++) {
-        std::ofstream os;
-        std::stringstream ss;
-        ss << i;
-        if ( (i+1)%episodeOutputFreq == 0) {
-            os.open("traj/traj"+ss.str()+".dat");        
-        }
         std::cout << "training Episodes " << i << std::endl;
         iter = 0;
         model->createInitialState();
@@ -55,23 +40,19 @@ void RLSolver_2DTable::train() {
             } else {
                 action = randChoice->nextInt();
             }
-            model->run(action, controlFreq);
+            model->run(action, controlInterval);
             State newState = model->getCurrState();
             reward = model->getRewards();
             this->updateQ(Experience(oldState, newState, action, reward));
             if (experienceReplayFlag) {
                 this->experienceVec.push_back(Experience(oldState, newState, action, reward));
             }
-            
-            if ((iter == 0 || (iter+1)%trajOutputFreq == 0) && (i+1)%episodeOutputFreq == 0) {
-                this->writeTrajectory(iter, os, action, oldState, reward);
-            }
              iter++;
         }
         // after an episode, do experience reply
         this->replayExperience();
         std::cout << "duration: " << iter << std::endl;
-        if ((i + 1) % 100 == 0) {
+        if (i == 0 || ((i + 1) % QTableOutputInterval == 0)) {
             std::stringstream ss;        
             ss << i;
             this->outputQ("QTable_" + ss.str() + "iter");
@@ -79,20 +60,20 @@ void RLSolver_2DTable::train() {
     }
         this->outputQ("QTableFinal");
         this->outputPolicy();
-
 }
 
 void RLSolver_2DTable::replayExperience(){
+    // replay in reverse order
     for (auto exp = this->experienceVec.rbegin(); exp != this->experienceVec.rend(); ++exp){
         this->updateQ(*exp);
     }
-
 }
 
 void RLSolver_2DTable::test(){
 // do some test
     int maxIter = trainingPara.numtrainingepisodes();
     int epiLength = trainingPara.episodelength();
+    int controlInterval = trainingPara.controlinterval();
     int iter;
     int action;
     double maxQ;
@@ -103,7 +84,7 @@ void RLSolver_2DTable::test(){
         while (!model->terminate() && iter < epiLength) {
             State oldState = model->getCurrState();          
             this->getMaxQ(oldState,&maxQ,&action);
-            model->run(action);
+            model->run(action, controlInterval);
             State newState = model->getCurrState();
             double reward = model->getRewards();
             iter++;
@@ -113,10 +94,10 @@ void RLSolver_2DTable::test(){
 }
 
 void RLSolver_2DTable::updateQ(Experience exp) {
-    double learningRate = 0.1;
+    double learningRate = trainingPara.learningrate();
     int action;
     double maxQ;
-    double discount = 0.95;
+    double discount = trainingPara.discount();
     this->getMaxQ(exp.newState, &maxQ, &action);
     std::pair<int, int> index0 = this->stateToIndex(exp.oldState);
     count(index0.first,index0.second) += 1;
@@ -140,6 +121,12 @@ std::pair<int, int> RLSolver_2DTable::stateToIndex(const State& S) const {
     int idx1, idx2;
     idx1 = (int) ((S[0] - minx1)/dx1) + 1;
     idx2 = (int) ((S[1] - minx2)/dx2) + 1;
+    if (idx1 < 0) idx1 = 0;
+    if (idx1 >= this->n_rows) idx1 = this->n_rows - 1; 
+    if (idx2 < 0) idx2 = 0;
+    if (idx2 >= this->n_cols) idx2 = this->n_cols - 1; 
+    
+    
     return std::pair<int, int>(idx1,idx2);
 }
 
@@ -151,6 +138,16 @@ void RLSolver_2DTable::outputQ(std::string filename) {
         ss << i;
         temp.save(filename + ss.str() + ".dat", arma::raw_ascii);
     }
+}
+
+void RLSolver_2DTable::loadQTable(std::string filetag){
+    for (int i = 0; i < numActions; ++i) {
+        arma::mat temp;
+        std::stringstream ss;
+        ss << i;
+        temp.load(filetag + ss.str() + ".dat");
+	QTable.slice(i) = temp;    
+	}
 }
 
 void RLSolver_2DTable::outputPolicy(){
@@ -171,11 +168,13 @@ void RLSolver_2DTable::outputPolicy(){
             }
             actionMap(i,j) = action;
             QMap(i,j) = maxQ;
+            if (count(i,j) == 0){
+                actionMap(i,j) = -1;
+            }
         }
     }
     actionMap.save("actionMap.dat", arma::raw_ascii);
     QMap.save("QMap.dat", arma::raw_ascii);
     count.save("count.dat", arma::raw_ascii);
-
 }
 

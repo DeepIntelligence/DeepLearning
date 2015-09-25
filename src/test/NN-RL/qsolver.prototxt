@@ -1,10 +1,10 @@
-
-
 qLearningSolverParameter{
+        learningRate: 0.1
+        discount: 0.95
 	numTrainingEpisodes: 200
-	epsilon: 0.2;
+	epsilon: 0.2
 	EpisodeLength: 1000
-	discount: 0.9
+        QTableOutputInterval: 100
 }
 
 

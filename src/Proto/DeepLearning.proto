@@ -67,9 +67,14 @@ message NeuralNetTrainingParameter {
 
 message QLearningSolverParameter{
 	optional int32 numTrainingEpisodes = 1;
-	optional double learningRate = 2;
-	optional double epsilon = 3;
+	optional double learningRate = 2 [default = 0.1];
+	optional double epsilon = 3 [default = 0.95];
 	optional int32 EpisodeLength = 4;
-	optional double discount = 5;
+	optional double discount = 5 [default = 0.95];
 	optional int32 numEpisodesBeforeTraining = 6;
+	optional int32 QTableOutputInterval = 7;
+	optional int32 controlInterval = 8 [default = 1];
+
+
+
 }
